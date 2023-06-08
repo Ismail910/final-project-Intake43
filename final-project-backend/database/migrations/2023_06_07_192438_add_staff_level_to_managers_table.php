@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::table('managers', function (Blueprint $table) {
             //
-            $table->foreignId('staff_level_id')->constrained();
+            $table->foreignId('staff_level_id')->constrained()->cascadeOnDelete();
 
         });
     }
