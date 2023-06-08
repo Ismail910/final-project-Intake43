@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Managers;
 use Illuminate\Http\Request;
 
 class ManagersController extends Controller
@@ -12,7 +13,7 @@ class ManagersController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -26,7 +27,7 @@ class ManagersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Managers $managers)
     {
         //
     }
@@ -34,7 +35,7 @@ class ManagersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Managers $managers)
     {
         //
     }
@@ -42,7 +43,7 @@ class ManagersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Managers $managers)
     {
         //
     }

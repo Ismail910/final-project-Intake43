@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\StaffLevel;
 use Illuminate\Http\Request;
 
-class staffLevelController extends Controller
+class StaffLevelController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,7 +27,7 @@ class staffLevelController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(StaffLevel $staffLevel)
     {
         //
     }
@@ -34,7 +35,7 @@ class staffLevelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, StaffLevel $staffLevel)
     {
         //
     }
@@ -42,7 +43,7 @@ class staffLevelController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(StaffLevel $staffLevel)
     {
         //
     }
