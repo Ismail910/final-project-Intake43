@@ -10,6 +10,10 @@ class staffLevel extends Model
     use HasFactory;
 
 
+    protected $fillable = [
+        'name',
+        'salary'
+    ];
 
     function managger(){
         return $this->hasMany(managers::class);
