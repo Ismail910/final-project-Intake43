@@ -34,6 +34,7 @@ class ManagersController extends Controller
 
     public function store(StoremanagersRequest $request)
     {  
+        
         $manager = Managers::create($request->all());
       
         return $manager;
