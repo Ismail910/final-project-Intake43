@@ -4,10 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\User;
+use App\Models\staff_levels;
+use App\Models\Project;
 class managers extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'role',
+       
+    ];
 
     function user()
     {

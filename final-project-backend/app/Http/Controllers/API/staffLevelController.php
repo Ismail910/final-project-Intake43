@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\StaffLevel;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class StaffLevelController extends Controller
@@ -11,9 +12,9 @@ class StaffLevelController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(User $salary_id)
     {
-        //
+        return StaffLevel::where(['id' => $salary_id])->get();
     }
 
     /**

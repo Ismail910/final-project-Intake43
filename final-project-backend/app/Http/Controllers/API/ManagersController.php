@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\API;
-
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Models\Managers;
 use Illuminate\Http\Request;
@@ -13,7 +13,7 @@ class ManagersController extends Controller
      */
     public function index()
     {
-        
+        return Managers::all();
     }
 
     /**
@@ -27,7 +27,7 @@ class ManagersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Managers $managers)
+    public function show(Managers $manager)
     {
         //
     }
@@ -35,7 +35,7 @@ class ManagersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Managers $managers)
+    public function update(Request $request, Managers $manager)
     {
         //
     }
@@ -43,8 +43,20 @@ class ManagersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Managers $managers)
+    public function destroy(Managers $manager)
     {
-        //
+        $manager->delete();
+        return new Response('', 204);
     }
+
+    private function save_image($image , $manager){
+        if($image){
+            $image_name = time().'.'.$image->extension();
+            $image->move(public_path('images/Managers'),$image_name);
+            $manager->image = $image_name;
+            $manager->save();
+        }
+    }
+
+
 }

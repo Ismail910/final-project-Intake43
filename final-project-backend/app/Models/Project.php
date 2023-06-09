@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Client;
+use App\Models\managers;
 class Project extends Model
 {
     
@@ -22,14 +23,14 @@ class Project extends Model
     ];
     function ProductOwner()
     {
-        return $this->belongsTo(managers::class);
+        return $this->belongsTo(managers::class,'ProductOwner_id','id');
     }
     function ProductManager()
     {
-        return $this->belongsTo(managers::class);
+        return $this->belongsTo(managers::class,'ProductManager_id','id');
     }
     function client()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Client::class,'client_id','id');
     }
 }
