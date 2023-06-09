@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
+use App\Models\managers;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -50,5 +50,8 @@ class User extends Authenticatable
 
     function managers(){
         return $this->hasMany(managers::class);
+    }
+    function clients(){
+        return $this->hasMany(Client::class);
     }
 }

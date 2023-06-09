@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\User;
+use App\Models\staff_levels;
+use App\Models\Project;
 class managers extends Model
 {
     use HasFactory;
@@ -23,5 +25,8 @@ class managers extends Model
     function staff_level()
     {
         return $this->belongsTo(staff_levels::class);
+    }
+    function project(){
+        return $this->hasMany(Project::class);
     }
 }
