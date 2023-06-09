@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\API;
+use App\Http\Requests\StoremanagersRequest;
+use App\Http\Resources\ManagersResource;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Models\managers as managers;
@@ -20,7 +22,7 @@ class ManagersController extends Controller
      * Store a newly created resource in storage.
      */
 
-    public function store(Request $request)
+    public function store(StoremanagersRequest $request)
     {  
         
         $manager = Managers::create($request->all());
@@ -33,11 +35,11 @@ class ManagersController extends Controller
      */
     public function show(Managers $manager)
     {
-       
         if ($manager){
-            return $manager;
+           
+            return  new ManagersResource($manager);  
         }
-        return new Response('', 205);
+        return  new Response('', 205);
     }
 
     /**
