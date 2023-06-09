@@ -12,7 +12,6 @@ return new class extends Migration {
     {
         Schema::create('managers', function (Blueprint $table) {
             $table->id();
-
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->enum('role', ['Admin', 'Product Manager', 'Product Owner'])->default('Product Owner');
             $table->timestamps();

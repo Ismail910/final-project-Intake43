@@ -17,4 +17,7 @@ class managers extends Model
     {
         return $this->belongsTo(staff_levels::class);
     }
+    function project(){
+        return $this->hasMany(Project::class);
+    }
 }
