@@ -19,9 +19,18 @@ class ManagersController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    
     public function store(Request $request)
     {
-        //
+        // $request->validate([
+        //    'user_id'=>'required',
+        //     'role' => 'required',
+        //     'staff_level_id'=>'required',
+        // ]);
+       
+        $manager = Managers::create($request->all());
+      
+        return $manager;
     }
 
     /**
@@ -29,7 +38,11 @@ class ManagersController extends Controller
      */
     public function show(Managers $manager)
     {
-        //
+       
+        if ($manager){
+            return $manager;
+        }
+        return new Response('', 205);
     }
 
     /**

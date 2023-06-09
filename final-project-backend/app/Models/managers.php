@@ -12,6 +12,7 @@ class managers extends Model
     protected $fillable = [
         'user_id',
         'role',
+        'staff_level_id'
        
     ];
 

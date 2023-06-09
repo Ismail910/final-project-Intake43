@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\FreelancerController;
 use App\Http\Controllers\API\ManagersController;
 use App\Http\Controllers\API\StaffLevelController;
+use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
