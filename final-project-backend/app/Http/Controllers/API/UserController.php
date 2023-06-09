@@ -13,6 +13,11 @@ class UserController extends Controller
      */
     public function index()
     {
+        // $perPage = $request->per_page ? $request->per_page : 10;
+        // $currentPage = $request->current_page ? $request->current_page : 1;
+        // $users = User::paginate($perPage, ["*"], "page", $currentPage);
+        // $response = new APIPaginateCollection($users, ProductResource::class);
+        // return response()->json($response);
         return User::all();
     }
 
@@ -21,6 +26,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+       
         return User::create($request->all());
     }
 
@@ -29,7 +35,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        
     }
 
     /**

@@ -22,7 +22,8 @@ class StoremanagersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id' => 'required',
+            ''
         ];
     }
 }

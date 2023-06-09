@@ -25,7 +25,8 @@ class User extends Authenticatable
         'address',
         'joinedDate',
         'endDate',
-        'profilePic'
+        'profilePic',
+        'phone'
     ];
 
     /**

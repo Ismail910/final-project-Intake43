@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-use App\Models\Managers;
+use App\Models\managers as managers;
 use Illuminate\Http\Request;
 
 class ManagersController extends Controller
@@ -19,15 +19,9 @@ class ManagersController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    
+
     public function store(Request $request)
-    {
-        // $request->validate([
-        //    'user_id'=>'required',
-        //     'role' => 'required',
-        //     'staff_level_id'=>'required',
-        // ]);
-       
+    {  
         $manager = Managers::create($request->all());
       
         return $manager;
@@ -50,7 +44,7 @@ class ManagersController extends Controller
      */
     public function update(Request $request, Managers $manager)
     {
-        //
+        $manager = Managers::update($request->all());
     }
 
     /**
