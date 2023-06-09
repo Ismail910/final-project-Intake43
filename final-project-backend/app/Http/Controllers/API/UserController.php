@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
@@ -24,10 +27,12 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
        
-        return User::create($request->all());
+        $user = User::create($request->all());
+        $this->save_image($request->profilePic, $user);
+        return new UserResource($user);
     }
 
     /**
@@ -35,7 +40,12 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        
+        if ($user){
+           
+            return  new UserResource($user);  #
+        }
+        return  new Response('', 205);
+
     }
 
     /**
@@ -43,7 +53,15 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $old_image=  $user->profilePic;
+        $user->update($request->all());
+        $this->save_image($request->profilePic, $user);
+        if($request->profilePic){
+            $this->delete_image($old_image);
+        }
+
+//        return new Response($user, '200');
+        return new UserResource($user);
     }
 
     /**
@@ -51,6 +69,27 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        
+        $this->delete_image($user->profilePic);
+        $user->delete();
+    }
+
+    private function save_image($image, $article){
+        if ($image){
+            $image_name = time().'.'.$image->extension();
+            $image->move(public_path('images/users'),$image_name);
+            $article->image = $image_name;
+            $article->save();
+        }
+    }
+    private  function  delete_image($image_name){
+        if($image_name !='user.png' and ! str_contains($image_name, '/tmp/')){
+            try{
+                unlink(public_path('images/users/'.$image_name));
+
+            }catch (\Exception $e){
+                echo $e;
+            }
+        }
     }
 }
