@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('freelancers', function (Blueprint $table) {
             $table->id();
-            $table->enum('rate', ['1', '2', '3', '4', '5'])->nullable();
+            $table->enum('rate', ['1', '2', '3', '4', '5'])->default('1')->nullable();
             $table->boolean('Status')->default(false)->nullable();
             $table->integer('balance')->default(0);
-            $table->foreignId('task_id')->constrained()->cascadeOnDelete();
+            // $table->foreignId('task_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
