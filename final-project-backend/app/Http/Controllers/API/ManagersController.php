@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\API;
 use App\Http\Requests\StoremanagersRequest;
 use App\Http\Resources\ManagersResource;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-use App\Models\managers as managers;
+use App\Models\managers as Managers;
 use Illuminate\Http\Request;
 
 class ManagersController extends Controller
@@ -15,7 +16,16 @@ class ManagersController extends Controller
      */
     public function index()
     {
-        return Managers::all();
+        // return Managers::all();
+        try{
+            $manager = Managers::all();
+            return ManagersResource::collection($manager);
+        }
+        catch(ModelNotFoundException $e){
+            return response()->json([
+                'error' => 'not found mangers collection',
+            ], 404);
+        }
     }
 
     /**
@@ -59,14 +69,6 @@ class ManagersController extends Controller
         return new Response('', 204);
     }
 
-    private function save_image($image , $manager){
-        if($image){
-            $image_name = time().'.'.$image->extension();
-            $image->move(public_path('images/Managers'),$image_name);
-            $manager->image = $image_name;
-            $manager->save();
-        }
-    }
-
+   
 
 }
