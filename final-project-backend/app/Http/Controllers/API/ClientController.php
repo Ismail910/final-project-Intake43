@@ -3,7 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreClientRequest;
+use App\Http\Resources\ClientResource;
+use App\Models\Client;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+
 
 class ClientController extends Controller
 {
@@ -12,15 +17,24 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+        try{
+            $client = Client::all();
+            return ClientResource::collection($client);
+        }
+        catch(ModelNotFoundException $e){
+            return response()->json([
+                'error' => 'not found client collection',
+            ], 404);
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreClientRequest $request)
     {
-        //
+        $salary = Client::create($request->all());
+        return new ClientResource($salary);
     }
 
     /**
@@ -28,15 +42,31 @@ class ClientController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
+        try {
+            $project = Client::findOrFail($id);
+            return new ClientResource($project);
+        } catch (ModelNotFoundException $exception) {
+            return response()->json(['error' => 'client not found'], 404);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreClientRequest $request, string $id)
     {
-        //
+        try{
+            $client = Client::findOrFail($id);
+            $client->update($request->all());
+
+            return new ClientResource($client);
+       }
+       catch(ModelNotFoundException $e){
+            return response()->json([
+                'error' => 'check if client is exist and check it is validation'
+            ], 404);
+       }
     }
 
     /**
@@ -44,6 +74,15 @@ class ClientController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try{
+            $client = Client::findOrFail($id);
+            $client->delete();
+            return response()->json([$client], 204);
+        }
+        catch(ModelNotFoundException $e){
+            return response()->json([
+                'error' => 'check if client is exist '
+            ], 404);
+        }
     }
 }

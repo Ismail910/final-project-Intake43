@@ -11,7 +11,18 @@ class Freelancer extends Model
 
     protected $fillable = [
         'user_id',
+        'status',
+        'balance',
+        'task_id',
+        'rate'
        
     ];
+    function user()
+    {
+        return $this->belongsTo(User::class,'user_id','id');
+    }
+    function tasks(){
+        return $this->hasMany(Tasks::class);
+    }
 
 }

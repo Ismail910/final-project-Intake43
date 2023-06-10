@@ -25,7 +25,6 @@ class UpdatemanagersRequest extends FormRequest
         return [
             'role' => 'required',
             'user_id' => 'required|exists:Users,id',
-           
         ];
     }
     public  function  failedValidation(Validator $validator)
