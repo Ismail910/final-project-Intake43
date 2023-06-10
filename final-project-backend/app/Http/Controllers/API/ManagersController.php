@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\API;
 use App\Http\Requests\StoremanagersRequest;
+use App\Http\Requests\UpdatemanagersRequest;
 use App\Http\Resources\ManagersResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Models\managers as Managers;
-use Illuminate\Http\Request;
+
 
 class ManagersController extends Controller
 {
@@ -55,9 +56,19 @@ class ManagersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Managers $manager)
+    public function update(UpdatemanagersRequest $request, Managers $manager)
     {
-        $manager = Managers::update($request->all());
+        // $manager = Managers::update($request->all());
+        try {
+            $manager->update($request->all());
+            return new ManagersResource($manager);
+
+        } catch(ModelNotFoundException $e){
+            return response()->json([
+                'error' => 'check if manager is exist and check it is validation'
+            ], 404);
+       }
+
     }
 
     /**

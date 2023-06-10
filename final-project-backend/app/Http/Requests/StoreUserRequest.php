@@ -11,7 +11,7 @@ class StoreUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,15 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            
+            'name' => 'required|string|max:55',
+            'email' => 'required|string|unique|max:255',
+            'password' => 'required|string',
+            'nationalID' => 'required|number',
+            'phone' => 'required|string',
+            'address' => 'required|string',
+            'joinedDate'=> 'required|date',
+            'endDate'=> 'required|date|after:joinedDate',
+            'profilePic'=> 'required|string',
         ];
     }
 }

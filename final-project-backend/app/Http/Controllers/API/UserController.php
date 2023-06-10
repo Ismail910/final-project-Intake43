@@ -7,9 +7,10 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Models\managers;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Response;
+
 class UserController extends Controller
 {
     /**
@@ -88,8 +89,7 @@ class UserController extends Controller
         // }
 
          return response()->json(['error' => 'faild create user'], 404);
-// =======
-       
+// =======    
 //         $user = User::create($request->all());
 //         $this->save_image($request->profilePic, $user);
 //         return new UserResource($user);
@@ -102,17 +102,14 @@ class UserController extends Controller
     public function show(User $user)
     {
         if ($user){
-           
             return  new UserResource($user);  #
         }
         return  new Response('', 205);
-
     }
-
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(StoreUserRequest $request, User $user)
     {
         $old_image=  $user->profilePic;
         $user->update($request->all());
@@ -120,8 +117,6 @@ class UserController extends Controller
         if($request->profilePic){
             $this->delete_image($old_image);
         }
-
-//        return new Response($user, '200');
         return new UserResource($user);
     }
 
@@ -130,7 +125,6 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        
         $this->delete_image($user->profilePic);
         $user->delete();
     }
@@ -147,7 +141,6 @@ class UserController extends Controller
         if($image_name !='user.png' and ! str_contains($image_name, '/tmp/')){
             try{
                 unlink(public_path('images/users/'.$image_name));
-
             }catch (\Exception $e){
                 echo $e;
             }

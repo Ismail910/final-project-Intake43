@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectAPIRequest;
 use App\Http\Requests\UpdateProjectAPIRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 class ProjectController extends Controller
 {
     /**

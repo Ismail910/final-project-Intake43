@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorestaffLevelRequest;
+use App\Http\Requests\UpdatestaffLevelRequest;
 use App\Http\Resources\StaffLevelResource;
 use App\Models\StaffLevel;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
+
+use Illuminate\Http\Response;
 
 class StaffLevelController extends Controller
 {
@@ -31,25 +34,29 @@ class StaffLevelController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+
+    public function store(StorestaffLevelRequest $request)
     {
-        //
+        $salary = StaffLevel::create($request->all());
+        return new StaffLevelResource($salary);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(StaffLevel $staffLevel , User $salary_id)
+
+    public function show(StaffLevel $staffLevel , User $staff_level_id)
     {
-        return StaffLevel::where(['id' => $salary_id])->get();
+        return StaffLevel::where(['id' => $staff_level_id])->get();
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, StaffLevel $staffLevel)
+    public function update(UpdatestaffLevelRequest $request, StaffLevel $staffLevel)
     {
-        //
+        $staffLevel->update($request->all());
+       return  new StaffLevelResource($staffLevel);
     }
 
     /**
@@ -57,6 +64,7 @@ class StaffLevelController extends Controller
      */
     public function destroy(StaffLevel $staffLevel)
     {
-        //
+        $staffLevel->delete();
+        return new Response('', 204);
     }
 }
