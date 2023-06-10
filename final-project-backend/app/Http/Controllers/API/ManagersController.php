@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-use App\Models\Managers;
+use App\Models\managers as managers;
 use Illuminate\Http\Request;
 
 class ManagersController extends Controller
@@ -19,9 +19,12 @@ class ManagersController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
-    {
-        //
+    {  
+        $manager = Managers::create($request->all());
+      
+        return $manager;
     }
 
     /**
@@ -29,7 +32,11 @@ class ManagersController extends Controller
      */
     public function show(Managers $manager)
     {
-        //
+       
+        if ($manager){
+            return $manager;
+        }
+        return new Response('', 205);
     }
 
     /**
@@ -37,7 +44,7 @@ class ManagersController extends Controller
      */
     public function update(Request $request, Managers $manager)
     {
-        //
+        $manager = Managers::update($request->all());
     }
 
     /**

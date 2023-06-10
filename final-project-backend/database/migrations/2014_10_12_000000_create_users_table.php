@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('address');
             $table->date('joinedDate');
             $table->date('endDate');
-           
             $table->string('profilePic')->nullable();
             $table->rememberToken();
             $table->timestamps();
