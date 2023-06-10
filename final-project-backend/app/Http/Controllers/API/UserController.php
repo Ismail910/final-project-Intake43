@@ -72,7 +72,11 @@ class UserController extends Controller
                'staff_level_id'=>$request->input('staff_level_id'),
             ]);
       
-        return $manager;
+            return response()->json([
+                'success' =>true,
+                'manager' =>$manager,
+                'token'  =>$token
+            ], 201);
             // return redirect()->route('managers.store', ['user_id' => $user->id,'role'=>'Product Manager','staff_level_id'=>1])->withInput();;
         }
         elseif($request->input('role')=='Product Owner'){

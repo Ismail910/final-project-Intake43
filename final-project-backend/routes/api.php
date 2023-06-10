@@ -31,3 +31,6 @@ Route::apiResource('management', ManagersController::class );
 Route::apiResource('freelancer', FreelancerController::class);
 Route::apiResource('salary', StaffLevelController::class);
 
+use App\Http\Controllers\LoginController;
+
+Route::post('/login', [LoginController::class, 'login']);
