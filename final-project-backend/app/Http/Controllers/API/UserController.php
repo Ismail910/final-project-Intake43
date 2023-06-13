@@ -57,11 +57,10 @@ class UserController extends Controller
             'phone'=> $request->input('phone'),
             'joinedDate' => $request->input('joinedDate'),
             'endDate'=> $request->input('endDate'),
-            'profilePic' => $request->input('profilePic'),
         ]);
+        $this->save_image($request->profilePic, $user);
         
-        $token = $user->createToken('token-name',['user_id' => $user->id, 'email' => $user->email])->plainTextToken;
-        // return User::create($request->all());
+        $token = $user->createToken('token-name',['user_id' => $user->id, 'email' => $user->email,'name'=>$user->name])->plainTextToken;
         if($request->input('role')=='Admin'){
             return redirect()->route('management.store', ['user_id' => $user->id,'role'=>'Admin']);
         }
@@ -93,11 +92,7 @@ class UserController extends Controller
         // }
 
          return response()->json(['error' => 'faild create user'], 404);
-// =======    
-//         $user = User::create($request->all());
-//         $this->save_image($request->profilePic, $user);
-//         return new UserResource($user);
-// >>>>>>> d5e3fa259f50db459b4f4db98026b0794dfe445f
+
     }
 
     /**

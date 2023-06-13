@@ -34,3 +34,8 @@ Route::apiResource('salary', StaffLevelController::class);
 use App\Http\Controllers\LoginController;
 
 Route::post('/login', [LoginController::class, 'login']);
+
+use APP\Http\Controllers\API\payment\CreditController;
+// paymob
+Route::post('/credit', [CreditController::class, 'credit'])->name('credit');
+Route::get('/callback', [CreditController::class, 'callback'])->name('callback');
