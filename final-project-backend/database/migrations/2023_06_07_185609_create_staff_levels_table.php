@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('staff_levels', function (Blueprint $table) {
             $table->id();
-            $table->index('name');
+            $table->string('name');
             $table->decimal('salary',10,2)->default(0);
             $table->timestamps();
         });
