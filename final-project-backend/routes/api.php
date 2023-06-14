@@ -26,6 +26,7 @@ use App\Http\Controllers\API\ProjectController;
 Route::apiResource('projects', ProjectController::class);
 
 Route::apiResource('user', UserController::class);
+
 // Route::post('managers', [ManagersController::class, 'store'])->name('managers.store');
 Route::apiResource('management', ManagersController::class );
 Route::apiResource('freelancer', FreelancerController::class);
@@ -34,3 +35,5 @@ Route::apiResource('salary', StaffLevelController::class);
 use App\Http\Controllers\LoginController;
 
 Route::post('/login', [LoginController::class, 'login']);
+
+Route::get('/search', [ UserController::class, 'search'])->name('search');
