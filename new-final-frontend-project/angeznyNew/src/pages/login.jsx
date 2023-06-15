@@ -15,14 +15,14 @@ const Login = (props) => {
     <h2>Login</h2>
      <form onSubmit={submission} className='login-form'>
      <label htmlFor="email" >
-     email
+     Email
      </label>
      <input type='email' placeholder='email@gmail.com' id="email" name="email" value={email}/>
      <label htmlFor="password" >
-     password
+     Password
      </label>
      <input type='password'  id="password"  placeholder="***********"name="password" value={password}/>
-     <button type='submit'>Log In</button>
+     <button type='submit' className='submission'>Log In</button>
      </form>
      <button className="link-btn" onClick={()=>props.onFormSwitch("register")}>Don't have an account? Register here.</button>
     </div>

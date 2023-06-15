@@ -29,7 +29,7 @@ const registration=(e)=>{
     password
     </label>
     <input type='password'  id="password"  placeholder="***********"name="password" value={password}/>
-    <button type='submit'>Register</button>
+    <button type='submit' className='submission'>Register</button>
     </form>
     <button className="link-btn" onClick={()=>props.onFormSwitch("login")}>Already have an account? Login here.</button>
     </div>
