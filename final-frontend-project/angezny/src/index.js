@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import { CometChat } from "@cometchat-pro/chat";
 const appID = "240169ef153c40df";
 const region = "US";
@@ -11,6 +14,7 @@ const appSetting = new CometChat.AppSettingsBuilder()
   .subscribePresenceForAllUsers()
   .setRegion(region)
   .build();
+
 
 CometChat.init(appID, appSetting).then(
   () => {
