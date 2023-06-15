@@ -8,6 +8,7 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Models\managers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Response;
 
@@ -149,5 +150,14 @@ class UserController extends Controller
                 echo $e;
             }
         }
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $users = User::where('name', 'like', '%'.$query.'%')->get();
+
+        return response()->json($users);
     }
 }
