@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 const MyRoutes = () => {
   return (
     <div>  
-        i work a route
+      
     </div>
   )
 }
