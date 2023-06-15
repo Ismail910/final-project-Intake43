@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\API\FreelancerController;
 use App\Http\Controllers\API\ManagersController;
+
+use App\Http\Controllers\API\SearchٍController;
 use App\Http\Controllers\API\StaffLevelController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
@@ -36,4 +38,4 @@ use App\Http\Controllers\LoginController;
 
 Route::post('/login', [LoginController::class, 'login']);
 
-Route::get('/search', [ UserController::class, 'search'])->name('search');
+Route::get('/search', [ SearchٍController::class, 'searchByName'])->name('search');

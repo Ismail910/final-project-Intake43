@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('clients', function (Blueprint $table) {
-            $table->id();
-            $table->integer('balance')->default(0);
-           
-            $table->timestamps();
+        Schema::table('freelancers', function (Blueprint $table) {
+            $table->foreignId('task_id')->constrained()->cascadeOnDelete();
         });
     }
 
@@ -24,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('clients');
+        Schema::table('freelancer', function (Blueprint $table) {
+            //
+        });
     }
 };
