@@ -10,11 +10,14 @@ const MyRoutes = () => {
     setCurrentForm(formName);
   }
   return (
+
+    <div>  
+
     <div className='App'>  
     {
       currentForm==="Login"? <Login onFormSwitch={toggleForm}/>:<Register onFormSwitch={toggleForm}/>
     }
-      
+    </div>
     </div>
   )
 }
