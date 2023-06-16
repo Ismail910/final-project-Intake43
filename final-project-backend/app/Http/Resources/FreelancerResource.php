@@ -18,8 +18,16 @@ class FreelancerResource extends JsonResource
             'id' => $this->id,
             'rate' => $this->rate,
             'status' => $this->status,
-            // 'task'=> new TaskResource($this->staff_level),
-            'user' => new UserResource($this->user)
+            'user' => new UserResource($this->user),
+             'salayre'=>[
+                'salary-class'=>$this->staff_levels->name,
+                'salary'=>$this->staff_levels->salary
+            ],
+            'task'=>[
+                'title'=>$this->task->task_title,
+                'description'=>$this->task->task_description,
+                'status'=>$this->task->task_status,
+            ]
         ];
     }
 }

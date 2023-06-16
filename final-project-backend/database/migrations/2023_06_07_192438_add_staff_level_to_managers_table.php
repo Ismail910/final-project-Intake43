@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('managers', function (Blueprint $table) {
-            //
+         
             $table->foreignId('staff_level_id')->constrained()->onDelete('cascade');
 
         });
@@ -23,9 +23,7 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('managers', function (Blueprint $table) {
-            //
             $table->dropIfExists('staff_level_id');
-
         });
     }
 };
