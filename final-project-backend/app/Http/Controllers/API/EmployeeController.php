@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreEmployeeRequest;
+use App\Http\Resources\EmployeeResource;
 use App\Models\Employee;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class EmployeeController extends Controller
 {
@@ -13,7 +17,15 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $emp = Employee::all();
+            return EmployeeResource::colection($emp);
+        } catch(ModelNotFoundException $e){
+            return response()->json([
+                'error' => 'not found Employee collection',
+            ], 404);
+        }
+        
     }
 
     /**
@@ -21,7 +33,9 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $employee = Employee::create($request->all());
+        return new EmployeeResource($employee);
     }
 
     /**
@@ -29,7 +43,11 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        //
+        if($employee){
+            return  new EmployeeResource($employee);  
+        }
+        return  new Response('', 205);
+        
     }
 
     /**
@@ -37,7 +55,15 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        //
+        try {
+            $employee->update($request->all());
+            return new EmployeeResource($employee);
+        } catch(ModelNotFoundException $e){
+            return response()->json([
+                'error' => 'check it is validation'
+            ], 404);
+            
+        }
     }
 
     /**
@@ -45,6 +71,7 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        //
+        $employee->delete();
+        return new Response('', 204);
     }
 }

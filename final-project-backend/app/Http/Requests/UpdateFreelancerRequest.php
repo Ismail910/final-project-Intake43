@@ -21,8 +21,7 @@ class UpdateFreelancerRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-           
+        return [ 
             'task_id' => 'required|exists:Task,id',
             'user_id' => 'required|exists:Users,id',
         ];
