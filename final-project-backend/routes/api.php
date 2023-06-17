@@ -38,11 +38,11 @@ use App\Http\Controllers\LoginController;
 
 Route::post('/login', [LoginController::class, 'login']);
 
-<<<<<<< HEAD
-use APP\Http\Controllers\API\payment\CreditController;
-// paymob
-Route::post('/credit', [CreditController::class, 'credit'])->name('credit');
-Route::get('/callback', [CreditController::class, 'callback'])->name('callback');
-=======
-Route::get('/search', [ SearchٍController::class, 'searchByName'])->name('search');
->>>>>>> 2638a499954ab5144341b85b9ff0c47843acf8ee
+
+// use APP\Http\Controllers\API\payment\CreditController;
+// // paymob
+// Route::post('/credit', [CreditController::class, 'credit'])->name('credit');
+// Route::get('/callback', [CreditController::class, 'callback'])->name('callback');
+
+// Route::get('/search', [ SearchٍController::class, 'searchByName'])->name('search');
+
