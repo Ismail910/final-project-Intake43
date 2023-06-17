@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateFreelancerRequest extends FormRequest
+class UpdateEmployeeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return true ;
     }
 
     /**
@@ -21,9 +21,10 @@ class UpdateFreelancerRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [ 
+        return [
             'task_id' => 'required|exists:Task,id',
             'user_id' => 'required|exists:Users,id',
+            'staff_level_id' => 'required|exists:Users,id',
         ];
     }
 }

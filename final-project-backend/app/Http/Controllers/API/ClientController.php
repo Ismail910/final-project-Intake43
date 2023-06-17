@@ -42,7 +42,6 @@ class ClientController extends Controller
      */
     public function show(string $id)
     {
-        
         try {
             $project = Client::findOrFail($id);
             return new ClientResource($project);

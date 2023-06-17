@@ -8,7 +8,7 @@ use App\Http\Requests\UpdateFreelancerRequest;
 use App\Http\Resources\FreelancerResource;
 use App\Models\Freelancer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
+
 use Illuminate\Http\Response;
 
 class FreelancerController extends Controller
@@ -44,7 +44,6 @@ class FreelancerController extends Controller
     public function show(Freelancer $freelancer)
     {
         if ($freelancer){
-
             return  new FreelancerResource($freelancer);  
         }
         return  new Response('', 205);
@@ -58,7 +57,6 @@ class FreelancerController extends Controller
         try {
             $freelancer->update($request->all());
             return new FreelancerResource($freelancer);
-
          } catch(ModelNotFoundException $e){
             return response()->json([
                 'error' => 'check if freelancer is exist and check it is validation'
