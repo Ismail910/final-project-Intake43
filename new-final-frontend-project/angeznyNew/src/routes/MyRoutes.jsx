@@ -7,8 +7,8 @@ import { CircleSpinner, WaveSpinner } from "react-spinners-kit";
 import Login from '../pages/login';
 import Register from '../pages/register';
 import Home from '../pages/user/home';
-
 import Chat from '../components/chat/chat';
+
 import ClientProject from '../pages/user/clientPages/clientProject';
 import Payment from '../pages/user/clientPages/payment';
 
@@ -42,6 +42,7 @@ const MyRoutes = () => {
   };
 
   return (
+
     <BrowserRouter>
         <Routes>
           <Route element={<LoggedInGuard />}>
