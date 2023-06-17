@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from '../pages/login';
 import Register from '../pages/register';
-
+import Payment from "../pages/adminPages/common/payment";
 const MyRoutes = () => {
   const [currentForm, setCurrentForm] = useState('Login');
 
@@ -13,7 +13,7 @@ const MyRoutes = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={
+        <Route path="/login" exact element={
           <div className='App'>
           {currentForm === 'Login' ? (
             <Login onFormSwitch={toggleForm} />
@@ -22,6 +22,7 @@ const MyRoutes = () => {
           )}
               </div>
         } />
+        <Route path='/payment' exact  element={< Payment />} />
       </Routes>
     </Router>
   );

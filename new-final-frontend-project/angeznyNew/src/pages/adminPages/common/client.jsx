@@ -3,7 +3,10 @@ import React, { Component } from 'react'
 export class client extends Component {
   render() {
     return (
-      <div>client</div>
+      <div>
+        <p className='fs-1 text-center'>Client</p>
+        
+      </div>
     )
   }
 }
