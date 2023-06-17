@@ -10,6 +10,7 @@ import Home from '../pages/user/home';
 
 import Chat from '../components/chat/chat';
 import ClientProject from '../pages/user/clientPages/clientProject';
+import Payment from '../pages/user/clientPages/payment';
 
 import AdminClient  from '../pages/adminPages/common/client'
 import AdminDash from '../pages/adminPages/common/Dashboard'
@@ -182,6 +183,83 @@ const MyRoutes = () => {
               </Suspense>
             }
           />
+
+          {/* </Route> */}
+
+
+          {/* <Route element={<clientGuard />}> */}
+          <Route
+            path="/client/"
+            element={
+              <Suspense
+                fallback={
+                  <div className="grid place-items-center h-screen bg-black">
+                    <CircleSpinner size={60} />
+                  </div>
+                }
+              >
+                <NavBarC  />
+                <Home />
+                <Footer/>
+
+              </Suspense>
+            }
+          />
+          <Route
+            path="/client/project"
+            element={
+              <Suspense
+                fallback={
+                  <div className="grid place-items-center h-screen bg-black">
+                    <CircleSpinner size={60} />
+                  </div>
+                }
+              >
+                <NavBarC  />
+                <ClientProject />
+                <Footer/>
+
+              </Suspense>
+            }
+          />
+            <Route
+            path="/client/chat"
+            element={
+              <Suspense
+                fallback={
+                  <div className="grid place-items-center h-screen bg-black">
+                    <CircleSpinner size={60} />
+                  </div>
+                }
+              >
+                <NavBarC  />
+                <Chat />
+                <Footer/>
+
+              </Suspense>
+            }
+          />
+
+            <Route
+            path="/client/payment"
+            element={
+              <Suspense
+                fallback={
+                  <div className="grid place-items-center h-screen bg-black">
+                    <CircleSpinner size={60} />
+                  </div>
+                }
+              >
+                <NavBarC  />
+                <Payment />
+                <Footer/>
+
+              </Suspense>
+            }
+          />
+
+
+  
 
           {/* </Route> */}
         </Routes>
