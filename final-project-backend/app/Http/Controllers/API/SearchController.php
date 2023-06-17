@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Project;
 use App\Models\User;
 use App\Models\Skill;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -32,13 +33,33 @@ public function searchByName($modelName, $keyword)
             ->where('skills.name', $keyword)
             ->select('users.*')
             ->get();
-
-        return Response::json($users);
+            if($users){
+                return Response::json($users);
+            }else{
+                return response()->json([
+                    'error' => 'not found any users having this skill',
+                ], 404);
+            }
+        }else if($model == 'Project'){
+            $project = Project::where('project_title', 'LIKE', "%$keyword%")->get();
+            if($project){
+                return Response::json($project);
+            }else{
+                return response()->json([
+                    'error' => 'not found any project',
+                ], 404);
+            }
+        }else{
+            $results = $model->where('name', 'LIKE', "%$keyword%")->get();
+            return Response::json($results);
+            if($results){
+                return Response::json($results);
+            }else{
+                return response()->json([
+                    'error' => 'not found results',
+                ], 404);
+            }
         }
-
-        $results = $model->where('name', 'LIKE', "%$keyword%")->get();
-        return $results;
-
     }  catch(ModelNotFoundException $e){
         return response()->json([
             'error' => 'check if this name is exist because not found this name',
