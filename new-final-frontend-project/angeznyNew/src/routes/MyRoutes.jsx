@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from '../pages/login';
 import Register from '../pages/register';
-
+import LoggedInGuard from '../guard/LoggedInRoutes';
 const MyRoutes = () => {
   const [currentForm, setCurrentForm] = useState('Login');
 
@@ -13,6 +13,7 @@ const MyRoutes = () => {
   return (
     <Router>
       <Routes>
+      <Route element={<LoggedInGuard />}>
         <Route path="/login" element={
           <div className='App'>
           {currentForm === 'Login' ? (
@@ -22,6 +23,7 @@ const MyRoutes = () => {
           )}
               </div>
         } />
+        </Route>
       </Routes>
     </Router>
   );
