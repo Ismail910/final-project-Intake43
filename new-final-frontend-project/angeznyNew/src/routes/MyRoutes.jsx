@@ -67,7 +67,7 @@ const MyRoutes = () => {
                   </div>
                 }
               >
-                <div className='row'>
+                <div className='row w-100'>
                 <AdminSidnave className ="col-2" />
                 <AdminDash className = "col-8" />
                 </div>
@@ -85,8 +85,8 @@ const MyRoutes = () => {
                   </div>
                 }
               >
-                <div className='row'>
-                <AdminSidnave className ="col-2"  style={{}} />
+                <div className='row w-100'>
+                <AdminSidnave className ="col-2"   />
                 <AdminOwner className = "col-10" />
                 </div>
 
@@ -103,7 +103,7 @@ const MyRoutes = () => {
                   </div>
                 }
               >
-                <div className='row'>
+                <div className='row w-100'>
                 <AdminSidnave className ="col-2"  style={{}} />
                 <AdminManager className = "col-10" />
                 </div>
@@ -121,7 +121,7 @@ const MyRoutes = () => {
                   </div>
                 }
               >
-                <div className='row'>
+                <div className='row w-100'>
                 <AdminSidnave className ="col-2"  style={{}} />
                 <AdminDeveloper className = "col-10" />
                 </div>
@@ -139,7 +139,7 @@ const MyRoutes = () => {
                   </div>
                 }
               >
-                <div className='row'>
+                <div className='row w-100'>
                 <AdminSidnave className ="col-2"  style={{}} />
                 <AdminFreelancer className = "col-10" />
                 </div>
@@ -158,7 +158,7 @@ const MyRoutes = () => {
                   </div>
                 }
               >
-                <div className='row'>
+                <div className='row w-100'>
                 <AdminSidnave className ="col-2"  style={{}} />
                 <AdminPayment className = "col-10" />
                 </div>
@@ -176,7 +176,7 @@ const MyRoutes = () => {
                   </div>
                 }
               >
-                <div className='row'>
+                <div className='row w-100'>
                 <AdminSidnave className ="col-2"  style={{}} />
                 <AdminClient className = "col-10" />
                 </div>
