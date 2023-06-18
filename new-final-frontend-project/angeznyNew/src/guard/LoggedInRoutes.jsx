@@ -48,7 +48,7 @@ const LoggedInGuard = () => {
   ): isLoggedIn() && isDeveloper() ? (
     <Navigate to="/developer/" />
   ) : isLoggedIn() && isAdmin() ? (
-    <Navigate to="/a/" />
+    <Navigate to="/admin/" />
   ) : (
     <Outlet />
   );
