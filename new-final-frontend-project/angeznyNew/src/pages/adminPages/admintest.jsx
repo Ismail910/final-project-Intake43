@@ -6,7 +6,7 @@ const Admintest = () => {
   return (
     <div>
         <div class="container-fluid" id="main">
-         <div class="row row-offcanvas row-offcanvas-left">
+         <div class="row row-offcanvas accordion-collapse">
            <Sidnave/>
            <Dashboard/>
      </div>

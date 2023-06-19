@@ -6,7 +6,7 @@ export class payment extends Component {
       <div>
         {/* add table for testing I'll wait until see the payment  */}
        <p className='fs-1 text-center'>Payment history</p>
-        <table class="table">
+        <table className="table">
           <thead>
             <tr>
               <th scope="col">#</th>
