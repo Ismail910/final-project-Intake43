@@ -10,7 +10,7 @@ const LoggedInGuard = () => {
     const token = localStorage.getItem("token");
     const client = jwtDecode(token);
     console.log(client);
-    return client.role === "Client";
+    return client.role === "Client";//t/f
   };
   const isFreelancer = () => {
     const token = localStorage.getItem("token");
@@ -48,7 +48,7 @@ const LoggedInGuard = () => {
   ): isLoggedIn() && isDeveloper() ? (
     <Navigate to="/developer/" />
   ) : isLoggedIn() && isAdmin() ? (
-    <Navigate to="/a/" />
+    <Navigate to="/admin/" />
   ) : (
     <Outlet />
   );

@@ -31,12 +31,17 @@ Route::get('search', [SearchController::class, 'searchByName'])->name('search');
 
 use App\Http\Controllers\API\ProjectController;
 
+Route::get('projects/count', [ProjectController::class, 'countProject'])->name('countProject');
 Route::apiResource('projects', ProjectController::class);
+Route::get('projects/search/{status}', [ProjectController::class, 'searchProjectByStatus'])->name('projects.search');
 
 Route::apiResource('tasks', TaskController::class);
 
 Route::apiResource('skills', TaskController::class);
 
+
+Route::get('user/count', [UserController::class, 'countUser'])->name('countUser');
+Route::get('user/countCountry', [UserController::class, 'countUserCountry'])->name('countUserCountry');
 Route::apiResource('user', UserController::class);
 
 // Route::post('managers', [ManagersController::class, 'store'])->name('managers.store');
@@ -46,9 +51,13 @@ Route::apiResource('salary', StaffLevelController::class);
 
 use App\Http\Controllers\LoginController;
 
-Route::post('/login', [LoginController::class, 'login']);
+Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 
 
-// Route::post('credit', [CreditController::class, 'credit'])->name('credit');
-// Route::get('callback', [CreditController::class, 'callback'])->name('callback');
+// use APP\Http\Controllers\API\payment\CreditController;
+// // paymob
+// Route::post('/credit', [CreditController::class, 'credit'])->name('credit');
+// Route::get('/callback', [CreditController::class, 'callback'])->name('callback');
+
+// Route::get('/search', [ SearchٍController::class, 'searchByName'])->name('search');

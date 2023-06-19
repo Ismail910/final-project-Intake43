@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('freelancers', function (Blueprint $table) {
-            $table->foreignId('task_id')->constrained()->cascadeOnDelete()->nullable();
+        Schema::table('users', function (Blueprint $table) {
+            //
+            $table->string('country');
         });
     }
 
@@ -21,8 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('freelancer', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
+            $table->dropColumn('country');
         });
     }
 };
