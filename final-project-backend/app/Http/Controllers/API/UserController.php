@@ -7,7 +7,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Models\managers;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Response;
@@ -152,7 +152,19 @@ class UserController extends Controller
         $this->delete_image($user->profilePic);
         $user->delete();
     }
-
+    public function countUser(){
+        $count= User::count();
+        return response()->json([
+            'countUser' => $count
+        ], 200);
+    }
+    public function countUserCountry(){
+        $countryCount = User::distinct('country')->select(DB::raw('count(distinct country) as count'))
+        ->first();
+        return response()->json([
+            'countryCount' => $countryCount->count
+        ], 200);
+    }
     private function save_image($image, $article){
         if ($image){
             $image_name = time().'.'.$image->extension();

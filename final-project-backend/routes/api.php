@@ -32,9 +32,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('search', [ SearchController::class, 'searchByName'])->name('search');
 
 use App\Http\Controllers\API\ProjectController;
-
+Route::get('projects/count',[ProjectController::class,'countProject'])->name('countProject');
 Route::apiResource('projects', ProjectController::class);
 Route::get('projects/search/{status}', [ProjectController::class, 'searchProjectByStatus'])->name('projects.search');
+
+
+Route::get('user/count',[UserController::class,'countUser'])->name('countUser');
+Route::get('user/countCountry',[UserController::class,'countUserCountry'])->name('countUserCountry');
 Route::apiResource('user', UserController::class);
 
 // Route::post('managers', [ManagersController::class, 'store'])->name('managers.store');
