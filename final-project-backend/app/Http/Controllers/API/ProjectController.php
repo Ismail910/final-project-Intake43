@@ -12,6 +12,10 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ProjectController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth:sanctum','checkUser:Client'])->only('store');
+    }
     /**
      * Display a listing of the resource.
      */

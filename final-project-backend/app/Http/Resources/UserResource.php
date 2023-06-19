@@ -23,7 +23,7 @@ class UserResource extends JsonResource
             'address'=>$this->address,
             'joinedDate'=>$this->joinedDate,
             'endDate'=>$this->endDate,
-            
+            'profilePic'=>$this->profilePic,
 
         ];
     }

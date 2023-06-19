@@ -3,9 +3,11 @@
 use App\Http\Controllers\API\FreelancerController;
 use App\Http\Controllers\API\ManagersController;
 
-use App\Http\Controllers\API\SearchٍController;
+use App\Http\Controllers\API\SearchController;
+
 use App\Http\Controllers\API\StaffLevelController;
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\Payment\CreditController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +25,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+
+
+Route::get('search', [ SearchController::class, 'searchByName'])->name('search');
+
 use App\Http\Controllers\API\ProjectController;
 
 Route::apiResource('projects', ProjectController::class);
@@ -36,7 +44,8 @@ Route::apiResource('salary', StaffLevelController::class);
 
 use App\Http\Controllers\LoginController;
 
-Route::post('/login', [LoginController::class, 'login']);
+Route::post('/login', [LoginController::class, 'login'])->name('login')->middleware('guest:sanctum');
+
 
 
 // use APP\Http\Controllers\API\payment\CreditController;
@@ -45,4 +54,5 @@ Route::post('/login', [LoginController::class, 'login']);
 // Route::get('/callback', [CreditController::class, 'callback'])->name('callback');
 
 // Route::get('/search', [ SearchٍController::class, 'searchByName'])->name('search');
+
 
