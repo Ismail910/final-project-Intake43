@@ -34,7 +34,7 @@ Route::get('search', [ SearchController::class, 'searchByName'])->name('search')
 use App\Http\Controllers\API\ProjectController;
 
 Route::apiResource('projects', ProjectController::class);
-
+Route::get('projects/search/{status}', [ProjectController::class, 'searchProjectByStatus'])->name('projects.search');
 Route::apiResource('user', UserController::class);
 
 // Route::post('managers', [ManagersController::class, 'store'])->name('managers.store');
@@ -44,7 +44,7 @@ Route::apiResource('salary', StaffLevelController::class);
 
 use App\Http\Controllers\LoginController;
 
-Route::post('/login', [LoginController::class, 'login'])->name('login')->middleware('guest:sanctum');
+Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 
 
