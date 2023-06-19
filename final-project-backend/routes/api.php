@@ -7,6 +7,7 @@ use App\Http\Controllers\API\SearchController;
 
 use App\Http\Controllers\API\StaffLevelController;
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\TaskController;
 use App\Http\Controllers\Payment\CreditController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,19 +27,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-
-
-Route::get('search', [ SearchController::class, 'searchByName'])->name('search');
+Route::get('search', [SearchController::class, 'searchByName'])->name('search');
 
 use App\Http\Controllers\API\ProjectController;
 
 Route::apiResource('projects', ProjectController::class);
 
+Route::apiResource('tasks', TaskController::class);
+
+Route::apiResource('skills', TaskController::class);
+
 Route::apiResource('user', UserController::class);
 
 // Route::post('managers', [ManagersController::class, 'store'])->name('managers.store');
-Route::apiResource('management', ManagersController::class );
+Route::apiResource('management', ManagersController::class);
 Route::apiResource('freelancer', FreelancerController::class);
 Route::apiResource('salary', StaffLevelController::class);
 
