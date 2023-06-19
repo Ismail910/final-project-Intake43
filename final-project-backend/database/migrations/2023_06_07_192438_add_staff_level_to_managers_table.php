@@ -14,7 +14,6 @@ return new class extends Migration {
             $table->foreignId('staff_level_id')->constrained()->onDelete('cascade');
         });
     }
-
     /**
      * Reverse the migrations.
      */

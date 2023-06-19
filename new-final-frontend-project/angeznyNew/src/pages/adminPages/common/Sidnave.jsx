@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Link } from 'react-router-dom';
 const Sidnave = () => {
   return (
     // <Router>
-    <div className="col-md-3 col-lg-2 sidebar-offcanvas pl-0" id="sidebar" role="navigation" style={{ backgroundColor: '#2a52be' }}>
+    <div className="col-md-3 col-lg-2 sidebar-offcanvas pl-0 h-auto" id="sidebar" role="navigation" style={{ backgroundColor: '#2a52be' }}>
       <ul className="nav flex-column sticky-top pl-0 pt-5 p-3 mt-3">
         <li className="nav-item mb-2 mt-3">
           <Link className="nav-link text-secondary text-light" to="/admin">
@@ -16,6 +16,8 @@ const Sidnave = () => {
             <i className="font-weight-bold"></i> <span className="ml-3">Product Owner</span>
           </Link>
         </li>
+
+
         <li className="nav-item mb-2">
           <Link className="nav-link text-secondary text-light" to="/admin/product-manager">
             <i className="fas fa-user font-weight-bold"></i> <span className="ml-3">Product Manager</span>
