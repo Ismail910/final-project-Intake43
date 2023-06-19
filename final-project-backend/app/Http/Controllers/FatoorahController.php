@@ -29,10 +29,26 @@ public function __construct(FatoorahServices $fatoorahServices)
             'CustomerEmail' => 'arabiccreative80@gmail.com',
             'InvoiceValue' => '100',
             'Language' => 'en',
-            'CallBackUrl' => 'http://google.com',
-            'ErrorUrl' => 'http://youtube.com',
+            'CallBackUrl' => env('fatoorah_callback'),
+            'ErrorUrl' => env('fatoorah_error'),
         ];
-        $this->fatoorahServices->sendPayment($data);
+        //table transaction
+        //invoice id , user id  
+        //add middle ware auth for this function
+      return  $this->fatoorahServices->sendPayment($data);
 
    }
+   public function paymentCallBack(request $request){
+        $data=[];
+        $data['key']=$request->paymentId;
+        $data['keyType']='paymentId';
+         
+        return $data= $this->fatoorahServices->getPaymentStatus($data);
+        //search for $data['Data']['InvoiceId']; in table transaction and get user id 
+        // do order table store user id and data and mount ...
+   }
+   public function error(Request $request) {
+    // Show error actions
+    return response()->json(['status' => 'fail']);
+ }
 }

@@ -54,11 +54,11 @@ use App\Http\Controllers\LoginController;
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 use App\Http\Controllers\FatoorahController;
-Route::get('pay', [FatoorahController::class, 'payOrder'])->name('pay');
+Route::post('pay', [FatoorahController::class, 'payOrder'])->name('pay');
 
-Route::get('payment', [\App\Http\Controllers\MyFatoorahController::class, 'index']);
-Route::get('payment/callback', [\App\Http\Controllers\MyFatoorahController::class, 'callback']);
-Route::get('payment/error', [\App\Http\Controllers\MyFatoorahController::class, 'error']);
+Route::post('payment', [\App\Http\Controllers\MyFatoorahController::class, 'index']);
+Route::get('payment/callback', [\App\Http\Controllers\FatoorahController::class, 'paymentCallBack']);
+Route::get('payment/error', [\App\Http\Controllers\FatoorahController::class, 'error']);
 // use APP\Http\Controllers\API\payment\CreditController;
 // // paymob
 // Route::post('/credit', [CreditController::class, 'credit'])->name('credit');

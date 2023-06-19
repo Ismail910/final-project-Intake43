@@ -15,10 +15,10 @@ class FatoorahServices
     public function __construct (Client $request_client)
     {
         $this->request_client = $request_client;
-        $this->base_url = env('fatoora_base_url ');
+        $this->base_url = env('fatoora_base_url');
         $this->headers = [
             'Content-Type' => 'application/json',
-            'authorization' => 'Bearer' . env('fatoorah_token')
+            'authorization' => 'Bearer ' . env('fatoorah_token')
 
 
         ];
@@ -31,7 +31,7 @@ class FatoorahServices
         $request = new Request($method , $this->base_url.$url , $this->headers);
         // if(!$body)
         // return false;
-        $request = $this->request_client->send($request , [
+        $response = $this->request_client->send($request , [
             'json' => $data
         ]);
 
@@ -39,7 +39,7 @@ class FatoorahServices
         {
             return false;
         }
-        $response = json_encode($response->getBody() , true);
+        $response = json_decode($response->getBody() , true);
 
         return $response;
     }
@@ -47,6 +47,13 @@ class FatoorahServices
     public function sendPayment($data)
     {
         // dd($data);
-        $response = $this->buildRequest('v2/SendPayment' , 'Get' , $data);
+        $response = $this->buildRequest('/v2/SendPayment' , 'POST' , $data);
+        return $response;
+    }
+    public function getPaymentStatus($data)
+    {
+        // dd($data);
+        $response = $this->buildRequest('/v2/getPaymentStatus' , 'POST' , $data);
+        return $response;
     }
 }

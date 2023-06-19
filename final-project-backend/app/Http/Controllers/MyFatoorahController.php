@@ -19,8 +19,8 @@ public function index() {
        'CustomerEmail' => 'test@test.test',
        'InvoiceValue' => '100',
        'Language' => 'en',
-       'CallBackUrl' => 'https://yourdomain.test/callback',
-       'ErrorUrl' => 'https://yourdomain.test/error',
+       'CallBackUrl' => 'http://127.0.0.1:8000/api/payment/callback',
+       'ErrorUrl' => env('fatoorah_error'),
    ];
 
 // If you want to set the credentials and the mode manually.
