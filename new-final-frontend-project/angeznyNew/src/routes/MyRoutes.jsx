@@ -9,6 +9,9 @@ import Register from '../pages/register';
 import Home from '../pages/user/home';
 import Chat from '../components/chat/chat';
 import Payment from '../pages/user/common/payment';
+import ContactUs from '../components/ContactUs';
+import AboutUs from '../components/AboutUs';
+
 
 import ClientProject from '../pages/user/clientPages/clientProject';
 
@@ -46,6 +49,8 @@ import NavBarD from '../pages/user/developerPages/common/navBarD';
 import NavBarF from '../pages/user/freelancerpages/common/navBarF';
 import NavBarM from '../pages/user/productManagerpages/common/navBarM';
 import NavBarO from '../pages/user/productOwnerPages/common/navBarO';
+import Header from '../pages/user/common/header';
+import NotFound from '../components/NotFound';
 
 const MyRoutes = () => {
   const [currentForm, setCurrentForm] = useState('Login');
@@ -55,8 +60,60 @@ const MyRoutes = () => {
   };
 
   return (
+
     <BrowserRouter>
         <Routes>
+        <Route
+            path="/"
+            exact
+            element={
+              <Suspense
+                fallback={
+                  <div className="grid place-items-center h-screen bg-black">
+                    <CircleSpinner size={60} />
+                  </div>
+                }
+              >
+                <Header/>
+                <Home />
+                <Footer />
+              </Suspense>
+            }
+          />
+           <Route
+            path="/contactUs"
+            exact
+            element={
+              <Suspense
+                fallback={
+                  <div className="grid place-items-center h-screen bg-black">
+                    <CircleSpinner size={60} />
+                  </div>
+                }
+              >
+                <Header/>
+                <ContactUs/>
+                <Footer />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/aboutUs"
+            exact
+            element={
+              <Suspense
+                fallback={
+                  <div className="grid place-items-center h-screen bg-black">
+                    <CircleSpinner size={60} />
+                  </div>
+                }
+              >
+                <Header/>
+                <AboutUs />
+                <Footer />
+              </Suspense>
+            }
+          />
 
           {/* login and register */}
           <Route element={<LoggedInGuard />}>
@@ -215,6 +272,7 @@ const MyRoutes = () => {
                   </div>
                 }
               >
+                <Header/>
                 <NavBarC  />
                 <Home />
                 <Footer/>
@@ -232,6 +290,7 @@ const MyRoutes = () => {
                   </div>
                 }
               >
+                <Header/>
                 <NavBarC  />
                 <ClientProject />
                 <Footer/>
@@ -249,6 +308,7 @@ const MyRoutes = () => {
                   </div>
                 }
               >
+                <Header/>
                 <NavBarC  />
                 <Chat />
                 <Footer/>
@@ -267,6 +327,7 @@ const MyRoutes = () => {
                   </div>
                 }
               >
+                <Header/>
                 <NavBarC />
                 <Payment />
                 <Footer/>
@@ -288,6 +349,7 @@ const MyRoutes = () => {
                   </div>
                 }
               >
+                <Header/>
                 <NavBarD  />
                 <Home />
                 <Footer/>
@@ -305,6 +367,7 @@ const MyRoutes = () => {
                   </div>
                 }
               >
+                <Header/>
                 <NavBarD  />
                 <DeveloperTask />
                 <Footer/>
@@ -322,6 +385,7 @@ const MyRoutes = () => {
                   </div>
                 }
               >
+                <Header/>
                 <NavBarD  />
                 <Chat />
                 <Footer/>
@@ -344,10 +408,10 @@ const MyRoutes = () => {
                   </div>
                 }
               >
-                <NavBarF  />
-                <Home />
+                <Header/>
+                <NavBarF/>
+                <Home/>
                 <Footer/>
-
               </Suspense>
             }
           />
@@ -361,6 +425,7 @@ const MyRoutes = () => {
                   </div>
                 }
               >
+                <Header/>
                 <NavBarF  />
                 <FreelancerTask />
                 <Footer/>
@@ -378,6 +443,7 @@ const MyRoutes = () => {
                   </div>
                 }
               >
+                <Header/>
                 <NavBarF  />
                 <Chat />
                 <Footer/>
@@ -396,6 +462,7 @@ const MyRoutes = () => {
                   </div>
                 }
               >
+                <Header/>
                 <NavBarF />
                 <Payment />
                 <Footer/>
@@ -416,6 +483,7 @@ const MyRoutes = () => {
                   </div>
                 }
               >
+                <Header/>
                 <NavBarM  />
                 <Home />
                 <Footer/>
@@ -432,6 +500,7 @@ const MyRoutes = () => {
                   </div>
                 }
               >
+                <Header/>
                 <NavBarM  />
                 <ManagerTask />
                 <Footer/>
@@ -448,6 +517,7 @@ const MyRoutes = () => {
                   </div>
                 }
               >
+                <Header/>
                 <NavBarM  />
                 <Chat />
                 <Footer/>
@@ -465,6 +535,7 @@ const MyRoutes = () => {
                   </div>
                 }
               >
+                <Header/>
                 <NavBarM  />
                 <Managerproject />
                 <Footer/>
@@ -486,10 +557,10 @@ const MyRoutes = () => {
                   </div>
                 }
               >
-                <NavBarO />
-                <Home />
+                <Header/>
+                <NavBarO/>
+                <Home/>
                 <Footer/>
-
               </Suspense>
             }
           />
@@ -503,6 +574,7 @@ const MyRoutes = () => {
                   </div>
                 }
               >
+                <Header/>
                 <NavBarO  />
                 <Chat />
                 <Footer/>
@@ -521,8 +593,26 @@ const MyRoutes = () => {
                   </div>
                 }
               >
+                <Header/>
                 <NavBarO  />
                 <OwnerProject/>
+                <Footer/>
+              </Suspense>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <Suspense
+                fallback={
+                  <div className="grid place-items-center h-screen bg-black">
+                    <CircleSpinner size={60} />
+                  </div>
+                }
+              >
+                <Header/>
+                <NavBarO  />
+                <NotFound/>
                 <Footer/>
               </Suspense>
             }
