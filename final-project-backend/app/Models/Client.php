@@ -7,7 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
+    
     use HasFactory;
+    protected $fillable = [
+        'user_id',
+        'balance',
+    ];
     function project(){
         return $this->hasMany(Project::class);
     }

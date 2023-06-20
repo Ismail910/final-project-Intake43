@@ -17,7 +17,7 @@ const Login = (props) => {
         // history.push('/home');
 
         const validationErrors = validateForm()
-
+ 
         if (Object.keys(validationErrors).length === 0) {
           // Proceed with registration logic
           // ...
