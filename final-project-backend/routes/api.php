@@ -47,11 +47,14 @@ Route::apiResource('user', UserController::class);
 // Route::post('managers', [ManagersController::class, 'store'])->name('managers.store');
 Route::apiResource('management', ManagersController::class);
 Route::apiResource('freelancer', FreelancerController::class);
+Route::apiResource('client', ClientController::class);
+Route::apiResource('employee', EmployeeController::class);
 Route::apiResource('salary', StaffLevelController::class);
 
 use App\Http\Controllers\LoginController;
 
 Route::post('/login', [LoginController::class, 'login'])->name('login');
+
 
 use App\Http\Controllers\FatoorahController;
 Route::post('pay', [FatoorahController::class, 'payOrder'])->name('pay');
@@ -59,9 +62,16 @@ Route::post('pay', [FatoorahController::class, 'payOrder'])->name('pay');
 Route::post('payment', [\App\Http\Controllers\MyFatoorahController::class, 'index']);
 Route::get('payment/callback', [\App\Http\Controllers\FatoorahController::class, 'paymentCallBack']);
 Route::get('payment/error', [\App\Http\Controllers\FatoorahController::class, 'error']);
+
 // use APP\Http\Controllers\API\payment\CreditController;
 // // paymob
 // Route::post('/credit', [CreditController::class, 'credit'])->name('credit');
 // Route::get('/callback', [CreditController::class, 'callback'])->name('callback');
 
 // Route::get('/search', [ SearchٍController::class, 'searchByName'])->name('search');
+
+
+// Route::get('/payment', [DashboardController::class, 'index']);
+Route::post('pay', [PaymentController::class, 'pay'])->name('payment');
+Route::get('success', [PaymentController::class, 'success']);
+Route::get('error', [PaymentController::class, 'error']);
