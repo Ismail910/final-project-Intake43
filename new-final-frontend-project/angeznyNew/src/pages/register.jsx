@@ -5,15 +5,28 @@ const Register = (props) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [nationalID, setNationalID] = useState('')
+  const [phone, setPhone] = useState('')
+  const [address, setAddress] = useState('')
+  const [joinedDate, setJoinedDate] = useState('')
+  const [endDate, setEndDate] = useState('')
+  const [profilePic, setProfilePic] = useState('')
   const [errors, setErrors] = useState({})
   const registration = (e) => {
     e.preventDefault()
     console.log(email)
-    console.log('Form submitted:', { name, email, password })
+    console.log('Form submitted:', { name, email, password,confirmPassword,nationalID,phone,address,joinedDate,endDate,profilePic})
     // Reset form fields
     setName('')
     setEmail('')
     setPassword('')
+    setConfirmPassword('')
+    setNationalID('')
+    setPhone('')
+    setAddress('')
+    setJoinedDate('')
+    setEndDate('')
+    setProfilePic('')
     const validationErrors = validateForm()
 
     if (Object.keys(validationErrors).length === 0) {
@@ -52,7 +65,31 @@ const Register = (props) => {
     } else if (confirmPassword !== password) {
       errors.confirmPassword = 'Passwords do not match'
     }
+    if (!nationalID.trim()) {
+      errors.nationalID = 'nationalID is required'
+    } else if (nationalID.length ==14) {
+      errors.nationalID = 'nationalID must be at least 14 characters long'
+    }
+    if (!phone.trim()) {
+      errors.phone = 'phone is required'
+    } else if (phone.length ==11) {
+      errors.phone = 'phone must be at least 11 characters long'
+    }
+    if (!address.trim()) {
+      errors.address = 'phone is required'
+    } 
 
+    if (!joinedDate.trim()) {
+      errors.joinedDate = 'joinedDate is required'
+    } 
+
+    if (!endDate.trim()) {
+      errors.endDate = 'endDate is required'
+    }
+
+    if (!profilePic.trim()) {
+      errors.profilePic = 'profilePic is required'
+    }
     return errors
   }
 
@@ -102,6 +139,72 @@ const Register = (props) => {
         />
         {errors.confirmPassword && (
           <p className="text-danger">{errors.confirmPassword}</p>
+        )}
+
+        <label htmlFor="co">National ID </label>
+        <input
+          type="password"
+          id="confirmPassword"
+          placeholder="National ID"
+          name="nationalID"
+          value={nationalID}
+          onChange={(e) => setNationalID(e.target.value)}
+        />
+        {errors.nationalID && (
+          <p className="text-danger">{errors.nationalID}</p>
+        )}
+
+        <label htmlFor="co">Phone </label>
+        <input
+          type="text"
+          id="phone"
+          placeholder="phone"
+          name="phone"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+        />
+        {errors.phone && (
+          <p className="text-danger">{errors.phone}</p>
+        )}
+
+        <label htmlFor="co">Address </label>
+        <input
+          type="text"
+          id="address"
+          placeholder="address"
+          name="address"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+        />
+        {errors.address && (
+          <p className="text-danger">{errors.address}</p>
+        )}
+
+
+        <label htmlFor="co">Joined date </label>
+        <input
+          type="date"
+          id="joinedDate"
+          placeholder="joinedDate"
+          name="joinedDate"
+          value={joinedDate}
+          onChange={(e) => setJoinedDate(e.target.value)}
+        />
+        {errors.joinedDate && (
+          <p className="text-danger">{errors.joinedDate}</p>
+        )}
+
+        <label htmlFor="co">Profile Picture </label>
+        <input
+          type="file"
+          id="profilePic"
+          placeholder="profile picture"
+          name="profilePic"
+          value={profilePic}
+          onChange={(e) => setProfilePic(e.target.value)}
+        />
+        {errors.profilePic && (
+          <p className="text-danger">{errors.profilePic}</p>
         )}
         <button type="submit" className="submission">
           Register
