@@ -8,6 +8,7 @@ use App\Http\Controllers\API\SearchController;
 use App\Http\Controllers\API\StaffLevelController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\TaskController;
+use App\Http\Controllers\API\SkillController;
 use App\Http\Controllers\Payment\CreditController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -37,7 +38,7 @@ Route::get('projects/search/{status}', [ProjectController::class, 'searchProject
 
 Route::apiResource('tasks', TaskController::class);
 
-Route::apiResource('skills', TaskController::class);
+Route::apiResource('skills', SkillController::class);
 
 
 Route::get('user/count', [UserController::class, 'countUser'])->name('countUser');

@@ -11,6 +11,10 @@ use Illuminate\Http\Response;
 
 class TaskController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth:sanctum', 'checkUser:Product Manager,Employee,Freelancer,Admin']);
+    }
     /**
      * Display a listing of the resource.
      */
