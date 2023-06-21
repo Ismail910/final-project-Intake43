@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
+use App\Http\Resources\SkillResource;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\Skill;
 use App\Http\Requests\StoreSkillRequest;
 use App\Http\Requests\UpdateSkillRequest;
@@ -9,12 +12,22 @@ use Illuminate\Http\Response;
 
 class SkillController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth:sanctum', 'checkUser:Admin'])->only('store', 'update', 'destroy');
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Skill::all();
+        try {
+            return SkillResource::collection(Skill::all());
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'not found Skills'
+            ], 404);
+        }
     }
 
     /**
@@ -24,7 +37,7 @@ class SkillController extends Controller
     {
         //
         $skill = Skill::create($request->all());
-        return $skill;
+        return new SkillResource($skill);
     }
 
     /**
@@ -32,7 +45,11 @@ class SkillController extends Controller
      */
     public function show(Skill $skill)
     {
-        return Skill::where(['id' => $skill->id])->get();
+        try {
+            return new SkillResource(Skill::where(['id' => $skill->id])->get());
+        } catch (ModelNotFoundException $exception) {
+            return response()->json(['error' => 'Skills not found'], 404);
+        }
     }
 
     /**
@@ -40,8 +57,14 @@ class SkillController extends Controller
      */
     public function update(UpdateSkillRequest $request, Skill $skill)
     {
-        $skill->update($request->all());
-        return $skill;
+        try {
+            $skill->update($request->all());
+            return new SkillResource($skill);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'check if Skills is exist and check it is validation'
+            ], 404);
+        }
     }
 
     /**
@@ -49,8 +72,13 @@ class SkillController extends Controller
      */
     public function destroy(Skill $skill)
     {
-
-        $skill->delete();
-        return new Response('', 204);
+        try {
+            $skill->delete();
+            return new Response('', 204);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'check if Skills is exist '
+            ], 404);
+        }
     }
 }

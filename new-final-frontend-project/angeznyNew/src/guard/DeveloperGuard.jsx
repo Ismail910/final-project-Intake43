@@ -15,7 +15,7 @@ const DeveloperGuard = () => {
     isLoggedIn() && isDeveloper() ?
     <Outlet/> 
     :
-    <Navigate to='/signin'/>
+    <Navigate to='/login'/>
   )
 };
 
