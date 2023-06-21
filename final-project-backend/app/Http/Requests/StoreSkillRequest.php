@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 
 class StoreSkillRequest extends FormRequest
 {
@@ -24,5 +26,20 @@ class StoreSkillRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
         ];
+    }
+
+    public  function  failedValidation(Validator $validator)
+    {
+        throw  new HttpResponseException(
+            response()->json(
+                [
+                    'success' => false,
+                    "message" => "Error in Skill validation",
+                    "data" => $validator->errors()
+                ],
+                400
+
+            )
+        );
     }
 }
