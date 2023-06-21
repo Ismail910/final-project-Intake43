@@ -6,12 +6,20 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
+use App\Models\managers;
+use App\Models\Client;
+
 use App\Http\Requests\StoreProjectAPIRequest;
 use App\Http\Requests\UpdateProjectAPIRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-
+use Illuminate\Support\Facades\Auth;
 class ProjectController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth:sanctum','checkUser:Product Owner,Client'])->only('store');
+        $this->middleware(['auth:sanctum','checkUser:Product Owner,Client,Admin'])->only('searchProjectByStatus');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -87,5 +95,54 @@ class ProjectController extends Controller
                 'error' => 'check if project is exist '
             ], 404);
         }
+    }
+    public function searchProjectByStatus($status)
+    {
+        $searchTerm = $status;
+        
+        $results=[];
+        if(!Auth::user()){
+            return response()->json([
+                'error' => 'unauthentecation'
+            ], 404);
+        }
+        $id=Auth::user()->id;
+        if(Auth::user()->role=='Admin'){
+            // Perform your search logic based on the provided search term
+            $results = Project::where('project_status', '=',$searchTerm)->get();
+        }elseif(Auth::user()->role=='Product Manager'){
+            $manager=managers::where('user_id',$id)->first();
+            $results = Project:: where([
+                ['ProductManager_id', '=', $manager->id],
+                ['project_status', '=', $searchTerm]
+            ])->get();
+        }
+        elseif(Auth::user()->role=='Product Owner'){
+            $owner=managers::where('user_id',$id)->first();
+            $results = Project:: where([
+                ['ProductOwner_id', '=', $owner->id],
+                ['project_status', '=', $searchTerm]
+            ])->get();
+           
+
+        }elseif(Auth::user()->role=='Client'){
+            $client=Client::where('user_id',$id)->first();
+            $results = Project:: where([
+                ['client_id', '=', $client->id],
+                ['project_status', '=', $searchTerm],
+            ])->get();
+        }else{
+            return response()->json([
+                'error' => 'Not found project with this status'
+            ], 404);
+        }
+        return response()->json($results);
+    }
+
+    public function countProject(){
+        $count= Project::count();
+        return response()->json([
+            'countProject' => $count
+        ], 200);
     }
 }
