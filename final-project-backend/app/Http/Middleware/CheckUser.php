@@ -17,7 +17,6 @@ class CheckUser
     {
         if (Auth::user()) {
             $userRole = Auth::user()->role;
-    
             // Perform your role-based checks or validations here
             // For example, you can check if the user's role is one of the specified roles
             // and perform specific actions accordingly.

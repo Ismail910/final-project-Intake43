@@ -16,9 +16,6 @@ import {
     MDBDropdownItem,
     MDBCollapse,
   } from 'mdb-react-ui-kit';
-  import Home from '../../home';
-  import Chat from '../../../../components/chat/chat';
-  import ClientProject from '../clientProject';
 
 const NavBarC = () => {
     const [showBasic, setShowBasic] = useState(false);

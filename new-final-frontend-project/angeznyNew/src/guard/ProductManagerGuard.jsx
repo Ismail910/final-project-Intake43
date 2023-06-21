@@ -15,7 +15,7 @@ const ProductManagerGuard = () => {
     isLoggedIn() && isClient() ?
     <Outlet/> 
     :
-    <Navigate to='/signin'/>
+    <Navigate to='/login'/>
   )
 };
 

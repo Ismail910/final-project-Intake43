@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Managertest = () => {
+const Managerproject = () => {
   return (
     <div>
     manager  
@@ -8,4 +8,4 @@ const Managertest = () => {
   )
 }
 
-export default Managertest
+export default Managerproject
