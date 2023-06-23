@@ -29,4 +29,5 @@ class managers extends Model
     function project(){
         return $this->hasMany(Project::class);
     }
+    
 }

@@ -29,7 +29,8 @@ class User extends Authenticatable
         'endDate',
         'profilePic',
         'phone',
-        'role'
+        'role',
+        'country'
     ];
 
     /**
