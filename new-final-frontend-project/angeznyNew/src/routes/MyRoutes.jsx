@@ -148,19 +148,20 @@ const MyRoutes = () => {
               </Suspense>
             }
           />
+
             <Route
             path="/admin/product-owner"
             element={
               <Suspense
                 fallback={
-                  <div className="grid place-items-center h-screen bg-black">
+                  <div className="grid place-items-center  bg-black">
                     <CircleSpinner size={60} />
                   </div>
                 }
               >
                 <div className='row w-100'>
                 <AdminSidnave className ="col-2"   />
-                <AdminOwner className = "col-10" />
+                <AdminOwner className = "col-8" />
                 </div>
 
               </Suspense>

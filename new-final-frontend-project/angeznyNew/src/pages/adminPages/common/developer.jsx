@@ -133,8 +133,8 @@ const Developer = () => {
       <div className='container'>
         <h3 className='text-center'>Add Developer</h3>
         <div className='row justify-content-center my-3 '>
-          <div className='col-md-6 mx-5'>
-            <form className='d-flex flex-column border border-1 rounded '>
+          <div className='col-md-6 '>
+            <form className='d-flex flex-column '>
               <div className='row my-3'>
                 <label htmlFor='name' className='col-form-label' >
                   Name
@@ -263,11 +263,13 @@ const Developer = () => {
                     required
                   />
               </div>
+
               <div className='d-flex justify-content-center my-3'>
                 <button className='btn btn-primary' onClick={createDeveloper}>
                   Add Developer
                 </button>
               </div>
+
             </form>
           </div>
         </div>
