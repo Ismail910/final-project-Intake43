@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
+use App\Rules\ProductManagerValidationRule;
 
 class UpdateTaskRequest extends FormRequest
 {
@@ -11,7 +14,7 @@ class UpdateTaskRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +25,28 @@ class UpdateTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'project_id' => ['required', 'exists:projects,id'],
+            'product_manager_id' => ['required', 'exists:managers,id', new ProductManagerValidationRule],
+            'task_title' => 'required|string|max:255|unique:tasks',
+            'task_description' => 'required|string|max:255',
+            'task_start' => 'required|date',
+            'task_end' => 'required|date|after:task_start',
+            'task_status' => 'required|in:notStarted,inProgress,complete',
         ];
+    }
+
+    public  function  failedValidation(Validator $validator)
+    {
+        throw  new HttpResponseException(
+            response()->json(
+                [
+                    'success' => false,
+                    "message" => "Error in Task Update validation",
+                    "data" => $validator->errors()
+                ],
+                400
+
+            )
+        );
     }
 }

@@ -5,7 +5,7 @@ use App\Http\Controllers\API\ManagersController;
 
 use App\Http\Controllers\API\SearchController;
 
-use App\Http\Controllers\API\StaffLevelController;
+use App\Http\Controllers\API\staffLevelController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\TaskController;
 use App\Http\Controllers\API\SkillController;
