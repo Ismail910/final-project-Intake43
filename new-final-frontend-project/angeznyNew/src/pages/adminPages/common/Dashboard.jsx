@@ -18,7 +18,7 @@ const Dashboard = () => {
  
     return (
     <div className="col main pt-5 mt-3">
-        <p className="lead d-none d-sm-block">Add Employee Details and Records</p>
+         <p className="lead d-none d-sm-block">Add Employee Details and Records</p>
  
         <div className="alert alert-warning fade collapse" role="alert" id="myAlert">
             <button type="button" className="close" data-dismiss="alert" aria-label="Close">
@@ -108,7 +108,6 @@ const Dashboard = () => {
       
  
         <a id="layouts"></a>
-     
     </div>
     )
 }

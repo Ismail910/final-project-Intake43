@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Client;
 use App\Models\managers;
+use App\Models\Task;
 class Project extends Model
 {
     
@@ -32,5 +33,9 @@ class Project extends Model
     function client()
     {
         return $this->belongsTo(Client::class,'client_id','id');
+    }
+    function task()
+    {
+        return $this->hasMany(Task::class);
     }
 }

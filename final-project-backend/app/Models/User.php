@@ -29,7 +29,8 @@ class User extends Authenticatable
         'endDate',
         'profilePic',
         'phone',
-        'role'
+        'role',
+        'country'
     ];
 
     /**
@@ -56,6 +57,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(managers::class);
     }
+    
     function clients()
     {
         return $this->hasMany(Client::class);

@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\managers;
 use App\Models\Freelancer;
 use App\Models\client;
+use App\Models\Employee;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -45,6 +46,7 @@ class UserController extends Controller
             'phone' => $request->input('phone'),
             'joinedDate' => $request->input('joinedDate'),
             'endDate' => $request->input('endDate'),
+            'country' => $request->input('country'),
         ]);
         $this->save_image($request->profilePic, $user);
 
@@ -61,7 +63,7 @@ class UserController extends Controller
 
             return response()->json([
                 'success' => true,
-                'manager' => $freelancer,
+                'freelancer' => $freelancer,
                 'token'  => $token
             ], 201);
         } elseif ($request->input('role') == 'Client') {
@@ -72,11 +74,11 @@ class UserController extends Controller
 
             return response()->json([
                 'success' => true,
-                'manager' => $client,
+                'client' => $client,
                 'token'  => $token
             ], 201);
         } elseif ($request->input('role') == 'Employee') {
-            $employee = Client::create([
+            $employee = Employee::create([
                 'user_id' => $user->id,
                 'balance' => 0,
                 'staff_level_id' => $request->input('staff_level_id'),
@@ -84,7 +86,7 @@ class UserController extends Controller
 
             return response()->json([
                 'success' => true,
-                'manager' => $client,
+                'employee' => $employee,
                 'token'  => $token
             ], 201);
         } else {
@@ -93,6 +95,7 @@ class UserController extends Controller
                 'role' => $request->input('role'),
                 'staff_level_id' => $request->input('staff_level_id'),
             ]);
+
 
             return response()->json([
                 'success' => true,

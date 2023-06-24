@@ -2,7 +2,31 @@ import React, { useState } from 'react';
 import  "../admin.css";
 const Developer = () => {
   const [developers, setDevelopers] = useState([
-    // Existing developer data
+    {
+      id: 1,
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      password: 'password123',
+      nationalId: '1234567890',
+      address: '123 Main St, City',
+      joinDate: '2023-06-01',
+      profilePicture: 'https://example.com/profile.jpg',
+      phoneNumber: '123-456-7890',
+      Country:'KSA'
+    },
+    {
+      id: 2,
+      name: 'Jane Smith',
+      email: 'janesmith@example.com',
+      password: 'pass321',
+      nationalId: '0987654321',
+      address: '456 Elm St, City',
+      joinDate: '2023-06-05',
+      profilePicture: 'https://example.com/profile.jpg',
+      phoneNumber: '987-654-3210',
+      Country:'USA'
+    },
+
   ]);
 
   const [formData, setFormData] = useState({
@@ -13,6 +37,7 @@ const Developer = () => {
     address: '',
     joinDate: '',
     profilePicture: '',
+    Country:'',
     phoneNumber: '',
   });
 
@@ -62,7 +87,9 @@ const Developer = () => {
   };
 
   return (
-    <div>
+    <div className="col main pt-5 mt-3">
+      <div className='row '>
+      <div className="table-responsive table-bordered">
       <h2 className='text-center'>Developers</h2>
       <table className='table table-striped text-center'>
         {/* Table header */}
@@ -76,6 +103,7 @@ const Developer = () => {
             <th>Join Date</th>
             <th>Profile Picture</th>
             <th>Phone Number</th>
+            <th>Country</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -91,6 +119,7 @@ const Developer = () => {
               <td>{developer.joinDate}</td>
               <td>{developer.profilePicture}</td>
               <td>{developer.phoneNumber}</td>
+              <td>{developer.Country}</td>
               <td className='d-flex justify-content-evenly'>
                 <button className='btn btn-info' onClick={() => updateDeveloper(developer.id)}>
                   Edit
@@ -103,17 +132,18 @@ const Developer = () => {
           ))}
         </tbody>
       </table>
+      </div>
+      </div>
       {/* Add Developer form */}
       <div className='container'>
-        <h3 className='text-center'>Add Developer</h3>
+        <h3 className='text-center my-3'>Add Developer</h3>
         <div className='row justify-content-center my-3 '>
-          <div className='col-md-6 mx-5'>
-            <form className='d-flex flex-column border border-1 rounded '>
+          <div className='col-md-6 '>
+            <form className='d-flex flex-column '>
               <div className='row my-3'>
-                <label htmlFor='name' className='col-sm-2 col-form-label' >
+                <label htmlFor='name' >
                   Name
                 </label>
-                <div className='col-sm-10'>
                   <input
                     type='text'
                     className='form-control'
@@ -123,13 +153,12 @@ const Developer = () => {
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     required
                   />
-                </div>
               </div>
+
               <div className='row mb-3'>
-                <label htmlFor='email' className='col-sm-2 col-form-label'>
+                <label htmlFor='email'>
                   Email
                 </label>
-                <div className='col-sm-10'>
                   <input
                     type='email'
                     className='form-control'
@@ -139,13 +168,12 @@ const Developer = () => {
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
                   />
-                </div>
               </div>
+
               <div className='row mb-3'>
-                <label htmlFor='password' className='col-sm-2 col-form-label'>
+                <label htmlFor='password'>
                   Password
                 </label>
-                <div className='col-sm-10'>
                   <input
                     type='password'
                     className='form-control'
@@ -155,13 +183,13 @@ const Developer = () => {
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     required
                   />
-                </div>
               </div>
+
               <div className='row mb-3'>
-                <label htmlFor='nationalId' className='col-sm-2 col-form-label'>
+                <label htmlFor='nationalId'>
                   National ID
                 </label>
-                <div className='col-sm-10'>
+  
                   <input
                     type='text'
                     className='form-control'
@@ -171,13 +199,14 @@ const Developer = () => {
                     onChange={(e) => setFormData({ ...formData, nationalId: e.target.value })}
                     required
                   />
-                </div>
+
               </div>
+
               <div className='row mb-3'>
-                <label htmlFor='address' className='col-sm-2 col-form-label'>
+                <label htmlFor='address'>
                   Address
                 </label>
-                <div className='col-sm-10'>
+              
                   <input
                     type='text'
                     className='form-control'
@@ -187,13 +216,13 @@ const Developer = () => {
                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                     required
                   />
-                </div>
+              
               </div>
+
               <div className='row mb-3'>
-                <label htmlFor='joinDate' className='col-sm-2 col-form-label'>
+                <label htmlFor='joinDate'>
                   Join Date
                 </label>
-                <div className='col-sm-10'>
                   <input
                     type='date'
                     className='form-control'
@@ -203,13 +232,13 @@ const Developer = () => {
                     onChange={(e) => setFormData({ ...formData, joinDate: e.target.value })}
                     required
                   />
-                </div>
               </div>
+
               <div className='row mb-3'>
-                <label htmlFor='profilePicture' className='col-sm-2 col-form-label'>
+                <label htmlFor='profilePicture'>
                   Profile Picture URL
                 </label>
-                <div className='col-sm-10'>
+
                   <input
                     type='file'
                     className='form-control'
@@ -219,13 +248,12 @@ const Developer = () => {
                     onChange={(e) => setFormData({ ...formData, profilePicture: e.target.value })}
                     required
                   />
-                </div>
               </div>
+
               <div className='row mb-3'>
-                <label htmlFor='phoneNumber' className='col-sm-2 col-form-label'>
+                <label htmlFor='phoneNumber' className='col-form-label'>
                   Phone Number
                 </label>
-                <div className='col-sm-10'>
                   <input
                     type='text'
                     className='form-control'
@@ -235,13 +263,14 @@ const Developer = () => {
                     onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
                     required
                   />
-                </div>
               </div>
+
               <div className='d-flex justify-content-center my-3'>
                 <button className='btn btn-primary' onClick={createDeveloper}>
                   Add Developer
                 </button>
               </div>
+
             </form>
           </div>
         </div>

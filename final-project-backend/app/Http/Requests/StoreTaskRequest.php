@@ -27,11 +27,11 @@ class StoreTaskRequest extends FormRequest
         return [
             'project_id' => ['required', 'exists:projects,id'],
             'product_manager_id' => ['required', 'exists:managers,id', new ProductManagerValidationRule],
-            'task_title' => 'required|string|max:255|unique:tasks',
+            'task_title' => 'required|string|max:255',
             'task_description' => 'required|string|max:255',
             'task_start' => 'required|date',
             'task_end' => 'required|date|after:task_start',
-            'task_status' => 'required|in:notStarted,inProgress,complete',
+            'task_status' => 'required|in:notStarted,in_progress,completed',
         ];
     }
 
