@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\staff_levels;
 use App\Models\Project;
+use App\Models\Task;
+
 class managers extends Model
 {
     use HasFactory;
@@ -28,5 +30,8 @@ class managers extends Model
     }
     function project(){
         return $this->hasMany(Project::class);
+    }
+    function task(){
+        return $this->hasMany(Task::class);
     }
 }

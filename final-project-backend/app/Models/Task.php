@@ -20,13 +20,13 @@ class Task extends Model
         'task_status'
     ];
 
-    public function project()
+    function project()
     {
         return $this->belongsTo(Project::class);
     }
 
-    public function productManager()
+    function ProductManager()
     {
-        return $this->belongsTo(managers::class, 'ProductManager_id');
+        return $this->belongsTo(managers::class,'product_manager_id','id');
     }
 }
