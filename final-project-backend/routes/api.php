@@ -4,7 +4,8 @@ use App\Http\Controllers\API\FreelancerController;
 use App\Http\Controllers\API\ManagersController;
 
 use App\Http\Controllers\API\SearchController;
-
+use App\Http\Controllers\API\ClientController;
+use App\Http\Controllers\API\EmployeeController;
 use App\Http\Controllers\API\staffLevelController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\TaskController;
@@ -23,7 +24,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -73,6 +73,6 @@ Route::get('payment/error', [\App\Http\Controllers\FatoorahController::class, 'e
 
 
 // Route::get('/payment', [DashboardController::class, 'index']);
-Route::post('pay', [PaymentController::class, 'pay'])->name('payment');
-Route::get('success', [PaymentController::class, 'success']);
-Route::get('error', [PaymentController::class, 'error']);
+// Route::post('pay', [PaymentController::class, 'pay'])->name('payment');
+// Route::get('success', [PaymentController::class, 'success']);
+// Route::get('error', [PaymentController::class, 'error']);
