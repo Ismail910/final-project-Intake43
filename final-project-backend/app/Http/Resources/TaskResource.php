@@ -22,7 +22,12 @@ class TaskResource extends JsonResource
             'start' => $this->task_start,
             'end' => $this->task_end,
             'status' => $this->task_status,
+            'project' => [
+                'id'=>$this->project->id,
+                'name' => $this->project->project_title,
+            ],
             'productManager' => [
+                'id'=>$this->ProductManager->user->id,
                 'name' => $this->ProductManager->user->name,
                 'email' => $this->ProductManager->user->email,
             ],
