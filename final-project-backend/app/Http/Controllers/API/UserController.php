@@ -60,7 +60,7 @@ class UserController extends Controller
        
              return response()->json([
                  'success' =>true,
-                 'manager' =>$freelancer,
+                 'freelancer' =>$freelancer,
                  'token'  =>$token
              ], 201);
         }
@@ -72,7 +72,7 @@ class UserController extends Controller
        
              return response()->json([
                  'success' =>true,
-                 'manager' =>$client,
+                 'client' =>$client,
                  'token'  =>$token
              ], 201);
         }
@@ -85,7 +85,7 @@ class UserController extends Controller
        
              return response()->json([
                  'success' =>true,
-                 'manager' =>$client,
+                 'employee' =>$employee,
                  'token'  =>$token
              ], 201);
         }
