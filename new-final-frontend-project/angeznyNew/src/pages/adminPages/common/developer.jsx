@@ -12,6 +12,7 @@ const Developer = () => {
       joinDate: '2023-06-01',
       profilePicture: 'https://example.com/profile.jpg',
       phoneNumber: '123-456-7890',
+      Country:'KSA'
     },
     {
       id: 2,
@@ -23,6 +24,7 @@ const Developer = () => {
       joinDate: '2023-06-05',
       profilePicture: 'https://example.com/profile.jpg',
       phoneNumber: '987-654-3210',
+      Country:'USA'
     },
 
   ]);
@@ -35,6 +37,7 @@ const Developer = () => {
     address: '',
     joinDate: '',
     profilePicture: '',
+    Country:'',
     phoneNumber: '',
   });
 
@@ -84,7 +87,7 @@ const Developer = () => {
   };
 
   return (
-    <div>
+    <div className="col main pt-5 mt-3">
       <div className='row '>
       <div className="table-responsive table-bordered">
       <h2 className='text-center'>Developers</h2>
@@ -100,6 +103,7 @@ const Developer = () => {
             <th>Join Date</th>
             <th>Profile Picture</th>
             <th>Phone Number</th>
+            <th>Country</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -115,6 +119,7 @@ const Developer = () => {
               <td>{developer.joinDate}</td>
               <td>{developer.profilePicture}</td>
               <td>{developer.phoneNumber}</td>
+              <td>{developer.Country}</td>
               <td className='d-flex justify-content-evenly'>
                 <button className='btn btn-info' onClick={() => updateDeveloper(developer.id)}>
                   Edit
@@ -131,15 +136,14 @@ const Developer = () => {
       </div>
       {/* Add Developer form */}
       <div className='container'>
-        <h3 className='text-center'>Add Developer</h3>
+        <h3 className='text-center my-3'>Add Developer</h3>
         <div className='row justify-content-center my-3 '>
           <div className='col-md-6 '>
             <form className='d-flex flex-column '>
               <div className='row my-3'>
-                <label htmlFor='name' className='col-form-label' >
+                <label htmlFor='name' >
                   Name
                 </label>
-                <div className=''>
                   <input
                     type='text'
                     className='form-control'
@@ -149,14 +153,12 @@ const Developer = () => {
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     required
                   />
-                </div>
               </div>
 
               <div className='row mb-3'>
-                <label htmlFor='email' className='col-form-label'>
+                <label htmlFor='email'>
                   Email
                 </label>
-                <div className=''>
                   <input
                     type='email'
                     className='form-control'
@@ -166,11 +168,10 @@ const Developer = () => {
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
                   />
-                </div>
               </div>
 
               <div className='row mb-3'>
-                <label htmlFor='password' className='col-form-label'>
+                <label htmlFor='password'>
                   Password
                 </label>
                   <input
@@ -185,7 +186,7 @@ const Developer = () => {
               </div>
 
               <div className='row mb-3'>
-                <label htmlFor='nationalId' className='col-form-label'>
+                <label htmlFor='nationalId'>
                   National ID
                 </label>
   
@@ -202,7 +203,7 @@ const Developer = () => {
               </div>
 
               <div className='row mb-3'>
-                <label htmlFor='address' className='col-sm-2 col-form-label'>
+                <label htmlFor='address'>
                   Address
                 </label>
               
@@ -219,7 +220,7 @@ const Developer = () => {
               </div>
 
               <div className='row mb-3'>
-                <label htmlFor='joinDate' className='col-form-label'>
+                <label htmlFor='joinDate'>
                   Join Date
                 </label>
                   <input
@@ -234,7 +235,7 @@ const Developer = () => {
               </div>
 
               <div className='row mb-3'>
-                <label htmlFor='profilePicture' className='col-sm-2 col-form-label'>
+                <label htmlFor='profilePicture'>
                   Profile Picture URL
                 </label>
 

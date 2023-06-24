@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 export class payment extends Component {
   render() {
     return (
-      <div>
+      <div className="col main pt-5 mt-3">
         {/* add table for testing I'll wait until see the payment  */}
        <p className='fs-1 text-center'>Payment history</p>
         <table className="table">

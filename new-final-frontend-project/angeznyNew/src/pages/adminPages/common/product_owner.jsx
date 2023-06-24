@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 export class product_owner extends Component {
   render() {
     return (
-      <div>product_owner</div>
+      <div className="col main pt-5 mt-3">product_owner</div>
     )
   }
 }
