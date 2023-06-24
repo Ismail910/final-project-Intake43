@@ -17,10 +17,10 @@ class SkillResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'users' => [
-                'name' => $this->user->name,
-                'email' => $this->user->email,
-            ]
+            // 'users' => [
+            //     'name' => $this->user->name?? null,
+            //     'email' => $this->user->email ?? null,
+            // ]
         ];
     }
 }

@@ -44,7 +44,7 @@ Route::apiResource('skills', SkillController::class);
 Route::get('user/count', [UserController::class, 'countUser'])->name('countUser');
 Route::get('user/countCountry', [UserController::class, 'countUserCountry'])->name('countUserCountry');
 Route::apiResource('user', UserController::class);
-Route::apiResource('user/addSkills', [UserController::class, 'addSkillsToUser']);
+Route::post('user/addSkills', [UserController::class, 'addSkillsToUser']);
 
 // Route::post('managers', [ManagersController::class, 'store'])->name('managers.store');
 Route::apiResource('management', ManagersController::class);

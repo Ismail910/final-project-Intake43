@@ -165,6 +165,7 @@ class UserController extends Controller
             'inserted' => $inserted
         ], 200);
     }
+    
 
     public function countUser()
     {
