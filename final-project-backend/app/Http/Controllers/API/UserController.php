@@ -10,6 +10,7 @@ use App\Models\managers;
 use App\Models\Freelancer;
 use App\Models\client;
 use App\Models\Employee;
+use App\Models\Skill;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -153,6 +154,18 @@ class UserController extends Controller
         $this->delete_image($user->profilePic);
         $user->delete();
     }
+
+    public function addSkillsToUser(Request $request)
+    {
+        $inserted = DB::table('user_skill')->insert([
+            'user_id' => $request->input('user_id'),
+            'skill_id' => $request->input('skill_id'),
+        ]);
+        return response()->json([
+            'inserted' => $inserted
+        ], 200);
+    }
+
     public function countUser()
     {
         $count = User::count();

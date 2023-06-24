@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Models\managers;
 use App\Models\User;
+
 class TaskResource extends JsonResource
 {
     /**
@@ -23,11 +24,11 @@ class TaskResource extends JsonResource
             'end' => $this->task_end,
             'status' => $this->task_status,
             'project' => [
-                'id'=>$this->project->id,
+                'id' => $this->project->id,
                 'name' => $this->project->project_title,
             ],
             'productManager' => [
-                'id'=>$this->ProductManager->user->id,
+                'id' => $this->ProductManager->user->id,
                 'name' => $this->ProductManager->user->name,
                 'email' => $this->ProductManager->user->email,
             ],

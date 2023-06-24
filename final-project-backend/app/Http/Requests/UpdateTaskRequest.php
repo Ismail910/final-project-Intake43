@@ -26,12 +26,12 @@ class UpdateTaskRequest extends FormRequest
     {
         return [
             'project_id' => 'sometimes|required|exists:projects,id',
-            'product_manager_id' => ['sometimes','required', 'exists:managers,id', new ProductManagerValidationRule],
+            'product_manager_id' => ['sometimes', 'required', 'exists:managers,id', new ProductManagerValidationRule],
             'task_title' => 'sometimes|required|string|max:255',
             'task_description' => 'sometimes|required|string|max:255',
             'task_start' => 'sometimes|required|date',
             'task_end' => 'sometimes|required|date|after:task_start',
-            'task_status' => 'sometimes|required|in:notStarted,inProgress,complete',
+            'task_status' => 'sometimes|required|in:new,in_progress,completed',
         ];
     }
 
