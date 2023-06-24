@@ -44,7 +44,7 @@ class FreelancerController extends Controller
     public function show(Freelancer $freelancer)
     {
         if ($freelancer){
-            return  new FreelancerResource($freelancer);  
+            return  new FreelancerResource($freelancer);
         }
         return  new Response('', 205);
     }
