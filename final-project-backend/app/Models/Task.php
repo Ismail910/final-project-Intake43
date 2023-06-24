@@ -27,6 +27,6 @@ class Task extends Model
 
     function ProductManager()
     {
-        return $this->belongsTo(managers::class,'ProductManager_id','id');
+        return $this->belongsTo(managers::class,'product_manager_id','id');
     }
 }
