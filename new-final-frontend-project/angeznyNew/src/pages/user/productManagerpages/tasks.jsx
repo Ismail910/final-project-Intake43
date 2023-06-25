@@ -71,10 +71,29 @@ function Row(props) {
     event.preventDefault();
     axios
       .put(`http://127.0.0.1:8000/api/tasks/${row.id}`, {
-
-      })
-      .then(()=>{toast.success("Exam Time Updating")})
-      .catch((error) => toast.error("Error updating exam:", error));
+        // project_id:row.project.id,
+        // product_manager_id:row.productManager.id,
+        // task_title:title,
+        // task_description:description,
+        // task_start:new Date(`${startDate}`),
+        // task_end: new Date(`${endDate}`),
+        // status:status,
+        // task_description:description
+        project_id:3,
+        product_manager_id:17,
+        task_title:"title",
+        task_description:"description",
+        task_start:"2023-06-09",
+        task_end: "2023-06-12",
+        status:"in_progress",
+        task_description:"description"
+      }, {
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer 40|r7dXk1L6Dvnm7J0YZcyhTwukkDlbWwxNoA8KStEG'
+        }})
+      .then(()=>{toast.success("Task Updated")})
+      .catch((error) => toast.error("Error updating Task:", error));
     setOpenDialog(false);
   }
   return (
