@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('freelancers', function (Blueprint $table) {
+        Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->enum('rate', ['0', '1', '2', '3', '4', '5'])->default('0');
-            $table->boolean('Status')->default(false)->nullable();
+            // $table->integer('balance')->default(0);
+            $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->decimal('balance', 10, 2)->default(0);
-            $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('task_id')->nullable()->constrained('tasks')->cascadeOnUpdate()->onDelete('set null');
             $table->timestamps();
         });
     }
@@ -25,9 +23,8 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-
     public function down(): void
     {
-        Schema::dropIfExists('freelancers');
+        Schema::dropIfExists('clients');
     }
 };

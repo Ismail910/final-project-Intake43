@@ -4,29 +4,35 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use App\Models\staff_levels;
+use App\Models\Project;
+use App\Models\Task;
 
-class Employee extends Model
+class Manager extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'user_id',
-        'staff_level_id',
-        'task_id',
-        // 'deductions'
+        'staff_level_id'
+
     ];
 
     function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-
-    function task()
-    {
-        return $this->hasOne(Tasks::class);
-    }
-
     function staff_level()
     {
         return $this->belongsTo(staff_levels::class);
+    }
+    function project()
+    {
+        return $this->hasMany(Project::class);
+    }
+    function task()
+    {
+        return $this->hasMany(Task::class);
     }
 }
