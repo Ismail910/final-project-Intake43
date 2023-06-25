@@ -15,7 +15,6 @@ class Freelancer extends Model
         'balance',
         'task_id',
         'rate'
-       
     ];
     function user()
     {

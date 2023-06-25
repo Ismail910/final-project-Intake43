@@ -3,20 +3,32 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use Illuminate\Http\Response;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
 class TaskController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth:sanctum', 'checkUser:Product Manager,Admin'])->only('store', 'destroy', 'update');
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Task::all();
+        try {
+            return TaskResource::collection(Task::all());
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'not found Tasks'
+            ], 404);
+        }
     }
 
     /**
@@ -26,7 +38,7 @@ class TaskController extends Controller
     {
         //
         $task = Task::create($request->all());
-        return $task;
+        return new TaskResource($task);
     }
 
     /**
@@ -34,7 +46,11 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        return Task::where(['id' => $task->id])->get();
+        try {
+            return new TaskResource(Task::where(['id' => $task->id])->get());
+        } catch (ModelNotFoundException $exception) {
+            return response()->json(['error' => 'Tasks not found'], 404);
+        }
     }
 
     /**
@@ -42,8 +58,15 @@ class TaskController extends Controller
      */
     public function update(UpdateTaskRequest $request, Task $task)
     {
-        $task->update($request->all());
-        return $task;
+
+        try {
+            $task->update($request->all());
+            return new TaskResource($task);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'check if Tasks is exist and check it is validation'
+            ], 404);
+        }
     }
 
     /**
@@ -51,8 +74,13 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-
-        $task->delete();
-        return new Response('', 204);
+        try {
+            $task->delete();
+            return new Response('', 204);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'check if Tasks is exist '
+            ], 404);
+        }
     }
 }

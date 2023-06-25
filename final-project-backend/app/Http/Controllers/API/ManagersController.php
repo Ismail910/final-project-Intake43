@@ -15,11 +15,11 @@ class ManagersController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $managerRole)
     {
         // return Managers::all();
         try{
-            $manager = Managers::all();
+            $manager = Managers::where('role', $managerRole )->get();
             return ManagersResource::collection($manager);
         }
         catch(ModelNotFoundException $e){

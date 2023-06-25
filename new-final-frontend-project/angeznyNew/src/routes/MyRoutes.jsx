@@ -148,6 +148,8 @@ const MyRoutes = () => {
               </Suspense>
             }
           />
+
+          
             <Route
             path="/admin/product-owner"
             element={
@@ -159,8 +161,8 @@ const MyRoutes = () => {
                 }
               >
                 <div className='row w-100'>
-                <AdminSidnave className ="col-2"   />
-                <AdminOwner className = "col-10" />
+                <AdminSidnave className ="col-10 "   />
+                <AdminOwner className = "col-2 " />
                 </div>
 
               </Suspense>

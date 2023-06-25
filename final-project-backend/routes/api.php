@@ -4,10 +4,12 @@ use App\Http\Controllers\API\FreelancerController;
 use App\Http\Controllers\API\ManagersController;
 
 use App\Http\Controllers\API\SearchController;
-
-use App\Http\Controllers\API\StaffLevelController;
+use App\Http\Controllers\API\ClientController;
+use App\Http\Controllers\API\EmployeeController;
+use App\Http\Controllers\API\staffLevelController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\TaskController;
+use App\Http\Controllers\API\SkillController;
 use App\Http\Controllers\Payment\CreditController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -37,12 +39,12 @@ Route::get('projects/search/{status}', [ProjectController::class, 'searchProject
 
 Route::apiResource('tasks', TaskController::class);
 
-Route::apiResource('skills', TaskController::class);
-
+Route::apiResource('skills', SkillController::class);
 
 Route::get('user/count', [UserController::class, 'countUser'])->name('countUser');
 Route::get('user/countCountry', [UserController::class, 'countUserCountry'])->name('countUserCountry');
 Route::apiResource('user', UserController::class);
+Route::post('user/addSkills', [UserController::class, 'addSkillsToUser']);
 
 // Route::post('managers', [ManagersController::class, 'store'])->name('managers.store');
 Route::apiResource('management', ManagersController::class);
@@ -57,6 +59,7 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 
 use App\Http\Controllers\FatoorahController;
+
 Route::post('pay', [FatoorahController::class, 'payOrder'])->name('pay');
 
 Route::post('payment', [\App\Http\Controllers\MyFatoorahController::class, 'index']);
@@ -72,6 +75,6 @@ Route::get('payment/error', [\App\Http\Controllers\FatoorahController::class, 'e
 
 
 // Route::get('/payment', [DashboardController::class, 'index']);
-Route::post('pay', [PaymentController::class, 'pay'])->name('payment');
-Route::get('success', [PaymentController::class, 'success']);
-Route::get('error', [PaymentController::class, 'error']);
+// Route::post('pay', [PaymentController::class, 'pay'])->name('payment');
+// Route::get('success', [PaymentController::class, 'success']);
+// Route::get('error', [PaymentController::class, 'error']);
