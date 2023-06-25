@@ -22,7 +22,7 @@ const NavBarM = () => {
   return (
     <MDBNavbar expand='lg' light bgColor='light'>
     <MDBContainer fluid>
-      <MDBNavbarBrand href='/manager'>Brand</MDBNavbarBrand>
+      <MDBNavbarBrand href='/manager'>Product Manager</MDBNavbarBrand>
 
       <MDBNavbarToggler
         aria-controls='navbarSupportedContent'
@@ -35,11 +35,11 @@ const NavBarM = () => {
 
       <MDBCollapse navbar show={showBasic}>
         <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
-          <MDBNavbarItem>
+          {/* <MDBNavbarItem>
           <Link className="nav-link text-secondary " to="/manager">
             <i className="font-weight-bold"></i> <span className="ml-3">home</span>
           </Link>
-          </MDBNavbarItem>
+          </MDBNavbarItem> */}
           <MDBNavbarItem>
           <Link className="nav-link text-secondary " to="/manager/task">
             <i className="font-weight-bold"></i> <span className="ml-3">task</span>
@@ -79,10 +79,10 @@ const NavBarM = () => {
 
         </MDBNavbarNav>
 
-        <form className='d-flex input-group w-auto'>
+        {/* <form className='d-flex input-group w-auto'>
           <input type='search' className='form-control' placeholder='Type query' aria-label='Search' />
           <MDBBtn color='primary'>Search</MDBBtn>
-        </form>
+        </form> */}
       </MDBCollapse>
     </MDBContainer>
   </MDBNavbar>

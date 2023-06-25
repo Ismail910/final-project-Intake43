@@ -89,7 +89,7 @@ const Developer = () => {
   return (
     <div className="col main pt-5 mt-3">
       <div className='row '>
-      <div className="table-responsive table-bordered">
+      <div className="table-sm-responsive table-bordered">
       <h2 className='text-center'>Developers</h2>
       <table className='table table-striped text-center'>
         {/* Table header */}

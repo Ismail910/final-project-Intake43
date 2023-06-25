@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -40,10 +41,10 @@ Route::apiResource('tasks', TaskController::class);
 
 Route::apiResource('skills', SkillController::class);
 
-
 Route::get('user/count', [UserController::class, 'countUser'])->name('countUser');
 Route::get('user/countCountry', [UserController::class, 'countUserCountry'])->name('countUserCountry');
 Route::apiResource('user', UserController::class);
+Route::post('user/addSkills', [UserController::class, 'addSkillsToUser']);
 
 // Route::post('managers', [ManagersController::class, 'store'])->name('managers.store');
 Route::apiResource('management', ManagersController::class);
@@ -58,6 +59,7 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 
 use App\Http\Controllers\FatoorahController;
+
 Route::post('pay', [FatoorahController::class, 'payOrder'])->name('pay');
 
 Route::post('payment', [\App\Http\Controllers\MyFatoorahController::class, 'index']);

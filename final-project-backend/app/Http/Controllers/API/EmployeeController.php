@@ -19,13 +19,13 @@ class EmployeeController extends Controller
     {
         try {
             $emp = Employee::all();
-            return EmployeeResource::colection($emp);
+            return EmployeeResource::collection($emp);
         } catch(ModelNotFoundException $e){
             return response()->json([
                 'error' => 'not found Employee collection',
             ], 404);
         }
-        
+
     }
 
     /**
@@ -33,7 +33,7 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $employee = Employee::create($request->all());
         return new EmployeeResource($employee);
     }
@@ -44,10 +44,10 @@ class EmployeeController extends Controller
     public function show(Employee $employee)
     {
         if($employee){
-            return  new EmployeeResource($employee);  
+            return  new EmployeeResource($employee);
         }
         return  new Response('', 205);
-        
+
     }
 
     /**
@@ -62,7 +62,7 @@ class EmployeeController extends Controller
             return response()->json([
                 'error' => 'check it is validation'
             ], 404);
-            
+
         }
     }
 

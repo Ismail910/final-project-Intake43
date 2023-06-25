@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Client;
 use App\Models\managers;
 use App\Models\Task;
+
 class Project extends Model
 {
-    
+
     use HasFactory;
     protected $fillable = [
         'project_title',
@@ -24,15 +25,15 @@ class Project extends Model
     ];
     function ProductOwner()
     {
-        return $this->belongsTo(managers::class,'ProductOwner_id','id');
+        return $this->belongsTo(managers::class, 'ProductOwner_id', 'id');
     }
     function ProductManager()
     {
-        return $this->belongsTo(managers::class,'ProductManager_id','id');
+        return $this->belongsTo(managers::class, 'ProductManager_id', 'id');
     }
     function client()
     {
-        return $this->belongsTo(Client::class,'client_id','id');
+        return $this->belongsTo(Client::class, 'client_id', 'id');
     }
     function task()
     {

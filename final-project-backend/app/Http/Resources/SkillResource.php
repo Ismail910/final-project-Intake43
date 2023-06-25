@@ -16,11 +16,10 @@ class SkillResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->task_title,
+            'name' => $this->name,
             // 'users' => [
-
-            //     'name' => $this->user->name,
-            //     'email' => $this->user->email,
+            //     'name' => $this->user->name?? null,
+            //     'email' => $this->user->email ?? null,
             // ]
         ];
     }
