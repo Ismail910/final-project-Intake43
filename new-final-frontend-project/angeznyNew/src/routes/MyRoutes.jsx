@@ -275,7 +275,6 @@ const MyRoutes = () => {
                 }
               >
                 <Header/>
-                <NavBarC  />
                 <Home />
                 <Footer/>
 
@@ -293,7 +292,6 @@ const MyRoutes = () => {
                 }
               >
                 <Header/>
-                <NavBarC  />
                 <ClientProject />
                 <Footer/>
 
@@ -311,7 +309,6 @@ const MyRoutes = () => {
                 }
               >
                 <Header/>
-                <NavBarC  />
                 <Chat />
                 <Footer/>
 
@@ -330,7 +327,6 @@ const MyRoutes = () => {
                 }
               >
                 <Header/>
-                <NavBarC />
                 <Payment />
                 <Footer/>
 
@@ -352,7 +348,6 @@ const MyRoutes = () => {
                 }
               >
                 <Header/>
-                <NavBarD  />
                 <Home />
                 <Footer/>
 
@@ -370,7 +365,6 @@ const MyRoutes = () => {
                 }
               >
                 <Header/>
-                <NavBarD  />
                 <DeveloperTask />
                 <Footer/>
 
@@ -388,7 +382,6 @@ const MyRoutes = () => {
                 }
               >
                 <Header/>
-                <NavBarD  />
                 <Chat />
                 <Footer/>
 
@@ -411,7 +404,6 @@ const MyRoutes = () => {
                 }
               >
                 <Header/>
-                <NavBarF/>
                 <Home/>
                 <Footer/>
               </Suspense>
@@ -428,7 +420,6 @@ const MyRoutes = () => {
                 }
               >
                 <Header/>
-                <NavBarF  />
                 <FreelancerTask />
                 <Footer/>
 
@@ -446,7 +437,6 @@ const MyRoutes = () => {
                 }
               >
                 <Header/>
-                <NavBarF  />
                 <Chat />
                 <Footer/>
 
@@ -465,7 +455,6 @@ const MyRoutes = () => {
                 }
               >
                 <Header/>
-                <NavBarF />
                 <Payment />
                 <Footer/>
 
@@ -486,7 +475,6 @@ const MyRoutes = () => {
                 }
               >
                 <Header/>
-                <NavBarM  />
                 <Home />
                 <Footer/>
               </Suspense>
@@ -503,7 +491,6 @@ const MyRoutes = () => {
                 }
               >
                 <Header/>
-                <NavBarM  />
                 <ManagerTask />
                 <Footer/>
               </Suspense>
@@ -520,7 +507,6 @@ const MyRoutes = () => {
                 }
               >
                 <Header/>
-                <NavBarM  />
                 <Chat />
                 <Footer/>
               </Suspense>
@@ -538,7 +524,6 @@ const MyRoutes = () => {
                 }
               >
                 <Header/>
-                <NavBarM  />
                 <Managerproject />
                 <Footer/>
               </Suspense>
@@ -560,7 +545,6 @@ const MyRoutes = () => {
                 }
               >
                 <Header/>
-                <NavBarO/>
                 <Home/>
                 <Footer/>
               </Suspense>
@@ -577,10 +561,8 @@ const MyRoutes = () => {
                 }
               >
                 <Header/>
-                <NavBarO  />
                 <Chat />
                 <Footer/>
-
               </Suspense>
             }
           />
@@ -596,7 +578,6 @@ const MyRoutes = () => {
                 }
               >
                 <Header/>
-                <NavBarO  />
                 <OwnerProject/>
                 <Footer/>
               </Suspense>
@@ -613,7 +594,6 @@ const MyRoutes = () => {
                 }
               >
                 <Header/>
-                <NavBarO  />
                 <NotFound/>
                 <Footer/>
               </Suspense>
