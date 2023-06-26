@@ -1,13 +1,16 @@
-import React, { Component } from 'react'
+// import React, { Component } from 'react';
+// import UserForm from "./userform";
 
-export class product_manger extends Component {
-  render() {
-    return (
-      <div className="col main pt-5 mt-3">
-      <p>product_manger</p>
-      </div>
-    )
-  }
-}
+// class ProductManager extends Component {
+//   render() {
+//     const { formData, setFormData, createDeveloper } = this.props;
 
-export default product_manger
+//     return (
+//       <div className="col main pt-5 mt-3">
+//         <UserForm formData={formData} setFormData={setFormData} createDeveloper={createDeveloper} />
+//       </div>
+//     );
+//   }
+// }
+
+// export default ProductManager;
