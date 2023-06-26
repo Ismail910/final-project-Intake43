@@ -11,7 +11,7 @@ use App\Models\User;
 
 class LoginController extends Controller
 {
-    //
+
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -43,9 +43,19 @@ class LoginController extends Controller
                 'error' => 'Email or Password not match',
             ], 401);
         }
-
         return response()->json([
             'error' => 'token not created',
         ], 401);
     }
+
+    public function logout(Request $request)
+    {
+        Auth::logout(); 
+        $request->session()->invalidate(); 
+        $request->session()->regenerateToken(); 
+        return redirect('/'); 
+    }
+
+
+
 }

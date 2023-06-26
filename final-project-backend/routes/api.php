@@ -42,6 +42,8 @@ Route::post('register/manager', [RegisterController::class, 'RegisterManager'])-
 
 // ========== login route ====================
 Route::post('/login', [LoginController::class, 'login'])->name('login');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
 
 // ========== User route ====================
 Route::put('user/updateForAdmin/{user}', [UserController::class, 'updateForAdmin'])->name('updateForAdmin');
