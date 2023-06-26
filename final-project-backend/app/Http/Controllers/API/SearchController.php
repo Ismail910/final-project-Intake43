@@ -83,10 +83,10 @@ public function searchByName($modelName, $keyword, $projectType = null)
             $users = User::join('skills', 'users.id', '=', 'skills.user_id')
                 ->where('skills.name', $keyword)
                 ->when($projectType === 'mileStone', function ($query) {
-                    return $query->where('user_role', 'Freelancer');
+                    return $query->where('user.role', 'Freelancer');
                 })
                 ->when($projectType === 'byProject', function ($query) {
-                    return $query->where('user_role', 'Employee');
+                    return $query->where('user.role', 'Employee');
                 })
                 ->select('users.*')
                 ->get();
