@@ -54,11 +54,13 @@ Route::apiResource('user', UserController::class);
 
 
 
-Route::get('search', [SearchController::class, 'searchByName'])->name('search');
+
+Route::get('search/{model}/{keyword}/{projectType}', [SearchController::class, 'searchByName'])->name('search');
 
 use App\Http\Controllers\API\ProjectController;
 
 Route::get('projects/count', [ProjectController::class, 'countProject'])->name('countProject');
+Route::get('projects/searchProjectByUsers', [ProjectController::class, 'searchProjectByUsers'])->name('searchProjectByUsers');
 Route::apiResource('projects', ProjectController::class);
 Route::get('projects/search/{status}', [ProjectController::class, 'searchProjectByStatus'])->name('projects.search');
 
