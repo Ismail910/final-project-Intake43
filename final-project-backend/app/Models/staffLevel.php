@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Manager;
+use App\Models\Employee;
 
 class staffLevel extends Model
 {
@@ -15,8 +17,13 @@ class staffLevel extends Model
         'salary'
     ];
 
-    function managger(){
-        return $this->hasMany(managers::class);
+    function manager()
+    {
+        return $this->hasMany(Manager::class);
     }
 
+    function employee()
+    {
+        return $this->hasMany(Employee::class);
+    }
 }

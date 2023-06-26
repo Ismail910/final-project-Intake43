@@ -14,15 +14,18 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->index('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('nationalID');
             $table->string('phone');
             $table->string('address');
+            $table->string('country');
             $table->date('joinedDate');
-            $table->date('endDate');
-            $table->string('profilePic')->nullable();
+            $table->date('endDate')->nullable();
+            $table->string('profilePic')->nullable()->default('user.png');
+            $table->enum('role', ['Admin', 'Product Manager', 'Product Owner', 'Freelancer', 'Client', 'Employee'])->default('Client');
             $table->rememberToken();
             $table->timestamps();
         });

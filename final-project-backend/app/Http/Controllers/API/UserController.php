@@ -4,11 +4,13 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\UpdateUserForAdminRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use App\Models\managers;
+use App\Models\Manager;
 use App\Models\Freelancer;
-use App\Models\client;
+use App\Models\Client;
 use App\Models\Employee;
 use App\Models\Skill;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +23,12 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function __construct()
+    {
+        $this->middleware(['auth:sanctum', 'checkUser:Admin'])->only('updateForAdmin');
+    }
+
     public function index()
     {
         // $perPage = $request->per_page ? $request->per_page : 10;
@@ -28,7 +36,7 @@ class UserController extends Controller
         // $users = User::paginate($perPage, ["*"], "page", $currentPage);
         // $response = new APIPaginateCollection($users, ProductResource::class);
         // return response()->json($response);
-        return User::all();
+        return UserResource::collection(User::all());
     }
 
     /**
@@ -36,6 +44,7 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
+<<<<<<< HEAD
 
         $user = User::create([
             'name' => $request->input('name'),
@@ -111,6 +120,8 @@ class UserController extends Controller
 
 
         return response()->json(['error' => 'faild create user'], 404);
+=======
+>>>>>>> 5f829f1c869dd78e82a555ef1578688835f965d3
     }
 
     /**
@@ -126,19 +137,39 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
         $old_image =  $user->profilePic;
         $user->update([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => bcrypt($request->input('password')),
-            'role' => $request->input('role'),
             'nationalID' => $request->input('nationalID'),
             'address' => $request->input('address'),
             'phone' => $request->input('phone'),
+            'country' => $request->input('country'),
+        ]);
+        $this->save_image($request->profilePic, $user);
+        if ($request->profilePic) {
+            $this->delete_image($old_image);
+        }
+        return new UserResource($user);
+    }
+
+    public function updateForAdmin(UpdateUserForAdminRequest $request, User $user)
+    {
+        $old_image =  $user->profilePic;
+        $user->update([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+            'nationalID' => $request->input('nationalID'),
+            'address' => $request->input('address'),
+            'phone' => $request->input('phone'),
+            'role' => $request->input('role'),
             'joinedDate' => $request->input('joinedDate'),
             'endDate' => $request->input('endDate'),
+            'country' => $request->input('country'),
         ]);
         $this->save_image($request->profilePic, $user);
         if ($request->profilePic) {
@@ -154,19 +185,52 @@ class UserController extends Controller
     {
         $this->delete_image($user->profilePic);
         $user->delete();
+        return response()->json([
+            'success' => 'user deleted'
+        ], 404);
     }
 
     public function addSkillsToUser(Request $request)
     {
-        $inserted = DB::table('user_skill')->insert([
-            'user_id' => $request->input('user_id'),
-            'skill_id' => $request->input('skill_id'),
-        ]);
-        return response()->json([
-            'inserted' => $inserted
-        ], 200);
+        $user = User::find($request->input('user_id'));
+        $skill = Skill::find($request->input('skill_id'));
+        $value = $user->skills()->syncWithoutDetaching($skill);
+        // $inserted = DB::table('user_skill')->insert([
+        //     'user_id' => $request->input('user_id'),
+        //     'skill_id' => $request->input('skill_id'),
+        // ]);
+        if (count($value['attached']) == 1) {
+            return response()->json([
+                'success' => "true",
+                'message' => "inserted"
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => "error",
+                'inserted' => "already inserted"
+            ], 200);
+        }
     }
 
+<<<<<<< HEAD
+=======
+    public function getUserSkills(Request $request, User $user)
+    {
+        return $user->skills;
+        // if (count($value['attached']) == 1) {
+        //     return response()->json([
+        //         'success' => "true",
+        //         'message' => "inserted"
+        //     ], 200);
+        // } else {
+        //     return response()->json([
+        //         'success' => "error",
+        //         'inserted' => "already inserted"
+        //     ], 200);
+        // }
+    }
+
+>>>>>>> 5f829f1c869dd78e82a555ef1578688835f965d3
 
     public function countUser()
     {
@@ -183,18 +247,18 @@ class UserController extends Controller
             'countryCount' => $countryCount->count
         ], 200);
     }
-    private function save_image($image, $article)
+    private function save_image($image, $user)
     {
         if ($image) {
             $image_name = time() . '.' . $image->extension();
             $image->move(public_path('images/users'), $image_name);
-            $article->profilePic = $image_name;
-            $article->save();
+            $user->profilePic = $image_name;
+            $user->save();
         }
     }
     private  function  delete_image($image_name)
     {
-        if ($image_name != 'user.png' and !str_contains($image_name, '/tmp/')) {
+        if ($image_name != 'user.png' && $image_name && file_exists(public_path('images/users/' . $image_name))) {
             try {
                 unlink(public_path('images/users/' . $image_name));
             } catch (\Exception $e) {

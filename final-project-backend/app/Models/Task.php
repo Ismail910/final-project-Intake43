@@ -4,8 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\managers;
+use App\Models\Manager;
+use App\Models\Freelancer;
+use App\Models\Employee;
 use App\Models\Project;
+
 class Task extends Model
 {
     use HasFactory;
@@ -27,6 +30,16 @@ class Task extends Model
 
     function ProductManager()
     {
-        return $this->belongsTo(managers::class,'product_manager_id','id');
+        return $this->belongsTo(Manager::class, 'product_manager_id', 'id');
+    }
+
+    function freelancer()
+    {
+        return $this->belongsTo(Freelancer::class);
+    }
+
+    function employee()
+    {
+        return $this->belongsTo(Employee::class);
     }
 }
