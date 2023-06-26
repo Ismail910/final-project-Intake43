@@ -16,12 +16,16 @@ class Freelancer extends Model
         'task_id',
         'rate'
     ];
+    protected $casts = [
+        'rate' => 'integer',
+    ];
+
     function user()
     {
-        return $this->belongsTo(User::class,'user_id','id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
-    function tasks(){
-        return $this->hasMany(Tasks::class);
+    function task()
+    {
+        return $this->hasOne(Tasks::class);
     }
-
 }

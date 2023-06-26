@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('clients', function (Blueprint $table) {
+        Schema::create('managers', function (Blueprint $table) {
             $table->id();
-            $table->integer('balance')->default(0);
-           
+            $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->onDelete('cascade');
+            $table->foreignId('staff_level_id')->nullable()->cascadeOnUpdate()->constrained()->onDelete('set null');
+            // $table->enum('role', ['Admin', 'Product Manager', 'Product Owner']);
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('clients');
+        Schema::dropIfExists('managers');
     }
 };

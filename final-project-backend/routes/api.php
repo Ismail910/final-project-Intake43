@@ -10,9 +10,11 @@ use App\Http\Controllers\API\staffLevelController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\TaskController;
 use App\Http\Controllers\API\SkillController;
+use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\Payment\CreditController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +31,29 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// ========== Staff route ====================
+Route::apiResource('staff', StaffLevelController::class);
+
+// ========== Register route ====================
+
+Route::post('register/client', [RegisterController::class, 'RegisterClient'])->name('RegisterClient');
+Route::post('register/freelancer', [RegisterController::class, 'RegisterFreelancer'])->name('RegisterFreelancer');
+Route::post('register/manager', [RegisterController::class, 'RegisterManager'])->name('RegisterManager');
+
+// ========== login route ====================
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+
+// ========== User route ====================
+Route::put('user/updateForAdmin/{user}', [UserController::class, 'updateForAdmin'])->name('updateForAdmin');
+Route::get('user/count', [UserController::class, 'countUser'])->name('countUser');
+Route::get('user/countCountry', [UserController::class, 'countUserCountry'])->name('countUserCountry');
+Route::post('user/{user}/Skills', [UserController::class, 'addSkillsToUser']);
+Route::get('user/{user}/Skills', [UserController::class, 'getUserSkills']);
+Route::apiResource('user', UserController::class);
+
+
+
+
 Route::get('search', [SearchController::class, 'searchByName'])->name('search');
 
 use App\Http\Controllers\API\ProjectController;
@@ -42,21 +67,17 @@ Route::apiResource('tasks', TaskController::class);
 
 Route::apiResource('skills', SkillController::class);
 
-Route::get('user/count', [UserController::class, 'countUser'])->name('countUser');
-Route::get('user/countCountry', [UserController::class, 'countUserCountry'])->name('countUserCountry');
-Route::apiResource('user', UserController::class);
-Route::post('user/addSkills', [UserController::class, 'addSkillsToUser']);
+
 
 // Route::post('managers', [ManagersController::class, 'store'])->name('managers.store');
 Route::apiResource('management', ManagersController::class);
 Route::apiResource('freelancer', FreelancerController::class);
 Route::apiResource('client', ClientController::class);
 Route::apiResource('employee', EmployeeController::class);
-Route::apiResource('salary', StaffLevelController::class);
 
-use App\Http\Controllers\LoginController;
 
-Route::post('/login', [LoginController::class, 'login'])->name('login');
+
+
 
 
 use App\Http\Controllers\FatoorahController;

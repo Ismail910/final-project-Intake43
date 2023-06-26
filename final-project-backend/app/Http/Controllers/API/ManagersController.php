@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\API;
-use App\Http\Requests\StoremanagersRequest;
+
+use App\Http\Requests\StoreManagersRequest;
 use App\Http\Requests\UpdatemanagersRequest;
 use App\Http\Resources\ManagersResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-use App\Models\managers as Managers;
+use App\Models\Manager as Managers;
 
 
 class ManagersController extends Controller
@@ -18,11 +19,10 @@ class ManagersController extends Controller
     public function index(string $managerRole)
     {
         // return Managers::all();
-        try{
-            $manager = Managers::where('role', $managerRole )->get();
+        try {
+            $manager = Managers::where('role', $managerRole)->get();
             return ManagersResource::collection($manager);
-        }
-        catch(ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'not found mangers collection',
             ], 404);
@@ -33,11 +33,11 @@ class ManagersController extends Controller
      * Store a newly created resource in storage.
      */
 
-    public function store(StoremanagersRequest $request)
-    {  
-        
+    public function store(StoreManagersRequest $request)
+    {
+
         $manager = Managers::create($request->all());
-      
+
         return $manager;
     }
 
@@ -46,9 +46,9 @@ class ManagersController extends Controller
      */
     public function show(Managers $manager)
     {
-        if ($manager){
-           
-            return  new ManagersResource($manager);  
+        if ($manager) {
+
+            return  new ManagersResource($manager);
         }
         return  new Response('', 205);
     }
@@ -62,13 +62,11 @@ class ManagersController extends Controller
         try {
             $manager->update($request->all());
             return new ManagersResource($manager);
-
-        } catch(ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'check if manager is exist and check it is validation'
             ], 404);
-       }
-
+        }
     }
 
     /**
@@ -79,7 +77,4 @@ class ManagersController extends Controller
         $manager->delete();
         return new Response('', 204);
     }
-
-   
-
 }

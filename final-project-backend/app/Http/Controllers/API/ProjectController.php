@@ -6,13 +6,14 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
-use App\Models\managers;
+use App\Models\Manager;
 use App\Models\Client;
 
 use App\Http\Requests\StoreProjectAPIRequest;
 use App\Http\Requests\UpdateProjectAPIRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
+
 class ProjectController extends Controller
 {
     public function __construct()
@@ -28,11 +29,10 @@ class ProjectController extends Controller
     public function index()
     {
         //
-        try{
+        try {
             $projects = Project::all();
             return ProjectResource::collection($projects);
-        }
-        catch(ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'not found projects'
             ], 404);
@@ -68,17 +68,16 @@ class ProjectController extends Controller
     public function update(UpdateProjectAPIRequest $request, string $id)
     {
         //
-       try{
+        try {
             $project = Project::findOrFail($id);
             $project->update($request->all());
 
             return new ProjectResource($project);
-       }
-       catch(ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'check if project is exist and check it is validation'
             ], 404);
-       }
+        }
     }
 
     /**
@@ -87,12 +86,11 @@ class ProjectController extends Controller
     public function destroy(string $id)
     {
         //
-        try{
+        try {
             $project = Project::findOrFail($id);
             $project->delete();
             return response()->json([$project], 204);
-        }
-        catch(ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'check if project is exist '
             ], 404);
@@ -101,39 +99,36 @@ class ProjectController extends Controller
     public function searchProjectByStatus($status)
     {
         $searchTerm = $status;
-        
-        $results=[];
-        if(!Auth::user()){
+
+        $results = [];
+        if (!Auth::user()) {
             return response()->json([
                 'error' => 'unauthentecation'
             ], 404);
         }
-        $id=Auth::user()->id;
-        if(Auth::user()->role=='Admin'){
+        $id = Auth::user()->id;
+        if (Auth::user()->role == 'Admin') {
             // Perform your search logic based on the provided search term
-            $results = Project::where('project_status', '=',$searchTerm)->get();
-        }elseif(Auth::user()->role=='Product Manager'){
-            $manager=managers::where('user_id',$id)->first();
-            $results = Project:: where([
+            $results = Project::where('project_status', '=', $searchTerm)->get();
+        } elseif (Auth::user()->role == 'Product Manager') {
+            $manager = Manager::where('user_id', $id)->first();
+            $results = Project::where([
                 ['ProductManager_id', '=', $manager->id],
                 ['project_status', '=', $searchTerm]
             ])->get();
-        }
-        elseif(Auth::user()->role=='Product Owner'){
-            $owner=managers::where('user_id',$id)->first();
-            $results = Project:: where([
+        } elseif (Auth::user()->role == 'Product Owner') {
+            $owner = Manager::where('user_id', $id)->first();
+            $results = Project::where([
                 ['ProductOwner_id', '=', $owner->id],
                 ['project_status', '=', $searchTerm]
             ])->get();
-           
-
-        }elseif(Auth::user()->role=='Client'){
-            $client=Client::where('user_id',$id)->first();
-            $results = Project:: where([
+        } elseif (Auth::user()->role == 'Client') {
+            $client = Client::where('user_id', $id)->first();
+            $results = Project::where([
                 ['client_id', '=', $client->id],
                 ['project_status', '=', $searchTerm],
             ])->get();
-        }else{
+        } else {
             return response()->json([
                 'error' => 'Not found project with this status'
             ], 404);

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\managers;
+use App\Models\Manager;
 use App\Models\Skill;
 
 class User extends Authenticatable
@@ -55,9 +55,9 @@ class User extends Authenticatable
 
     function managers()
     {
-        return $this->hasMany(managers::class);
+        return $this->hasMany(Manager::class);
     }
-    
+
     function clients()
     {
         return $this->hasMany(Client::class);
@@ -65,6 +65,6 @@ class User extends Authenticatable
 
     public function skills()
     {
-        return $this->belongsToMany(Skill::class);
+        return $this->belongsToMany(Skill::class, 'user_skill');
     }
 }

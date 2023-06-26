@@ -13,15 +13,16 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('client_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('ProductOwner_id')->nullable()->cascadeOnUpdate()->constrained('managers')->onDelete('set null');
+            $table->foreignId('ProductManager_id')->nullable()->cascadeOnUpdate()->constrained('managers')->onDelete('set null');
+            $table->enum('project_type', ['mileStone', 'byProject'])->default('mileStone');
             $table->string('project_title');
-            $table->string('project_type');
+            $table->index('project_title');
             $table->string('project_description');
             $table->date('project_start');
             $table->date('project_end');
-            $table->enum('project_status',['notStarted','inProgress','complete'])->default('notStarted');
-            $table->foreignId('ProductOwner_id')->constrained('managers')->cascadeOnDelete();
-            $table->foreignId('ProductManager_id')->constrained('managers')->cascadeOnDelete();
-            $table->foreignId('client_id')->constrained()->cascadeOnDelete();
+            $table->enum('project_status', ['notStarted', 'inProgress', 'completed'])->default('notStarted');
             $table->timestamps();
         });
     }

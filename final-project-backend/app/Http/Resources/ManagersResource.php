@@ -17,7 +17,7 @@ class ManagersResource extends JsonResource
         return [
             'id' => $this->id,
             'role' => $this->role,
-            'staffLevel'=> new StaffLevelResource($this->staffLevel),
+            'staffLevel' => new StaffLevelResource($this->staffLevel),
             'user' => new UserResource($this->user)
         ];
     }

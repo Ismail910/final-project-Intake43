@@ -9,29 +9,30 @@ use App\Models\staff_levels;
 use App\Models\Project;
 use App\Models\Task;
 
-class managers extends Model
+class Manager extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'user_id',
-        'role',
         'staff_level_id'
-       
+
     ];
 
     function user()
     {
-        return $this->belongsTo(User::class,'user_id','id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
     function staff_level()
     {
         return $this->belongsTo(staff_levels::class);
     }
-    function project(){
+    function project()
+    {
         return $this->hasMany(Project::class);
     }
-    function task(){
+    function task()
+    {
         return $this->hasMany(Task::class);
     }
 }

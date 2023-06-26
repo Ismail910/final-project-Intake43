@@ -12,21 +12,21 @@ class Employee extends Model
         'user_id',
         'staff_level_id',
         'task_id',
-        'deductions'
+        // 'deductions'
     ];
 
     function user()
     {
-        return $this->belongsTo(User::class,'user_id','id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    function tasks(){
-        return $this->hasMany(Tasks::class);
+    function task()
+    {
+        return $this->hasOne(Tasks::class);
     }
-    
+
     function staff_level()
     {
         return $this->belongsTo(staff_levels::class);
     }
-
 }

@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-            $table->enum('role', ['Admin', 'Product Manager', 'Product Owner','Freelancer','Client','Employee'])->default('Client');
+        Schema::create('staff_levels', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->index('name');
+            $table->decimal('salary', 10, 2)->default(0);
+            $table->timestamps();
         });
     }
 
@@ -22,9 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-            $table->dropColumn('role');
-        });
+        Schema::dropIfExists('staff_levels');
     }
 };
