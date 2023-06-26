@@ -7,6 +7,8 @@ use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Models\Employee;
+use App\Models\Freelancer;
 use Illuminate\Http\Response;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -15,7 +17,7 @@ class TaskController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:sanctum', 'checkUser:Product Manager,Admin'])->only('store', 'destroy', 'update');
+        $this->middleware(['auth:sanctum', 'checkUser:ProductManager,Admin'])->only('store', 'destroy', 'update');
     }
     /**
      * Display a listing of the resource.
@@ -38,6 +40,19 @@ class TaskController extends Controller
     {
         //
         $task = Task::create($request->all());
+        // print($task->project->project_type);
+        if ($task->project->project_type == "mileStone") {
+            Freelancer::find($request->input('assigned_to'))->update([
+                'Status' => 0,
+                'task_id' => $task->id
+            ]);
+            // print(Freelancer::find($request->input('assigned_to')));
+        } else {
+            Employee::find($request->input('assigned_to'))->update([
+                'Status' => false,
+                'task_id' => $task->id
+            ]);
+        }
         return new TaskResource($task);
     }
 
