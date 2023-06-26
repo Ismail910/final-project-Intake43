@@ -11,12 +11,12 @@ const Developer = () => {
     name: '',
     email: '',
     password: '',
-    nationalId: '',
+    nationalID: '',
     address: '',
-    joinDate: '',
+    joinedDate: '',
     endDate: '',
-    profilePicture: '',
-    Country:'',
+    profilePic: '',
+    country:'',
     phoneNumber: '',
     role:''
   });
@@ -42,13 +42,14 @@ const Developer = () => {
       name: '',
       email: '',
       password: '',
-      nationalId: '',
+      nationalID: '',
       address: '',
-      joinDate: '',
+      joinedDate: '',
       endDate: '',
-      profilePicture: '',
-      phoneNumber: '',
-      role:''
+      profilePic: '',
+      phone: '',
+      role:'',
+      country:'',
     });
   };
 
@@ -91,7 +92,6 @@ const Developer = () => {
           <tr>
             <th>Name</th>
             <th>Email</th>
-            <th>Password</th>
             <th>National ID</th>
             <th>Address</th>
             <th>Join Date</th>
@@ -108,14 +108,13 @@ const Developer = () => {
             <tr key={developer.id}>
               <td>{developer.name}</td>
               <td>{developer.email}</td>
-              <td>{developer.password}</td>
-              <td>{developer.nationalId}</td>
+              <td>{developer.nationalID}</td>
               <td>{developer.address}</td>
-              <td>{developer.joinDate}</td>
+              <td>{developer.joinedDate}</td>
               <td>{developer.endDate}</td>
-              <td>{developer.profilePicture}</td>
-              <td>{developer.phoneNumber}</td>
-              <td>{developer.Country}</td>
+              <td>{developer.profilePic}</td>
+              <td>{developer.phone}</td>
+              <td>{developer.country}</td>
               <td className='d-flex justify-content-evenly'>
                 <button className='btn btn-info' onClick={() => updateDeveloper(developer.id)}>
                   Edit
@@ -184,12 +183,9 @@ const Developer = () => {
               <div className='row mb-3'>
                 <label htmlFor='role'>Role</label>
                 <select
-                  className='form-control'
-                  id='role'
-                  value={formData.role}
-                  onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                  required
-                >
+                  className='form-control' id='role' value={formData.role}
+                  onChange={(e) => setFormData({ ...formData, role: e.target.value })} required>
+
                   <option value=''>Select a role</option>
                   {['Admin', 'Product Manager', 'Product Owner', 'Freelancer', 'Client', 'Employee'].map((role) => (
                     <option key={role} value={role}>
@@ -197,8 +193,7 @@ const Developer = () => {
                     </option>
                   ))}
                 </select>
-           </div>
-
+              </div>
 
               <div className='row mb-3'>
                 <label htmlFor='joinDate'>
@@ -208,8 +203,7 @@ const Developer = () => {
                     id='joinDate'placeholder='Join Date'value={formData.joinDate}
                     onChange={(e) => setFormData({ ...formData, joinDate: e.target.value })} required/>
               </div>
-              
-              
+                  
               <div className='row mb-3'>
                 <label htmlFor='endDate'>
                   End Date
@@ -236,7 +230,6 @@ const Developer = () => {
                     type='text'className='form-control'id='phoneNumber'placeholder='Phone Number'value={formData.phoneNumber}
                     onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}required/>
               </div>
-
 
               <div className='row mb-3'>
                 <label htmlFor='country'>

@@ -78,6 +78,7 @@ class UserController extends Controller
                 'client' => $client,
                 'token'  => $token
             ], 201);
+            
         } elseif ($request->input('role') == 'Employee') {
             $employee = Employee::create([
                 'user_id' => $user->id,
@@ -165,7 +166,7 @@ class UserController extends Controller
             'inserted' => $inserted
         ], 200);
     }
-    
+
 
     public function countUser()
     {

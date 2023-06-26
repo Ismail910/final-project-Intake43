@@ -13,7 +13,7 @@ class Freelancer extends Model
         'user_id',
         'status',
         'balance',
-        'task_id',
+        // 'task_id',
         'rate'
     ];
     function user()

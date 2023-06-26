@@ -23,11 +23,11 @@ class FreelancerResource extends JsonResource
                 'salary-class'=>$this->staff_levels->name,
                 'salary'=>$this->staff_levels->salary
             ],
-            'task'=>[
-                'title'=>$this->task->task_title,
-                'description'=>$this->task->task_description,
-                'status'=>$this->task->task_status,
-            ]
+            // 'task'=>[
+            //     'title'=>$this->task->task_title,
+            //     'description'=>$this->task->task_description,
+            //     'status'=>$this->task->task_status,
+            // ]
         ];
     }
 }
