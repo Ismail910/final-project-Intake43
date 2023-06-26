@@ -54,7 +54,8 @@ Route::apiResource('user', UserController::class);
 
 
 
-Route::get('search', [SearchController::class, 'searchByName'])->name('search');
+
+Route::get('search/{model}/{keyword}/{projectType}', [SearchController::class, 'searchByName'])->name('search');
 
 use App\Http\Controllers\API\ProjectController;
 

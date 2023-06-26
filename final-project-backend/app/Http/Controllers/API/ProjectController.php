@@ -149,7 +149,7 @@ class ProjectController extends Controller
             // Perform your search logic based on the provided search term
             $results = Project::all();
         }elseif(Auth::user()->role=='Product Manager'){
-            $manager=managers::where('user_id',$id)->first();
+            $manager=manager::where('user_id',$id)->first();
             $results = Project:: where([
                 ['ProductManager_id', '=', $manager->id],
             ])->get();

@@ -44,7 +44,6 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-<<<<<<< HEAD
 
         $user = User::create([
             'name' => $request->input('name'),
@@ -120,8 +119,7 @@ class UserController extends Controller
 
 
         return response()->json(['error' => 'faild create user'], 404);
-=======
->>>>>>> 5f829f1c869dd78e82a555ef1578688835f965d3
+
     }
 
     /**
