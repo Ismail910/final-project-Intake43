@@ -95,7 +95,7 @@ class RegisterController extends Controller
         $freelancer = Freelancer::create([
             'user_id' => $result['user']->id,
             'status' => true,
-            'rate' => 0,
+            'rate' => '0',
             'balance' => 0,
             'task_id' => null
         ]);

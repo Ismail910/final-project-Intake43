@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('freelancers', function (Blueprint $table) {
             $table->id();
-            $table->enum('rate', ['0', '1', '2', '3', '4', '5'])->default('0');
+            $table->enum('rate', ['0','1','2','3','4','5'])->default('0');
             $table->boolean('Status')->default(false)->nullable();
             $table->decimal('balance', 10, 2)->default(0);
             $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
