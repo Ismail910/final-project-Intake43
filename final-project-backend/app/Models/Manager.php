@@ -25,7 +25,7 @@ class Manager extends Model
     }
     function staff_level()
     {
-        return $this->belongsTo(staff_levels::class);
+        return $this->belongsTo(StaffLevel::class);
     }
     function project()
     {

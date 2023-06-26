@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+// use App\Models\StaffLevel;
+use App\Models\User;
+use App\Models\Task;
 
 class Employee extends Model
 {
@@ -22,11 +25,11 @@ class Employee extends Model
 
     function task()
     {
-        return $this->hasOne(Tasks::class);
+        return $this->hasOne(Task::class);
     }
 
     function staff_level()
     {
-        return $this->belongsTo(staff_levels::class);
+        return $this->belongsTo(StaffLevel::class);
     }
 }

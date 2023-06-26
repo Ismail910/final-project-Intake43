@@ -4,16 +4,16 @@ namespace App\Rules;
 
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
-use App\Models\managers;
+use App\Models\Manager;
 use Illuminate\Contracts\Validation\Rule;
 
 class ProductOwnerValidationRule implements Rule
 {
     public function passes($attribute, $value)
     {
-        $manager = managers::find($value);
+        $manager = Manager::find($value);
 
-        return $manager && $manager->role === 'Product Owner';
+        return $manager && $manager->role === 'ProductOwner';
     }
 
     public function message()

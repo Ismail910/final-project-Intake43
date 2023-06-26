@@ -51,6 +51,20 @@ Route::post('user/{user}/Skills', [UserController::class, 'addSkillsToUser']);
 Route::get('user/{user}/Skills', [UserController::class, 'getUserSkills']);
 Route::apiResource('user', UserController::class);
 
+// ========== Freelancer route ====================
+Route::apiResource('freelancer', FreelancerController::class);
+
+// ========== client route ====================
+Route::apiResource('client', ClientController::class);
+
+// ========== employee route ====================
+Route::apiResource('employee', EmployeeController::class);
+
+// ========== manager route ====================
+Route::get('managers/{type}', [ManagersController::class, 'index'])->name('index');
+Route::apiResource('manager', ManagersController::class);
+
+
 
 
 
@@ -69,10 +83,7 @@ Route::apiResource('skills', SkillController::class);
 
 
 // Route::post('managers', [ManagersController::class, 'store'])->name('managers.store');
-Route::apiResource('management', ManagersController::class);
-Route::apiResource('freelancer', FreelancerController::class);
-Route::apiResource('client', ClientController::class);
-Route::apiResource('employee', EmployeeController::class);
+
 
 
 

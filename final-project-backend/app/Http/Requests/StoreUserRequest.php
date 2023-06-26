@@ -27,7 +27,7 @@ class StoreUserRequest extends FormRequest
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6',
-            'role' => 'sometimes|in:Admin,Product Manager,Product Owner,Freelancer,Client,Employee',
+            'role' => 'sometimes|in:Admin,ProductManager,ProductOwner,Freelancer,Client,Employee',
             'nationalID' => 'required|string|min:14',
             'address' => 'required|string',
             'phone' => 'required|string|min:11',

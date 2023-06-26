@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StorestaffLevelRequest;
-use App\Http\Requests\UpdatestaffLevelRequest;
+use App\Http\Requests\StoreStaffLevelRequest;
+use App\Http\Requests\UpdateStaffLevelRequest;
 use App\Http\Resources\StaffLevelResource;
 use App\Models\StaffLevel;
 use App\Models\User;
@@ -20,11 +20,10 @@ class StaffLevelController extends Controller
     public function index()
     {
         // return StaffLevel::all();
-        try{
+        try {
             $manager = StaffLevel::all();
             return StaffLevelResource::collection($manager);
-        }
-        catch(ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'not found mangers collection',
             ], 404);
@@ -35,7 +34,7 @@ class StaffLevelController extends Controller
      * Store a newly created resource in storage.
      */
 
-    public function store(StorestaffLevelRequest $request)
+    public function store(StoreStaffLevelRequest $request)
     {
         $salary = StaffLevel::create($request->all());
         return new StaffLevelResource($salary);
@@ -45,7 +44,7 @@ class StaffLevelController extends Controller
      * Display the specified resource.
      */
 
-    public function show(StaffLevel $staffLevel , User $staff_level_id)
+    public function show(StaffLevel $staffLevel, User $staff_level_id)
     {
         return StaffLevel::where(['id' => $staff_level_id])->get();
     }
@@ -53,10 +52,10 @@ class StaffLevelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatestaffLevelRequest $request, StaffLevel $staffLevel)
+    public function update(UpdateStaffLevelRequest $request, StaffLevel $staffLevel)
     {
         $staffLevel->update($request->all());
-       return  new StaffLevelResource($staffLevel);
+        return  new StaffLevelResource($staffLevel);
     }
 
     /**

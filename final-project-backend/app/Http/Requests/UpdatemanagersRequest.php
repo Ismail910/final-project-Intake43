@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 
-class UpdatemanagersRequest extends FormRequest
+class UpdateManagersRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class UpdatemanagersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:Users,id',
+            'user_id' => 'exists:Users,id',
         ];
     }
     public  function  failedValidation(Validator $validator)

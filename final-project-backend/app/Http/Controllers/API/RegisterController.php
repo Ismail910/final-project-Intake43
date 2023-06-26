@@ -18,10 +18,10 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth:sanctum', 'checkUser:Admin'])->only('RegisterManager');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware(['auth:sanctum', 'checkUser:Admin'])->only('RegisterManager');
+    // }
     public function RegisterUser(StoreUserRequest $request)
     {
         $user = User::create([
@@ -45,7 +45,7 @@ class RegisterController extends Controller
     public function RegisterManager(StoreUserRequest $request)
     {
         $validator = Validator::make($request->all(), [
-            'staff_level_id' => 'required|exists:staff_levels,id'
+            'staff_level_id' => 'exists:staff_levels,id'
         ]);
 
         if ($validator->fails()) {
@@ -71,7 +71,7 @@ class RegisterController extends Controller
                 'employee' => $employee,
                 'token'  => $result['token']
             ], 201);
-        } elseif ($request->input('role') == 'Product Manager' || $request->input('role') == 'Product Owner' || $request->input('role') == 'Admin') {
+        } elseif ($request->input('role') == 'ProductManager' || $request->input('role') == 'ProductOwner' || $request->input('role') == 'Admin') {
             $manager = Manager::create([
                 'user_id' => $result['user']->id,
                 'staff_level_id' => $request->input('staff_level_id'),

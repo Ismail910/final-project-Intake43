@@ -18,8 +18,9 @@ class ProjectController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:sanctum', 'checkUser:Product Owner,Client'])->only('store');
-        $this->middleware(['auth:sanctum', 'checkUser:Product Owner,Client,Admin'])->only('searchProjectByStatus');
+        $this->middleware(['auth:sanctum', 'checkUser:ProductOwner'])->only('store', 'delete');
+        $this->middleware(['auth:sanctum', 'checkUser:ProductOwner,ProductManager'])->only('store', 'delete', 'update');
+        $this->middleware(['auth:sanctum', 'checkUser:ProductOwner,Client,Admin'])->only('searchProjectByStatus');
     }
     /**
      * Display a listing of the resource.

@@ -26,6 +26,6 @@ class Freelancer extends Model
     }
     function task()
     {
-        return $this->hasOne(Tasks::class);
+        return $this->hasOne(Tasks::class, 'task_id', 'id');
     }
 }

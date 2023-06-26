@@ -9,6 +9,7 @@ use App\Models\Employee;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Models\User;
 
 class EmployeeController extends Controller
 {
@@ -20,12 +21,11 @@ class EmployeeController extends Controller
         try {
             $emp = Employee::all();
             return EmployeeResource::collection($emp);
-        } catch(ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'not found Employee collection',
             ], 404);
         }
-
     }
 
     /**
@@ -43,11 +43,10 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        if($employee){
+        if ($employee) {
             return  new EmployeeResource($employee);
         }
         return  new Response('', 205);
-
     }
 
     /**
@@ -58,11 +57,10 @@ class EmployeeController extends Controller
         try {
             $employee->update($request->all());
             return new EmployeeResource($employee);
-        } catch(ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'check it is validation'
             ], 404);
-
         }
     }
 
@@ -71,7 +69,16 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        $employee->delete();
-        return new Response('', 204);
+        try {
+            User::find($employee->user->id)->delete();
+            // $client->delete();
+            return response()->json([
+                'success' => "user deleted"
+            ], 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'check if client is exist '
+            ], 404);
+        }
     }
 }
