@@ -21,6 +21,7 @@ class ProjectController extends Controller
         $this->middleware(['auth:sanctum', 'checkUser:ProductOwner'])->only('store', 'delete');
         $this->middleware(['auth:sanctum', 'checkUser:ProductOwner,ProductManager'])->only('store', 'delete', 'update');
         $this->middleware(['auth:sanctum', 'checkUser:ProductOwner,Client,Admin'])->only('searchProjectByStatus');
+        $this->middleware(['auth:sanctum', 'checkUser:Product Owner,Client,Admin,Product Manager'])->only('searchProjectByUsers');
     }
     /**
      * Display a listing of the resource.
@@ -134,7 +135,39 @@ class ProjectController extends Controller
         }
         return response()->json($results);
     }
+    public function searchProjectByUsers()
+    {
 
+        $results = [];
+        if (!Auth::user()) {
+            return response()->json([
+                'error' => 'unauthentecation'
+            ], 404);
+        }
+        $id = Auth::user()->id;
+        if (Auth::user()->role == 'Admin') {
+            // Perform your search logic based on the provided search term
+            $results = Project::all();
+        } elseif (Auth::user()->role == 'Product Manager') {
+            $manager = Manager::where('user_id', $id)->first();
+            $results = Project::where([
+                ['ProductManager_id', '=', $manager->id],
+            ])->get();
+        } elseif (Auth::user()->role == 'Product Owner') {
+            $results = Project::where([
+                ['ProductOwner_id', '=', $owner->id],
+            ])->get();
+        } elseif (Auth::user()->role == 'Client') {
+            $results = Project::where([
+                ['client_id', '=', $client->id],
+            ])->get();
+        } else {
+            return response()->json([
+                'error' => 'Not found project to this user'
+            ], 404);
+        }
+        return response()->json($results);
+    }
     public function countProject()
     {
         $count = Project::count();
