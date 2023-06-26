@@ -1,20 +1,30 @@
-// import React, { Component } from 'react';
-// import UserForm from "./userform";
+import React, { useState } from 'react';
+import UserForm from "./userform";
+const ProductOwner = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    nationalID: '',
+    address: '',
+    joinDate: '',
+    endDate: '',
+    profilePicture: '',
+    country: '',
+    phoneNumber: '',
+    role: ''
+  });
 
-// export class ProductOwner extends Component {
-//   render() {
-//     const { formData, setFormData, createDeveloper } = this.props;
+  const createDeveloper = () => {
+    
+    console.log(formData);
+  };
 
-//     return (
-//       <div className="col main pt-5 mt-3">
-//         <UserForm
-//           formData={formData}
-//           setFormData={setFormData}
-//           createDeveloper={createDeveloper}
-//         />
-//       </div>
-//     );
-//   }
-// }
+  return (
+    <div className='col main pt-5 mt-3'>
+      <UserForm formData={formData} setFormData={setFormData} createDeveloper={createDeveloper} />
+    </div>
+  );
+};
 
-// export default ProductOwner;
+export default ProductOwner;

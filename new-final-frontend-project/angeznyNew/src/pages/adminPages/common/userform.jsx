@@ -3,8 +3,8 @@ import React from 'react';
 
 const Userform = ({ formData, setFormData, createDeveloper }) => {
   return (
-    <div className='container'>
-        <h3 className='text-center my-3'>Add Developer</h3>
+    <div className='my-2'>
+        <h3 className='text-center '>Add User</h3>
         <div className='row justify-content-center my-3 '>
           <div className='col-md-6 '>
             <form className='d-flex flex-column '>
@@ -60,7 +60,7 @@ const Userform = ({ formData, setFormData, createDeveloper }) => {
                   onChange={(e) => setFormData({ ...formData, role: e.target.value })} required>
 
                   <option value=''>Select a role</option>
-                  {['Admin', 'Product Manager', 'Product Owner', 'Freelancer', 'Client', 'Employee'].map((role) => (
+                  {['Admin', 'Product Manager', 'Product Owner','Employee'].map((role) => (
                     <option key={role} value={role}>
                       {role}
                     </option>

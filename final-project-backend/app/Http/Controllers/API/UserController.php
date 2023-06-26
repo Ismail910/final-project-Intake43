@@ -86,7 +86,7 @@ class UserController extends Controller
                 'client' => $client,
                 'token'  => $token
             ], 201);
-            
+
         } elseif ($request->input('role') == 'Employee') {
             $employee = Employee::create([
                 'user_id' => $user->id,
@@ -210,8 +210,6 @@ class UserController extends Controller
         }
     }
 
-<<<<<<< HEAD
-=======
     public function getUserSkills(Request $request, User $user)
     {
         return $user->skills;
@@ -228,7 +226,6 @@ class UserController extends Controller
         // }
     }
 
->>>>>>> 5f829f1c869dd78e82a555ef1578688835f965d3
 
     public function countUser()
     {
