@@ -44,6 +44,80 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
+
+        $user = User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+            'role' => $request->input('role'),
+            'nationalID' => $request->input('nationalID'),
+            'address' => $request->input('address'),
+            'phone' => $request->input('phone'),
+            'joinedDate' => $request->input('joinedDate'),
+            'endDate' => $request->input('endDate'),
+            'country' => $request->input('country'),
+        ]);
+        $this->save_image($request->profilePic, $user);
+
+        $token = $user->createToken('token-name', ['user_id' => $user->id, 'email' => $user->email, 'name' => $user->name, 'role' => $user->role])->plainTextToken;
+
+        if ($request->input('role') == 'Freelancer') {
+            $freelancer = Freelancer::create([
+                'user_id' => $user->id,
+                'status' => false,
+                'rate' => 1,
+                'balance' => 0,
+                'task_id' => null
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'freelancer' => $freelancer,
+                'token'  => $token
+            ], 201);
+        } elseif ($request->input('role') == 'Client') {
+            $client = Client::create([
+                'user_id' => $user->id,
+                'balance' => 0,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'client' => $client,
+                'token'  => $token
+            ], 201);
+        } elseif ($request->input('role') == 'Employee') {
+            $employee = Employee::create([
+                'user_id' => $user->id,
+                'balance' => 0,
+                'staff_level_id' => $request->input('staff_level_id'),
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'employee' => $employee,
+                'token'  => $token
+            ], 201);
+        } else {
+            $manager = managers::create([
+                'user_id' => $user->id,
+                'role' => $request->input('role'),
+                'staff_level_id' => $request->input('staff_level_id'),
+            ]);
+
+
+            return response()->json([
+                'success' => true,
+                'manager' => $manager,
+                'token'  => $token
+            ], 201);
+            // return redirect()->route('managers.store', ['user_id' => $user->id,'role'=>'Product Manager','staff_level_id'=>1])->withInput();;
+        }
+
+
+
+
+        return response()->json(['error' => 'faild create user'], 404);
     }
 
     /**
@@ -133,7 +207,6 @@ class UserController extends Controller
             ], 200);
         }
     }
-
 
     public function getUserSkills(Request $request, User $user)
     {
