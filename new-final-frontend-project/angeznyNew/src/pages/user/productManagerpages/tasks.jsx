@@ -69,7 +69,6 @@ function Row(props) {
       
       try {
           var response;
-          console.log(row.project.type);
           if( row.project.type=='mileStone'){
               response = await fetch(`http://127.0.0.1:8000/api/freeFreelancers`, {
               headers: {
@@ -87,7 +86,6 @@ function Row(props) {
         if (response.ok) {
           const data = await response.json();
           if (data) {
-            console.log(data);
             setDevelopers(data.data);
           }
         } else {
@@ -376,6 +374,9 @@ const Tasks = () => {
   const [description, setDescription] = React.useState('');
   const [startDate, setStartDate] = React.useState('');
   const [endDate, setEndDate] = React.useState('');
+  const [searchSkill, setSearchSkill] = React.useState('');
+  const [users, setUsers] = React.useState('');
+
   React.useEffect(() => {
     // Fetch questions from backend API
     const fetchTasks = async () => {
@@ -464,6 +465,25 @@ const Tasks = () => {
   const handleEndDateChange = (event) => {
     setEndDate(event.target.value);
   };
+  const handleSearch = () => {
+    // Make the API request to fetch users based on the entered skill
+    fetchUsersBySkill(searchSkill);
+  };
+  const fetchUsersBySkill = async (skill) => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/api/search/Skill/${skill}/mileStone`);
+      if (response.ok) {
+        const data = await response.json();
+        // Process the data and update the user list state variable
+        console.log(data);
+        setUsers(data.data);
+      } else {
+        toast.error('Failed to fetch users');
+      }
+    } catch (error) {
+      toast.error('Error fetching users: ' + error.message);
+    }
+  };
   const handleSave=async (event) => {
     event.preventDefault();
     // console.log(id);
@@ -538,22 +558,24 @@ const Tasks = () => {
         sx={{ width:'40%',marginBottom:'10px' ,marginRight:'15px'}}
         InputProps={{
           endAdornment: (
-            <InputAdornment position="end" >
-              <SearchIcon  />
+            <InputAdornment position="end" onClick={handleSearch}>
+              <SearchIcon  onClick={handleSearch}/>
             </InputAdornment>
           ),
         }}
+        value={searchSkill}
+        onChange={(event) => setSearchSkill(event.target.value)}
       />
     <TextField
         id="input-with-icon-textfield"
         color="success"
-        placeholder="Search for users with skills"
+        placeholder="Send message for this user"
         size="lg"
         variant="outlined"
         sx={{ width:'40%',marginBottom:'10px' ,marginRight:'15px' }}
         InputProps={{
           endAdornment: (
-            <InputAdornment position="end" >
+            <InputAdornment position="end"  >
               <SendIcon/>
             </InputAdornment>
           ),
@@ -635,6 +657,19 @@ const Tasks = () => {
           </form>
         </ModalDialog>
       </Modal>
+      </Box>
+      <Box>
+      {users.length > 0 ? (
+  users.map((user) => (
+    <div key={user.id}>
+      <p>Name: {user.name}</p>
+      <p>Email: {user.email}</p>
+      {/* Add other user information you want to display */}
+    </div>
+  ))
+) : (
+  <p>No users found.</p>
+)}
       </Box>
       <TableContainer component={Paper}>
         <Table aria-label="collapsible table">
