@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Requests\StoreManagersRequest;
-use App\Http\Requests\UpdatemanagersRequest;
+use App\Http\Requests\UpdateManagersRequest;
 use App\Http\Resources\ManagersResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-use App\Models\Manager as Managers;
+use App\Models\Manager;
+use App\Models\User;
 
 
 class ManagersController extends Controller
@@ -16,12 +17,22 @@ class ManagersController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(string $managerRole)
+    public function __construct()
     {
+        $this->middleware(['auth:sanctum', 'checkUser:Admin'])->only('store', 'update', 'destroy');
+    }
+    public function index(string $type)
+    {
+        $managers = [];
         // return Managers::all();
         try {
-            $manager = Managers::where('role', $managerRole)->get();
-            return ManagersResource::collection($manager);
+            $users = User::where('role', $type)->get();
+            foreach ($users as $user) {
+                $manager = Manager::where('user_id', $user->id)->first();
+                array_push($managers, $manager);
+            }
+            // return $managers;
+            return ManagersResource::collection($managers);
         } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'not found mangers collection',
@@ -36,7 +47,7 @@ class ManagersController extends Controller
     public function store(StoreManagersRequest $request)
     {
 
-        $manager = Managers::create($request->all());
+        $manager = Manager::create($request->all());
 
         return $manager;
     }
@@ -44,7 +55,7 @@ class ManagersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Managers $manager)
+    public function show(Manager $manager)
     {
         if ($manager) {
 
@@ -56,7 +67,7 @@ class ManagersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatemanagersRequest $request, Managers $manager)
+    public function update(UpdateManagersRequest $request, Manager $manager)
     {
         // $manager = Managers::update($request->all());
         try {
@@ -72,9 +83,18 @@ class ManagersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Managers $manager)
+    public function destroy(Manager $manager)
     {
-        $manager->delete();
-        return new Response('', 204);
+        try {
+            User::find($manager->user->id)->delete();
+            // $client->delete();
+            return response()->json([
+                'success' => "user deleted"
+            ], 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'check if client is exist '
+            ], 404);
+        }
     }
 }

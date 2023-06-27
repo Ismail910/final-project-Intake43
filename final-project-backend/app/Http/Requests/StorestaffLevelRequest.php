@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorestaffLevelRequest extends FormRequest
+class StoreStaffLevelRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,8 @@ class StorestaffLevelRequest extends FormRequest
     public function rules(): array
     {
         return [
-           'name' => 'required|string|max:255',
+            'name' => 'required|string|unique:staff_levels,name|max:255',
             'salary' => 'required',
-            
         ];
     }
 }

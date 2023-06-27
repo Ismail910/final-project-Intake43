@@ -18,10 +18,10 @@ class ProjectController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:sanctum','checkUser:Product Owner,Client'])->only('store');
-        $this->middleware(['auth:sanctum','checkUser:Product Owner,Client,Admin,Product Manager'])->only('searchProjectByStatus');
-        $this->middleware(['auth:sanctum','checkUser:Product Owner,Client,Admin,Product Manager'])->only('searchProjectByUsers');
-
+        $this->middleware(['auth:sanctum', 'checkUser:ProductOwner'])->only('store', 'delete');
+        $this->middleware(['auth:sanctum', 'checkUser:ProductOwner,ProductManager'])->only('update');
+        $this->middleware(['auth:sanctum', 'checkUser:ProductOwner,Client,Admin'])->only('searchProjectByStatus');
+        $this->middleware(['auth:sanctum', 'checkUser:ProductOwner,Client,Admin,ProductManager'])->only('searchProjectByUsers');
     }
     /**
      * Display a listing of the resource.
@@ -86,10 +86,13 @@ class ProjectController extends Controller
     public function destroy(string $id)
     {
         //
+
         try {
             $project = Project::findOrFail($id);
             $project->delete();
-            return response()->json([$project], 204);
+            return response()->json([
+                'success' => "project deleted"
+            ], 200);
         } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'check if project is exist '
@@ -110,13 +113,13 @@ class ProjectController extends Controller
         if (Auth::user()->role == 'Admin') {
             // Perform your search logic based on the provided search term
             $results = Project::where('project_status', '=', $searchTerm)->get();
-        } elseif (Auth::user()->role == 'Product Manager') {
+        } elseif (Auth::user()->role == 'ProductManager') {
             $manager = Manager::where('user_id', $id)->first();
             $results = Project::where([
                 ['ProductManager_id', '=', $manager->id],
                 ['project_status', '=', $searchTerm]
             ])->get();
-        } elseif (Auth::user()->role == 'Product Owner') {
+        } elseif (Auth::user()->role == 'ProductOwner') {
             $owner = Manager::where('user_id', $id)->first();
             $results = Project::where([
                 ['ProductOwner_id', '=', $owner->id],
@@ -137,42 +140,42 @@ class ProjectController extends Controller
     }
     public function searchProjectByUsers()
     {
-        
-        $results=[];
-        if(!Auth::user()){
+
+        $results = [];
+        if (!Auth::user()) {
             return response()->json([
                 'error' => 'unauthentecation'
             ], 404);
         }
-        $id=Auth::user()->id;
-        if(Auth::user()->role=='Admin'){
+        $id = Auth::user()->id;
+        if (Auth::user()->role == 'Admin') {
             // Perform your search logic based on the provided search term
             $results = Project::all();
-        }elseif(Auth::user()->role=='Product Manager'){
-            $manager=manager::where('user_id',$id)->first();
-            $results = Project:: where([
+        } elseif (Auth::user()->role == 'ProductManager') {
+            $manager = Manager::where('user_id', $id)->first();
+            $results = Project::where([
                 ['ProductManager_id', '=', $manager->id],
             ])->get();
-        }
-        elseif(Auth::user()->role=='Product Owner'){
-            $results = Project:: where([
+        } elseif (Auth::user()->role == 'ProductOwner') {
+            $owner = Manager::where('user_id', $id)->first();
+            $results = Project::where([
                 ['ProductOwner_id', '=', $owner->id],
             ])->get();
-           
-
-        }elseif(Auth::user()->role=='Client'){
-            $results = Project:: where([
+        } elseif (Auth::user()->role == 'Client') {
+            $client = Client::where('user_id', $id)->first();
+            $results = Project::where([
                 ['client_id', '=', $client->id],
             ])->get();
-        }else{
+        } else {
             return response()->json([
                 'error' => 'Not found project to this user'
             ], 404);
         }
         return response()->json($results);
     }
-    public function countProject(){
-        $count= Project::count();
+    public function countProject()
+    {
+        $count = Project::count();
         return response()->json([
             'countProject' => $count
         ], 200);

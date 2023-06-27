@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Manager;
 use App\Models\Employee;
 
-class staffLevel extends Model
+class StaffLevel extends Model
 {
     use HasFactory;
 

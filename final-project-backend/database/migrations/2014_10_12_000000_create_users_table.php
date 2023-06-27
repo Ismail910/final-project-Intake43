@@ -25,7 +25,7 @@ return new class extends Migration
             $table->date('joinedDate');
             $table->date('endDate')->nullable();
             $table->string('profilePic')->nullable()->default('user.png');
-            $table->enum('role', ['Admin', 'Product Manager', 'Product Owner', 'Freelancer', 'Client', 'Employee'])->default('Client');
+            $table->enum('role', ['Admin', 'ProductManager', 'ProductOwner', 'Freelancer', 'Client', 'Employee'])->default('Client');
             $table->rememberToken();
             $table->timestamps();
         });

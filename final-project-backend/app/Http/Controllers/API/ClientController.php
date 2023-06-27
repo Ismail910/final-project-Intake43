@@ -8,6 +8,7 @@ use App\Http\Resources\ClientResource;
 use App\Models\Client;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 
 class ClientController extends Controller
@@ -15,13 +16,16 @@ class ClientController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        $this->middleware(['auth:sanctum', 'checkUser:Admin'])->only('store', 'update', 'destroy');
+    }
     public function index()
     {
-        try{
+        try {
             $client = Client::all();
             return ClientResource::collection($client);
-        }
-        catch(ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'not found client collection',
             ], 404);
@@ -55,17 +59,16 @@ class ClientController extends Controller
      */
     public function update(StoreClientRequest $request, string $id)
     {
-        try{
+        try {
             $client = Client::findOrFail($id);
             $client->update($request->all());
 
             return new ClientResource($client);
-       }
-       catch(ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'check if client is exist and check it is validation'
             ], 404);
-       }
+        }
     }
 
     /**
@@ -73,12 +76,14 @@ class ClientController extends Controller
      */
     public function destroy(string $id)
     {
-        try{
+        try {
             $client = Client::findOrFail($id);
-            $client->delete();
-            return response()->json([$client], 204);
-        }
-        catch(ModelNotFoundException $e){
+            User::find($client->user->id)->delete();
+            // $client->delete();
+            return response()->json([
+                'success' => "user deleted"
+            ], 200);
+        } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'check if client is exist '
             ], 404);

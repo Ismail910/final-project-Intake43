@@ -45,7 +45,7 @@ class RegisterController extends Controller
     public function RegisterManager(StoreUserRequest $request)
     {
         $validator = Validator::make($request->all(), [
-            'staff_level_id' => 'required|exists:staff_levels,id'
+            'staff_level_id' => 'exists:staff_levels,id'
         ]);
 
         if ($validator->fails()) {
@@ -71,7 +71,7 @@ class RegisterController extends Controller
                 'employee' => $employee,
                 'token'  => $result['token']
             ], 201);
-        } elseif ($request->input('role') == 'Product Manager' || $request->input('role') == 'Product Owner' || $request->input('role') == 'Admin') {
+        } elseif ($request->input('role') == 'ProductManager' || $request->input('role') == 'ProductOwner' || $request->input('role') == 'Admin') {
             $manager = Manager::create([
                 'user_id' => $result['user']->id,
                 'staff_level_id' => $request->input('staff_level_id'),
@@ -94,7 +94,7 @@ class RegisterController extends Controller
 
         $freelancer = Freelancer::create([
             'user_id' => $result['user']->id,
-            'status' => true,
+            'Status' => true,
             'rate' => '0',
             'balance' => 0,
             'task_id' => null

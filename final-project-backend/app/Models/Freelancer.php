@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use App\Models\Task;
 
 class Freelancer extends Model
 {
@@ -11,7 +13,7 @@ class Freelancer extends Model
 
     protected $fillable = [
         'user_id',
-        'status',
+        'Status',
         'balance',
         'task_id',
         'rate'
@@ -26,6 +28,6 @@ class Freelancer extends Model
     }
     function task()
     {
-        return $this->hasOne(Tasks::class);
+        return $this->hasOne(Task::class, 'id', 'task_id');
     }
 }

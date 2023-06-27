@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Employee;
+use App\Models\Freelancer;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Models\managers;
@@ -16,6 +18,11 @@ class TaskResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
+        $employee = Employee::where('task_id', $this->id)->first();
+        $freelancer = Freelancer::where('task_id', $this->id)->first();
+        $assigned_to = $employee ? $employee : ($freelancer ? $freelancer : null);
+
         return [
             'id' => $this->id,
             'name' => $this->task_title,
@@ -26,11 +33,17 @@ class TaskResource extends JsonResource
             'project' => [
                 'id' => $this->project->id,
                 'name' => $this->project->project_title,
+                'type' => $this->project->project_type,
             ],
             'productManager' => [
                 'id' => $this->ProductManager->id,
                 'name' => $this->ProductManager->user->name,
                 'email' => $this->ProductManager->user->email,
+            ],
+            'assigned_to' => [
+                'id' => $assigned_to->user->id,
+                'name' => $assigned_to->user->name,
+                'email' => $assigned_to->user->email,
             ],
         ];
     }

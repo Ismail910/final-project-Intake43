@@ -14,7 +14,7 @@ class SkillController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware(['auth:sanctum', 'checkUser:Admin'])->only('store', 'update', 'destroy');
+        $this->middleware(['auth:sanctum', 'checkUser:Admin'])->only('store', 'update', 'destroy');
     }
     /**
      * Display a listing of the resource.
@@ -22,8 +22,8 @@ class SkillController extends Controller
     public function index()
     {
         try {
-            // return SkillResource::collection(Skill::all());
-            return Skill::all();
+            return SkillResource::collection(Skill::all());
+            // return Skill::all();
         } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'not found Skills'
@@ -47,8 +47,8 @@ class SkillController extends Controller
     public function show(Skill $skill)
     {
         try {
-            // return new SkillResource(Skill::where(['id' => $skill->id])->get());
-            return Skill::where(['id' => $skill->id])->get()->users();
+            return new SkillResource($skill);
+            // return Skill::where(['id' => $skill->id])->get()->users();
         } catch (ModelNotFoundException $exception) {
             return response()->json(['error' => 'Skills not found'], 404);
         }
@@ -72,14 +72,19 @@ class SkillController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Skill $skill)
+    public function destroy(string $id)
     {
+        //
+
         try {
-            $skill->delete();
-            return new Response('', 204);
+            $project = Skill::findOrFail($id);
+            $project->delete();
+            return response()->json([
+                'success' => "Skill deleted"
+            ], 200);
         } catch (ModelNotFoundException $e) {
             return response()->json([
-                'error' => 'check if Skills is exist '
+                'error' => 'check if Skill is exist '
             ], 404);
         }
     }
