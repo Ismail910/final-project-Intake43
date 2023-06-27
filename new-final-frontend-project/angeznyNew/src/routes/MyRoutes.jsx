@@ -22,7 +22,7 @@ import FreelancerTask from '../pages/user/freelancerpages/task'
 import Managerproject from '../pages/user/productManagerpages/Managerproject';
 import ManagerTask from '../pages/user/productManagerpages/tasks'
 
-import OwnerProject from '../pages/user/productOwnerPages/OwnerProject';
+import OwnerTask from '../pages/user/productOwnerPages/tasks';
 
 import AdminClient  from '../pages/adminPages/common/client'
 import AdminDash from '../pages/adminPages/common/Dashboard'
@@ -533,7 +533,7 @@ const MyRoutes = () => {
           {/* </Route> */}
 
          {/* Owner routes */}
-          <Route element={<ProductOwnerGuard />}>
+          {/* <Route element={<ProductOwnerGuard />}> */}
           <Route
             path="owner/"
             element={
@@ -568,7 +568,7 @@ const MyRoutes = () => {
           />
 
             <Route
-            path="/owner/project"
+            path="/owner/task"
             element={
               <Suspense
                 fallback={
@@ -578,7 +578,7 @@ const MyRoutes = () => {
                 }
               >
                 <Header/>
-                <OwnerProject/>
+                <OwnerTask/>
                 <Footer/>
               </Suspense>
             }
@@ -588,7 +588,7 @@ const MyRoutes = () => {
             element={
               <Suspense
                 fallback={
-                  <div className="grid place-items-center h-screen bg-black">
+                  <div className="grid place-items-center h-screen bg-blackm">
                     <CircleSpinner size={60} />
                   </div>
                 }
@@ -600,7 +600,7 @@ const MyRoutes = () => {
             }
           />
 
-          </Route>
+          {/* </Route> */}
         </Routes>
     </BrowserRouter>
   );
