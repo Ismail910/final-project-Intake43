@@ -22,7 +22,11 @@ class TaskResource extends JsonResource
         $employee = Employee::where('task_id', $this->id)->first();
         $freelancer = Freelancer::where('task_id', $this->id)->first();
         $assigned_to = $employee ? $employee : ($freelancer ? $freelancer : null);
-
+        $assignedToData = $assigned_to ? [
+            'id' => $assigned_to->user->id,
+            'name' => $assigned_to->user->name,
+            'email' => $assigned_to->user->email,
+        ] : null;
         return [
             'id' => $this->id,
             'name' => $this->task_title,
@@ -40,11 +44,7 @@ class TaskResource extends JsonResource
                 'name' => $this->ProductManager->user->name,
                 'email' => $this->ProductManager->user->email,
             ],
-            'assigned_to' => [
-                'id' => $assigned_to->user->id,
-                'name' => $assigned_to->user->name,
-                'email' => $assigned_to->user->email,
-            ],
+            'assigned_to' => $assignedToData
         ];
     }
 }
