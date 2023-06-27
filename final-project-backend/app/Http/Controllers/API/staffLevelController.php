@@ -17,6 +17,10 @@ class StaffLevelController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        $this->middleware(['auth:sanctum', 'checkUser:Admin']);
+    }
     public function index()
     {
         // return StaffLevel::all();
@@ -44,26 +48,51 @@ class StaffLevelController extends Controller
      * Display the specified resource.
      */
 
-    public function show(StaffLevel $staffLevel, User $staff_level_id)
+    public function show(string $id)
     {
-        return StaffLevel::where(['id' => $staff_level_id])->get();
+        try {
+            $staffLevel = StaffLevel::findOrFail($id);
+            return new StaffLevelResource($staffLevel);
+        } catch (ModelNotFoundException $exception) {
+            return response()->json(['error' => 'staffLevel not found'], 404);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateStaffLevelRequest $request, StaffLevel $staffLevel)
+    public function update(UpdateStaffLevelRequest $request, string $id)
     {
-        $staffLevel->update($request->all());
-        return  new StaffLevelResource($staffLevel);
+        //
+        try {
+            $project = StaffLevel::findOrFail($id);
+            $project->update($request->all());
+
+            return new StaffLevelResource($project);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'check if project is exist and check it is validation'
+            ], 404);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(StaffLevel $staffLevel)
+    public function destroy(string $id)
     {
-        $staffLevel->delete();
-        return new Response('', 204);
+        //
+
+        try {
+            $project = StaffLevel::findOrFail($id);
+            $project->delete();
+            return response()->json([
+                'success' => "staffLevel deleted"
+            ], 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'check if staffLevel is exist '
+            ], 404);
+        }
     }
 }

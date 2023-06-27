@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\Rule;
 
 class UpdateSkillRequest extends FormRequest
 {
@@ -24,7 +25,13 @@ class UpdateSkillRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
+            'name' => [
+                'sometimes',
+                'required',
+                'string',
+                Rule::unique('skills', 'name')->ignore($this->route('skill')),
+                'max:255'
+            ],
         ];
     }
 

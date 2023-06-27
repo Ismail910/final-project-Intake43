@@ -17,12 +17,12 @@ class EmployeeResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // $Task = $this->task_id ? new TaskResource($this->task_id) : null;
+        $Task = $this->task ? new TaskResource($this->task) : null;
         $staff_level = $this->staff_level ? new StaffLevelResource($this->staff_level) : null;
         return [
             'id' => $this->id,
             'user' => new UserResource($this->user),
-            // 'task' => $Task,
+            'task' => $Task,
             'staff_level' => $staff_level
 
             // 'salayre' => [

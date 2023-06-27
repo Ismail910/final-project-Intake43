@@ -33,13 +33,18 @@ class TaskResource extends JsonResource
             'project' => [
                 'id' => $this->project->id,
                 'name' => $this->project->project_title,
+                'type' => $this->project->project_type,
             ],
             'productManager' => [
                 'id' => $this->ProductManager->id,
                 'name' => $this->ProductManager->user->name,
                 'email' => $this->ProductManager->user->email,
             ],
-            'assigned_to' => $assigned_to
+            'assigned_to' => [
+                'id' => $assigned_to->user->id,
+                'name' => $assigned_to->user->name,
+                'email' => $assigned_to->user->email,
+            ],
         ];
     }
 }

@@ -16,6 +16,10 @@ class EmployeeController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        $this->middleware(['auth:sanctum', 'checkUser:Admin'])->only('store', 'update', 'destroy');
+    }
     public function index()
     {
         try {
@@ -24,6 +28,20 @@ class EmployeeController extends Controller
         } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'not found Employee collection',
+            ], 404);
+        }
+    }
+
+    public function findFreeEmployees()
+    {
+        // print('================');
+        try {
+            $employee = Employee::where('task_id', null)->get();
+            // return $freelancer;
+            return EmployeeResource::collection($employee);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'not found free freelancers',
             ], 404);
         }
     }

@@ -25,7 +25,7 @@ class Employee extends Model
 
     function task()
     {
-        return $this->hasOne(Task::class);
+        return $this->hasOne(Task::class, 'id', 'task_id');
     }
 
     function staff_level()

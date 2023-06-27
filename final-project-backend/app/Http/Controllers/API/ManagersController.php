@@ -17,6 +17,10 @@ class ManagersController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        $this->middleware(['auth:sanctum', 'checkUser:Admin'])->only('store', 'update', 'destroy');
+    }
     public function index(string $type)
     {
         $managers = [];

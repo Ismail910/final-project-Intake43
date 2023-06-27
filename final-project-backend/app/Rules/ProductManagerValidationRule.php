@@ -12,9 +12,14 @@ class ProductManagerValidationRule implements Rule
 {
     public function passes($attribute, $value)
     {
-        $manager = Manager::find($value);
-        $user = User::find($manager->user->id);
-        return $user && $user->role === 'ProductManager';
+        try {
+            $manager = Manager::find($value);
+            $user = User::find($manager->user->id);
+            // print($user);
+            return $user && $user->role === 'ProductManager';
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
     public function message()

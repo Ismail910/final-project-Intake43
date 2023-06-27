@@ -18,10 +18,10 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware(['auth:sanctum', 'checkUser:Admin'])->only('RegisterManager');
-    // }
+    public function __construct()
+    {
+        $this->middleware(['auth:sanctum', 'checkUser:Admin'])->only('RegisterManager');
+    }
     public function RegisterUser(StoreUserRequest $request)
     {
         $user = User::create([
@@ -94,7 +94,7 @@ class RegisterController extends Controller
 
         $freelancer = Freelancer::create([
             'user_id' => $result['user']->id,
-            'status' => true,
+            'Status' => true,
             'rate' => '0',
             'balance' => 0,
             'task_id' => null

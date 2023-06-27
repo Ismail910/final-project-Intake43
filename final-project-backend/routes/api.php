@@ -15,6 +15,10 @@ use App\Http\Controllers\Payment\CreditController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\API\ProjectController;
+use App\Http\Controllers\FatoorahController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -52,46 +56,40 @@ Route::get('user/{user}/Skills', [UserController::class, 'getUserSkills']);
 Route::apiResource('user', UserController::class);
 
 // ========== Freelancer route ====================
+Route::get('freeFreelancers', [FreelancerController::class, 'findFreeFreelancer']);
 Route::apiResource('freelancer', FreelancerController::class);
 
 // ========== client route ====================
 Route::apiResource('client', ClientController::class);
 
 // ========== employee route ====================
+Route::get('freeEmployees', [EmployeeController::class, 'findFreeEmployees']);
 Route::apiResource('employee', EmployeeController::class);
 
 // ========== manager route ====================
 Route::get('managers/{type}', [ManagersController::class, 'index'])->name('index');
 Route::apiResource('manager', ManagersController::class);
 
+// ========== search route ====================
+Route::get('search/{model}/{keyword}/{projectType?}', [SearchController::class, 'searchByName'])->name('search');
 
 
-
-
-Route::get('search', [SearchController::class, 'searchByName'])->name('search');
-
-use App\Http\Controllers\API\ProjectController;
-
+// ========== project route ====================
 Route::get('projects/count', [ProjectController::class, 'countProject'])->name('countProject');
 Route::get('projects/searchProjectByUsers', [ProjectController::class, 'searchProjectByUsers'])->name('searchProjectByUsers');
 Route::apiResource('projects', ProjectController::class);
 Route::get('projects/search/{status}', [ProjectController::class, 'searchProjectByStatus'])->name('projects.search');
 
-Route::apiResource('tasks', TaskController::class);
 
-Route::apiResource('skills', SkillController::class);
+// ========== task route ====================
 
+Route::apiResource('task', TaskController::class);
 
-
-// Route::post('managers', [ManagersController::class, 'store'])->name('managers.store');
-
-
+// ========== skill route ====================
+Route::apiResource('skill', SkillController::class);
 
 
 
-
-
-use App\Http\Controllers\FatoorahController;
 
 Route::post('pay', [FatoorahController::class, 'payOrder'])->name('pay');
 
