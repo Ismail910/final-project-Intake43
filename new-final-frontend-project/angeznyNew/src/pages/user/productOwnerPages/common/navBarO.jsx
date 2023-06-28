@@ -35,13 +35,8 @@ const NavBarO = () => {
 
       <MDBCollapse navbar show={showBasic}>
         <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
-          {/* <MDBNavbarItem>
-          <Link className="nav-link text-secondary " to="/owner">
-            <i className="font-weight-bold"></i> <span className="ml-3">home</span>
-          </Link>
-          </MDBNavbarItem> */}
           <MDBNavbarItem>
-          <Link className="nav-link text-secondary " to="/owner/project">
+          <Link className="nav-link text-secondary " to="/owner/task">
             <i className="font-weight-bold"></i> <span className="ml-3">task</span>
           </Link>
           </MDBNavbarItem>

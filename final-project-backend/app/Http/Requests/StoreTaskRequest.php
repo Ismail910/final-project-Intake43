@@ -31,7 +31,7 @@ class StoreTaskRequest extends FormRequest
             'task_description' => 'required|string|max:255',
             'task_start' => 'required|date',
             'task_end' => 'required|date|after:task_start',
-            'task_status' => 'required|in:new,in_progress,completed',
+            'task_status' => 'required|in:notStarted,inProgress,complete',
         ];
     }
 

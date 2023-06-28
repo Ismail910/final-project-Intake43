@@ -38,12 +38,9 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import SearchIcon from '@mui/icons-material/Search';
 import SendIcon from '@mui/icons-material/Send';
 function Row(props) {
-  const token = '2|qLJh9hNXFldz9O4QnEX0cIGFWSUbYYUwGUr38CsF';
   const { row } = props;
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
-  const [developers, setDevelopers] = React.useState([]);
-  const [selectedDeveloperId, setSelectedDeveloperId] = React.useState();
   const [openDialogDelete, setOpenDialogDelete] = React.useState(false);
   const [status, setStatus] = React.useState(row.status);
   const [title, setTitle] = React.useState(row.name);
@@ -65,40 +62,6 @@ function Row(props) {
     setStartDate(startdate);
     const enddate = row.end.split(' ')[0];
     setEndDate(enddate);
-    const fetchDevelopers = async () => {
-      
-      try {
-          var response;
-          if( row.project.type=='mileStone'){
-              response = await fetch(`http://127.0.0.1:8000/api/freeFreelancers`, {
-              headers: {
-                'Accept': 'application/json',
-              }
-            }); 
-          }else if( row.project.type=='byProject'){
-            response = await fetch(`http://127.0.0.1:8000/api/freeEmployees`, {
-              headers: {
-                'Accept': 'application/json',
-              }
-            }); 
-          }
-           
-        if (response.ok) {
-          const data = await response.json();
-          if (data) {
-            setDevelopers(data.data);
-          }
-        } else {
-          toast.error("Failed to fetch Project data");
-
-        }
-
-        
-      } catch (error) {
-          toast.error(error);
-      }
-     };
-     fetchDevelopers();
   }, [row.start,row.end]);
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -115,25 +78,22 @@ function Row(props) {
   const handleEndDateChange = (event) => {
     setEndDate(event.target.value);
   };
-  const handleTaskChange = (event) => {
-    setSelectedDeveloperId(event.target.value);
-  }
   const handleSave=async (event) => {
     event.preventDefault();
    await axios
-      .put(`http://127.0.0.1:8000/api/task/${row.id}`, {
+      .put(`http://127.0.0.1:8000/api/tasks/${row.id}`, {
         project_id:row.project.id,
         product_manager_id:row.productManager.id,
         task_title:title,
         task_description:description,
         task_start:startDate,
         task_end: endDate,
-        task_status:status,
-        assigned_to:selectedDeveloperId
+        status:status
+        
       }, {
         headers: {
           'Accept': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Authorization': 'Bearer 40|r7dXk1L6Dvnm7J0YZcyhTwukkDlbWwxNoA8KStEG'
         }})
       .then(()=>{
         // Update the task data in the local state
@@ -155,16 +115,16 @@ function Row(props) {
       //   return updatedTasks;
       // });
         toast.success("Task Updated")})
-      .catch((error) => toast.error("Error updating Task:"+ error.message));
+      .catch((error) => toast.error("Error updating Task:", error));
     setOpenDialog(false);
   }
   const handleDelete= async (event)=>{
     event.preventDefault();
    await  axios
-      .delete(`http://127.0.0.1:8000/api/task/${row.id}`,  {
+      .delete(`http://127.0.0.1:8000/api/tasks/${row.id}`,  {
         headers: {
           'Accept': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Authorization': 'Bearer 40|r7dXk1L6Dvnm7J0YZcyhTwukkDlbWwxNoA8KStEG'
         }})
       .then(()=>{
         toast.success("Task Deleted")})
@@ -262,13 +222,9 @@ function Row(props) {
                 <Input value={endDate} onChange={handleEndDateChange} autoFocus required type="date" />
               </FormControl>
               <FormControl>
-              <FormLabel>Assigned to</FormLabel>
-                <Select value={selectedDeveloperId} onChange={handleTaskChange} autoFocus >
-                  {developers.map((developer) => (
-                    <MenuItem key={developer.id} value={developer.id}>{developer.user.name}</MenuItem>
-                  ))}
-                </Select>
-            </FormControl>
+                <FormLabel>assigned To</FormLabel>
+                <Input autoFocus required />
+              </FormControl>
               <FormControl>
                 <FormLabel>Description</FormLabel>
                 <TextareaAutosize minRows={3} value={description} onChange={handleDescriptionChange} autoFocus required />
@@ -358,35 +314,24 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 const Tasks = () => {
-  const token = '2|qLJh9hNXFldz9O4QnEX0cIGFWSUbYYUwGUr38CsF';
+  const token = '40|r7dXk1L6Dvnm7J0YZcyhTwukkDlbWwxNoA8KStEG';
   // const decodedToken = jwtDecode(token);
   // const id = decodedToken.user_id;
-  const id = 2;
-
   const [tasks, setTasks] = React.useState([]);
   const [projects, setProjects] = React.useState([]);
-  const [developers, setDevelopers] = React.useState([]);
-  const [selectedProjectId, setSelectedProjectId] = React.useState();
-  const [selectedDeveloperId, setSelectedDeveloperId] = React.useState();
+  const [selectedProjectId, setSelectedProjectId] = React.useState('');
   const [open, setOpen] = React.useState(false);
   const [status, setStatus] = React.useState('');
   const [title, setTitle] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [startDate, setStartDate] = React.useState('');
   const [endDate, setEndDate] = React.useState('');
-  const [searchSkill, setSearchSkill] = React.useState('');
-  const [users, setUsers] = React.useState('');
-
   React.useEffect(() => {
     // Fetch questions from backend API
     const fetchTasks = async () => {
       
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/task/searchTaskByUsers`, {
-                  headers: {
-                    'Accept': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                  }}); 
+                const response = await fetch(`http://127.0.0.1:8000/api/tasks`); 
               if (response.ok) {
                 const data = await response.json();
                 if (data) {
@@ -405,54 +350,14 @@ const Tasks = () => {
     
     
 
-  },  [tasks]);
+  }, []);
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
   };
   const handleProjectChange = (event) => {
     setSelectedProjectId(event.target.value);
-    const fetchDevelopers = async () => {
-      
-      try {
-          var response;
-          const selectedProject = projects.find((project) => project.id == event.target.value);
-          const selectedProjectType = selectedProject ? selectedProject.project_type : null;
-          console.log(selectedProjectType);
-          if( selectedProjectType=='mileStone'){
-              response = await fetch(`http://127.0.0.1:8000/api/freeFreelancers`, {
-              headers: {
-                'Accept': 'application/json',
-              }
-            }); 
-          }else if( selectedProjectType=='byProject'){
-            response = await fetch(`http://127.0.0.1:8000/api/freeEmployees`, {
-              headers: {
-                'Accept': 'application/json',
-              }
-            }); 
-          }
-           
-        if (response.ok) {
-          const data = await response.json();
-          if (data) {
-            console.log(data);
-            setDevelopers(data.data);
-          }
-        } else {
-          toast.error("Failed to fetch Project data");
-
-        }
-
-        
-      } catch (error) {
-          toast.error(error);
-      }
-     };
-     fetchDevelopers();
+    
   };  
-  const handleTaskChange = (event) => {
-    setSelectedDeveloperId(event.target.value);
-  }
   const handleDescriptionChange = (event) => {
     setDescription(event.target.value);
   };
@@ -465,53 +370,45 @@ const Tasks = () => {
   const handleEndDateChange = (event) => {
     setEndDate(event.target.value);
   };
-  const handleSearch = () => {
-    // Make the API request to fetch users based on the entered skill
-    fetchUsersBySkill(searchSkill);
-  };
-  const fetchUsersBySkill = async (skill) => {
-    try {
-      const response = await fetch(`http://127.0.0.1:8000/api/search/Skill/${skill}/mileStone`);
-      if (response.ok) {
-        const data = await response.json();
-        // Process the data and update the user list state variable
-        console.log(data);
-        setUsers(data.data);
-      } else {
-        toast.error('Failed to fetch users');
-      }
-    } catch (error) {
-      toast.error('Error fetching users: ' + error.message);
-    }
-  };
   const handleSave=async (event) => {
     event.preventDefault();
     // console.log(id);
-    await axios.post(
-      `http://127.0.0.1:8000/api/task`,
-      {
-        project_id: selectedProjectId,
-        product_manager_id: id,
-        task_title: title,
-        task_description: description,
-        task_start: startDate,
+   await axios
+      .post(`http://127.0.0.1:8000/api/tasks`, {
+        project_id:selectedProjectId,
+        // product_manager_id:id,
+        task_title:title,
+        task_description:description,
+        task_start:startDate,
         task_end: endDate,
-        task_status: status,
-        assigned_to: selectedDeveloperId,
-      },
-      {
+        status:status
+        
+      }, {
         headers: {
           'Accept': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-      }
-    )
-      .then(() => {
-        toast.success("Task Created");
-      })
-      .catch((error) => {
-        toast.error("Error Creating Task: " + error.message);
-      });
+          'Authorization': `Bearer ${token}`
+        }})
+      .then(()=>{
+        // Update the task data in the local state
+      // setTasks((prevTasks) => {
+      //   const updatedTasks = prevTasks.map((task) => {
+      //     if (task.id === row.id) {
+      //       // Update the task properties with the new values
+      //       return {
+      //         ...task,
+      //         task_title: title,
+      //         task_description: description,
+      //         task_start: startDate,
+      //         task_end: endDate,
+      //         status: status,
+      //       };
+      //     }
+      //     return task;
+      //   });
+      //   return updatedTasks;
+      // });
+        toast.success("Task Updated")})
+      .catch((error) => toast.error("Error updating Task:", error));
     setOpen(false);
   }
   
@@ -523,7 +420,7 @@ const Tasks = () => {
           const response = await fetch(`http://127.0.0.1:8000/api/projects/searchProjectByUsers`, {
             headers: {
               'Accept': 'application/json',
-              'Authorization': `Bearer ${token}`
+              'Authorization': 'Bearer 42|7UZmWxUHU5J9V2OmdCcFR7dgvHpheg2fFQ7nZ47x'
             }
           }); 
         if (response.ok) {
@@ -535,14 +432,11 @@ const Tasks = () => {
           toast.error("Failed to fetch Project data");
 
         }
-
-        
       } catch (error) {
           toast.error(error);
       }
      };
 
-     
      fetchProjects();
     setOpen(true);
   }
@@ -558,24 +452,22 @@ const Tasks = () => {
         sx={{ width:'40%',marginBottom:'10px' ,marginRight:'15px'}}
         InputProps={{
           endAdornment: (
-            <InputAdornment position="end" onClick={handleSearch}>
-              <SearchIcon  onClick={handleSearch}/>
+            <InputAdornment position="end" >
+              <SearchIcon  />
             </InputAdornment>
           ),
         }}
-        value={searchSkill}
-        onChange={(event) => setSearchSkill(event.target.value)}
       />
     <TextField
         id="input-with-icon-textfield"
         color="success"
-        placeholder="Send message for this user"
+        placeholder="Search for users with skills"
         size="lg"
         variant="outlined"
         sx={{ width:'40%',marginBottom:'10px' ,marginRight:'15px' }}
         InputProps={{
           endAdornment: (
-            <InputAdornment position="end"  >
+            <InputAdornment position="end" >
               <SendIcon/>
             </InputAdornment>
           ),
@@ -591,11 +483,11 @@ const Tasks = () => {
   >
     ADD Task
   </Button>
-      <Modal sx={{overflow: 'auto'}} open={open} onClose={() => setOpen(false)}>
+      <Modal open={open} onClose={() => setOpen(false)}>
         <ModalDialog
           aria-labelledby="basic-modal-dialog-title"
           aria-describedby="basic-modal-dialog-description"
-          sx={{ maxWidth: 500,overflow: 'auto' }}
+          sx={{ maxWidth: 500 }}
         >
           <Typography id="basic-modal-dialog-title" component="h2">
             Create new Task
@@ -641,13 +533,9 @@ const Tasks = () => {
                 <Input value={endDate} onChange={handleEndDateChange} autoFocus required type="date" />
               </FormControl>
               <FormControl>
-              <FormLabel>Assigned to</FormLabel>
-                <Select value={selectedDeveloperId} onChange={handleTaskChange} autoFocus required>
-                  {developers.map((developer) => (
-                    <MenuItem key={developer.id} value={developer.id}>{developer.user.name}</MenuItem>
-                  ))}
-                </Select>
-            </FormControl>
+                <FormLabel>assigned To</FormLabel>
+                <Input autoFocus required />
+              </FormControl>
               <FormControl>
                 <FormLabel>Description</FormLabel>
                 <TextareaAutosize minRows={3} value={description} onChange={handleDescriptionChange} autoFocus required />
@@ -657,19 +545,6 @@ const Tasks = () => {
           </form>
         </ModalDialog>
       </Modal>
-      </Box>
-      <Box>
-      {users.length > 0 ? (
-  users.map((user) => (
-    <div key={user.id}>
-      <p>Name: {user.name}</p>
-      <p>Email: {user.email}</p>
-      {/* Add other user information you want to display */}
-    </div>
-  ))
-) : (
-  <p>No users found.</p>
-)}
       </Box>
       <TableContainer component={Paper}>
         <Table aria-label="collapsible table">
