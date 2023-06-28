@@ -74,7 +74,7 @@ Route::apiResource('manager', ManagersController::class);
 
 // ========== search route ====================
 Route::get('search/{model}/{keyword}/{projectType?}', [SearchController::class, 'searchByName'])->name('search');
-Route::get('search/{projectType}', [SearchController::class, 'searchSkills'])->name('searchSkills');
+Route::get('search/{projectType}/{keywords}', [SearchController::class, 'searchSkills'])->name('searchSkills');
 
 
 // ========== project route ====================

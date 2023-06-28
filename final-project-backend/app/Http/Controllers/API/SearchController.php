@@ -54,13 +54,15 @@ class SearchController extends Controller
     }
 
 
-    function searchSkills( $projectType, Request $keyword)
+    function searchSkills( $projectType,  $keyword)
     {
-        $keywords = $keyword->input('keywords');
+        $keywords = explode(' ', $keyword); 
+
         $skills = Skill::whereIn('name', $keywords)->get();
+
         $users = User::whereHas('skills', function ($query) use ($skills) {
             $query->whereIn('skill_id', $skills->pluck('id'));
-        })
+        })->get()
         ->when($projectType === 'mileStone', function ($query) {
             return $query->where('role', 'Freelancer'); 
         })
