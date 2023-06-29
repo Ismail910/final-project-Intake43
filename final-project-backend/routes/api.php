@@ -53,7 +53,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::put('user/updateForAdmin/{user}', [UserController::class, 'updateForAdmin'])->name('updateForAdmin');
 Route::get('user/count', [UserController::class, 'countUser'])->name('countUser');
 Route::get('user/countCountry', [UserController::class, 'countUserCountry'])->name('countUserCountry');
-Route::post('user/{user}/Skills', [UserController::class, 'addSkillsToUser']);
+Route::post('user/Skills', [UserController::class, 'addSkillsToUser']);
 Route::get('user/{user}/Skills', [UserController::class, 'getUserSkills']);
 Route::apiResource('user', UserController::class);
 
