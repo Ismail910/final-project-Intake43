@@ -49,12 +49,12 @@ const Freelancer = () => {
                   <td>{freelancer.user.endDate}</td>
                   <td>{freelancer.user.profilePic}</td>
                   <td className='d-flex justify-content-evenly'>
-                <button className='btn btn-info'>
-                  Edit
-                </button>
-                <button className='btn btn-danger'>
-                  Delete
-                </button>
+                   <button className='btn btn-info'>
+                    Edit
+                    </button>
+                  <button className='btn btn-danger'>
+                    Delete
+                  </button>
               </td>
                 </tr>
               ))}
