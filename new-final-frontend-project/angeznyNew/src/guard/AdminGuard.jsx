@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import jwtDecode from "jwt-decode";
+import React from 'react';
 
 const AdminGuard = () => {
   const isAdmin = () => {
@@ -15,7 +16,7 @@ const AdminGuard = () => {
     isLoggedIn() && isAdmin() ?
     <Outlet/> 
     :
-    <Navigate to='/signin'/>
+    <Navigate to='/login'/>
   )
 };
 

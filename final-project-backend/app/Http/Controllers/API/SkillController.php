@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
+use App\Http\Resources\SkillResource;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\Skill;
 use App\Http\Requests\StoreSkillRequest;
 use App\Http\Requests\UpdateSkillRequest;
@@ -9,12 +12,23 @@ use Illuminate\Http\Response;
 
 class SkillController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth:sanctum', 'checkUser:Admin'])->only('store', 'update', 'destroy');
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Skill::all();
+        try {
+            return SkillResource::collection(Skill::all());
+            // return Skill::all();
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'not found Skills'
+            ], 404);
+        }
     }
 
     /**
@@ -22,9 +36,9 @@ class SkillController extends Controller
      */
     public function store(StoreSkillRequest $request)
     {
-        //
+        // dd($request);
         $skill = Skill::create($request->all());
-        return $skill;
+        return new SkillResource($skill);
     }
 
     /**
@@ -32,7 +46,12 @@ class SkillController extends Controller
      */
     public function show(Skill $skill)
     {
-        return Skill::where(['id' => $skill->id])->get();
+        try {
+            return new SkillResource($skill);
+            // return Skill::where(['id' => $skill->id])->get()->users();
+        } catch (ModelNotFoundException $exception) {
+            return response()->json(['error' => 'Skills not found'], 404);
+        }
     }
 
     /**
@@ -40,17 +59,33 @@ class SkillController extends Controller
      */
     public function update(UpdateSkillRequest $request, Skill $skill)
     {
-        $skill->update($request->all());
-        return $skill;
+        try {
+            $skill->update($request->all());
+            return new SkillResource($skill);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'check if Skills is exist and check it is validation'
+            ], 404);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Skill $skill)
+    public function destroy(string $id)
     {
+        //
 
-        $skill->delete();
-        return new Response('', 204);
+        try {
+            $project = Skill::findOrFail($id);
+            $project->delete();
+            return response()->json([
+                'success' => "Skill deleted"
+            ], 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'check if Skill is exist '
+            ], 404);
+        }
     }
 }

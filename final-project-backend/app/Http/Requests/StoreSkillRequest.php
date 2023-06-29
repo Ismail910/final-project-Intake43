@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 
 class StoreSkillRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class StoreSkillRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +24,22 @@ class StoreSkillRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|unique:skills,name|max:255',
         ];
+    }
+
+    public  function  failedValidation(Validator $validator)
+    {
+        throw  new HttpResponseException(
+            response()->json(
+                [
+                    'success' => false,
+                    "message" => "Error in Skill validation",
+                    "data" => $validator->errors()
+                ],
+                400
+
+            )
+        );
     }
 }

@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import jwtDecode from "jwt-decode";
+import React from 'react';
 
 const ClientGuard = () => {
   const isClient = () => {
@@ -15,7 +16,7 @@ const ClientGuard = () => {
     isLoggedIn() && isClient() ?
     <Outlet/> 
     :
-    <Navigate to='/signin'/>
+    <Navigate to='/login'/>
   )
 };
 

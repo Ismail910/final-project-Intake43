@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Freelancer;
+use App\Models\Employee;
+use App\Models\Manager;
 
 class Skill extends Model
 {
@@ -16,6 +19,6 @@ class Skill extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'user_skill');
     }
 }

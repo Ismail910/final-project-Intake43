@@ -3,6 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Contracts\Validation\Validator;
+use Symfony\Component\HttpFoundation\Response;
+use App\Rules\ProductManagerValidationRule;
 
 class UpdateTaskRequest extends FormRequest
 {
@@ -11,7 +15,7 @@ class UpdateTaskRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +26,22 @@ class UpdateTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'project_id' => 'exists:projects,id',
+            'product_manager_id' => ['exists:managers,id', new ProductManagerValidationRule],
+            'task_title' => 'sometimes|required|string|max:255',
+            'task_description' => 'sometimes|required|string|max:255',
+            'task_start' => 'sometimes|required|date',
+            'task_end' => 'required|date|after:task_start',
+            'task_status' => 'sometimes|required|in:new,in_progress,completed',
         ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new ValidationException($validator, response()->json([
+            'success' => false,
+            'message' => 'Error in Task Update validation',
+            'data' => $validator->errors()
+        ], 404));
     }
 }

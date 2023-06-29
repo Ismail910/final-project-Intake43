@@ -3,8 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class UpdatestaffLevelRequest extends FormRequest
+
+class UpdateStaffLevelRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +24,15 @@ class UpdatestaffLevelRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-             'salary' => 'required',
-             
-         ];
+            'name' => [
+                'sometimes',
+                'required',
+                'string',
+                Rule::unique('staff_levels', 'name')->ignore($this->route('staff')),
+                'max:255'
+            ],
+            'salary' => 'required',
+
+        ];
     }
 }

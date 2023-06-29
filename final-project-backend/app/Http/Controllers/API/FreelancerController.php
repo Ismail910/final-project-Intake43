@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateFreelancerRequest;
 use App\Http\Resources\FreelancerResource;
 use App\Models\Freelancer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Models\User;
 
 use Illuminate\Http\Response;
 
@@ -16,15 +17,33 @@ class FreelancerController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        $this->middleware(['auth:sanctum', 'checkUser:Admin'])->only('store', 'update', 'destroy');
+    }
     public function index()
     {
-        try{
-            $client = Freelancer::all();
-            return FreelancerResource::collection($client);
-        }
-        catch(ModelNotFoundException $e){
+        try {
+            $freelancer = Freelancer::all();
+            // return $freelancer;
+            return FreelancerResource::collection($freelancer);
+        } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'not found freelancer collection',
+            ], 404);
+        }
+    }
+
+    public function findFreeFreelancer()
+    {
+        // print('================');
+        try {
+            $freelancer = Freelancer::where('Status', 1)->get();
+            // return $freelancer;
+            return FreelancerResource::collection($freelancer);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'not found free freelancers',
             ], 404);
         }
     }
@@ -34,8 +53,8 @@ class FreelancerController extends Controller
      */
     public function store(StoreFreelancerRequest $request)
     {
-        $salary = Freelancer::create($request->all());
-        return new FreelancerResource($salary);
+        // $salary = Freelancer::create($request->all());
+        // return new FreelancerResource($salary);
     }
 
     /**
@@ -43,8 +62,8 @@ class FreelancerController extends Controller
      */
     public function show(Freelancer $freelancer)
     {
-        if ($freelancer){
-            return  new FreelancerResource($freelancer);  
+        if ($freelancer) {
+            return  new FreelancerResource($freelancer);
         }
         return  new Response('', 205);
     }
@@ -52,16 +71,17 @@ class FreelancerController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
     public function update(UpdateFreelancerRequest $request, Freelancer $freelancer)
     {
         try {
             $freelancer->update($request->all());
             return new FreelancerResource($freelancer);
-         } catch(ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'check if freelancer is exist and check it is validation'
             ], 404);
-       }
+        }
     }
 
     /**
@@ -69,7 +89,8 @@ class FreelancerController extends Controller
      */
     public function destroy(Freelancer $freelancer)
     {
-        $freelancer->delete();
-        return new Response('', 204);
+        User::find($freelancer->user->id)->delete();
+
+        return new Response('user deleted', 204);
     }
 }

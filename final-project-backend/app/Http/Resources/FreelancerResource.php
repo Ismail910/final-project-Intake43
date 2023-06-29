@@ -4,6 +4,8 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\TaskResource;
+use App\Http\Resources\UserResource;
 
 class FreelancerResource extends JsonResource
 {
@@ -14,20 +16,13 @@ class FreelancerResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $Task = $this->task ? new TaskResource($this->task) : null;
         return [
             'id' => $this->id,
             'rate' => $this->rate,
-            'status' => $this->status,
+            'status' => $this->Status,
             'user' => new UserResource($this->user),
-             'salayre'=>[
-                'salary-class'=>$this->staff_levels->name,
-                'salary'=>$this->staff_levels->salary
-            ],
-            'task'=>[
-                'title'=>$this->task->task_title,
-                'description'=>$this->task->task_description,
-                'status'=>$this->task->task_status,
-            ]
+            'task' => $Task
         ];
     }
 }
