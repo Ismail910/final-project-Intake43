@@ -47,20 +47,20 @@ const Header = () => {
           <MDBCollapse navbar show={showBasic}>
           <div className=' headerMenu col-10'>
             <MDBNavbarNav className='mr-auto mb-2 mb-lg-0 linksMenu'>
-              <MDBNavbarItem className=''>
+              <MDBNavbarItem className='linksWords'>
               <Link className="nav-link text-secondary " to="/">
-                <i className="font-weight-bold"></i> <span className="ml-3">Home</span>
+                <i className="font-weight-bold"></i> <span className="ml-3 text-dark">Home</span>
               </Link>
               </MDBNavbarItem>
-              <MDBNavbarItem>
+              <MDBNavbarItem className='linksWords'>
               <Link className="nav-link text-secondary " to="/contactUs">
-                <i className="font-weight-bold"></i> <span className="ml-3">Countact Us</span>
+                <i className="font-weight-bold"></i> <span className="ml-3 text-dark">Countact Us</span>
               </Link>
               </MDBNavbarItem>
 
-              <MDBNavbarItem>
+              <MDBNavbarItem className='linksWords'>
               <Link className="nav-link text-secondary " to="/aboutUs">
-                <i className="font-weight-bold"></i> <span className="ml-3">About Us</span>
+                <i className="font-weight-bold"></i> <span className="ml-3 text-dark">About Us</span>
               </Link>
               </MDBNavbarItem>
               {/*     
