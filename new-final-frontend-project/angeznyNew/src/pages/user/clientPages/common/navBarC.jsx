@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
+import '../../../../styles/navStyles.css';
 import {
     MDBContainer,
     MDBNavbar,
@@ -20,9 +21,9 @@ import {
 const NavBarC = () => {
     const [showBasic, setShowBasic] = useState(false);
     return (
-        <MDBNavbar expand='lg' light bgColor='light'>
-          <MDBContainer fluid>
-            <MDBNavbarBrand href='/client'>client</MDBNavbarBrand>
+        <MDBNavbar expand='lg'   className='mainNav mb-5'>
+        
+            
     
             <MDBNavbarToggler
               aria-controls='navbarSupportedContent'
@@ -34,27 +35,23 @@ const NavBarC = () => {
             </MDBNavbarToggler>
     
             <MDBCollapse navbar show={showBasic}>
-              <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
-                {/* <MDBNavbarItem>
-                <Link className="nav-link text-secondary " to="/client">
-                  <i className="font-weight-bold"></i> <span className="ml-3">home</span>
-                </Link>
-                </MDBNavbarItem> */}
-                <MDBNavbarItem>
-                <Link className="nav-link text-secondary " to="/client/project">
-                  <i className="font-weight-bold"></i> <span className="ml-3">project</span>
+              <MDBNavbarNav className=' navBarContainer'>
+                
+                <MDBNavbarItem className='NavItem'>
+                <Link className="nav-link  text-white" to="/client/project">
+                  <i className="font-weight-bold"></i> <span className="ml-3">Project</span>
                 </Link>
                 </MDBNavbarItem>
 
-                <MDBNavbarItem>
-                <Link className="nav-link text-secondary " to="/client/chat">
-                  <i className="font-weight-bold"></i> <span className="ml-3">chat</span>
+                <MDBNavbarItem className='NavItem'>
+                <Link className="nav-link  text-white" to="/client/chat">
+                  <i className="font-weight-bold"></i> <span className="ml-3">Chat</span>
                 </Link>
                 </MDBNavbarItem>
 
-                <MDBNavbarItem>
-                <Link className="nav-link text-secondary " to="/client/payment">
-                  <i className="font-weight-bold"></i> <span className="ml-3">payment</span>
+                <MDBNavbarItem className='NavItem'>
+                <Link className="nav-link  text-white" to="/client/payment">
+                  <i className="font-weight-bold"></i> <span className="ml-3">Payment</span>
                 </Link>
                 </MDBNavbarItem>
 {/*     
@@ -84,7 +81,7 @@ const NavBarC = () => {
                 <MDBBtn color='primary'>Search</MDBBtn>
               </form> */}
             </MDBCollapse>
-          </MDBContainer>
+        
         </MDBNavbar>
       );
 }

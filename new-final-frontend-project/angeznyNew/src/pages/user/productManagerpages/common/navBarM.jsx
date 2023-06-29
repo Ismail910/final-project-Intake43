@@ -20,9 +20,10 @@ import {
 const NavBarM = () => {
     const [showBasic, setShowBasic] = useState(false);
   return (
-    <MDBNavbar expand='lg' light bgColor='light'>
-    <MDBContainer fluid>
-      <MDBNavbarBrand href='/manager'>Product Manager</MDBNavbarBrand>
+    <MDBNavbar expand='lg'   className='mainNav mb-5'>
+
+  
+      
 
       <MDBNavbarToggler
         aria-controls='navbarSupportedContent'
@@ -34,26 +35,26 @@ const NavBarM = () => {
       </MDBNavbarToggler>
 
       <MDBCollapse navbar show={showBasic}>
-        <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
+        <MDBNavbarNav className=' navBarContainer'>
           {/* <MDBNavbarItem>
           <Link className="nav-link text-secondary " to="/manager">
             <i className="font-weight-bold"></i> <span className="ml-3">home</span>
           </Link>
           </MDBNavbarItem> */}
-          <MDBNavbarItem>
-          <Link className="nav-link text-secondary " to="/manager/task">
-            <i className="font-weight-bold"></i> <span className="ml-3">task</span>
+          <MDBNavbarItem className='NavItem'>
+          <Link className="nav-link text-white " to="/manager/task">
+            <i className="font-weight-bold"></i> <span className="ml-3">Task</span>
           </Link>
           </MDBNavbarItem>
-          <MDBNavbarItem>
-          <Link className="nav-link text-secondary " to="/manager/project">
-            <i className="font-weight-bold"></i> <span className="ml-3">project</span>
+          <MDBNavbarItem className='NavItem'>
+          <Link className="nav-link text-white " to="/manager/project">
+            <i className="font-weight-bold"></i> <span className="ml-3">Project</span>
           </Link>
           </MDBNavbarItem>
 
-          <MDBNavbarItem>
-          <Link className="nav-link text-secondary " to="/manager/chat">
-            <i className="font-weight-bold"></i> <span className="ml-3">chat</span>
+          <MDBNavbarItem className='NavItem'>
+          <Link className="nav-link text-white " to="/manager/chat">
+            <i className="font-weight-bold"></i> <span className="ml-3">Chat</span>
           </Link>
           </MDBNavbarItem>
 
@@ -84,7 +85,7 @@ const NavBarM = () => {
           <MDBBtn color='primary'>Search</MDBBtn>
         </form> */}
       </MDBCollapse>
-    </MDBContainer>
+    
   </MDBNavbar>
   )
 }

@@ -20,7 +20,7 @@ class RegisterController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:sanctum', 'checkUser:Admin'])->only('RegisterManager');
+        // $this->middleware(['auth:sanctum', 'checkUser:Admin'])->only('RegisterManager');
     }
     public function RegisterUser(StoreUserRequest $request)
     {

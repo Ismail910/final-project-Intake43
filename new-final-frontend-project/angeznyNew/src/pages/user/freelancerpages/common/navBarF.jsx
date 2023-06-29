@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
+import '../../../../styles/navStyles.css';
+
 import {
     MDBContainer,
     MDBNavbar,
@@ -20,9 +22,8 @@ import {
 const NavBarF = () => {
     const [showBasic, setShowBasic] = useState(false);
   return (
-    <MDBNavbar expand='lg' light bgColor='light'>
-    <MDBContainer fluid>
-      <MDBNavbarBrand href='/client'>Freelancer</MDBNavbarBrand>
+    <MDBNavbar expand='lg'   className='mainNav mb-5'>
+
 
       <MDBNavbarToggler
         aria-controls='navbarSupportedContent'
@@ -34,27 +35,31 @@ const NavBarF = () => {
       </MDBNavbarToggler>
 
       <MDBCollapse navbar show={showBasic}>
-        <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
+      <MDBNavbarNav className=' navBarContainer'>
+
           {/* <MDBNavbarItem>
-          <Link className="nav-link text-secondary " to="/freelancer">
+          <Link className="nav-link text-white " to="/freelancer">
             <i className="font-weight-bold"></i> <span className="ml-3">home</span>
           </Link>
           </MDBNavbarItem> */}
-          <MDBNavbarItem>
-          <Link className="nav-link text-secondary " to="/freelancer/task">
-            <i className="font-weight-bold"></i> <span className="ml-3">task</span>
+          <MDBNavbarItem className='NavItem'>
+
+          <Link className="nav-link text-white " to="/freelancer/task">
+            <i className="font-weight-bold"></i> <span className="ml-3">Task</span>
           </Link>
           </MDBNavbarItem>
 
-          <MDBNavbarItem>
-          <Link className="nav-link text-secondary " to="/freelancer/chat">
-            <i className="font-weight-bold"></i> <span className="ml-3">chat</span>
+          <MDBNavbarItem className='NavItem'>
+
+          <Link className="nav-link text-white " to="/freelancer/chat">
+            <i className="font-weight-bold"></i> <span className="ml-3">Chat</span>
           </Link>
           </MDBNavbarItem>
 
-          <MDBNavbarItem>
-          <Link className="nav-link text-secondary " to="/freelancer/payment">
-            <i className="font-weight-bold"></i> <span className="ml-3">payment</span>
+          <MDBNavbarItem className='NavItem'>
+
+          <Link className="nav-link text-white " to="/freelancer/payment">
+            <i className="font-weight-bold"></i> <span className="ml-3">Payment</span>
           </Link>
           </MDBNavbarItem>
 {/*     
@@ -84,7 +89,6 @@ const NavBarF = () => {
           <MDBBtn color='primary'>Search</MDBBtn>
         </form> */}
       </MDBCollapse>
-    </MDBContainer>
   </MDBNavbar>
   )
 }

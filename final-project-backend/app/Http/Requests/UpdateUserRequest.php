@@ -25,7 +25,7 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'email' => 'required|exists:users,email',
+            'email' => 'sometimes|required|exists:users,email',
             'password' => 'required|string|min:6',
             'nationalID' => 'required|string|min:14',
             'address' => 'required|string',
@@ -42,7 +42,7 @@ class UpdateUserRequest extends FormRequest
             response()->json(
                 [
                     'success' => false,
-                    "message" => "validation project errors",
+                    "message" => "validation User errors",
                     "data" => $validator->errors()
                 ],
                 400
