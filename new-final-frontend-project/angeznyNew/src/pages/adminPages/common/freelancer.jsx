@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import UserForm from './userform';
+// import UserForm from './userform';
 import '../admin.css';
 
 const Freelancer = () => {
