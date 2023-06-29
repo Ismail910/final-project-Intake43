@@ -27,7 +27,7 @@ const Header = () => {
     const [showBasic, setShowBasic] = useState(false);
   return (
     <>
-      <MDBNavbar expand='lg' light bgColor='light'>
+      <MDBNavbar expand='lg' light bgColor='light' className='mb-3'>
         <MDBContainer fluid>
           <Link className="nav-link  logoName " to="/">
           <span className='firstLetter'>
@@ -44,7 +44,7 @@ const Header = () => {
             <MDBIcon icon='bars' fas />
           </MDBNavbarToggler>
 
-          <MDBCollapse navbar show={showBasic}>
+          <MDBCollapse navbar show={showBasic} >
           <div className=' headerMenu col-10'>
             <MDBNavbarNav className='mr-auto mb-2 mb-lg-0 linksMenu'>
               <MDBNavbarItem className='linksWords'>
@@ -95,11 +95,11 @@ const Header = () => {
         </MDBContainer>
       </MDBNavbar>
       <div>
-        <NavBarC/>
-        <NavBarD/>
-        <NavBarF/>
-        <NavBarM/>
-        <NavBarO/>
+        <NavBarC className="mt-5"/>
+        <NavBarD className="mt-5"/>
+        <NavBarF className="mt-5"/>
+        <NavBarM className="mt-5"/>
+        <NavBarO className="mt-5"/>
       </div>
     </>
 
