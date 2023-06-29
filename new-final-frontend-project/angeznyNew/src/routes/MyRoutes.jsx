@@ -22,7 +22,7 @@ import FreelancerTask from '../pages/user/freelancerpages/task'
 import Managerproject from '../pages/user/productManagerpages/Managerproject';
 import ManagerTask from '../pages/user/productManagerpages/tasks'
 
-import OwnerTask from '../pages/user/productOwnerPages/tasks';
+import Ownerproject from '../pages/user/productOwnerPages/Ownerproject'
 
 import AdminClient  from '../pages/adminPages/common/client'
 import AdminDash from '../pages/adminPages/common/Dashboard'
@@ -568,7 +568,7 @@ const MyRoutes = () => {
           />
 
             <Route
-            path="/owner/task"
+            path="/owner/project"
             element={
               <Suspense
                 fallback={
@@ -578,7 +578,7 @@ const MyRoutes = () => {
                 }
               >
                 <Header/>
-                <OwnerTask/>
+                <Ownerproject/>
                 <Footer/>
               </Suspense>
             }
