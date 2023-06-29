@@ -21,7 +21,7 @@ import {
 const NavBarC = () => {
     const [showBasic, setShowBasic] = useState(false);
     return (
-        <MDBNavbar expand='lg' light bgColor='light' className='mainNav'>
+        <MDBNavbar expand='lg'   className='mainNav mb-5'>
         
             
     

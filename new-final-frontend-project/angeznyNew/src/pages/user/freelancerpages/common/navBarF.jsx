@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
+import '../../../../styles/navStyles.css';
+
 import {
     MDBContainer,
     MDBNavbar,
