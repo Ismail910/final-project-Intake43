@@ -5,6 +5,7 @@ import NavBarD from '../developerPages/common/navBarD';
 import NavBarF from '../freelancerpages/common/navBarF';
 import NavBarM from '../productManagerpages/common/navBarM';
 import NavBarO from '../productOwnerPages/common/navBarO';
+import './style.css';
 import {
     MDBContainer,
     MDBNavbar,
@@ -28,7 +29,10 @@ const Header = () => {
     <>
       <MDBNavbar expand='lg' light bgColor='light'>
         <MDBContainer fluid>
-          <Link className="nav-link text-secondary " to="/">Brand
+          <Link className="nav-link  logoName " to="/">
+          <span className='firstLetter'>
+          A
+          </span>ngezny
           </Link>
 
           <MDBNavbarToggler
@@ -41,10 +45,11 @@ const Header = () => {
           </MDBNavbarToggler>
 
           <MDBCollapse navbar show={showBasic}>
-            <MDBNavbarNav className='mr-auto mb-2 mb-lg-0'>
-              <MDBNavbarItem>
+          <div className=' headerMenu col-10'>
+            <MDBNavbarNav className='mr-auto mb-2 mb-lg-0 linksMenu'>
+              <MDBNavbarItem className=''>
               <Link className="nav-link text-secondary " to="/">
-                <i className="font-weight-bold"></i> <span className="ml-3">home</span>
+                <i className="font-weight-bold"></i> <span className="ml-3">Home</span>
               </Link>
               </MDBNavbarItem>
               <MDBNavbarItem>
@@ -79,12 +84,12 @@ const Header = () => {
               </MDBNavbarItem> */}
 
             </MDBNavbarNav>
-
-            <Link className="nav-link text-secondary " to="/login">
-              <MDBBtn color='primary'>login</MDBBtn>
+            </div>
+            <Link className="nav-link  " to="/login">
+              <button className='submissionSign'>Signin</button>
             </Link>
-            <Link className="nav-link text-secondary " to="/">
-              <MDBBtn color='primary'>logout</MDBBtn>
+            <Link className="nav-link  " to="/">
+              <button className='submissionButton'>Logout</button>
             </Link>
           </MDBCollapse>
         </MDBContainer>
