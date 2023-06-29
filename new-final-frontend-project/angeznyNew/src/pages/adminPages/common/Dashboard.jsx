@@ -24,7 +24,7 @@ const Dashboard = () => {
         <div className="alert alert-warning fade collapse" role="alert" id="myAlert">
             <button type="button" className="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">×</span>
-                <span class="sr-only">Close</span>
+                <span className="sr-only">Close</span>
             </button>
             <strong>Data and Records</strong> Learn more about employee
         </div>
