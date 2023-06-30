@@ -115,7 +115,7 @@ const Userform = ({ formData, setFormData, createDeveloper }) => {
 
               <div className='d-flex justify-content-center my-3'>
                 <button className='btn btn-primary' onClick={createDeveloper}>
-                  Add Developer
+                  Add User
                 </button>
               </div>
 
