@@ -357,6 +357,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
+
 const Tasks = () => {
   const token = '2|qLJh9hNXFldz9O4QnEX0cIGFWSUbYYUwGUr38CsF';
   // const decodedToken = jwtDecode(token);
@@ -449,7 +450,8 @@ const Tasks = () => {
       }
      };
      fetchDevelopers();
-  };  
+  }; 
+
   const handleTaskChange = (event) => {
     setSelectedDeveloperId(event.target.value);
   }
@@ -484,6 +486,7 @@ const Tasks = () => {
       toast.error('Error fetching users: ' + error.message);
     }
   };
+
   const handleSave=async (event) => {
     event.preventDefault();
     // console.log(id);
@@ -546,6 +549,7 @@ const Tasks = () => {
      fetchProjects();
     setOpen(true);
   }
+  
   return (
     <Box sx={{ margin: '50px', overflowX: 'auto' }}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
