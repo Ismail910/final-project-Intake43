@@ -25,7 +25,6 @@ class UserResource extends JsonResource
             'endDate' => $this->endDate,
             'profilePic' => $this->profilePic,
             'skills' => $this->skills,
-
         ];
     }
 }
