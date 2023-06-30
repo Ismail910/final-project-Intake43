@@ -128,7 +128,7 @@ const Developer = () => {
               {employees.map(employee => (
                 <tr key={employee.id}>
                   <td>{employee.id}</td>
-                  {/* <td>{employee.user.name}</td> */}
+                  <td>{employee.user.name}</td>
                   <td>{employee.user.email}</td>
                   <td>{employee.user.phone}</td>
                   <td>{employee.user.address}</td>
