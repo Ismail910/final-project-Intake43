@@ -15,6 +15,10 @@ use App\Models\Client;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\EmployeeResource;
+use App\Http\Resources\ManagersResource;
+use App\Http\Resources\FreelancerResource;
+use App\Http\Resources\ClientResource;
 
 class RegisterController extends Controller
 {
@@ -68,7 +72,7 @@ class RegisterController extends Controller
 
             return response()->json([
                 'success' => true,
-                'employee' => $employee,
+                'employee' =>new EmployeeResource($employee),
                 'token'  => $result['token']
             ], 201);
         } elseif ($request->input('role') == 'ProductManager' || $request->input('role') == 'ProductOwner' || $request->input('role') == 'Admin') {
@@ -80,7 +84,7 @@ class RegisterController extends Controller
 
             return response()->json([
                 'success' => true,
-                'manager' => $manager,
+                'manager' => new ManagersResource($manager),
                 'token'  => $result['token']
             ], 201);
             // return redirect()->route('managers.store', ['user_id' => $user->id,'role'=>'Product Manager','staff_level_id'=>1])->withInput();;
@@ -102,7 +106,7 @@ class RegisterController extends Controller
 
         return response()->json([
             'success' => true,
-            'freelancer' => $freelancer,
+            'freelancer' => new FreelancerResource($freelancer),
             'token'  => $result['token'],
         ], 201);
     }
@@ -118,7 +122,7 @@ class RegisterController extends Controller
 
         return response()->json([
             'success' => true,
-            'client' => $client,
+            'client' => new ClientResource($client),
             'token'  => $result['token'],
         ], 201);
     }
