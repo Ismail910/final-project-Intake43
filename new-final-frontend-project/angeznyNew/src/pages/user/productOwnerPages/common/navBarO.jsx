@@ -35,8 +35,8 @@ const NavBarO = () => {
       <MDBCollapse navbar show={showBasic}>
         <MDBNavbarNav className=' navBarContainer'>
             <MDBNavbarItem className='NavItem'>
-          <Link className="nav-link text-white " to="/owner/task">
-            <i className="font-weight-bold"></i> <span className="ml-3">Task</span>
+          <Link className="nav-link text-white " to="/owner/project">
+            <i className="font-weight-bold"></i> <span className="ml-3">project</span>
           </Link>
           </MDBNavbarItem>
 
@@ -45,33 +45,8 @@ const NavBarO = () => {
             <i className="font-weight-bold"></i> <span className="ml-3">Chat</span>
           </Link>
           </MDBNavbarItem>
-
-{/*     
-          <MDBNavbarItem>
-            <MDBDropdown>
-              <MDBDropdownToggle tag='a' className='nav-link' role='button'>
-                Dropdown
-              </MDBDropdownToggle>
-              <MDBDropdownMenu>
-                <MDBDropdownItem link>Action</MDBDropdownItem>
-                <MDBDropdownItem link>Another action</MDBDropdownItem>
-                <MDBDropdownItem link>Something else here</MDBDropdownItem>
-              </MDBDropdownMenu>
-            </MDBDropdown>
-          </MDBNavbarItem> */}
-
-          {/* <MDBNavbarItem>
-            <MDBNavbarLink disabled href='#' tabIndex={-1} aria-disabled='true'>
-              Disabled
-            </MDBNavbarLink>
-          </MDBNavbarItem> */}
-
         </MDBNavbarNav>
 
-        {/* <form className='d-flex input-group w-auto'>
-          <input type='search' className='form-control' placeholder='Type query' aria-label='Search' />
-          <MDBBtn color='primary'>Search</MDBBtn>
-        </form> */}
       </MDBCollapse>
   </MDBNavbar>
   )
