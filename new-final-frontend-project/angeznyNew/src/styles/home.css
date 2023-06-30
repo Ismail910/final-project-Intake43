@@ -53,4 +53,28 @@ font-size: 1.2rem;
     border-radius: 15px;
     box-shadow: 3px 3px 3px 3px rgb(241, 241, 241);
 }
+/* second section */
+.logo1{
+    width: 100px;
+    height: 100px;
+}
+.logo2{
+    width: 80px;
+    height: 80px;
+}
+.projectText{
+font-size: 7rem;
+font-weight: bolder;
+}
+.projectColor{
+    color: #42B6D3;
+}
+
+.imgProject{
+    margin: 10px;
+    width: 230px;
+    height: 200px;
+    margin-top: 30px;
+    align-items: center;
+}
 
