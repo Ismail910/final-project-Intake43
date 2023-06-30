@@ -100,6 +100,7 @@ function Row(props) {
      };
      fetchDevelopers();
   }, [row.start,row.end]);
+  
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
   };
@@ -549,7 +550,7 @@ const Tasks = () => {
      fetchProjects();
     setOpen(true);
   }
-  
+
   return (
     <Box sx={{ margin: '50px', overflowX: 'auto' }}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
