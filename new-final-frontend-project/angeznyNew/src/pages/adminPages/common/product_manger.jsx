@@ -1,28 +1,26 @@
 
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import UserForm from "./userform";
 import axios from 'axios';
-const ProductManger = () => {
-  const [formData, setFormData] = useState({
-   user:{
-    name: '',
-    email: '',
-    password: '',
-    nationalID: '',
-    address: '',
-    joinDate: '',
-    endDate: '',
-    profilePicture: '',
-    country: '',
-    phoneNumber: '',
-    role: ''
-   }
-  });
+
 
 
 const ProductManager = () => {
   const [managers, setManagers] = useState([]);
-
+  const [formData, setFormData] = useState({
+    user:{
+     name: '',
+     email: '',
+     password: '',
+     nationalID: '',
+     address: '',
+     joinDate: '',
+     endDate: '',
+     profilePicture: '',
+     country: '',
+     phoneNumber: '',
+     role: ''
+    }});
   useEffect(() => {
     axios
       .get('http://127.0.0.1:8000/api/managers/ProductManager')
@@ -92,6 +90,6 @@ const ProductManager = () => {
       </div>
     </div>
   );
-}};
+};
 
 export default ProductManager;
