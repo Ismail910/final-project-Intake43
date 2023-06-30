@@ -1,5 +1,24 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useState } from 'react';
+import UserForm from "./userform";
 import axios from 'axios';
+const ProductManger = () => {
+  const [formData, setFormData] = useState({
+   user:{
+    name: '',
+    email: '',
+    password: '',
+    nationalID: '',
+    address: '',
+    joinDate: '',
+    endDate: '',
+    profilePicture: '',
+    country: '',
+    phoneNumber: '',
+    role: ''
+   }
+  });
+
 
 const ProductManager = () => {
   const [managers, setManagers] = useState([]);
@@ -73,6 +92,6 @@ const ProductManager = () => {
       </div>
     </div>
   );
-};
+}};
 
 export default ProductManager;

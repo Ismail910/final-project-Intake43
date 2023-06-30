@@ -21,7 +21,18 @@ class EmployeeResource extends JsonResource
         $staff_level = $this->staff_level ? new StaffLevelResource($this->staff_level) : null;
         return [
             'id' => $this->id,
-            'user' => new UserResource($this->user),
+            // 'user' => new UserResource($this->user),
+            'user'=>[
+                'id' => $this->user->id,
+                'name' => $this->user->name,
+                'email' => $this->user->email,
+                'password' => $this->user->password,
+                'phone' => $this->user->phone,
+                'address' => $this->user->address,
+                'joinedDate' => $this->user->joinedDate,
+                'endDate' => $this->user->endDate,
+                'profilePic' => $this->user->profilePic,
+            ],
             'task' => $Task,
             'staff_level' => $staff_level
 
