@@ -45,14 +45,14 @@ const NavBarD = () => {
           <MDBNavbarItem className='NavItem'>
 
           <Link className="nav-link text-white " to="/developer/task">
-            <i className="font-weight-bold"></i> <span className="ml-3">task</span>
+            <i className="font-weight-bold"></i> <span className="ml-3">Task</span>
           </Link>
           </MDBNavbarItem>
 
           <MDBNavbarItem className='NavItem'>
 
           <Link className="nav-link text-white " to="/developer/chat">
-            <i className="font-weight-bold"></i> <span className="ml-3">chat</span>
+            <i className="font-weight-bold"></i> <span className="ml-3">Chat</span>
           </Link>
           </MDBNavbarItem>
 {/*     
