@@ -15,7 +15,7 @@ const Home = () => {
         <div className="container">
           <div className="row">
             <div className="d-flex  row justify-content-around">
-              <div className="col-md-6 col-12 mb-3">
+              <div className="col-md-6 col-12 mb-3 textFirst ">
                 <p className="text1 ">
                   Are you asking for a
                   <span className="text1Word">
@@ -53,8 +53,8 @@ const Home = () => {
       <section className="mt-5">
         <div className="container">
           <div className="row">
-            <div className="d-flex  row">
-              <div className="col-md-6 col-12  projectSide row">
+            <div className="d-flex  row justify-content-around">
+              <div className="col-lg-6 col-12  projectSide row">
                 <div className="col-12">
                   <img src={logo1} alt="logo1" className="logo1 m-5"></img>
                   <img src={logo1} alt="logo1" className="logo2 mt-5"></img>
@@ -72,11 +72,12 @@ const Home = () => {
                 </div>
               </div>
 
-              <div className="col-md-5 col-12 projectImg">
-                <img src={project} className="imgProject"></img>
-                <img src={project} className="imgProject"></img>
-                <img src={project} className="imgProject"></img>
-                <img src={project} className="imgProject"></img>
+              <div className="col-lg-6 col-12 projectImg row">
+              
+                <img src={project} className="imgProject col-md-5 col-12"></img>
+                <img src={project} className="imgProject col-md-5 col-12"></img>
+                <img src={project} className="imgProject col-md-5 col-12"></img>
+                <img src={project} className="imgProject col-md-5 col-12"></img>
               </div>
             </div>
           </div>

@@ -72,8 +72,8 @@ font-weight: bolder;
 
 .imgProject{
     margin: 10px;
-    width: 230px;
-    height: 200px;
+    /* width: 230px;
+    height: 200px; */
     margin-top: 30px;
     align-items: center;
 }
@@ -119,3 +119,7 @@ font-weight: bolder;
     align-items: center;
     margin-top: 10px;
 }
+@media only screen and (max-width: 600px){
+    .textFirst{
+text-align: center;
+}}
