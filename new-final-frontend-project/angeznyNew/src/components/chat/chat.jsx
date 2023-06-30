@@ -1,6 +1,6 @@
 // import React from 'react'
-// import { CometChat } from "@cometchat-pro/chat";
-// import { CometChatUI } from "../../cometchat-pro-react-ui-kit/CometChatWorkspace/src";
+// // import { CometChat } from "@cometchat-pro/chat";
+// // import { CometChatUI } from "../../cometchat-pro-react-ui-kit/CometChatWorkspace/src";
 
 // const Chat = () => {
 //   const appID = "240169ef153c40df";
