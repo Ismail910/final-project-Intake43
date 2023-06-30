@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import UserForm from "./userform";
 const ProductManger = () => {
   const [formData, setFormData] = useState({
+   user:{
     name: '',
     email: '',
     password: '',
@@ -13,6 +14,7 @@ const ProductManger = () => {
     country: '',
     phoneNumber: '',
     role: ''
+   }
   });
 
   const createDeveloper = () => {
