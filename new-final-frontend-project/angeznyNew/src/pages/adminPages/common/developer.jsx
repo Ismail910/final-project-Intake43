@@ -58,9 +58,26 @@ const Developer = () => {
       });
   };
 
+  const handleDelete = (employeeId) => {
+    axios
+      .delete(`http://127.0.0.1:8000/api/employee/${employeeId}`, {
+        headers: {
+          Authorization: 'Bearer 7|rg9CBKokDh8YT3ThlLPB068mmCT5CH1UF7lcY8kl',
+        },
+      })
+      .then(response => {
+        console.log(response.data);
+        setEmployees(employees.filter(employee => employee.id !== employeeId));
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+  
+  
+
   return (
     <div className="col main pt-5 mt-3 h-100">
-      {/* <h2 className='text-center'>Employee Registration</h2> */}
       <UserForm
         formData={formData}
         handleInputChange={handleInputChange}
@@ -92,18 +109,18 @@ const Developer = () => {
                   <td>{employee.user.email}</td>
                   <td>{employee.user.phone}</td>
                   <td>{employee.user.address}</td>
-                  <td>{employee.user.nationalID }</td>
+                  <td>{employee.user.nationalID}</td>
                   <td>{employee.user.joinedDate}</td>
                   <td>{employee.user.endDate}</td>
                   <td>{employee.user.profilePic}</td>
                   <td className='d-flex justify-content-evenly'>
-                <button className='btn btn-info'>
-                  Edit
-                </button>
-                <button className='btn btn-danger'>
-                  Delete
-                </button>
-              </td>
+                    <button className='btn btn-info'>
+                      Edit
+                    </button>
+                    <button className='btn btn-danger' onClick={() => handleDelete(employee.id)}>
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import UserForm from './userform';
+// import UserForm from './userform';
 import '../admin.css';
 
 const Freelancer = () => {
@@ -17,6 +17,23 @@ const Freelancer = () => {
         console.error(error);
       });
   }, []);
+  
+  const handleDelete = (freelancerId) => {
+  axios
+    .delete(`http://127.0.0.1:8000/api/freelancer/${freelancerId}`, {
+      headers: {
+        Authorization: 'Bearer 7|rg9CBKokDh8YT3ThlLPB068mmCT5CH1UF7lcY8kl',
+      },
+    })
+    .then(response => {
+      console.log(response.data);
+      setFreelancers(freelancers.filter(freelancer => freelancer.id !== freelancerId));
+    })
+    .catch(error => {
+      console.error(error);
+    });
+};
+
 
   return (
     <div className="col main pt-5 mt-3 h-100">
@@ -52,7 +69,7 @@ const Freelancer = () => {
                    <button className='btn btn-info'>
                     Edit
                     </button>
-                  <button className='btn btn-danger'>
+                  <button className='btn btn-danger' onClick={() => handleDelete(freelancer.id)}>
                     Delete
                   </button>
               </td>

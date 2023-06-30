@@ -100,6 +100,7 @@ function Row(props) {
      };
      fetchDevelopers();
   }, [row.start,row.end]);
+  
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
   };
@@ -357,6 +358,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
+
 const Tasks = () => {
   const token = 'f245bdb13d30567419b0ae3d2351df344bc98ae9ae45ae2be46a6191227f85a8';
   // const decodedToken = jwtDecode(token);
@@ -449,7 +451,8 @@ const Tasks = () => {
       }
      };
      fetchDevelopers();
-  };  
+  }; 
+
   const handleTaskChange = (event) => {
     setSelectedDeveloperId(event.target.value);
   }
@@ -484,6 +487,7 @@ const Tasks = () => {
       toast.error('Error fetching users: ' + error.message);
     }
   };
+
   const handleSave=async (event) => {
     event.preventDefault();
     // console.log(id);
@@ -546,6 +550,7 @@ const Tasks = () => {
      fetchProjects();
     setOpen(true);
   }
+
   return (
     <Box sx={{ margin: '50px', overflowX: 'auto' }}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>

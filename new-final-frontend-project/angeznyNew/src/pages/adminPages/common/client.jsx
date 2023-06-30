@@ -17,6 +17,23 @@ const Client = () => {
       });
   }, []);
 
+  const handleDelete = (clientId) => {
+    axios
+      .delete(`http://127.0.0.1:8000/api/client/${clientId}`, {
+        headers: {
+          Authorization: 'Bearer 7|rg9CBKokDh8YT3ThlLPB068mmCT5CH1UF7lcY8kl',
+        },
+      })
+      .then(response => {
+        console.log(response.data);
+        setClients(clients.filter(client => client.id !== clientId));
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+  
+  
   return (
     <div className="col main pt-5 mt-3">
       <h2 className='text-center'>Client List</h2>
@@ -51,7 +68,7 @@ const Client = () => {
                    <button className='btn btn-info'>
                     Edit
                     </button>
-                  <button className='btn btn-danger'>
+                  <button className='btn btn-danger' onClick={() => handleDelete(client.id)}>
                     Delete
                   </button>
               </td>
