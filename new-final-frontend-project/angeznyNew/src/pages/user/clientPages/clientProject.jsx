@@ -1,3 +1,4 @@
+// import * as React from 'react';
 import * as React from 'react';
 import { toast } from "react-toastify";
 import { styled } from '@mui/material/styles';
@@ -39,6 +40,98 @@ import SearchIcon from '@mui/icons-material/Search';
 import SendIcon from '@mui/icons-material/Send';
 
 const ClientProject = () => {
+  const token = '2|qLJh9hNXFldz9O4QnEX0cIGFWSUbYYUwGUr38CsF';
+  // const decodedToken = jwtDecode(token);
+  // const id = decodedToken.user_id;
+  const id = 2;
+  const [projects, setProjects] = React.useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [status, setStatus] = React.useState('');
+  const [title, setTitle] = React.useState('');
+  const [type, setType] = React.useState('');
+  const [description, setDescription] = React.useState('');
+  const [startDate, setStartDate] = React.useState('');
+  const [endDate, setEndDate] = React.useState('');
+  const [users, setUsers] = React.useState('');
+
+  React.useEffect(() => {
+    // Fetch questions from backend API
+    const fetchProjects = async () => {
+      
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/api/project/searchProjectByUsers`, {
+                  headers: {
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                  }}); 
+              if (response.ok) {
+                const data = await response.json();
+                if (data) {
+                  setProjects(data.data);
+                }
+              } else {
+                toast.error("Failed to fetch Task data");
+
+              }
+            } catch (error) {
+                toast.error(error);
+            }
+           };
+    
+           fetchProjects();
+
+  },  [projects]);
+
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
+  };
+  const handleStatusChange = (event) => {
+    setStatus(event.target.value);
+  };
+  const handleTypeChange = (event) => {
+    setType(event.target.value);
+  };
+  const handleStartDateChange = (event) => {
+    setStartDate(event.target.value);
+  };
+  const handleEndDateChange = (event) => {
+    setEndDate(event.target.value);
+  };
+
+  const handleSave=async (event) => {
+    event.preventDefault();
+    // console.log(id);
+    await axios.post(
+      `http://127.0.0.1:8000/api/project`,
+      {
+        client_id: id,
+        project_type: type,
+        project_title: title,
+        project_description: description,
+        project_start: startDate,
+        project_end: endDate,
+        project_status: status,
+      },
+      {
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      }
+    )
+      .then(() => {
+        toast.success("Task Created");
+      })
+      .catch((error) => {
+        toast.error("Error Creating Task: " + error.message);
+      });
+    setOpen(false);
+  }
+  
+  
   return (
     <div>
       
