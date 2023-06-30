@@ -3,7 +3,6 @@ import React from 'react';
 const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
   return (
     <div className="my-2">
-    <p>{formData}</p>
       <h3 className="text-center">Add User</h3>
       <div className="row justify-content-center my-3">
         <div className="col-md-6">
