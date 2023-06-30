@@ -8,11 +8,11 @@ const Home = () => {
       <section>
         <div className="container">
           <div className="row">
-            <div className="d-flex textSide">
-              <div className="col-md-5 col-12">
+            <div className="d-flex  row">
+              <div className="col-md-6 col-12 mx-5">
                 <p className="text1">
                   Are you asking for a
-                  <span className="text1Word"> freelancer ?</span>
+                  <span className="text1Word"> <br></br>freelancer ?</span>
                 </p>
                 <p className="text2">
                   Explore thousands of jobs <br />
