@@ -15,7 +15,24 @@ const ProductManager = () => {
         console.error(error);
       });
   }, []);
-
+  
+  
+  const handleDelete = (managerId) => {
+    axios
+      .delete(`http://127.0.0.1:8000/api/manager/${managerId}`, {
+        headers: {
+          Authorization: 'Bearer 7|rg9CBKokDh8YT3ThlLPB068mmCT5CH1UF7lcY8kl',
+        },
+      })
+      .then(response => {
+        console.log(response.data);
+        setManagers(managers.filter(manager => manager.id !== managerId));
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+  
   return (
     <div className='col main pt-5 mt-3'>
       <h2>Product Managers</h2>
@@ -47,7 +64,7 @@ const ProductManager = () => {
                 <td>{manager.user.profilePic}</td>
                 <td className='d-flex justify-content-evenly'>
                   <button className='btn btn-info'>Edit</button>
-                  <button className='btn btn-danger'>Delete</button>
+                  <button className='btn btn-danger' onClick={() => handleDelete(manager.id)}>Delete</button>
                 </td>
               </tr>
             ))}
