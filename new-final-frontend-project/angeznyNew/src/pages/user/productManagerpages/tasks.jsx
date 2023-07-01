@@ -37,8 +37,10 @@ import TextField from '@mui/material/TextField';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import SearchIcon from '@mui/icons-material/Search';
 import SendIcon from '@mui/icons-material/Send';
+import { CometChat } from "@cometchat-pro/chat";
+// import { CometChatUI } from "./cometchat-pro-react-ui-kit/CometChatWorkspace/src";
 function Row(props) {
-  const token = '2|qLJh9hNXFldz9O4QnEX0cIGFWSUbYYUwGUr38CsF';
+  const token = '5|mfYgbX7HbdrG2lFSkipBbD6k98OSVIJghUI5rXOP';
   const { row } = props;
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
@@ -360,7 +362,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const Tasks = () => {
-  const token = 'f245bdb13d30567419b0ae3d2351df344bc98ae9ae45ae2be46a6191227f85a8';
+  const token = '5|mfYgbX7HbdrG2lFSkipBbD6k98OSVIJghUI5rXOP';
   // const decodedToken = jwtDecode(token);
   // const id = decodedToken.user_id;
   const id = 2;
@@ -378,6 +380,7 @@ const Tasks = () => {
   const [endDate, setEndDate] = React.useState('');
   const [searchSkill, setSearchSkill] = React.useState('');
   const [users, setUsers] = React.useState('');
+  const [message, setMessage] = React.useState('');
 
   React.useEffect(() => {
     // Fetch questions from backend API
@@ -551,6 +554,41 @@ const Tasks = () => {
     setOpen(true);
   }
 
+  const handleSend= ()=>{
+    const appID = "240169ef153c40df";
+    const region = "US";
+    const authKey = "581f246117c147b5f041cf28049c89388b3fc5cd";
+    const appSetting = new CometChat.AppSettingsBuilder()
+      .subscribePresenceForAllUsers()
+      .setRegion(region)
+      .build();
+
+      CometChat.init(appID, appSetting).then(
+        () => {
+          console.log("Initialization completed successfully");
+          // You can now proceed with rendering your app or calling the login function.
+          const messageText = message;
+          const receiverID = 'user2';
+          const receiverType = CometChat.RECEIVER_TYPE.USER;
+      
+          const textMessage = new CometChat.TextMessage(receiverID, messageText, receiverType);
+      
+          CometChat.sendMessage(textMessage).then(
+            message => {
+              console.log("Message sent successfully:", message);
+            },
+            error => {
+              console.log("Message sending failed with error:", error);
+            }
+          );
+        },
+        error => {
+          console.log("Initialization failed with error:", error);
+          // Check the reason for error and take appropriate action.
+        }
+      );
+  
+  }
   return (
     <Box sx={{ margin: '50px', overflowX: 'auto' }}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -580,11 +618,13 @@ const Tasks = () => {
         sx={{ width:'40%',marginBottom:'10px' ,marginRight:'15px' }}
         InputProps={{
           endAdornment: (
-            <InputAdornment position="end"  >
-              <SendIcon/>
+            <InputAdornment position="end"  onClick={handleSend}>
+              <SendIcon onClick={handleSend}/>
             </InputAdornment>
           ),
         }}
+        value={message}
+        onChange={(event) => setMessage(event.target.value)}
       />
   
   <Button
