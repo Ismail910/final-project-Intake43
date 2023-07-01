@@ -114,7 +114,7 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
               />
             </div>
 
-            {/* <div className="row mb-3">
+            <div className="row mb-3">
               <label htmlFor="profilePic">Profile Picture</label>
               <input
                 type="file"
@@ -126,7 +126,7 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
                 onChange={handleInputChange}
               />
             </div>
-             */}
+             
             <div className="row mb-3">
               <label htmlFor="country">Country</label>
               <input

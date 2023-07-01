@@ -19,15 +19,7 @@ const ProductOwner = () => {
     }
  });
  
- const handleInputChange = event => {
-  setFormData({
-    ...formData,
-    user: {
-      ...formData.user,
-      [event.target.name]: event.target.value
-    }
-  });  };
-  
+ 
   const handleSubmit = async(event) => {
   event.preventDefault();
   console.log(formData);
@@ -78,6 +70,18 @@ const ProductOwner = () => {
       });
   }, []);
   
+  const handleInputChange = event => {
+    setFormData({
+      ...formData,
+      user: {
+        ...formData.user,
+        [event.target.name]: event.target.value
+      }
+    });  };
+    
+    
+
+
   const handleDelete = (ownerId) => {
     axios
       .delete(`http://127.0.0.1:8000/api/owner/${ownerId}`, {
@@ -98,10 +102,17 @@ const ProductOwner = () => {
 
   return (
     <div className='col main pt-5 mt-3'>
+    
+    <UserForm
+        formData={formData.user}
+        handleInputChange={handleInputChange}
+        handleSubmit={handleSubmit}
+      />
+
       <h2>Product Owners</h2>
       <div className='product-owner'>
       
-      <table className='table table-responsive table-striped text-center'>
+      <table className='table table-responsive table-striped text-center table-sm'>
             <thead>
               <tr>
                 <th>ID</th>

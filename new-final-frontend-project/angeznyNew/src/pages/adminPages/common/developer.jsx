@@ -109,7 +109,7 @@ const Developer = () => {
       <div className="employee-list">
         <h3 className="text-center">Employee List</h3>
         {employees.length > 0 ? (
-          <table className="table table-responsive table-striped text-center">
+          <table className="table table-responsive table-striped text-center table-sm">
             <thead>
               <tr>
                 <th>ID</th>
@@ -117,7 +117,7 @@ const Developer = () => {
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Address</th>
-                <th>National ID</th>
+                <th>National ID</th> 
                 <th>Joined Date</th>
                 <th>End Date</th>
                 <th>Profile Picture</th>

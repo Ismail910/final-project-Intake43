@@ -105,7 +105,7 @@ const ProductManager = () => {
       />
       <h2>Product Managers</h2>
       <div className='product-manager'>
-        <table className='table table-responsive table-striped text-center'>
+        <table className='table table-responsive table-striped text-center table-sm'>
           <thead>
             <tr>
               <th>ID</th>
