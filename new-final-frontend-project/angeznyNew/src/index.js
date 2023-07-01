@@ -11,7 +11,7 @@ import { ToastContainer } from "react-toastify";
 createRoot(document.getElementById('root')).render(
   <>
     <App />
-    <ToastContainer />
+   <ToastContainer />
   </>);
 
 // If you want to start measuring performance in your app, pass a function

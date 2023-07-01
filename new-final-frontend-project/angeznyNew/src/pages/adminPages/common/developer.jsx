@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import UserForm from './userform';
+import Editform from "./editform"
 import '../admin.css';
 
 const Developer = () => {
   const [employees, setEmployees] = useState([]);
+  const [showEditForm, setShowEditForm] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
 
   const [formData, setFormData] = useState({
-     user:{
+    user: {
       name: '',
       email: '',
       password: '',
@@ -16,8 +19,8 @@ const Developer = () => {
       joinedDate: '',
       endDate: '',
       profilePic: '',
-      country:'',
-     }
+      country: '',
+    },
   });
 
   useEffect(() => {
@@ -32,49 +35,48 @@ const Developer = () => {
       });
   }, []);
 
-  // const handleInputChange = event => {
-  //   setFormData({ ...formData, [event.target.name]: event.target.value });
-  // };
-  
   const handleInputChange = event => {
     setFormData({
       ...formData,
       user: {
         ...formData.user,
-        [event.target.name]: event.target.value
-      }
-    });  };
-    
-    const handleSubmit = async(event) => {
+        [event.target.name]: event.target.value,
+      },
+    });
+  };
+
+  const handleSubmit = async event => {
     event.preventDefault();
     console.log(formData);
     await axios
-      .post('http://127.0.0.1:8000/api/register/manager',{name:formData.user.name,
-      email:formData.user.email,password:formData.user.password,
-      phone:formData.user.phone,
-      nationalID:formData.user.nationalID,
-    address:formData.user.address,joinedDate:formData.user.joinedDate,endDate:formData.user.endDate,
-    country:formData.user.country,
-    role:formData.user.role,
-    })
+      .post('http://127.0.0.1:8000/api/register/manager', {
+        name: formData.user.name,
+        email: formData.user.email,
+        password: formData.user.password,
+        phone: formData.user.phone,
+        nationalID: formData.user.nationalID,
+        address: formData.user.address,
+        joinedDate: formData.user.joinedDate,
+        endDate: formData.user.endDate,
+        country: formData.user.country,
+        role: formData.user.role,
+      })
       .then(response => {
         console.log(formData);
         setEmployees([...employees, formData]);
         setFormData({
-          user:{
-          name: '',
-          email: '',
-          password: '',
-          phone: '',
-          nationalID:'',
-          address: '',
-          joinedDate: '',
-          endDate: '',
-          // profilePic: '',
-          country:'',
-          // skills: [],
-          }
-        
+          user: {
+            name: '',
+            email: '',
+            password: '',
+            phone: '',
+            nationalID: '',
+            address: '',
+            joinedDate: '',
+            endDate: '',
+            profilePic: '',
+            country: '',
+          },
         });
       })
       .catch(error => {
@@ -98,6 +100,40 @@ const Developer = () => {
       });
   };
 
+  const handleEdit = employee => {
+    setSelectedEmployee(employee);
+    setShowEditForm(true);
+  };
+
+  const handleUpdate = updatedEmployee => {
+    axios
+      .put(`http://127.0.0.1:8000/api/employee/${selectedEmployee.id}`, updatedEmployee, {
+        headers: {
+          Authorization: 'Bearer 7|rg9CBKokDh8YT3ThlLPB068mmCT5CH1UF7lcY8kl',
+        },
+      })
+      .then(response => {
+        console.log(response.data);
+        const updatedEmployees = employees.map(employee => {
+          if (employee.id === selectedEmployee.id) {
+            return response.data;
+          }
+          return employee;
+        });
+        setEmployees(updatedEmployees);
+        setShowEditForm(false);
+        setSelectedEmployee(null);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+  const handleClose = () => {
+    setShowEditForm(false);
+    setSelectedEmployee(null);
+  };
+
   return (
     <div className="col main pt-5 mt-3 h-100">
       <UserForm
@@ -109,7 +145,7 @@ const Developer = () => {
       <div className="employee-list">
         <h3 className="text-center">Employee List</h3>
         {employees.length > 0 ? (
-          <table className="table table-responsive table-striped text-center table-sm">
+          <table className="table table-responsive table-striped text-center table-sm col-sm-12">
             <thead>
               <tr>
                 <th>ID</th>
@@ -117,7 +153,7 @@ const Developer = () => {
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Address</th>
-                <th>National ID</th> 
+                <th>National ID</th>
                 <th>Joined Date</th>
                 <th>End Date</th>
                 <th>Profile Picture</th>
@@ -137,11 +173,11 @@ const Developer = () => {
                   <td>{employee.user.endDate}</td>
                   <td>{employee.user.profilePic}</td>
                   <td className="d-flex justify-content-evenly">
-                    <button className="btn btn-info">Edit</button>
+                    <button className="btn btn-info" onClick={() => handleEdit(employee)}>
+                      Edit
+                    </button>
                     <button
-                      className="btn btn-danger"
-                      onClick={() => handleDelete(employee.id)}
-                    >
+                      className="btn btn-danger"onClick={() => handleDelete(employee.id)}>
                       Delete
                     </button>
                   </td>
@@ -153,6 +189,14 @@ const Developer = () => {
           <p>No employees found.</p>
         )}
       </div>
+
+      {showEditForm && (
+        <Editform
+          employee={selectedEmployee}
+          handleUpdate={handleUpdate}
+          handleClose={handleClose}
+        />
+      )}
     </div>
   );
 };
