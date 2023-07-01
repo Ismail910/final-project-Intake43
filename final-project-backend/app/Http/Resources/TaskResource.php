@@ -26,6 +26,7 @@ class TaskResource extends JsonResource
             'id' => $assigned_to->user->id,
             'name' => $assigned_to->user->name,
             'email' => $assigned_to->user->email,
+            'userName' => $assigned_to->user->userName,
         ] : null;
         return [
             'id' => $this->id,
@@ -43,6 +44,7 @@ class TaskResource extends JsonResource
                 'id' => $this->ProductManager->id,
                 'name' => $this->ProductManager->user->name,
                 'email' => $this->ProductManager->user->email,
+                'userName' => $this->ProductManager->user->userName,
             ],
             'assigned_to' => $assignedToData
         ];
