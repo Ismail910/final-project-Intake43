@@ -33,6 +33,52 @@ const ProductManager = () => {
       });
   }, []);
   
+    const handleInputChange = event => {
+    setFormData({
+      ...formData,
+      user: {
+        ...formData.user,
+        [event.target.name]: event.target.value
+      }
+    });  };
+    
+    const handleSubmit = async(event) => {
+    event.preventDefault();
+    console.log(formData);
+    await axios
+      .post('http://127.0.0.1:8000/api/register/manager',{name:formData.user.name,
+      email:formData.user.email,password:formData.user.password,
+      phone:formData.user.phone,
+      nationalID:formData.user.nationalID,
+    address:formData.user.address,joinedDate:formData.user.joinedDate,endDate:formData.user.endDate,
+    country:formData.user.country,
+    role:formData.user.role,
+    })
+      .then(response => {
+        console.log(formData);
+        setManagers([...managers, formData]);
+        setFormData({
+          user:{
+          name: '',
+          email: '',
+          password: '',
+          phone: '',
+          nationalID:'',
+          address: '',
+          joinedDate: '',
+          endDate: '',
+          // profilePic: '',
+          country:'',
+          // skills: [],
+          }
+        
+        });
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
   
   const handleDelete = (managerId) => {
     axios
@@ -52,9 +98,14 @@ const ProductManager = () => {
   
   return (
     <div className='col main pt-5 mt-3'>
+      <UserForm
+        formData={formData.user}
+        handleInputChange={handleInputChange}
+        handleSubmit={handleSubmit}
+      />
       <h2>Product Managers</h2>
       <div className='product-manager'>
-        <table className='table table-responsive table-striped text-center'>
+        <table className='table table-responsive table-striped text-center table-sm'>
           <thead>
             <tr>
               <th>ID</th>

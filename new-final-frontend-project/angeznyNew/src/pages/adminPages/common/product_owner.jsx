@@ -1,9 +1,63 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import UserForm from './userform';
 
 const ProductOwner = () => {
   const [owners, setOwners] = useState([]);
+   
+  const [formData, setFormData] = useState({
+    user:{
+     name: '',
+     email: '',
+     password: '',
+     phone: '',
+     address: '',
+     joinedDate: '',
+     endDate: '',
+     profilePic: '',
+     country:'',
+    }
+ });
+ 
+ 
+  const handleSubmit = async(event) => {
+  event.preventDefault();
+  console.log(formData);
+  await axios
+    .post('http://127.0.0.1:8000/api/register/manager',{name:formData.user.name,
+    email:formData.user.email,password:formData.user.password,
+    phone:formData.user.phone,
+    nationalID:formData.user.nationalID,
+  address:formData.user.address,joinedDate:formData.user.joinedDate,endDate:formData.user.endDate,
+  country:formData.user.country,
+  role:formData.user.role,
+  })
+    .then(response => {
+      console.log(formData);
+      setOwners([...owners, formData]);
+      setFormData({
+        user:{
+        name: '',
+        email: '',
+        password: '',
+        phone: '',
+        nationalID:'',
+        address: '',
+        joinedDate: '',
+        endDate: '',
+        // profilePic: '',
+        country:'',
+        // skills: [],
+        }
+      
+      });
+    })
+    .catch(error => {
+      console.error(error);
+    });
+};
 
+ 
   useEffect(() => {
     axios
       .get('http://127.0.0.1:8000/api/managers/ProductOwner')
@@ -16,6 +70,18 @@ const ProductOwner = () => {
       });
   }, []);
   
+  const handleInputChange = event => {
+    setFormData({
+      ...formData,
+      user: {
+        ...formData.user,
+        [event.target.name]: event.target.value
+      }
+    });  };
+    
+    
+
+
   const handleDelete = (ownerId) => {
     axios
       .delete(`http://127.0.0.1:8000/api/owner/${ownerId}`, {
@@ -36,10 +102,17 @@ const ProductOwner = () => {
 
   return (
     <div className='col main pt-5 mt-3'>
+    
+    <UserForm
+        formData={formData.user}
+        handleInputChange={handleInputChange}
+        handleSubmit={handleSubmit}
+      />
+
       <h2>Product Owners</h2>
       <div className='product-owner'>
       
-      <table className='table table-responsive table-striped text-center'>
+      <table className='table table-responsive table-striped text-center table-sm'>
             <thead>
               <tr>
                 <th>ID</th>

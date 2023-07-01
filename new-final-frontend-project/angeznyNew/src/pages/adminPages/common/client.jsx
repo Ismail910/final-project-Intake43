@@ -39,7 +39,7 @@ const Client = () => {
       <h2 className='text-center'>Client List</h2>
       <div className="client-list">
         {clients.length > 0 ? (
-          <table className='table table-responsive table-striped text-center'>
+          <table className='table table-responsive table-striped text-center table-sm'>
             <thead>
               <tr>
                 <th>ID</th>
