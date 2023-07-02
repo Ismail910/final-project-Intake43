@@ -4,23 +4,22 @@
   min-height: 100vh;
   align-items: center;
   justify-content: center;
-  background-image: linear-gradient(79deg ,#45A2FF,rgb(0, 0, 0));
+  background-image: linear-gradient(79deg, #45a2ff, rgb(0, 0, 0));
   color: white;
 }
-.auth-form-container,.login-form,.register-form{
+.auth-form-container,
+.login-form,
+.register-form {
   display: flex;
   flex-direction: column;
- 
-
 }
-.auth-form-container{
+.auth-form-container {
   padding: 5rem;
   border: 1px solid white;
   border-radius: 10px;
- 
 }
 @media screen and(min-width: 600px) {
-  .auth-form-container{
+  .auth-form-container {
     padding: 5rem;
     border: 1px solid white;
     border-radius: 10px;
@@ -28,17 +27,17 @@
   }
 }
 
-label{
-text-align: left;
-padding: 0.25rem 0;
+label {
+  text-align: left;
+  padding: 0.25rem 0;
 }
-input{
+input {
   margin: 0.5rem 0;
   padding: 0.5rem;
   border: none;
   border-radius: 10px;
 }
-.submission{
+.submission {
   border: none;
   background-color: white;
   padding: 0.5rem;
@@ -48,7 +47,6 @@ input{
   margin-top: 1rem;
   font-size: larger;
   font-weight: bolder;
-  
 }
 button {
   border: none;
@@ -58,10 +56,8 @@ button {
   cursor: pointer;
   color: darkblue;
   margin-top: 1rem;
-  
-  
 }
-.link-btn{
+.link-btn {
   background: none;
   color: white;
   text-decoration: underline;

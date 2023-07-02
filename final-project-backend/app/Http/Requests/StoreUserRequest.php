@@ -25,14 +25,15 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
+            'userName'=>'required|string|unique:users,userName',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6',
             'role' => 'sometimes|in:Admin,ProductManager,ProductOwner,Freelancer,Client,Employee',
-            'nationalID' => 'required|string|min:14',
-            'address' => 'required|string',
-            'phone' => 'required|string|min:11',
-            'joinedDate' => 'required|date',
-            'endDate' => 'required|date|after:joinedDate',
+            'nationalID' => 'string|min:14',
+            'address' => 'string',
+            'phone' => 'string|min:11',
+            'joinedDate' => 'date',
+            'endDate' => 'date|after:joinedDate',
             'profilePic' => 'nullable',
             'country' => 'required'
         ];

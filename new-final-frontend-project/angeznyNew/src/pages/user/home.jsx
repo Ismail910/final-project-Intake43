@@ -9,6 +9,7 @@ import flag2 from '../../assets/images/download.png'
 import flag3 from '../../assets/images/flag-3d-round-250.png'
 
 const Home = () => {
+  
   return (
     <div>
       <section>
@@ -105,6 +106,15 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+
+<section>
+<div className='container'>
+<div className='row'>
+</div>
+</div>
+</section>
+
     </div>
   )
 }

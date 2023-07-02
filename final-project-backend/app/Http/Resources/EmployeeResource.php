@@ -7,6 +7,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\TaskResource;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\StaffLevelResource;
+use App\Models\User;
 
 class EmployeeResource extends JsonResource
 {
@@ -22,6 +23,17 @@ class EmployeeResource extends JsonResource
         return [
             'id' => $this->id,
             'user' => new UserResource($this->user),
+            // 'user'=>[
+            //     'id' => $this->user->id,
+            //     'name' => $this->user->name,
+            //     'email' => $this->user->email,
+            //     'password' => $this->user->password,
+            //     'phone' => $this->user->phone,
+            //     'address' => $this->user->address,
+            //     'joinedDate' => $this->user->joinedDate,
+            //     'endDate' => $this->user->endDate,
+            //     'profilePic' => $this->user->profilePic,
+            // ],
             'task' => $Task,
             'staff_level' => $staff_level
 

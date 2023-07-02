@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('task_description');
             $table->dateTime('task_start');
             $table->dateTime('task_end');
+            $table->decimal('price', 10, 2)->default(0);
             $table->enum('task_status', ['notStarted', 'inProgress', 'completed'])->default('notStarted');
             $table->timestamps();
         });
