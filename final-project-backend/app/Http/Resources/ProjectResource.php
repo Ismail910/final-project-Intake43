@@ -26,14 +26,19 @@ class ProjectResource extends JsonResource
             'productOnwer'=>[
                 'name'=>$this->ProductOwner->user->name,
                 'email'=>$this->ProductOwner->user->email,
+                'userName'=>$this->ProductOwner->user->userName,
             ],
             'ProductManager'=>[
                 'name'=>$this->ProductManager->user->name,
                 'email'=>$this->ProductManager->user->email,
+                'userName'=>$this->ProductManager->user->userName,
+
             ],
             'client'=>[
                 'name'=>$this->client->user->name,
                 'email'=>$this->client->user->email,
+                'userName'=>$this->client->user->userName,
+
             ]
         ];
     }

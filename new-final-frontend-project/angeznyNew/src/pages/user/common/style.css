@@ -12,6 +12,7 @@
     font-size: larger;
     font-weight: bolder;
     color: black !important;
+    margin-left: 130px;
 }
 .linksWords{
     margin-right: 30px;
@@ -30,11 +31,21 @@
     font-weight: bolder;
 }
 .submissionSign{
-    font-size: larger;
+    font-size: 20px;
     font-weight: bolder;
     color: black;
-    background-color: white;
-
+    text-decoration: none;
+    margin-right:30px;
 }
-
+.userprofile{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    margin-right:15px;
+}
+.DropLogout{
+    background-color: #42B6D3 !important;
+    border: none;
+    border-radius: 10px;
+}
 /* header */

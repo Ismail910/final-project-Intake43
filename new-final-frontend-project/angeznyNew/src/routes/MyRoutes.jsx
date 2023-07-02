@@ -9,6 +9,7 @@ import {
 import { CircleSpinner, WaveSpinner } from "react-spinners-kit";
 
 // imports all pages
+
 import Login from "../pages/login";
 import Register from "../pages/register";
 import Home from "../pages/user/home";
@@ -16,6 +17,7 @@ import Chat from "../components/chat/chat";
 import Payment from "../pages/user/common/payment";
 import ContactUs from "../components/ContactUs";
 import AboutUs from "../components/AboutUs";
+import UserProfile from "../components/UserProfile";
 
 import ClientProject from "../pages/user/clientPages/clientProject";
 
@@ -113,6 +115,23 @@ const MyRoutes = () => {
             >
               <Header />
               <AboutUs />
+              <Footer />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/userprofile"
+          exact
+          element={
+            <Suspense
+              fallback={
+                <div className="grid place-items-center h-screen bg-black">
+                  <CircleSpinner size={60} />
+                </div>
+              }
+            >
+              <Header />
+              <UserProfile />
               <Footer />
             </Suspense>
           }

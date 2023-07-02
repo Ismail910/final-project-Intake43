@@ -27,6 +27,7 @@ class UserResource extends JsonResource
             'profilePic' => $this->profilePic,
             'country' => $this->country,
             'skills' => $this->skills,
+            'userName'=>$this->userName
         ];
     }
 }

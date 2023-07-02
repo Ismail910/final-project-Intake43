@@ -5,6 +5,7 @@ import NavBarD from '../developerPages/common/navBarD';
 import NavBarF from '../freelancerpages/common/navBarF';
 import NavBarM from '../productManagerpages/common/navBarM';
 import NavBarO from '../productOwnerPages/common/navBarO';
+import user1 from '../../../assets/images/user.png'
 import './style.css';
 import {
     MDBContainer,
@@ -45,7 +46,7 @@ const Header = () => {
           </MDBNavbarToggler>
 
           <MDBCollapse navbar show={showBasic} >
-          <div className=' headerMenu col-10'>
+          <div className=' headerMenu col-9'>
             <MDBNavbarNav className='mr-auto mb-2 mb-lg-0 linksMenu'>
               <MDBNavbarItem className='linksWords'>
               <Link className="nav-link text-secondary " to="/">
@@ -63,43 +64,38 @@ const Header = () => {
                 <i className="font-weight-bold"></i> <span className="ml-3 text-dark">About Us</span>
               </Link>
               </MDBNavbarItem>
-              {/*     
-              <MDBNavbarItem>
-                <MDBDropdown>
-                  <MDBDropdownToggle tag='a' className='nav-link' role='button'>
-                    Dropdown
-                  </MDBDropdownToggle>
-                  <MDBDropdownMenu>
-                    <MDBDropdownItem link>Action</MDBDropdownItem>
-                    <MDBDropdownItem link>Another action</MDBDropdownItem>
-                    <MDBDropdownItem link>Something else here</MDBDropdownItem>
-                  </MDBDropdownMenu>
-                </MDBDropdown>
-              </MDBNavbarItem> */}
-
-              {/* <MDBNavbarItem>
-                <MDBNavbarLink disabled href='#' tabIndex={-1} aria-disabled='true'>
-                  Disabled
-                </MDBNavbarLink>
-              </MDBNavbarItem> */}
+          
 
             </MDBNavbarNav>
             </div>
-            <Link className="nav-link  " to="/login">
-              <button className='submissionSign'>Signin</button>
+            
+            <Link className="submissionSign" to="/login">
+              Signin
             </Link>
-            <Link className="nav-link  " to="/">
-              <button className='submissionButton'>Logout</button>
-            </Link>
+
+            <MDBDropdown className="DropLogout">
+              <MDBDropdownToggle className="DropLogout">
+                <img src={user1} className="userprofile" alt="User Profile"/>
+                        <span className="caret">User Name</span>
+              </MDBDropdownToggle>
+              <MDBDropdownMenu >
+                <Link className="nav-link  " to="/userprofile"> <MDBDropdownItem link>User Profile </MDBDropdownItem> </Link>
+                <Link className="nav-link  " to="/">
+                <MDBDropdownItem link>log out</MDBDropdownItem>
+                </Link>
+              </MDBDropdownMenu>
+            </MDBDropdown>
           </MDBCollapse>
         </MDBContainer>
       </MDBNavbar>
       <div>
-        <NavBarC className="mt-5"/>
-        <NavBarD className="mt-5"/>
-        <NavBarF className="mt-5"/>
-        <NavBarM className="mt-5"/>
-        <NavBarO className="mt-5"/>
+
+          <NavBarC />
+          <NavBarD />
+          <NavBarF />
+          <NavBarM />
+          <NavBarO />
+
       </div>
     </>
 
