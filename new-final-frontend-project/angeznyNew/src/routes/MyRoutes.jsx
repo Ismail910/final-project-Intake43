@@ -165,8 +165,8 @@ const MyRoutes = () => {
                 </div>
               }
             >
-              <div className="row w-100">
-                <AdminSidnave className="col-2" />
+              <div className="row w-100 h-100">
+                <AdminSidnave className="col-2 h-100" />
                 <AdminDash className="col-10" />
               </div>
             </Suspense>
@@ -183,9 +183,9 @@ const MyRoutes = () => {
                 </div>
               }
             >
-              <div className="row w-100">
-                <AdminSidnave className="col-2 " />
-                <AdminOwner className="col-10 " />
+              <div className="w-100 h-100">
+                <AdminSidnave className="col-2" />
+                <AdminOwner className="col-12" />
               </div>
             </Suspense>
           }
@@ -200,9 +200,9 @@ const MyRoutes = () => {
                 </div>
               }
             >
-              <div className="row w-100">
-                <AdminSidnave className="col-2" style={{}} />
-                <AdminManager className="col-10" />
+              <div className="w-100 h-100">
+                <AdminSidnave className="col-2" />
+                <AdminManager className="col-12" />
               </div>
             </Suspense>
           }
@@ -217,9 +217,9 @@ const MyRoutes = () => {
                 </div>
               }
             >
-              <div className="row w-100">
-                <AdminSidnave className="col-2" style={{}} />
-                <AdminDeveloper className="col-10" />
+              <div className="w-100 h-100">
+                <AdminSidnave className="col-2" />
+                <AdminDeveloper className="col-12" />
               </div>
             </Suspense>
           }
@@ -234,9 +234,9 @@ const MyRoutes = () => {
                 </div>
               }
             >
-              <div className="row w-100">
-                <AdminSidnave className="col-2" style={{}} />
-                <AdminFreelancer className="col-10" />
+              <div className="w-100 h-100">
+                <AdminSidnave className="col-2" />
+                <AdminFreelancer className="col-12" />
               </div>
             </Suspense>
           }
@@ -252,7 +252,7 @@ const MyRoutes = () => {
                 </div>
               }
             >
-              <div className="row w-100">
+              <div className="row w-100 h-100">
                 <AdminSidnave className="col-2" style={{}} />
                 <AdminPayment className="col-10" />
               </div>
@@ -269,7 +269,7 @@ const MyRoutes = () => {
                 </div>
               }
             >
-              <div className="row w-100">
+              <div className="row w-100 h-100">
                 <AdminSidnave className="col-2" style={{}} />
                 <AdminClient className="col-10" />
               </div>

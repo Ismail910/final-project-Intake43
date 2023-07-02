@@ -1,67 +1,73 @@
-import React, { useState } from 'react';
-import { Button, Offcanvas } from 'react-bootstrap';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from "react";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
-const Sidebar = () => {
-  const [showOffcanvas, setShowOffcanvas] = useState(false);
-
-  const handleToggle = () => {
-    setShowOffcanvas(!showOffcanvas);
-  };
-
+const Sidnave = () => {
   return (
-    <div>
-      <Button variant="primary" onClick={handleToggle}>
-        <FontAwesomeIcon icon="fa-solid fa-toggle-on" />
-      </Button>
-
-      <Offcanvas show={showOffcanvas} onHide={handleToggle} placement="start">
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Sidebar</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-          <ul className="nav flex-column">
-            <li className="nav-item">
-              <Link className="nav-link" to="/admin">
-                Admin Dashboard
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/admin/product-owner">
-                Product Owner
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/admin/product-manager">
-                Product Manager
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/admin/developer">
-                Developer
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/admin/freelancer">
-                Freelancer
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/admin/client">
-                Client
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/admin/payment">
-                Payment
-              </Link>
-            </li>
-          </ul>
-        </Offcanvas.Body>
-      </Offcanvas>
+    <div
+      className="col-md-3 col-lg-2 sidebar-offcanvas pl-0 h-100"
+      id="sidebar"
+      role="navigation"
+      style={{ backgroundColor: "#2a52be", position: "fixed", zIndex: 1000 }}
+    >
+      <ul className="nav flex-column sticky-top pl-0 pt-5 p-3 mt-3 h-100">
+        <li className="nav-item mb-2 mt-3">
+          <Link className="nav-link text-secondary text-light" to="/admin">
+            <h5>Admin Dashboard</h5>
+          </Link>
+        </li>
+        <li className="nav-item mb-2">
+          <Link
+            className="nav-link text-secondary text-light"
+            to="/admin/product-owner"
+          >
+            <i className="font-weight-bold"></i>{" "}
+            <span className="ml-3">Product Owner</span>
+          </Link>
+        </li>
+        <li className="nav-item mb-2">
+          <Link
+            className="nav-link text-secondary text-light"
+            to="/admin/product-manager"
+          >
+            <i className="fas fa-user font-weight-bold"></i>{" "}
+            <span className="ml-3">Product Manager</span>
+          </Link>
+        </li>
+        <li className="nav-item mb-2">
+          <Link
+            className="nav-link text-secondary text-light"
+            to="/admin/developer"
+          >
+            <span className="ml-3">Developer</span>
+          </Link>
+        </li>
+        <li className="nav-item mb-2">
+          <Link
+            className="nav-link text-secondary text-light"
+            to="/admin/freelancer"
+          >
+            <span className="ml-3">Freelancer</span>
+          </Link>
+        </li>
+        <li className="nav-item mb-2">
+          <Link
+            className="nav-link text-secondary text-light"
+            to="/admin/client"
+          >
+            <span className="ml-3">Client</span>
+          </Link>
+        </li>
+        <li className="nav-item mb-2">
+          <Link
+            className="nav-link text-secondary text-light"
+            to="/admin/payment"
+          >
+            <span className="ml-3">Payment</span>
+          </Link>
+        </li>
+      </ul>
     </div>
   );
 };
 
-export default Sidebar;
+export default Sidnave;
