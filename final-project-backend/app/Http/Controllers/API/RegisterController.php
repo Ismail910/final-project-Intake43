@@ -39,6 +39,7 @@ class RegisterController extends Controller
             'joinedDate' => $request->input('joinedDate'),
             'endDate' => $request->input('endDate'),
             'country' => $request->input('country'),
+            'userName'=>$request->input('userName'),
         ]);
         $this->save_image($request->profilePic, $user);
 

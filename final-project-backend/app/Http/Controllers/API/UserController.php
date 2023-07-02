@@ -99,7 +99,7 @@ class UserController extends Controller
                 'token'  => $token
             ], 201);
         } else {
-            $manager = managers::create([
+            $manager = Manager::create([
                 'user_id' => $user->id,
                 'role' => $request->input('role'),
                 'staff_level_id' => $request->input('staff_level_id'),

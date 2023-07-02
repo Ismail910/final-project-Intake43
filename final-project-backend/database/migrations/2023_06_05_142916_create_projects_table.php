@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('project_description');
             $table->date('project_start');
             $table->date('project_end');
+            $table->decimal('budget', 10, 2)->default(0);
             $table->enum('project_status', ['notStarted', 'inProgress', 'completed'])->default('notStarted');
             $table->timestamps();
         });

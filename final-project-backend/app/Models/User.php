@@ -30,7 +30,8 @@ class User extends Authenticatable
         'profilePic',
         'phone',
         'role',
-        'country'
+        'country',
+        'userName'
     ];
 
     /**
