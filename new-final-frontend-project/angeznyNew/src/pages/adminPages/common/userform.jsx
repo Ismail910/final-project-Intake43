@@ -183,7 +183,7 @@
 // };
 
 // export default UserForm;
-
+import React from 'react';
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -200,7 +200,7 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
   };
 
   return (
-    <>
+    <div>
       <Button className="btn btn-success mx-4" onClick={handleShow}>
         <i className="fa-solid fa-plus me-2"></i>
         <span>Add User</span>
@@ -406,7 +406,7 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
           </Button>
         </Modal.Footer>
       </Modal>
-    </>
+    </div>
   );
 };
 

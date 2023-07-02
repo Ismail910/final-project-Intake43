@@ -32,8 +32,8 @@ export default function Developer() {
       country: "",
     },
   });
-  const [customers, setCustomers] = useState([]);
-  const [selectedCustomers, setSelectedCustomers] = useState([]);
+  const [employees, setemployees] = useState([]);
+  const [selectedemployees, setSelectedemployees] = useState([]);
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   });
@@ -43,7 +43,7 @@ export default function Developer() {
       .get("http://127.0.0.1:8000/api/employee")
       .then((response) => {
         console.log(response.data);
-        setCustomers(response.data.data || []);
+        setemployees(response.data.data || []);
       })
       .catch((error) => {
         console.error(error);
@@ -78,7 +78,7 @@ export default function Developer() {
       })
       .then((response) => {
         console.log(formData);
-        setCustomers([...customers, formData]);
+        setemployees([...employees, formData]);
         setFormData({
           user: {
             name: "",
@@ -108,8 +108,8 @@ export default function Developer() {
       })
       .then((response) => {
         console.log(response.data);
-        setCustomers(
-          customers.filter((employee) => employee.id !== employeeId)
+        setemployees(
+          employees.filter((employee) => employee.id !== employeeId)
         );
       })
       .catch((error) => {
@@ -137,7 +137,7 @@ export default function Developer() {
       )
       .then((response) => {
         console.log(response.data);
-        const updatedEmployees = customers.map((employee) => {
+        const updatedEmployees = employees.map((employee) => {
           if (employee.id === selectedEmployee.id) {
             employee.user = response.data.data;
           }
@@ -146,7 +146,7 @@ export default function Developer() {
 
         console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         console.log(updatedEmployees);
-        setCustomers(updatedEmployees);
+        setemployees(updatedEmployees);
         setShowEditForm(false);
         setSelectedEmployee(null);
       })
@@ -174,7 +174,7 @@ export default function Developer() {
   const renderHeader = () => {
     return (
       <div className="flex flex-wrap gap-2 justify-content-between align-items-center">
-        <h4 className="m-0">Customers</h4>
+        <h4 className="m-0">Employees</h4>
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
           <InputText
@@ -201,7 +201,7 @@ export default function Developer() {
           />
           <DataTable
             className="col-12"
-            value={customers}
+            value={employees}
             paginator
             header={header}
             rows={10}
@@ -209,8 +209,8 @@ export default function Developer() {
             rowsPerPageOptions={[10, 25, 50]}
             dataKey="id"
             selectionMode="checkbox"
-            selection={selectedCustomers}
-            onSelectionChange={(e) => setSelectedCustomers(e.value)}
+            selection={selectedemployees}
+            onSelectionChange={(e) => setSelectedemployees(e.value)}
             filters={filters}
             filterDisplay="menu"
             globalFilterFields={[
@@ -219,7 +219,7 @@ export default function Developer() {
               "user.nationalID",
               "user.country",
             ]}
-            emptyMessage="No customers found."
+            emptyMessage="No Employees found."
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
           >
             <Column
