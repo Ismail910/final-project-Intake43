@@ -15,7 +15,7 @@ const Home = () => {
         <div className="container">
           <div className="row">
             <div className="d-flex  row justify-content-around">
-              <div className="col-md-6 col-12 mb-3 textFirst ">
+              <div className="col-md-6 col-12 mb-3 textFirst mt-5 ">
                 <p className="text1 ">
                   Are you asking for a
                   <span className="text1Word">
@@ -41,7 +41,7 @@ const Home = () => {
                   className="imgside"
                   src={cuteGirlImage}
                   alt="Girl in a jacket"
-                  width="410"
+                  width="100%"
                   height="450"
                 ></img>
               </div>
@@ -54,18 +54,18 @@ const Home = () => {
         <div className="container">
           <div className="row">
             <div className="d-flex  row justify-content-around">
-              <div className="col-lg-6 col-12  projectSide row">
-                <div className="col-12">
+              <div className="col-lg-6 col-12  projectSide row d-flex justify-content-center">
+                <div className="col-12 d-flex justify-content-center">
                   <img src={logo1} alt="logo1" className="logo1 m-5"></img>
                   <img src={logo1} alt="logo1" className="logo2 mt-5"></img>
                   <img src={logo2} alt="logo2" className="logo1 mb-5"></img>
                 </div>
-                <div className="col-12">
+                <div className="col-12 d-flex justify-content-center">
                 <p className="projectText">
                   P<span className="projectColor">roject</span>s
                 </p>
                 </div>
-                <div className="col-12 ">
+                <div className="col-12 d-flex justify-content-center ">
                 <img src={logo2} alt="logo2" className="logo2 mx-3"></img>
                 <img src={logo1} alt="logo1" className="logo1 mb-5"></img>
                 <img src={logo2} alt="logo2" className="logo2 mx-3"></img>
@@ -89,15 +89,15 @@ const Home = () => {
           <div className="row">
             <p className="ComText">Our communities</p>
             <div className="d-flex row justify-content-center">
-              <div className="col-md-3 col-12 comDiv">
+              <div className="col-md-3 col-12 comDiv d-flex justify-content-center">
                 <img src={flag1} className="comImage1"></img>
                 <p className="commText">MOROCCO</p>
               </div>
-              <div className="col-md-3 col-12 comDiv">
+              <div className="col-md-3 col-12 comDiv d-flex justify-content-center">
                 <img src={flag2} className="comImage2 "></img>
                 <p className="commText">SAUDI</p>
               </div>
-              <div className="col-md-3 col-12 comDiv">
+              <div className="col-md-3 col-12 comDiv d-flex justify-content-center">
                 <img src={flag3} className="comImage3"></img>
                 <p className="commText">UNITED STATES</p>
               </div>

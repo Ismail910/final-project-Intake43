@@ -95,11 +95,7 @@ const Header = () => {
         </MDBContainer>
       </MDBNavbar>
       <div>
-        <NavBarC className="mt-5"/>
-        <NavBarD className="mt-5"/>
-        <NavBarF className="mt-5"/>
-        <NavBarM className="mt-5"/>
-        <NavBarO className="mt-5"/>
+       
       </div>
     </>
 
