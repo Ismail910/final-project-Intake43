@@ -1,17 +1,26 @@
-
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const EditForm = ({ employee, handleUpdate, handleClose }) => {
+  // console.log(employee);
   const [formData, setFormData] = useState(employee);
 
-  const handleInputChange = event => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    });
+  // const handleInputChange = (event) => {
+  //   setFormData({
+  //     ...formData,
+  //     [event.target.name]: event.target.value,
+  //   });
+  // };
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      user: {
+        ...prevFormData.user,
+        [name]: value,
+      },
+    }));
   };
 
-  const handleSubmit = (event) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     // console.log(formData);
@@ -82,7 +91,7 @@ const EditForm = ({ employee, handleUpdate, handleClose }) => {
             <input
               type="text"
               name="endDate"
-              value={formData.user.user.endDate}
+              value={formData.user.endDate}
               onChange={handleInputChange}
             />
           </div>
@@ -100,7 +109,7 @@ const EditForm = ({ employee, handleUpdate, handleClose }) => {
             <input
               type="text"
               name="country"
-              value={formData.user.user.country}
+              value={formData.user.country}
               onChange={handleInputChange}
             />
           </div>
@@ -108,7 +117,11 @@ const EditForm = ({ employee, handleUpdate, handleClose }) => {
             <button type="submit" className="btn btn-primary">
               Update
             </button>
-            <button type="button" className="btn btn-secondary" onClick={handleClose}>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={handleClose}
+            >
               Cancel
             </button>
           </div>
@@ -119,4 +132,3 @@ const EditForm = ({ employee, handleUpdate, handleClose }) => {
 };
 
 export default EditForm;
-
