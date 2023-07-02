@@ -4,12 +4,7 @@ const EditForm = ({ employee, handleUpdate, handleClose }) => {
   // console.log(employee);
   const [formData, setFormData] = useState(employee);
 
-  // const handleInputChange = (event) => {
-  //   setFormData({
-  //     ...formData,
-  //     [event.target.name]: event.target.value,
-  //   });
-  // };
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({

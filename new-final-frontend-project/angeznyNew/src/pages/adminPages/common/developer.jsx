@@ -156,10 +156,10 @@ const Developer = () => {
         handleSubmit={handleSubmit}
       />
 
-      <div className="employee-list row d-flex justify-content-center">
+      <div className="employee-list">
         <h3 className="text-center">Employee List</h3>
         {employees.length > 0 ? (
-        <div className="table-responsive">
+        <div className="container-fluid table-responsive">
           <table className="table  table-striped text-center table-sm">
             <thead>
               <tr>
