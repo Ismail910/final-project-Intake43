@@ -99,7 +99,7 @@ class UserController extends Controller
                 'token'  => $token
             ], 201);
         } else {
-            $manager = managers::create([
+            $manager = Manager::create([
                 'user_id' => $user->id,
                 'role' => $request->input('role'),
                 'staff_level_id' => $request->input('staff_level_id'),
@@ -242,12 +242,12 @@ class UserController extends Controller
     }
     private function save_image($image, $user)
     {
-        if ($image) {
-            $image_name = time() . '.' . $image->extension();
-            $image->move(public_path('images/users'), $image_name);
-            $user->profilePic = $image_name;
-            $user->save();
-        }
+        // if ($image) {
+        //     $image_name = time() . '.' . $image->extension();
+        //     $image->move(public_path('images/users'), $image_name);
+        //     $user->profilePic = $image_name;
+        //     $user->save();
+        // }
     }
     private  function  delete_image($image_name)
     {

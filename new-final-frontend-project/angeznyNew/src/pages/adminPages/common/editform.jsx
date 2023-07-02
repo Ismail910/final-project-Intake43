@@ -1,18 +1,29 @@
-
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const EditForm = ({ employee, handleUpdate, handleClose }) => {
+  // console.log(employee);
   const [formData, setFormData] = useState(employee);
 
-  const handleInputChange = event => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    });
+  // const handleInputChange = (event) => {
+  //   setFormData({
+  //     ...formData,
+  //     [event.target.name]: event.target.value,
+  //   });
+  // };
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      user: {
+        ...prevFormData.user,
+        [name]: value,
+      },
+    }));
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
+    // console.log(formData);
     handleUpdate(formData);
   };
 
@@ -26,7 +37,7 @@ const EditForm = ({ employee, handleUpdate, handleClose }) => {
             <input
               type="text"
               name="name"
-              value={formData.name}
+              value={formData.user.name}
               onChange={handleInputChange}
             />
           </div>
@@ -35,7 +46,7 @@ const EditForm = ({ employee, handleUpdate, handleClose }) => {
             <input
               type="email"
               name="email"
-              value={formData.email}
+              value={formData.user.email}
               onChange={handleInputChange}
             />
           </div>
@@ -44,7 +55,7 @@ const EditForm = ({ employee, handleUpdate, handleClose }) => {
             <input
               type="text"
               name="phone"
-              value={formData.phone}
+              value={formData.user.phone}
               onChange={handleInputChange}
             />
           </div>
@@ -53,7 +64,7 @@ const EditForm = ({ employee, handleUpdate, handleClose }) => {
             <input
               type="text"
               name="address"
-              value={formData.address}
+              value={formData.user.address}
               onChange={handleInputChange}
             />
           </div>
@@ -62,7 +73,7 @@ const EditForm = ({ employee, handleUpdate, handleClose }) => {
             <input
               type="text"
               name="nationalID"
-              value={formData.nationalID}
+              value={formData.user.nationalID}
               onChange={handleInputChange}
             />
           </div>
@@ -71,7 +82,7 @@ const EditForm = ({ employee, handleUpdate, handleClose }) => {
             <input
               type="text"
               name="joinedDate"
-              value={formData.joinedDate}
+              value={formData.user.joinedDate}
               onChange={handleInputChange}
             />
           </div>
@@ -80,7 +91,7 @@ const EditForm = ({ employee, handleUpdate, handleClose }) => {
             <input
               type="text"
               name="endDate"
-              value={formData.endDate}
+              value={formData.user.endDate}
               onChange={handleInputChange}
             />
           </div>
@@ -89,7 +100,7 @@ const EditForm = ({ employee, handleUpdate, handleClose }) => {
             <input
               type="text"
               name="profilePic"
-              value={formData.profilePic}
+              value={formData.user.profilePic}
               onChange={handleInputChange}
             />
           </div>
@@ -98,7 +109,7 @@ const EditForm = ({ employee, handleUpdate, handleClose }) => {
             <input
               type="text"
               name="country"
-              value={formData.country}
+              value={formData.user.country}
               onChange={handleInputChange}
             />
           </div>
@@ -106,7 +117,11 @@ const EditForm = ({ employee, handleUpdate, handleClose }) => {
             <button type="submit" className="btn btn-primary">
               Update
             </button>
-            <button type="button" className="btn btn-secondary" onClick={handleClose}>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={handleClose}
+            >
               Cancel
             </button>
           </div>
