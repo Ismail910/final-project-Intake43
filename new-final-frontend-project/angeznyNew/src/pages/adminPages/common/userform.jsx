@@ -5,7 +5,7 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
     <div className="my-2">
       <h3 className="text-center">Add User</h3>
       <div className="row justify-content-center my-3">
-        <div className="col-md-6">
+        <div className="col-md-6 col-sm-12">
           <form className="d-flex flex-column">
             <div className="row my-3">
               <label htmlFor="name">Name</label>
