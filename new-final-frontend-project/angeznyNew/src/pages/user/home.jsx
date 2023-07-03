@@ -8,6 +8,8 @@ import project from '../../assets/images/download (1).jfif'
 import flag1 from '../../assets/images/download (2).png'
 import flag2 from '../../assets/images/download.png'
 import flag3 from '../../assets/images/flag-3d-round-250.png'
+import event from '../../assets/images/images.png'
+
 import axios from 'axios';
 
 
@@ -77,7 +79,6 @@ const Home = () => {
                   className="imgside"
                   src={cuteGirlImage}
                   alt="Girl in a jacket"
-                  width="100%"
                   height="450"
                 ></img>
               </div>
@@ -149,6 +150,8 @@ const Home = () => {
 </div>
 </section>
 
+
+
     </div>
   )
 }
@@ -175,3 +178,34 @@ export default Home
 //           </div>
 //         </div>
 //       </section>
+
+
+
+// <section>
+// <div className='container'>
+// <div className='row'>
+// <div className="d-flex row justify-content-between">
+// <div className="col-md-5 col-12 comDiv d-flex justify-content-center">
+// <div>
+// <img src={event}></img>
+// <br></br>
+// <p className="ComText pt-5" style={{ color: ' black' }}>Count down</p>
+
+// </div>
+
+// </div>
+// <div className="col-md-5 col-12 comDiv d-flex justify-content-center">
+// <div>
+// <img src={event} className="mb-3 mt-4"></img>
+// <img src={event} className="mb-3"></img>
+// <img src={event}></img>
+
+// </div>
+// </div>
+
+// </div>
+
+// </div>
+// </div>
+
+// </section>
