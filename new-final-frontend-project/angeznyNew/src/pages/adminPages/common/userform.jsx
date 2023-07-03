@@ -208,7 +208,7 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Add User</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="my-2">
