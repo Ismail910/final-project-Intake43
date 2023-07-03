@@ -12,15 +12,31 @@ import axios from 'axios';
 
 
 const Home = () => {
-  const [TotalCountries, setTotalCountries] = useState([]);
-
+  const [totalCountries, setTotalCountries] = useState(0);
 
   useEffect(() => {
     axios
       .get('http://127.0.0.1:8000/api/user/countCountry')
       .then(response => {
+        console.log(response.data['countryCount']);
+        setTotalCountries(response.data['countryCount'] || 0);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, []);
+
+
+  // totalprojects
+
+  const [totalProjects, setTotalProjects] = useState(0);
+
+  useEffect(() => {
+    axios
+      .get('http://127.0.0.1:8000/api/projects/count')
+      .then(response => {
         console.log(response.data);
-        setTotalCountries(response.data.data || []);
+        setTotalProjects(response.data['countProject'] || 0);
       })
       .catch(error => {
         console.error(error);
@@ -104,33 +120,30 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="comSection">
-        <div className="container">
-          <div className="row">
-            <p className="ComText">Our communities</p>
-            <div className="d-flex row justify-content-center">
-              <div className="col-md-3 col-12 comDiv d-flex justify-content-center">
-                <img src={flag1} className="comImage1"></img>
-                <p className="commText">MOROCCO</p>
-              </div>
-              <div className="col-md-3 col-12 comDiv d-flex justify-content-center">
-                <img src={flag2} className="comImage2 "></img>
-                <p className="commText">SAUDI</p>
-              </div>
-              <div className="col-md-3 col-12 comDiv d-flex justify-content-center">
-                <img src={flag3} className="comImage3"></img>
-                <p className="commText">UNITED STATES</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      
 
 <section>
 <div className='container'>
 <div className='row'>
+<p className="ComText pt-5" style={{ color: ' black' }}>Statistics</p>
+<div className="d-flex row justify-content-center">
+<div className="col-md-5 col-12 comDiv d-flex justify-content-center">
 
+<div className='Analysis'>
+<i class="fa-solid fa-earth-americas text-dark " style={{ fontSize: '6rem' }}></i>
+<br></br>{totalCountries} +
+  </div>
+</div>
+<div className='colum col-1'  ></div>
+<div className="col-md-4 col-12 comDiv d-flex justify-content-center">
+<div className='Analysis'>
+<i class="fa-solid fa-laptop text-dark" style={{ fontSize: '6rem' }}></i>
+<br></br>
+{totalProjects} +  
+</div>
+</div>
+
+</div>
 
 </div>
 </div>
@@ -141,3 +154,24 @@ const Home = () => {
 }
 
 export default Home
+// <section className="comSection">
+//         <div className="container">
+//           <div className="row">
+//             <p className="ComText">Our communities</p>
+//             <div className="d-flex row justify-content-center">
+//               <div className="col-md-3 col-12 comDiv d-flex justify-content-center">
+//                 <img src={flag1} className="comImage1"></img>
+//                 <p className="commText">MOROCCO</p>
+//               </div>
+//               <div className="col-md-3 col-12 comDiv d-flex justify-content-center">
+//                 <img src={flag2} className="comImage2 "></img>
+//                 <p className="commText">SAUDI</p>
+//               </div>
+//               <div className="col-md-3 col-12 comDiv d-flex justify-content-center">
+//                 <img src={flag3} className="comImage3"></img>
+//                 <p className="commText">UNITED STATES</p>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </section>
