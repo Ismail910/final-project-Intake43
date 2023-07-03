@@ -27,7 +27,7 @@ import {
 const Header = () => {
     const [showBasic, setShowBasic] = useState(false);
   return (
-    <>
+    <div>
       <MDBNavbar expand='lg' light bgColor='light' className='mb-3'>
         <MDBContainer fluid>
           <Link className="nav-link  logoName " to="/">
@@ -90,16 +90,19 @@ const Header = () => {
       </MDBNavbar>
       <div>
 
-          <NavBarC />
-          <NavBarD />
-          <NavBarF />
-          <NavBarM />
-          <NavBarO />
+
+
 
       </div>
-    </>
+    </div>
 
   )
 }
 
-export default Header
+export default Header;
+
+// <NavBarC />
+// <NavBarD />
+// <NavBarF />
+// <NavBarM />
+// <NavBarO />
