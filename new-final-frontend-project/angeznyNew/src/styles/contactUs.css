@@ -1,6 +1,6 @@
 .contactForm{
     background-color:#bdeffc;
-    background-image: linear-gradient(white, #d3f1f8,white);
+    background-image: linear-gradient(#d3f1f8, #d3f1f8,#d3f1f8);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,6 +11,7 @@
 border-radius: 0px 20px 20px 0px ;
    border-color:  #42B6D3 ;
     border-style:  solid;
+    box-shadow: 10px 10px 10px 10px rgb(207, 207, 207);
     
 }
 .contact-us{
@@ -23,10 +24,24 @@ border-radius: 0px 20px 20px 0px ;
     height: 100%;
     border-radius: 20px 0px 0px 20px;
 }
+.labels{
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: rgb(145, 145, 145);
+}
 .contactButton{
     background-color: #FF7C03;
     color: white;
+    border-radius: 20px;
+    width: 120px;
+    height: 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    justify-content: center;
+    display: flex;
+    align-items: center;
 }
-.contactForm>MDBInput{
+
+/* .inputs{
     border: none;
-}
+} */

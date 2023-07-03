@@ -19,7 +19,7 @@ export default function Developer() {
   const [showEditForm, setShowEditForm] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
 
-<<<<<<< HEAD
+// <<<<<<< HEAD
   // const [formData, setFormData] = useState({
   //   user: {
   //     name: "",
@@ -59,7 +59,7 @@ export default function Developer() {
   //     },
   //   });
   // };
-=======
+// =======
   const [formData, setFormData] = useState({
     user: {
       name: "",
@@ -99,7 +99,7 @@ export default function Developer() {
       },
     });
   };
->>>>>>> 2bf1eca69b3c833a20e3d6cafb52fe9e9031741d
+// >>>>>>> 2bf1eca69b3c833a20e3d6cafb52fe9e9031741d
 
   // const handleSubmit = async (event) => {
     // event.preventDefault();
@@ -141,7 +141,7 @@ export default function Developer() {
 //       });
 //   };
 
-<<<<<<< HEAD
+// <<<<<<< HEAD
 //   const handleDelete = (employeeId) => {
 //     axios
 //       .delete(`http://127.0.0.1:8000/api/employee/${employeeId}`, {
@@ -199,7 +199,7 @@ export default function Developer() {
 //       },
 //     });
 //   };
-=======
+// =======
   const handleDelete = (employeeId) => {
     axios
       .delete(`http://127.0.0.1:8000/api/employee/${employeeId}`, {
@@ -217,7 +217,7 @@ export default function Developer() {
         console.error(error);
       });
   };
->>>>>>> 2bf1eca69b3c833a20e3d6cafb52fe9e9031741d
+// >>>>>>> 2bf1eca69b3c833a20e3d6cafb52fe9e9031741d
 
   const handleEdit = (employee) => {
     // console.log(employee);
@@ -225,7 +225,7 @@ export default function Developer() {
     setShowEditForm(true);
   };
 
-<<<<<<< HEAD
+// <<<<<<< HEAD
 //   const handleDelete = (employeeId) => {
 //     axios
 //       .delete(`http://127.0.0.1:8000/api/employee/${employeeId}`, {
@@ -312,7 +312,7 @@ export default function Developer() {
 //       .catch((error) => {
 //         console.log("asdadadasdassdasdadas");
 // >>>>>>> 2245e02e77f2958c89b9810eb4a82c7e7c358900
-=======
+// =======
   const handleUpdate = (updatedEmployee) => {
     console.log(updatedEmployee);
     axios
@@ -346,7 +346,7 @@ export default function Developer() {
         console.error(error);
       });
   };
->>>>>>> 2bf1eca69b3c833a20e3d6cafb52fe9e9031741d
+// >>>>>>> 2bf1eca69b3c833a20e3d6cafb52fe9e9031741d
 
   const handleClose = () => {
     setShowEditForm(false);
@@ -362,7 +362,7 @@ export default function Developer() {
     setGlobalFilterValue(value);
   };
 
-<<<<<<< HEAD
+// <<<<<<< HEAD
 //     setFilters(_filters);
 //     setGlobalFilterValue(value);
 //   };
@@ -400,7 +400,7 @@ export default function Developer() {
 //     );
 //   };
 // >>>>>>> 2245e02e77f2958c89b9810eb4a82c7e7c358900
-=======
+// =======
   const renderHeader = () => {
     return (
       <div className="flex flex-wrap gap-2 justify-content-between align-items-center">
@@ -416,11 +416,11 @@ export default function Developer() {
       </div>
     );
   };
->>>>>>> 2bf1eca69b3c833a20e3d6cafb52fe9e9031741d
+// >>>>>>> 2bf1eca69b3c833a20e3d6cafb52fe9e9031741d
 
   const header = renderHeader();
 
-<<<<<<< HEAD
+// <<<<<<< HEAD
 // <<<<<<< HEAD
 //   return (
 //     <div className="w-100 overflow-hidden">
@@ -554,7 +554,7 @@ export default function Developer() {
 //               style={{ minWidth: "14rem" }}
 //             />
 // >>>>>>> 2245e02e77f2958c89b9810eb4a82c7e7c358900
-=======
+// =======
   return (
     <div className="w-100 overflow-hidden">
       <div className="row">
@@ -563,7 +563,7 @@ export default function Developer() {
           <UserForm
             formData={formData.user}
             handleInputChange={handleInputChange}
-            handleSubmit={handleSubmit}
+            // handleSubmit={handleSubmit}
           />
           <DataTable
             className="col-12"
@@ -620,7 +620,6 @@ export default function Developer() {
               filter
               style={{ minWidth: "14rem" }}
             />
->>>>>>> 2bf1eca69b3c833a20e3d6cafb52fe9e9031741d
 
             <Column
               headerStyle={{ width: "5rem", textAlign: "center" }}
