@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper'; // Update import for Paper
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
+import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -25,6 +26,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 const Task = () => {
   const [tasks, setTasks] = useState([]);
+  const [disabled, setDisabled] = useState(false);
   const token = 'wVjMnHpbNamMHxY4DP0gv2q13sc3FJnLKeKC958O';
 
   useEffect(() => {
@@ -53,7 +55,20 @@ const Task = () => {
     fetchTasks();
   }, [token]);
 
-console.log(tasks);
+  const handleAction = (taskId, action) => {
+    const updatedTasks = tasks.map((task) => {
+      if (task.id === taskId) {
+        return { ...task, status: action };
+      }
+      return task;
+    });
+    setTasks(updatedTasks);
+    setDisabled(true); 
+  };
+  
+
+
+ 
 
   return (
     <div>
@@ -64,26 +79,49 @@ console.log(tasks);
               <TableRow>
                 <StyledTableCell />
                 <StyledTableCell>Title</StyledTableCell>
-                <StyledTableCell>Project Name</StyledTableCell>
+                <StyledTableCell>Task Description</StyledTableCell>
                 <StyledTableCell align="right">Status</StyledTableCell>
                 <StyledTableCell align="center">Start</StyledTableCell>
                 <StyledTableCell align="center">End</StyledTableCell>
-                <StyledTableCell align="right">assigned To</StyledTableCell>
                 <StyledTableCell align="center">Action</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {tasks.map((task) => (
-                <div key={task.id}>{task.title}</div>
+                <TableRow key={task.id}>
+                  <TableCell>
+                    <div>{task.projectName}</div>
+                    <div>{task.assignedTo}</div>
+                  </TableCell>
+                  <TableCell>{task.title}</TableCell>
+                  <TableCell>{task.description}</TableCell>
+                  <TableCell align="right">{task.status}</TableCell>
+                  <TableCell align="center">{task.start}</TableCell>
+                  <TableCell align="center">{task.end}</TableCell>
+                  <TableCell align="center">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      disabled={disabled}
+                      onClick={() => handleAction(task.id, 'Accept')}
+                    >
+                      Accept
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      disabled={disabled}
+                      onClick={() => handleAction(task.id, 'Ignore')}
+                    >
+                      Ignore
+                    </Button>
+                  </TableCell>
+                </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
       </Box>
-      {tasks.map((task) => (
-        <div key={task.id}>{task.title}</div>
-      ))}
-      <div>task developer</div>
     </div>
   );
 };
