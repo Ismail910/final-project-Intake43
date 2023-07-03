@@ -25,7 +25,7 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'userName'=>'required|string|unique:users,userName',
+            'userName' => 'required|string|unique:users,userName',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6',
             'role' => 'sometimes|in:Admin,ProductManager,ProductOwner,Freelancer,Client,Employee',
@@ -35,7 +35,7 @@ class StoreUserRequest extends FormRequest
             'joinedDate' => 'date',
             'endDate' => 'date|after:joinedDate',
             'profilePic' => 'nullable',
-            'country' => 'required'
+            // 'country' => 'required'
         ];
     }
     ## add new function failed validation

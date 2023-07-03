@@ -8,10 +8,13 @@ import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import { MaterialUIControllerProvider } from "context";
 createRoot(document.getElementById("root")).render(
   <div className="h-100">
-    <App />
-    <ToastContainer />
+    <MaterialUIControllerProvider>
+      <App />
+      <ToastContainer />
+    </MaterialUIControllerProvider>
   </div>
 );
 
