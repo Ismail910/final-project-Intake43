@@ -242,12 +242,12 @@ class UserController extends Controller
     }
     private function save_image($image, $user)
     {
-        if ($image) {
-            $image_name = time() . '.' . $image->extension();
-            $image->move(public_path('images/users'), $image_name);
-            $user->profilePic = $image_name;
-            $user->save();
-        }
+        // if ($image) {
+        //     $image_name = time() . '.' . $image->extension();
+        //     $image->move(public_path('images/users'), $image_name);
+        //     $user->profilePic = $image_name;
+        //     $user->save();
+        // }
     }
     private  function  delete_image($image_name)
     {

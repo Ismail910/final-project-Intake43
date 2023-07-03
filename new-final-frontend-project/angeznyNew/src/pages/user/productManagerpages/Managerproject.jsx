@@ -420,11 +420,8 @@ const Managerproject = ({ status }) => {
     
 
   },  [projects]);
- 
- 
 
  
-
   
   return (
     <Box sx={{ marginTop: '30px', overflowX: 'auto' }}>
