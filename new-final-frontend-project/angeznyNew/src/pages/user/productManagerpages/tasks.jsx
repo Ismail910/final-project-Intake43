@@ -20,6 +20,8 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Button from '@mui/joy/Button';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
+import Container from '@mui/material/Container';
+
 import InputLabel from '@mui/material/InputLabel';
 import {  Select, MenuItem } from '@mui/material';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
@@ -38,6 +40,10 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import SearchIcon from '@mui/icons-material/Search';
 import SendIcon from '@mui/icons-material/Send';
 import { CometChat } from "@cometchat-pro/chat";
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import { FixedSizeList } from 'react-window';
 // import { CometChatUI } from "./cometchat-pro-react-ui-kit/CometChatWorkspace/src";
 function Row(props) {
   const token = '5|mfYgbX7HbdrG2lFSkipBbD6k98OSVIJghUI5rXOP';
@@ -360,8 +366,18 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
+function renderRow(props) {
+  const { users } = props;
 
-const Tasks = () => {
+  return (
+    <ListItem  component="div" disablePadding>
+      <ListItemButton>
+        <ListItemText primary={`Item `} />
+      </ListItemButton>
+    </ListItem>
+  );
+}
+const Tasks = ({statustask}) => {
   const token = '5|mfYgbX7HbdrG2lFSkipBbD6k98OSVIJghUI5rXOP';
   // const decodedToken = jwtDecode(token);
   // const id = decodedToken.user_id;
@@ -405,10 +421,32 @@ const Tasks = () => {
                 toast.error(error);
             }
            };
-    
-    fetchTasks();
-    
-    
+           const fetchTasksByStatus = async () => {
+      
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/api/tasks/search/${statustask}`, {
+                  headers: {
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                  }}); 
+              if (response.ok) {
+                const data = await response.json();
+                if (data) {
+                  setTasks(data.data);
+                }
+              } else {
+                setTasks([]);
+
+              }
+            } catch (error) {
+                toast.error(error);
+            }
+           };
+          if(statustask=='all'){
+            fetchTasks();
+          }else{
+            fetchTasksByStatus();
+          }
 
   },  [tasks]);
   const handleTitleChange = (event) => {
@@ -421,7 +459,7 @@ const Tasks = () => {
       try {
           var response;
           const selectedProject = projects.find((project) => project.id == event.target.value);
-          const selectedProjectType = selectedProject ? selectedProject.project_type : null;
+          const selectedProjectType = selectedProject ? selectedProject.type : null;
           console.log(selectedProjectType);
           if( selectedProjectType=='mileStone'){
               response = await fetch(`http://127.0.0.1:8000/api/freeFreelancers`, {
@@ -453,6 +491,7 @@ const Tasks = () => {
           toast.error(error);
       }
      };
+     
      fetchDevelopers();
   }; 
 
@@ -477,7 +516,7 @@ const Tasks = () => {
   };
   const fetchUsersBySkill = async (skill) => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/search/Skill/${skill}/mileStone`);
+      const response = await fetch(`http://127.0.0.1:8000/api/searchUser/mileStone/${skill}`);
       if (response.ok) {
         const data = await response.json();
         // Process the data and update the user list state variable
@@ -536,7 +575,7 @@ const Tasks = () => {
         if (response.ok) {
           const data = await response.json();
           if (data) {
-            setProjects(data);
+            setProjects(data.data);
           }
         } else {
           toast.error("Failed to fetch Project data");
@@ -590,7 +629,8 @@ const Tasks = () => {
   
   }
   return (
-    <Box sx={{ margin: '50px', overflowX: 'auto' }}>
+    <Box sx={{ margin: '30px', overflowX: 'auto' }}>
+      <Container>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <TextField
         id="input-with-icon-textfield"
@@ -616,13 +656,7 @@ const Tasks = () => {
         size="lg"
         variant="outlined"
         sx={{ width:'40%',marginBottom:'10px' ,marginRight:'15px' }}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end"  onClick={handleSend}>
-              <SendIcon onClick={handleSend}/>
-            </InputAdornment>
-          ),
-        }}
+        
         value={message}
         onChange={(event) => setMessage(event.target.value)}
       />
@@ -660,7 +694,7 @@ const Tasks = () => {
             <FormLabel>Project Name</FormLabel>
               <Select value={selectedProjectId} onChange={handleProjectChange} autoFocus required>
                 {projects.map((project) => (
-                  <MenuItem key={project.id} value={project.id}>{project.project_title}</MenuItem>
+                  <MenuItem key={project.id} value={project.id}>{project.name}</MenuItem>
                 ))}
               </Select>
             </FormControl>
@@ -704,39 +738,58 @@ const Tasks = () => {
       </Modal>
       </Box>
       <Box>
+     
       {users.length > 0 ? (
   users.map((user) => (
     <div key={user.id}>
-      <p>Name: {user.name}</p>
-      <p>Email: {user.email}</p>
+      <Box sx={{ width: '100%', marginBottom: '5px', maxWidth: 450, bgcolor: 'background.paper' }}>
+        
+          {/* Replace itemSize and itemCount with appropriate values based on your list */}
+          <ListItem component="div" disablePadding>
+            <ListItemButton>
+              <ListItemText primary={`User Name: ${user.userName}`} />
+              <SendIcon onClick={handleSend}/>
+            </ListItemButton>
+          </ListItem>
+      </Box>
       {/* Add other user information you want to display */}
     </div>
   ))
 ) : (
   <p>No users found.</p>
 )}
+
       </Box>
-      <TableContainer component={Paper}>
-        <Table aria-label="collapsible table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell />
-              <StyledTableCell>Title</StyledTableCell>
-              <StyledTableCell>Project Name</StyledTableCell>
-              <StyledTableCell align="right">Status</StyledTableCell>
-              <StyledTableCell align="center">Start</StyledTableCell>
-              <StyledTableCell align="center">End</StyledTableCell>
-              <StyledTableCell align="right">assigned To</StyledTableCell>
-              <StyledTableCell align="center">Action</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {tasks.map((task) => (
-              <Row key={task.id} row={task} />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      </Container>
+      {tasks.length > 0 ?(
+        <Container>
+        <TableContainer component={Paper}>
+          <Table aria-label="collapsible table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell />
+                <StyledTableCell>Title</StyledTableCell>
+                <StyledTableCell>Project Name</StyledTableCell>
+                <StyledTableCell align="right">Status</StyledTableCell>
+                <StyledTableCell align="center">Start</StyledTableCell>
+                <StyledTableCell align="center">End</StyledTableCell>
+                <StyledTableCell align="right">assigned To</StyledTableCell>
+                <StyledTableCell align="center">Action</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {tasks.map((task) => (
+                <Row key={task.id} row={task} />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        </Container>
+      ):(
+        <Typography  component="div" align="center" color="danger">
+        No Tasks found.
+      </Typography>
+      )}
     </Box>
   );
 };

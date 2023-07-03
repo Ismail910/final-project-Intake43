@@ -20,6 +20,9 @@ import DeveloperTask from '../pages/user/developerPages/task'
 import FreelancerTask from '../pages/user/freelancerpages/task'
 
 import Managerproject from '../pages/user/productManagerpages/Managerproject';
+import Status from '../pages/user/productManagerpages/common/navBarstatusM'
+
+
 import ManagerTask from '../pages/user/productManagerpages/tasks'
 
 import Ownerproject from '../pages/user/productOwnerPages/Ownerproject'
@@ -491,7 +494,8 @@ const MyRoutes = () => {
                 }
               >
                 <Header/>
-                <ManagerTask />
+                {/* <ManagerTask /> */}
+                <Status/>
                 <Footer/>
               </Suspense>
             }
@@ -524,7 +528,9 @@ const MyRoutes = () => {
                 }
               >
                 <Header/>
-                <Managerproject />
+                
+                 <Status />
+                {/* <Managerproject /> */}
                 <Footer/>
               </Suspense>
             }
