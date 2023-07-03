@@ -91,11 +91,6 @@ const Header = () => {
       <div>
 
 
-          <NavBarC />
-          <NavBarD />
-          <NavBarF />
-          <NavBarM />
-          <NavBarO />
 
 
       </div>
@@ -105,3 +100,9 @@ const Header = () => {
 }
 
 export default Header;
+
+// <NavBarC />
+// <NavBarD />
+// <NavBarF />
+// <NavBarM />
+// <NavBarO />
