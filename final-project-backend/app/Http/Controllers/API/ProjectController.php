@@ -224,7 +224,7 @@ class ProjectController extends Controller
                 'error' => 'Not found project to this user'
             ], 404);
         }
-        return response()->json($results);
+        return   ProjectResource::collection($results);
     }
     public function countProject()
     {

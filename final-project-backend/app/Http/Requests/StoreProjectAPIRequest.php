@@ -27,7 +27,7 @@ class StoreProjectAPIRequest extends FormRequest
         return [
             //
             'project_title' => 'required|string|max:255',
-            'project_type' => 'required|string|max:255',
+            'project_type' => 'required|string|max:255|in:mileStone,byProject',
             'project_description' => 'required|string',
             'project_start' => 'required|date',
             'project_end' => 'required|date|after:project_start',

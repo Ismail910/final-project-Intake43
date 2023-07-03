@@ -27,7 +27,7 @@ class UpdateProjectAPIRequest extends FormRequest
         return [
             //
             'project_title' => 'sometimes|required|string',
-            'project_type' => 'sometimes|required|string',
+            'project_type' => 'sometimes|required|string|in:mileStone,byProject',
             'project_description' => 'sometimes|required|string',
             'project_start' => 'sometimes|required|date',
             'project_end' => 'sometimes|required|date|after:project_start',
