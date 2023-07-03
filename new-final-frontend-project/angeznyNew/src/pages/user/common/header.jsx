@@ -90,11 +90,13 @@ const Header = () => {
       </MDBNavbar>
       <div>
 
+
           <NavBarC />
           <NavBarD />
           <NavBarF />
           <NavBarM />
           <NavBarO />
+
 
       </div>
     </div>
@@ -102,4 +104,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default Header;
