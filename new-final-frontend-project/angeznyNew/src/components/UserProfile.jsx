@@ -3,16 +3,16 @@ import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCar
 import '../styles/userProfile.css';
 const UserProfile  = () => {
   return (
-    <div className="gradient-custom-2" style={{ backgroundColor: '#9de2ff' }}>
+    <div className="gradient-custom-2" style={{  }}>
       <MDBContainer className="py-5 h-100">
         <MDBRow className="justify-content-center align-items-center h-100">
-          <MDBCol lg="9" xl="7">
+          <MDBCol lg="9" xl="10">
             <MDBCard>
-              <div className="rounded-top text-white d-flex flex-row" style={{ backgroundColor: '#000', height: '200px' }}>
+              <div className="rounded-top text-white d-flex flex-row" style={{ backgroundColor: 'white', height: '200px' }}>
                 <div className="ms-4 mt-5 d-flex flex-column" style={{ width: '150px' }}>
                   <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
-                    alt="Generic placeholder image" className="mt-4 mb-2 img-thumbnail" fluid style={{ width: '150px', zIndex: '1' }} />
-                  <MDBBtn outline color="dark" style={{height: '36px', overflow: 'visible'}}>
+                    alt="Generic placeholder image" className="mt-4 mb-2 img-thumbnail" fluid style={{ width: '150px', zIndex: '1',borderRadius:'100px' }} />
+                  <MDBBtn outline color="white" style={{height: '36px', overflow: 'visible',backgroundColor:'#FF7C03',color:'#fff'}}>
                     Edit profile
                   </MDBBtn>
                 </div>
