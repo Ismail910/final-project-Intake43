@@ -56,6 +56,7 @@ class UserController extends Controller
             'joinedDate' => $request->input('joinedDate'),
             'endDate' => $request->input('endDate'),
             'country' => $request->input('country'),
+            'gender'=>$request->input('gender')
         ]);
         $this->save_image($request->profilePic, $user);
 

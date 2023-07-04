@@ -402,6 +402,7 @@ const Managerproject = ({ status }) => {
                 const data = await response.json();
                 if (data) {
                   setProjects(data.data);
+                  console.log(data);
                 }
               } else {
                 setProjects([]);
@@ -419,7 +420,7 @@ const Managerproject = ({ status }) => {
     
     
 
-  },  [projects]);
+  },  [status]);
 
  
   

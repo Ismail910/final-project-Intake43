@@ -366,17 +366,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
-function renderRow(props) {
-  const { users } = props;
 
-  return (
-    <ListItem  component="div" disablePadding>
-      <ListItemButton>
-        <ListItemText primary={`Item `} />
-      </ListItemButton>
-    </ListItem>
-  );
-}
 const Tasks = ({statustask}) => {
   const token = '5|mfYgbX7HbdrG2lFSkipBbD6k98OSVIJghUI5rXOP';
   // const decodedToken = jwtDecode(token);
@@ -412,6 +402,7 @@ const Tasks = ({statustask}) => {
                 const data = await response.json();
                 if (data) {
                     setTasks(data.data);
+                    console.log(data);
                 }
               } else {
                 toast.error("Failed to fetch Task data");
@@ -448,7 +439,7 @@ const Tasks = ({statustask}) => {
             fetchTasksByStatus();
           }
 
-  },  [tasks]);
+  },  [statustask]);
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
   };

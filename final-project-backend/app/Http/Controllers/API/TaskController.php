@@ -19,10 +19,10 @@ class TaskController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:sanctum', 'checkUser:ProductManager,Admin'])->only('store', 'destroy', 'update');
+        $this->middleware(['auth:sanctum', 'checkUser:ProductManager,Employee,Freelancer,Admin'])->only('store', 'destroy', 'update');
         $this->middleware(['auth:sanctum', 'checkUser:Freelancer,Admin,Employee,ProductManager'])->only('searchTaskByUsers');
         $this->middleware(['auth:sanctum', 'checkUser:ProductManager,Freelancer,Employee,Admin'])->only('searchTaskByStatus');
-        
+
     }
     /**
      * Display a listing of the resource.
@@ -54,6 +54,7 @@ class TaskController extends Controller
                     'task_id' => $task->id
                 ]);
              }
+
             // print(Freelancer::find($request->input('assigned_to')));
         } else {
             $employee = Employee::find($request->input('assigned_to'));
@@ -96,7 +97,7 @@ class TaskController extends Controller
                 // print(Freelancer::find($request->input('assigned_to')));
             } else {
                 Employee::where('task_id', $task->id)->update([
-                    'Status' => 1,
+                    // 'Status' => 1,
                     'task_id' => null
                 ]);
             }
@@ -163,13 +164,15 @@ class TaskController extends Controller
             ])->get();
         } elseif (Auth::user()->role == 'Employee') {
             $Employee = Employee::where('user_id', $id)->first();
+
             $results = Task::where([
-                ['product_manager_id', '=', $Employee->id],
+                ['id', '=', $Employee->task_id],
             ])->get();
         } elseif (Auth::user()->role == 'Freelancer') {
             $Freelancer = Freelancer::where('user_id', $id)->first();
+
             $results = Task::where([
-                ['product_manager_id', '=', $Freelancer->id],
+                ['id', '=', $Freelancer->task_id],
             ])->get();
         }else {
             return response()->json([

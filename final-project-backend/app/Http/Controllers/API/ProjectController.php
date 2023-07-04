@@ -18,9 +18,9 @@ class ProjectController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:sanctum', 'checkUser:ProductOwner'])->only('store', 'delete');
+        $this->middleware(['auth:sanctum', 'checkUser:ProductOwner,Client'])->only('store', 'delete');
         $this->middleware(['auth:sanctum', 'checkUser:ProductOwner,ProductManager'])->only('update');
-        $this->middleware(['auth:sanctum', 'checkUser:ProductOwner,Client,Admin'])->only('searchProjectByStatus');
+        $this->middleware(['auth:sanctum', 'checkUser:ProductOwner,ProductManager,Client,Admin'])->only('searchProjectByStatus');
         $this->middleware(['auth:sanctum', 'checkUser:ProductOwner,Client,Admin,ProductManager'])->only('searchProjectByUsers');
     }
     /**
@@ -44,64 +44,110 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectAPIRequest $request)
     {
-        $managerWithFewestProjects = $this->getManagerWithFewestProjects();
-        $ownerWithFewestProjects = $this->getOwnerWithFewestProjects();
-    
-        $this->updateOrAppendValue($request, 'ProductManager_id', $managerWithFewestProjects);
-        $this->updateOrAppendValue($request, 'ProductOwner_id', $ownerWithFewestProjects);
+        //
+        $managerWithFewestProjects = 
+        Manager::join('users', 'managers.user_id', '=', 'users.id')
+        ->where('users.role', 'ProductManager')
+        ->whereNotIn('managers.id', function ($query) {
+            $query->select('ProductManager_id')
+                ->from('projects');
+        })
+        ->value('managers.id');
+
+        $ownerWithFewestProjects = 
+        Manager::join('users', 'managers.user_id', '=', 'users.id')
+        ->where('users.role', 'ProductOwner')
+        // ->whereNotIn('managers.id', function ($query) {
+        //     $query->select('ProductOwner_id')
+        //         ->from('projects');
+        // })
+        ->value('managers.id');
+        var_dump($ownerWithFewestProjects);
+
+        if(!$managerWithFewestProjects){
+        $managerWithFewestProjects = Project::select('ProductManager_id')
+            ->groupBy('ProductManager_id')
+            ->orderByRaw('COUNT(*) ASC')
+            ->value('ProductManager_id');
+        }
         
+        if($ownerWithFewestProjects=="NULL"){
+        $ownerWithFewestProjects = Project::select('ProductOwner_id')
+            ->groupBy('ProductOwner_id')
+            ->orderByRaw('COUNT(*) ASC')
+            ->value('ProductOwner_id');
+            
+        }
+
+        // Check if the request has the ProductManager_id input
+        if ($request->has('ProductManager_id')) {
+            // Update the ProductManager_id with the managerWithFewestProjects value
+            $request->merge(['ProductManager_id' => $managerWithFewestProjects]);
+        } else {
+            // Append the new value to the request
+            $request->request->add(['ProductManager_id' => $managerWithFewestProjects]);
+        }
+        // Check if the request has the ProductOwner_id input
+        if ($request->has('ProductOwner_id')) {
+            // Update the ProductManager_id with the ownerWithFewestProjects value
+            $request->merge(['ProductOwner_id' => $ownerWithFewestProjects]);
+        } else {
+            // Append the new value to the request
+            $request->request->add(['ProductOwner_id' => $ownerWithFewestProjects]);
+        }
+        var_dump($request->all());
         $project = Project::create($request->all());
         return new ProjectResource($project);
     }
+
+    // private function getManagerWithFewestProjects()
+    // {
+    //     $managerWithFewestProjects = Manager::join('users', 'managers.user_id', '=', 'users.id')
+    //         ->where('users.role', 'ProductManager')
+    //         ->whereNotIn('managers.id', function ($query) {
+    //             $query->select('ProductManager_id')
+    //                 ->from('projects');
+    //         })
+    //         ->value('managers.id');
     
-    private function getManagerWithFewestProjects()
-    {
-        $managerWithFewestProjects = Manager::join('users', 'managers.user_id', '=', 'users.id')
-            ->where('users.role', 'ProductManager')
-            ->whereNotIn('managers.id', function ($query) {
-                $query->select('ProductManager_id')
-                    ->from('projects');
-            })
-            ->value('managers.id');
+    //     if (!$managerWithFewestProjects) {
+    //         $managerWithFewestProjects = Project::select('ProductManager_id')
+    //             ->groupBy('ProductManager_id')
+    //             ->orderByRaw('COUNT(*) ASC')
+    //             ->value('ProductManager_id');
+    //     }
     
-        if (!$managerWithFewestProjects) {
-            $managerWithFewestProjects = Project::select('ProductManager_id')
-                ->groupBy('ProductManager_id')
-                ->orderByRaw('COUNT(*) ASC')
-                ->value('ProductManager_id');
-        }
+    //     return $managerWithFewestProjects;
+    // }
     
-        return $managerWithFewestProjects;
-    }
+    // private function getOwnerWithFewestProjects()
+    // {
+    //     $ownerWithFewestProjects = Manager::join('users', 'managers.user_id', '=', 'users.id')
+    //         ->where('users.role', 'ProductOwner')
+    //         ->whereNotIn('managers.id', function ($query) {
+    //             $query->select('ProductOwner_id')
+    //                 ->from('projects');
+    //         })
+    //         ->value('managers.id');
     
-    private function getOwnerWithFewestProjects()
-    {
-        $ownerWithFewestProjects = Manager::join('users', 'managers.user_id', '=', 'users.id')
-            ->where('users.role', 'ProductOwner')
-            ->whereNotIn('managers.id', function ($query) {
-                $query->select('ProductOwner_id')
-                    ->from('projects');
-            })
-            ->value('managers.id');
+    //     if (!$ownerWithFewestProjects) {
+    //         $ownerWithFewestProjects = Project::select('ProductOwner_id')
+    //             ->groupBy('ProductOwner_id')
+    //             ->orderByRaw('COUNT(*) ASC')
+    //             ->value('ProductOwner_id');
+    //     }
     
-        if (!$ownerWithFewestProjects) {
-            $ownerWithFewestProjects = Project::select('ProductOwner_id')
-                ->groupBy('ProductOwner_id')
-                ->orderByRaw('COUNT(*) ASC')
-                ->value('ProductOwner_id');
-        }
+    //     return $ownerWithFewestProjects;
+    // }
     
-        return $ownerWithFewestProjects;
-    }
-    
-    private function updateOrAppendValue($request, $key, $value)
-    {
-        if ($request->has($key)) {
-            $request->merge([$key => $value]);
-        } else {
-            $request->request->add([$key => $value]);
-        }
-    }
+    // private function updateOrAppendValue($request, $key, $value)
+    // {
+    //     if ($request->has($key)) {
+    //         $request->merge([$key => $value]);
+    //     } else {
+    //         $request->request->add([$key => $value]);
+    //     }
+    // }
     /**
      * Display the specified resource.
      */
@@ -189,7 +235,7 @@ class ProjectController extends Controller
                 'error' => 'Not found project with this status'
             ], 404);
         }
-        return response()->json($results);
+        return ProjectResource::collection($results);
     }
     public function searchProjectByUsers()
     {

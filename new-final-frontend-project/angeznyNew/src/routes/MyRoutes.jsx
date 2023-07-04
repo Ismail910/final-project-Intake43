@@ -20,17 +20,17 @@ import AboutUs from "../components/AboutUs";
 import UserProfile from "../components/UserProfile";
 
 import ClientProject from "../pages/user/clientPages/clientProject";
+import StatusClient from '../pages/user/clientPages/common/navBarstatusC'
 
 import DeveloperTask from "../pages/user/developerPages/task";
+import StatusDeveloper from '../pages/user/developerPages/common/navBarStatusD'
 
 import FreelancerTask from "../pages/user/freelancerpages/task";
+import StatusFreelancer from '../pages/user/freelancerpages/common/navBarStatusF'
 
-
-import Managerproject from '../pages/user/productManagerpages/Managerproject';
+import Managerproject from "../pages/user/productManagerpages/Managerproject";
+import ManagerTask from "../pages/user/productManagerpages/tasks";
 import Status from '../pages/user/productManagerpages/common/navBarstatusM'
-
-
-import ManagerTask from '../pages/user/productManagerpages/tasks'
 
 import Ownerproject from "../pages/user/productOwnerPages/Ownerproject";
 
@@ -312,7 +312,8 @@ const MyRoutes = () => {
               }
             >
               <Header />
-              <ClientProject />
+              <StatusClient/>
+              {/* <ClientProject /> */}
               <Footer />
             </Suspense>
           }
@@ -381,7 +382,8 @@ const MyRoutes = () => {
               }
             >
               <Header />
-              <DeveloperTask />
+              <StatusDeveloper/>
+              {/* <DeveloperTask /> */}
               <Footer />
             </Suspense>
           }
@@ -434,7 +436,8 @@ const MyRoutes = () => {
               }
             >
               <Header />
-              <FreelancerTask />
+              {/* <FreelancerTask /> */}
+              <StatusFreelancer/>
               <Footer />
             </Suspense>
           }
@@ -502,7 +505,9 @@ const MyRoutes = () => {
               }
             >
               <Header />
-              <ManagerTask />
+              {/* <ManagerTask /> */}
+              <Status/>
+
               <Footer />
             </Suspense>
           }
@@ -535,7 +540,8 @@ const MyRoutes = () => {
               }
             >
               <Header />
-              <Managerproject />
+              {/* <Managerproject /> */}
+              <Status/>
               <Footer />
             </Suspense>
           }
@@ -611,222 +617,8 @@ const MyRoutes = () => {
           }
         />
 
-          {/* </Route> */}
-
-          {/* freelancer routes */}
-          {/* <Route element={<FreelancerGuard />}> */}
-          <Route
-            path="/freelancer/"
-            element={
-              <Suspense
-                fallback={
-                  <div className="grid place-items-center h-screen bg-black">
-                    <CircleSpinner size={60} />
-                  </div>
-                }
-              >
-                <Header/>
-                <Home/>
-                <Footer/>
-              </Suspense>
-            }
-          />
-          <Route
-            path="/freelancer/task"
-            element={
-              <Suspense
-                fallback={
-                  <div className="grid place-items-center h-screen bg-black">
-                    <CircleSpinner size={60} />
-                  </div>
-                }
-              >
-                <Header/>
-                <FreelancerTask />
-                <Footer/>
-
-              </Suspense>
-            }
-          />
-            <Route
-            path="/freelancer/chat"
-            element={
-              <Suspense
-                fallback={
-                  <div className="grid place-items-center h-screen bg-black">
-                    <CircleSpinner size={60} />
-                  </div>
-                }
-              >
-                <Header/>
-                <Chat />
-                <Footer/>
-
-              </Suspense>
-            }
-          />
-
-            <Route
-            path="/freelancer/payment"
-            element={
-              <Suspense
-                fallback={
-                  <div className="grid place-items-center h-screen bg-black">
-                    <CircleSpinner size={60} />
-                  </div>
-                }
-              >
-                <Header/>
-                <Payment />
-                <Footer/>
-
-              </Suspense>
-            }
-          />
-           {/* </Route> */}
-                     {/* manager routes */}
-          {/* <Route element={<ProductManagerGuard />}> */}
-          <Route
-            path="manager/"
-            element={
-              <Suspense
-                fallback={
-                  <div className="grid place-items-center h-screen bg-black">
-                    <CircleSpinner size={60} />
-                  </div>
-                }
-              >
-                <Header/>
-                <Home />
-                <Footer/>
-              </Suspense>
-            }
-          />
-          <Route
-            path="/manager/task"
-            element={
-              <Suspense
-                fallback={
-                  <div className="grid place-items-center h-screen bg-black">
-                    <CircleSpinner size={60} />
-                  </div>
-                }
-              >
-                <Header/>
-                {/* <ManagerTask /> */}
-                <Status/>
-                <Footer/>
-              </Suspense>
-            }
-          />
-            <Route
-            path="/manager/chat"
-            element={
-              <Suspense
-                fallback={
-                  <div className="grid place-items-center h-screen bg-black">
-                    <CircleSpinner size={60} />
-                  </div>
-                }
-              >
-                <Header/>
-                <Chat />
-                <Footer/>
-              </Suspense>
-            }
-          />
-
-            <Route
-            path="/manager/project"
-            element={
-              <Suspense
-                fallback={
-                  <div className="grid place-items-center h-screen bg-black">
-                    <CircleSpinner size={60} />
-                  </div>
-                }
-              >
-                <Header/>
-                
-                 <Status />
-                {/* <Managerproject /> */}
-                <Footer/>
-              </Suspense>
-            }
-          />
-
-          {/* </Route> */}
-
-         {/* Owner routes */}
-          {/* <Route element={<ProductOwnerGuard />}> */}
-          <Route
-            path="owner/"
-            element={
-              <Suspense
-                fallback={
-                  <div className="grid place-items-center h-screen bg-black">
-                    <CircleSpinner size={60} />
-                  </div>
-                }
-              >
-                <Header/>
-                <Home/>
-                <Footer/>
-              </Suspense>
-            }
-          />
-            <Route
-            path="/owner/chat"
-            element={
-              <Suspense
-                fallback={
-                  <div className="grid place-items-center h-screen bg-black">
-                    <CircleSpinner size={60} />
-                  </div>
-                }
-              >
-                <Header/>
-                <Chat />
-                <Footer/>
-              </Suspense>
-            }
-          />
-
-            <Route
-            path="/owner/project"
-            element={
-              <Suspense
-                fallback={
-                  <div className="grid place-items-center h-screen bg-black">
-                    <CircleSpinner size={60} />
-                  </div>
-                }
-              >
-                <Header/>
-                <Ownerproject/>
-                <Footer/>
-              </Suspense>
-            }
-          />
-          <Route
-            path="*"
-            element={
-              <Suspense
-                fallback={
-                  <div className="grid place-items-center h-screen bg-blackm">
-                    <CircleSpinner size={60} />
-                  </div>
-                }
-              >
-                <Header/>
-                <NotFound/>
-                <Footer/>
-              </Suspense>
-            }
-          />
-
-          {/* </Route> */}
-        </Routes>
+        {/* </Route> */}
+      </Routes>
     </BrowserRouter>
   );
 };
