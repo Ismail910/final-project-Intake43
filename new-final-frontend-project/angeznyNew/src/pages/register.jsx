@@ -1,220 +1,161 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@material-ui/core";
+import { toast } from "react-toastify";
+import axios from "axios";
+import FormContainer from "./formitems/FormContainer";
+import InputField from "./formitems/InputField";
+import SelectField from "./formitems//SelectField";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
-const Register = (props) => {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [nationalID, setNationalID] = useState('')
-  const [phone, setPhone] = useState('')
-  const [address, setAddress] = useState('')
-  const [joinedDate, setJoinedDate] = useState('')
-  const [endDate, setEndDate] = useState('')
-  const [profilePic, setProfilePic] = useState('')
-  const [errors, setErrors] = useState({})
-  const registration = (e) => {
-    e.preventDefault()
-    console.log(email)
-    console.log('Form submitted:', { name, email, password,confirmPassword,nationalID,phone,address,joinedDate,endDate,profilePic})
-    // Reset form fields
-    setName('')
-    setEmail('')
-    setPassword('')
-    setConfirmPassword('')
-    setNationalID('')
-    setPhone('')
-    setAddress('')
-    setJoinedDate('')
-    setEndDate('')
-    setProfilePic('')
-    const validationErrors = validateForm()
+const Register = () => {
+  const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("Client");
+  const [gender, setGender] = useState("male");
 
-    if (Object.keys(validationErrors).length === 0) {
-      // Proceed with registration logic
-      // ...
-    } else {
-      setErrors(validationErrors)
-    }
-  }
-  // form validation
-  const validateForm = () => {
-    let errors = {}
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1; // add 1 because month is zero-based
+    const day = currentDate.getDate();
+    const formattedDate = `${year}-${month}-${day}`;
+    console.log(email);
+    console.log(password);
+    console.log(name);
+    console.log(userName);
+    console.log(gender);
+    console.log(role);
 
-    // Validate name field
-    if (!name.trim()) {
-      errors.name = 'Name is required'
-    }
+    try {
+      // Perform form validation
+      if (!name || !userName || !email || !password || !role || !gender) {
+        toast.error("Please fill in all fields");
+        return;
+      }
 
-    // Validate email field
-    if (!email.trim()) {
-      errors.email = 'Email is required'
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      errors.email = 'Email is invalid'
+      // Send registration request to the server using Axios
+      if (role == "Client") {
+        await axios
+          .post("http://127.0.0.1:8000/api/register/client", {
+            name,
+            userName,
+            email,
+            password,
+            role,
+            gender,
+            joinedDate: formattedDate,
+          })
+          .then((res) => {
+            console.log(res);
+            localStorage.setItem("user_id", res.data.client.user.id);
+            localStorage.setItem("user_name", res.data.client.user.name);
+            localStorage.setItem("user_role", "Client");
+            localStorage.setItem("token", res.data.token);
+            // setCurrentUserData(userData);
+            toast.success("Registration successful");
+            navigate("/");
+          })
+          .catch((error) => {
+            toast.error("register failed!");
+            toast.error(error.res.data.message);
+            console.log(error);
+          });
+      } else {
+        await axios
+          .post("http://127.0.0.1:8000/api/register/freelancer", {
+            name,
+            userName,
+            email,
+            password,
+            role,
+            gender,
+            joinedDate: formattedDate,
+          })
+          .then((res) => {
+            localStorage.setItem("user_id", res.data.freelancer.user.id);
+            localStorage.setItem("user_name", res.data.freelancer.user.name);
+            localStorage.setItem("user_role", "Freelancer");
+            localStorage.setItem("token", res.data.token);
+            // setCurrentUserData(userData);
+            toast.success("Registration successful");
+            navigate("/");
+          })
+          .catch((error) => {
+            toast.error("register failed freelanser!");
+            toast.error(error.res.data.message);
+            console.log(error);
+          });
+      }
+    } catch (error) {
+      // Handle error cases
+      toast.error("Failed to register");
     }
-
-    // Validate password field
-    if (!password.trim()) {
-      errors.password = 'Password is required'
-    } else if (password.length < 6) {
-      errors.password = 'Password must be at least 6 characters long'
-    }
-
-    // Validate confirm password field
-    if (!confirmPassword.trim()) {
-      errors.confirmPassword = 'Confirm Password is required'
-    } else if (confirmPassword !== password) {
-      errors.confirmPassword = 'Passwords do not match'
-    }
-    if (!nationalID.trim()) {
-      errors.nationalID = 'nationalID is required'
-    } else if (nationalID.length ==14) {
-      errors.nationalID = 'nationalID must be at least 14 characters long'
-    }
-    if (!phone.trim()) {
-      errors.phone = 'phone is required'
-    } else if (phone.length ==11) {
-      errors.phone = 'phone must be at least 11 characters long'
-    }
-    if (!address.trim()) {
-      errors.address = 'phone is required'
-    } 
-
-    if (!joinedDate.trim()) {
-      errors.joinedDate = 'joinedDate is required'
-    } 
-
-    if (!endDate.trim()) {
-      errors.endDate = 'endDate is required'
-    }
-
-    if (!profilePic.trim()) {
-      errors.profilePic = 'profilePic is required'
-    }
-    return errors
-  }
+  };
 
   return (
-    <div className="auth-form-container">
-      <h2>Register</h2>
-      <form className="register-form" onSubmit={registration}>
-        <label htmlFor="name">Full name</label>
-        <input
-          type="name"
-          placeholder="enter your full name"
-          id="name"
-          name="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        {errors.name && <p className="text-danger">{errors.name}</p>}
-        <label htmlFor="email">email</label>
-        <input
-          type="email"
-          placeholder="email@gmail.com"
-          id="email"
-          name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        {errors.email && <p className="text-danger">{errors.email}</p>}
+    <FormContainer title="Register" onSubmit={handleRegister}>
+      <InputField
+        className="mt-4"
+        label="Name"
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <InputField
+        className="mt-4"
+        label="Username"
+        type="text"
+        value={userName}
+        onChange={(e) => setUserName(e.target.value)}
+      />
+      <InputField
+        className="mt-4"
+        label="Email"
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <InputField
+        className="mt-4"
+        label="Password"
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <SelectField
+        className="mt-4"
+        label="Role"
+        value={role}
+        onChange={(e) => setRole(e.target.value)}
+        options={["Client", "Freelancer"]}
+      />
+      <SelectField
+        className="mt-4"
+        label="Gender"
+        value={gender}
+        onChange={(e) => setGender(e.target.value)}
+        options={["male", "female"]}
+      />
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        className="mt-4"
+      >
+        SinUp
+      </Button>
+      <Link className="nav-link text-secondary " to="/login">
+        <Button variant="contained" color="primary" className="mt-5">
+          SinIn
+        </Button>
+      </Link>
+    </FormContainer>
+  );
+};
 
-        <label htmlFor="password">password</label>
-        <input
-          type="password"
-          id="password"
-          placeholder="***********"
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        {errors.password && <p className="text-danger">{errors.password}</p>}
-        <label htmlFor="co">Confirm your password</label>
-        <input
-          type="password"
-          id="confirmPassword"
-          placeholder="***********"
-          name="confirmPassword"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
-        {errors.confirmPassword && (
-          <p className="text-danger">{errors.confirmPassword}</p>
-        )}
-
-        <label htmlFor="co">National ID </label>
-        <input
-          type="password"
-          id="confirmPassword"
-          placeholder="National ID"
-          name="nationalID"
-          value={nationalID}
-          onChange={(e) => setNationalID(e.target.value)}
-        />
-        {errors.nationalID && (
-          <p className="text-danger">{errors.nationalID}</p>
-        )}
-
-        <label htmlFor="co">Phone </label>
-        <input
-          type="text"
-          id="phone"
-          placeholder="phone"
-          name="phone"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-        />
-        {errors.phone && (
-          <p className="text-danger">{errors.phone}</p>
-        )}
-
-        <label htmlFor="co">Address </label>
-        <input
-          type="text"
-          id="address"
-          placeholder="address"
-          name="address"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
-        {errors.address && (
-          <p className="text-danger">{errors.address}</p>
-        )}
-
-
-        <label htmlFor="co">Joined date </label>
-        <input
-          type="date"
-          id="joinedDate"
-          placeholder="joinedDate"
-          name="joinedDate"
-          value={joinedDate}
-          onChange={(e) => setJoinedDate(e.target.value)}
-        />
-        {errors.joinedDate && (
-          <p className="text-danger">{errors.joinedDate}</p>
-        )}
-
-        <label htmlFor="co">Profile Picture </label>
-        <input
-          type="file"
-          id="profilePic"
-          placeholder="profile picture"
-          name="profilePic"
-          value={profilePic}
-          onChange={(e) => setProfilePic(e.target.value)}
-        />
-        {errors.profilePic && (
-          <p className="text-danger">{errors.profilePic}</p>
-        )}
-        <button type="submit" className="submission">
-          Register
-        </button>
-      </form>
-      <button className="link-btn" onClick={() => props.onFormSwitch('login')}>
-        Already have an account? Login here.
-      </button>
-    </div>
-  )
-}
-
-export default Register
+export default Register;

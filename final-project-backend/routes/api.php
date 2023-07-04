@@ -41,16 +41,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 // ========== paypal payment ====================
-Route::post('pay', [PayPalController::class, 'pay'])->name('payment');
+Route::post('paypal/pay', [PayPalController::class, 'pay']);
 Route::get('success', [PayPalController::class, 'success']);
 Route::get('error', [PayPalController::class, 'error']);
-
 
 // ========== Chat route ====================
 
 use App\Http\Controllers\API\ChatGPTController;
 
-Route::get('chatGPT', [ChatGPTController::class, 'askToChatGpt']);
+Route::post('chatgpt/ask', [ChatGPTController::class, 'ask']);
+
 
 // ========== Staff route ====================
 Route::apiResource('staff', StaffLevelController::class);
@@ -91,7 +91,7 @@ Route::apiResource('manager', ManagersController::class);
 
 // ========== search route ====================
 Route::get('search/{model}/{keyword}/{projectType?}', [SearchController::class, 'searchByName'])->name('search');
-Route::get('search/{projectType}/{keywords}', [SearchController::class, 'searchSkills'])->name('searchSkills');
+Route::get('searchUser/{projectType}/{keywords}', [SearchController::class, 'searchSkills'])->name('searchSkills');
 
 
 // ========== project route ====================
@@ -104,6 +104,7 @@ Route::get('projects/search/{status}', [ProjectController::class, 'searchProject
 // ========== task route ====================
 Route::get('task/searchTaskByUsers', [TaskController::class, 'searchTaskByUsers']);
 Route::apiResource('task', TaskController::class);
+Route::get('tasks/search/{status}', [TaskController::class, 'searchTaskByStatus'])->name('task.search');
 
 // ========== skill route ====================
 Route::apiResource('skill', SkillController::class);

@@ -20,7 +20,8 @@ class Task extends Model
         'task_description',
         'task_start',
         'task_end',
-        'task_status'
+        'task_status',
+        'price'
     ];
 
     function project()

@@ -32,7 +32,7 @@ class UpdateTaskRequest extends FormRequest
             'task_description' => 'sometimes|required|string|max:255',
             'task_start' => 'sometimes|required|date',
             'task_end' => 'required|date|after:task_start',
-            'task_status' => 'sometimes|required|in:new,in_progress,completed',
+            'task_status' => 'sometimes|required|in:notStarted,inProgress,completed',
         ];
     }
 

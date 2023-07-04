@@ -22,6 +22,7 @@ class Project extends Model
         'ProductOwner_id',
         'ProductManager_id',
         'client_id',
+        'budget'
     ];
     function ProductOwner()
     {

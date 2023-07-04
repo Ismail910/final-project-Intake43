@@ -35,6 +35,7 @@ class StoreUserRequest extends FormRequest
             'joinedDate' => 'date',
             'endDate' => 'date|after:joinedDate',
             'profilePic' => 'nullable',
+            'gender' => 'in:male,female,'
             // 'country' => 'required'
         ];
     }

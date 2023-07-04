@@ -40,6 +40,7 @@ class RegisterController extends Controller
             'endDate' => $request->input('endDate'),
             'country' => $request->input('country'),
             'userName'=>$request->input('userName'),
+            'gender'=>$request->input('gender')
         ]);
         $this->save_image($request->profilePic, $user);
 
