@@ -35,11 +35,8 @@ class StoreProjectAPIRequest extends FormRequest
             'ProductOwner_id' => [ 'exists:managers,id', new ProductOwnerValidationRule],
             'ProductManager_id' => ['exists:managers,id', new ProductManagerValidationRule],
             'client_id' => 'required|exists:clients,id',
-<<<<<<< HEAD
             'budget' => 'numeric|min:0|gt:0|default:0',
-=======
-            
->>>>>>> bb32c3fa7861991396bd70b2dc87139761eb7eb1
+
         ];
     }
     ## add new function failed validation
