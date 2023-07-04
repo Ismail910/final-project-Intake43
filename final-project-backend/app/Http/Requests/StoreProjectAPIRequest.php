@@ -35,6 +35,7 @@ class StoreProjectAPIRequest extends FormRequest
             'ProductOwner_id' => [ 'exists:managers,id', new ProductOwnerValidationRule],
             'ProductManager_id' => ['exists:managers,id', new ProductManagerValidationRule],
             'client_id' => 'required|exists:clients,id',
+            
         ];
     }
     ## add new function failed validation
