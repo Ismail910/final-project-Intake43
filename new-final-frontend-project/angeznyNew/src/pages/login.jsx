@@ -52,7 +52,7 @@ const Login = () => {
               break;
             case "Employee":
               toast.success("Login successful");
-              navigate("/employee");
+              navigate("/developer");
               break;
             case "ProductManager":
               toast.success("Login successful");
