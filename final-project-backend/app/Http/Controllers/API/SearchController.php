@@ -62,14 +62,13 @@ class SearchController extends Controller
 
         $users = User::whereHas('skills', function ($query) use ($skills) {
             $query->whereIn('skill_id', $skills->pluck('id'));
-        })->get()
+        })
         ->when($projectType === 'mileStone', function ($query) {
             return $query->where('role', 'Freelancer'); 
         })
         ->when($projectType === 'byProject', function ($query) {
             return $query->where('role', 'Employee');
-        })
-        ->get();
+        })->get();
         if ($users->count() > 0) {
             return response()->json([
                 'data' => $users,

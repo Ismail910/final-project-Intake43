@@ -3,37 +3,33 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class ChatGPTController extends Controller
 {
-    protected $httpClient;
-
-    public function __construct()
+    public function ask(Request $request)
     {
-        $this->httpClient = new Client([
-            'base_uri' => 'https://api.openai.com/v1/',
-            'headers' => [
-                'Authorization' => 'Bearer ' . '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',
-                'Content-Type' => 'application/json',
-            ],
-        ]);
+
+        $prompt = $request->input('prompt');
+
+        $response = $this->askToChatGPT($prompt);
+       
+
+        return response()->json(['response' => $response]);
     }
 
-    public function askToChatGpt()
+    private function askToChatGPT($prompt)
     {
-        $message = "what is Laravel?";
-        $response = $this->httpClient->post('chat/completions', [
-            'json' => [
-                'model' => 'gpt-3.5-turbo',
-                'messages' => [
-                    ['role' => 'system', 'content' => 'You are'],
-                    ['role' => 'user', 'content' => $message],
-                ],
-            ],
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . env('CHATGPT_API_KEY'),
+            'Content-Type' => 'application/json',
+        ])->post('https://api.openai.com/v1/engines/text-davinci-003/completions', [
+            "prompt" => $prompt,
+            "max_tokens" => 1000,
+            "temperature" => 0.5
         ]);
 
-        return json_decode($response->getBody(), true)['choices'][0]['message']['content'];
+        return $response->json()['choices'][0]['text'];
     }
 }

@@ -31,7 +31,8 @@ class UpdateUserRequest extends FormRequest
             'address' => 'required|string',
             'phone' => 'required|string|min:11',
             'profilePic' => 'nullable',
-            'country' => 'required'
+            'gender'=>'in:male,female,'
+            // 'country' => 'required'
         ];
     }
     ## add new function failed validation
