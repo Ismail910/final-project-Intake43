@@ -35,7 +35,7 @@ class StoreUserRequest extends FormRequest
             'joinedDate' => 'date',
             'endDate' => 'date|after:joinedDate',
             'profilePic' => 'nullable',
-            'country' => 'required'
+            // 'country' => 'required'
         ];
     }
     ## add new function failed validation
