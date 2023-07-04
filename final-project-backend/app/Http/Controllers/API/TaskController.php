@@ -19,8 +19,9 @@ class TaskController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:sanctum', 'checkUser:ProductManager,Admin'])->only('store', 'destroy', 'update');
+        $this->middleware(['auth:sanctum', 'checkUser:ProductManager,Freelancer,Admin'])->only('store', 'destroy', 'update');
         $this->middleware(['auth:sanctum', 'checkUser:Freelancer,Admin,Employee,ProductManager'])->only('searchTaskByUsers');
+        $this->middleware(['auth:sanctum', 'checkUser:ProductManager,Freelancer,Employee,Admin'])->only('searchTaskByStatus');
 
     }
     /**
@@ -53,6 +54,7 @@ class TaskController extends Controller
                     'task_id' => $task->id
                 ]);
              }
+
             // print(Freelancer::find($request->input('assigned_to')));
         } else {
             $employee = Employee::find($request->input('assigned_to'));
@@ -162,17 +164,58 @@ class TaskController extends Controller
             ])->get();
         } elseif (Auth::user()->role == 'Employee') {
             $Employee = Employee::where('user_id', $id)->first();
+
             $results = Task::where([
-                ['product_manager_id', '=', $Employee->id],
+                ['id', '=', $Employee->task_id],
             ])->get();
         } elseif (Auth::user()->role == 'Freelancer') {
             $Freelancer = Freelancer::where('user_id', $id)->first();
+
             $results = Task::where([
-                ['product_manager_id', '=', $Freelancer->id],
+                ['id', '=', $Freelancer->task_id],
             ])->get();
         }else {
             return response()->json([
                 'error' => 'Not found project to this user'
+            ], 404);
+        }
+        return TaskResource::collection($results);
+    }
+    public function searchTaskByStatus($status)
+    {
+        $searchTerm = $status;
+
+        $results = [];
+        if (!Auth::user()) {
+            return response()->json([
+                'error' => 'unauthentecation'
+            ], 404);
+        }
+        $id = Auth::user()->id;
+        if (Auth::user()->role == 'Admin') {
+            // Perform your search logic based on the provided search term
+            $results = Task::where('task_status', '=', $searchTerm)->get();
+        } elseif (Auth::user()->role == 'ProductManager') {
+            $manager = Manager::where('user_id', $id)->first();
+            $results = Task::where([
+                ['product_manager_id', '=', $manager->id],
+                ['task_status', '=', $searchTerm]
+            ])->get();
+        } elseif (Auth::user()->role == 'Freelancer') {
+            $Freelancer = Freelancer::where('user_id', $id)->first();
+            $results = Task::where([
+                ['id', '=', $Freelancer->task_id],
+                ['task_status', '=', $searchTerm]
+            ])->get();
+        } elseif (Auth::user()->role == 'Employee') {
+            $Employee = Employee::where('user_id', $id)->first();
+            $results = Task::where([
+                ['id', '=', $Employee->task_id],
+                ['task_status', '=', $searchTerm]
+            ])->get();
+        } else {
+            return response()->json([
+                'error' => 'Not found project with this status'
             ], 404);
         }
         return TaskResource::collection($results);

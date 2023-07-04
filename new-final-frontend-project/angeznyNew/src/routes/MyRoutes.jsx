@@ -24,6 +24,7 @@ import ClientProject from "../pages/user/clientPages/clientProject";
 import DeveloperTask from "../pages/user/developerPages/task";
 
 import FreelancerTask from "../pages/user/freelancerpages/task";
+import Freelancerstatus from "../pages/user/freelancerpages/common/navBarStatusF";
 
 import Managerproject from "../pages/user/productManagerpages/Managerproject";
 import ManagerTask from "../pages/user/productManagerpages/tasks";
@@ -430,7 +431,8 @@ const MyRoutes = () => {
               }
             >
               <Header />
-              <FreelancerTask />
+              {/* <FreelancerTask /> */}
+              <Freelancerstatus/>
               <Footer />
             </Suspense>
           }

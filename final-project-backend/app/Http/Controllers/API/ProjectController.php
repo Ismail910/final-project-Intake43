@@ -19,7 +19,7 @@ class ProjectController extends Controller
     public function __construct()
     {
         $this->middleware(['auth:sanctum', 'checkUser:ProductOwner'])->only('store', 'delete');
-        $this->middleware(['auth:sanctum', 'checkUser:ProductOwner,ProductManager'])->only('update');
+        $this->middleware(['auth:sanctum', 'checkUser:ProductOwner,ProductManager,Admin'])->only('update');
         $this->middleware(['auth:sanctum', 'checkUser:ProductOwner,Client,Admin'])->only('searchProjectByStatus');
         $this->middleware(['auth:sanctum', 'checkUser:ProductOwner,Client,Admin,ProductManager'])->only('searchProjectByUsers');
     }
@@ -46,14 +46,14 @@ class ProjectController extends Controller
     {
         $managerWithFewestProjects = $this->getManagerWithFewestProjects();
         $ownerWithFewestProjects = $this->getOwnerWithFewestProjects();
-    
+
         $this->updateOrAppendValue($request, 'ProductManager_id', $managerWithFewestProjects);
         $this->updateOrAppendValue($request, 'ProductOwner_id', $ownerWithFewestProjects);
-        
+
         $project = Project::create($request->all());
         return new ProjectResource($project);
     }
-    
+
     private function getManagerWithFewestProjects()
     {
         $managerWithFewestProjects = Manager::join('users', 'managers.user_id', '=', 'users.id')
@@ -63,17 +63,17 @@ class ProjectController extends Controller
                     ->from('projects');
             })
             ->value('managers.id');
-    
+
         if (!$managerWithFewestProjects) {
             $managerWithFewestProjects = Project::select('ProductManager_id')
                 ->groupBy('ProductManager_id')
                 ->orderByRaw('COUNT(*) ASC')
                 ->value('ProductManager_id');
         }
-    
+
         return $managerWithFewestProjects;
     }
-    
+
     private function getOwnerWithFewestProjects()
     {
         $ownerWithFewestProjects = Manager::join('users', 'managers.user_id', '=', 'users.id')
@@ -83,17 +83,17 @@ class ProjectController extends Controller
                     ->from('projects');
             })
             ->value('managers.id');
-    
+
         if (!$ownerWithFewestProjects) {
             $ownerWithFewestProjects = Project::select('ProductOwner_id')
                 ->groupBy('ProductOwner_id')
                 ->orderByRaw('COUNT(*) ASC')
                 ->value('ProductOwner_id');
         }
-    
+
         return $ownerWithFewestProjects;
     }
-    
+
     private function updateOrAppendValue($request, $key, $value)
     {
         if ($request->has($key)) {

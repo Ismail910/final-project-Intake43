@@ -24,6 +24,7 @@ class TaskResource extends JsonResource
         $assigned_to = $employee ? $employee : ($freelancer ? $freelancer : null);
         $assignedToData = $assigned_to ? [
             'id' => $assigned_to->user->id,
+            'hisID'=>$assigned_to->id,
             'name' => $assigned_to->user->name,
             'email' => $assigned_to->user->email,
             'userName' => $assigned_to->user->userName,
@@ -34,6 +35,7 @@ class TaskResource extends JsonResource
             'description' => $this->task_description,
             'start' => $this->task_start,
             'end' => $this->task_end,
+            'price'=>$this->price,
             'status' => $this->task_status,
             'project' => [
                 'id' => $this->project->id,

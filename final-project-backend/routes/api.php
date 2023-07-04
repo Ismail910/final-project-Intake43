@@ -87,6 +87,7 @@ Route::get('projects/search/{status}', [ProjectController::class, 'searchProject
 // ========== task route ====================
 Route::get('task/searchTaskByUsers', [TaskController::class, 'searchTaskByUsers']);
 Route::apiResource('task', TaskController::class);
+Route::get('tasks/search/{status}', [TaskController::class, 'searchTaskByStatus'])->name('task.search');
 
 // ========== skill route ====================
 Route::apiResource('skill', SkillController::class);

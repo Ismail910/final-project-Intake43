@@ -14,7 +14,7 @@ class SkillController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:sanctum', 'checkUser:Admin'])->only('store', 'update', 'destroy');
+        // $this->middleware(['auth:sanctum', 'checkUser:Admin'])->only('store', 'update', 'destroy');
     }
     /**
      * Display a listing of the resource.
@@ -37,6 +37,7 @@ class SkillController extends Controller
     public function store(StoreSkillRequest $request)
     {
         // dd($request);
+
         $skill = Skill::create($request->all());
         return new SkillResource($skill);
     }

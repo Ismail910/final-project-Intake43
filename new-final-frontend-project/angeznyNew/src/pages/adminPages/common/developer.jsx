@@ -216,7 +216,7 @@ export default function Developer() {
             globalFilterFields={[
               "user.name",
               "user.email",
-              "user.nationalID",
+              "user.skills.name",
               "user.country",
             ]}
             emptyMessage="No employees found."
@@ -240,13 +240,17 @@ export default function Developer() {
               filter
               style={{ minWidth: "14rem" }}
             />
-            <Column
-              field="user.nationalID"
-              header="National id"
+           <Column
+              field="user.skills.name"
+              header="Skills"
               sortable
               filter
               style={{ minWidth: "14rem" }}
+              body={(rowData) =>
+                rowData.user.skills.map((skill) => skill.name).join(", ")
+              }
             />
+
             <Column
               field="user.country"
               header="Country"
