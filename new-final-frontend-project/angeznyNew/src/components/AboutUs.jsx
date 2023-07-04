@@ -1,11 +1,11 @@
 import React from 'react';
 import '../styles/AboutUs.css';
 import contactUs from '../assets/images/9.jpg'
-import amira from '../assets/images/amira.jpg'
+import amira from '../assets/images/amirq.jpg'
 import about from '../assets/images/background.jpg'
 import ismail from '../assets/images/ismail.jpg'
 import ibrahim from '../assets/images/Ibrahim.jpg'
-import norhan from '../assets/images/norhan.jpeg'
+import norhan from '../assets/images/norhan.jpg'
 import omar from '../assets/images/omar.jpg'
 
 const AboutUs = () => {
@@ -57,7 +57,7 @@ const AboutUs = () => {
    <img src={omar} className='contactImag '>
    </img>
    <div style={{marginTop:'350px'}}>
-   <h2 >omar gamal</h2>
+   <h2 >Omar gamal</h2>
    <p>CEO</p>
    </div>
    
@@ -66,7 +66,7 @@ const AboutUs = () => {
    <img src={norhan} className='contactImag '>
    </img>
    <div style={{marginTop:'350px'}}>
-   <h2 >norhan khalid</h2>
+   <h2 >Norhan khalid</h2>
    <p>CEO</p>
    </div>
    
