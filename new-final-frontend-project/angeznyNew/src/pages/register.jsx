@@ -7,7 +7,46 @@ import FormContainer from "./formitems/FormContainer";
 import InputField from "./formitems/InputField";
 import SelectField from "./formitems//SelectField";
 import { BrowserRouter as Router, Link } from "react-router-dom";
-
+import { CometChat } from "@cometchat-pro/chat";
+const handleUserChat = () => {
+  const appID = "240169ef153c40df";
+  const region = "US";
+  const authKey = "581f246117c147b5f041cf28049c89388b3fc5cd";
+  const appSetting = new CometChat.AppSettingsBuilder()
+    .subscribePresenceForAllUsers()
+    .setRegion(region)
+    .build();
+  CometChat.init(appID, appSetting).then(
+    () => {
+      console.log("Initialization completed successfully");
+      // You can now proceed with rendering your app or calling the login function.
+      var uid = localStorage.getItem("user_id");
+      var name = localStorage.getItem("user_userName");
+      var user = new CometChat.User(uid);
+      user.setName(name);
+      CometChat.createUser(user, authKey).then(
+        (user) => {
+          console.log("user created", user);
+        },
+        (error) => {
+          console.log("error", error);
+        }
+      );
+      // CometChat.login(uid, authKey).then(
+      //   (user) => {
+      //     console.log("Login Successful:", { user });
+      //   },
+      //   (error) => {
+      //     console.log("Login failed with exception:", { error });
+      //   }
+      // );
+    },
+    (error) => {
+      console.log("Initialization failed with error:", error);
+      // Check the reason for error and take appropriate action.
+    }
+  );
+};
 const Register = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
@@ -54,9 +93,14 @@ const Register = () => {
             console.log(res);
             localStorage.setItem("user_id", res.data.client.user.id);
             localStorage.setItem("user_name", res.data.client.user.name);
+            localStorage.setItem(
+              "user_userName",
+              res.data.client.user.userName
+            );
             localStorage.setItem("user_role", "Client");
             localStorage.setItem("token", res.data.token);
             // setCurrentUserData(userData);
+            handleUserChat();
             toast.success("Registration successful");
             navigate("/");
           })
@@ -77,6 +121,10 @@ const Register = () => {
             joinedDate: formattedDate,
           })
           .then((res) => {
+            localStorage.setItem(
+              "user_userName",
+              res.data.freelancer.user.userName
+            );
             localStorage.setItem("user_id", res.data.freelancer.user.id);
             localStorage.setItem("user_name", res.data.freelancer.user.name);
             localStorage.setItem("user_role", "Freelancer");
