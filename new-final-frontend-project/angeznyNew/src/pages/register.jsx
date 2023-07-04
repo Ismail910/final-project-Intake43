@@ -139,7 +139,7 @@ const Register = () => {
         label="Gender"
         value={gender}
         onChange={(e) => setGender(e.target.value)}
-        options={["male", "female"]}
+        options={[" ", "female"]}
       />
       <Button
         type="submit"
