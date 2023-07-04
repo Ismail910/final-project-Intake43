@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\FreelancerController;
 use App\Http\Controllers\API\ManagersController;
 
+use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\SearchController;
 use App\Http\Controllers\API\ClientController;
 use App\Http\Controllers\API\EmployeeController;
@@ -12,11 +13,13 @@ use App\Http\Controllers\API\TaskController;
 use App\Http\Controllers\API\SkillController;
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\Payment\CreditController;
+use App\Http\Controllers\API\PayPalController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\API\ProjectController;
 use App\Http\Controllers\FatoorahController;
+
 
 
 
@@ -34,6 +37,20 @@ use App\Http\Controllers\FatoorahController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+
+// ========== paypal payment ====================
+Route::post('pay', [PayPalController::class, 'pay'])->name('payment');
+Route::get('success', [PayPalController::class, 'success']);
+Route::get('error', [PayPalController::class, 'error']);
+
+
+// ========== Chat route ====================
+
+use App\Http\Controllers\API\ChatGPTController;
+
+Route::get('chatGPT', [ChatGPTController::class, 'askToChatGpt']);
 
 // ========== Staff route ====================
 Route::apiResource('staff', StaffLevelController::class);
@@ -94,11 +111,15 @@ Route::apiResource('skill', SkillController::class);
 
 
 
-Route::post('pay', [FatoorahController::class, 'payOrder'])->name('pay');
 
-Route::post('payment', [\App\Http\Controllers\MyFatoorahController::class, 'index']);
-Route::get('payment/callback', [\App\Http\Controllers\FatoorahController::class, 'paymentCallBack']);
-Route::get('payment/error', [\App\Http\Controllers\FatoorahController::class, 'error']);
+// Route::post('pay', [FatoorahController::class, 'payOrder'])->name('pay');
+
+// Route::post('payment', [\App\Http\Controllers\MyFatoorahController::class, 'index']);
+// Route::get('payment/callback', [\App\Http\Controllers\FatoorahController::class, 'paymentCallBack']);
+// Route::get('payment/error', [\App\Http\Controllers\FatoorahController::class, 'error']);
+
+
+
 
 // use APP\Http\Controllers\API\payment\CreditController;
 // // paymob
