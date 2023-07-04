@@ -11,6 +11,7 @@ import { CircleSpinner, WaveSpinner } from "react-spinners-kit";
 // imports all pages
 
 import Login from "../pages/login";
+import SignIn from "../pages/layouts/authentication/sign-in";
 import Register from "../pages/register";
 import Home from "../pages/user/home";
 import Chat from "../components/chat/chat";
@@ -63,11 +64,11 @@ import Header from "../pages/user/common/header";
 import NotFound from "../components/NotFound";
 
 const MyRoutes = () => {
-  const [currentForm, setCurrentForm] = useState("Login");
+  // const [currentForm, setCurrentForm] = useState("Login");
 
-  const toggleForm = (formName) => {
-    setCurrentForm(formName);
-  };
+  // const toggleForm = (formName) => {
+  //   setCurrentForm(formName);
+  // };
 
   return (
     <BrowserRouter>
@@ -140,19 +141,19 @@ const MyRoutes = () => {
             </Suspense>
           }
         />
-
-        {/* login and register */}
         <Route element={<LoggedInGuard />}>
           <Route
             path="/login"
             element={
-              <div className="App">
-                {currentForm === "Login" ? (
-                  <Login onFormSwitch={toggleForm} />
-                ) : (
-                  <Register onFormSwitch={toggleForm} />
-                )}
-              </div>
+                  <Login />
+            }
+          />
+        </Route>
+        <Route element={<LoggedInGuard />}>
+          <Route
+            path="/register"
+            element={
+                  <Register />
             }
           />
         </Route>

@@ -23,6 +23,7 @@ class ProjectResource extends JsonResource
             'start' => $this->project_start,
             'end' => $this->project_end,
             'status'=>$this->project_status,
+            'price'=>$this->budget,
             'productOnwer'=>[
                 'id'=>$this->ProductOwner->id,
                 'name'=>$this->ProductOwner->user->name,

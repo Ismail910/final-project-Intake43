@@ -43,7 +43,6 @@ import { CometChat } from "@cometchat-pro/chat";
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import { FixedSizeList } from 'react-window';
 // import { CometChatUI } from "./cometchat-pro-react-ui-kit/CometChatWorkspace/src";
 function Row(props) {
   const token = '13|zJoYkmitOyvWYSNN5RqccxzS84HwjlcxUhifFAgd';
