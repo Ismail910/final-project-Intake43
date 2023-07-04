@@ -19,7 +19,8 @@ class TaskController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:sanctum', 'checkUser:ProductManager,Freelancer,Admin'])->only('store', 'destroy', 'update');
+
+        $this->middleware(['auth:sanctum', 'checkUser:ProductManager,Employee,Freelancer,Admin'])->only('store', 'destroy', 'update');
         $this->middleware(['auth:sanctum', 'checkUser:Freelancer,Admin,Employee,ProductManager'])->only('searchTaskByUsers');
         $this->middleware(['auth:sanctum', 'checkUser:ProductManager,Freelancer,Employee,Admin'])->only('searchTaskByStatus');
     }

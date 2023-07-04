@@ -5,8 +5,10 @@ import React from 'react';
 const ClientGuard = () => {
   const isClient = () => {
     const token = localStorage.getItem("token");
+    const userRole = localStorage.getItem('user_role');
     const client = jwtDecode(token);
-    return client.role === 'Client'
+    console.log(client);
+    return userRole === 'Client'
   };
   const isLoggedIn = () => {
     const token = localStorage.getItem("token");

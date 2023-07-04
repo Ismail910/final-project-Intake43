@@ -27,7 +27,7 @@ class StoreProjectAPIRequest extends FormRequest
         return [
             //
             'project_title' => 'required|string|max:255',
-            'project_type' => 'required|string|max:255',
+            'project_type' => 'required|string|max:255|in:mileStone,byProject',
             'project_description' => 'required|string',
             'project_start' => 'required|date',
             'project_end' => 'required|date|after:project_start',
@@ -35,6 +35,11 @@ class StoreProjectAPIRequest extends FormRequest
             'ProductOwner_id' => [ 'exists:managers,id', new ProductOwnerValidationRule],
             'ProductManager_id' => ['exists:managers,id', new ProductManagerValidationRule],
             'client_id' => 'required|exists:clients,id',
+<<<<<<< HEAD
+            'budget' => 'numeric|min:0|gt:0|default:0',
+=======
+            
+>>>>>>> bb32c3fa7861991396bd70b2dc87139761eb7eb1
         ];
     }
     ## add new function failed validation
