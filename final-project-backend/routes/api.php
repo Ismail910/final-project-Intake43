@@ -41,16 +41,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 // ========== paypal payment ====================
-Route::post('pay', [PayPalController::class, 'pay'])->name('payment');
+Route::post('paypal/pay', [PayPalController::class, 'pay']);
 Route::get('success', [PayPalController::class, 'success']);
 Route::get('error', [PayPalController::class, 'error']);
-
 
 // ========== Chat route ====================
 
 use App\Http\Controllers\API\ChatGPTController;
 
-Route::get('chatGPT', [ChatGPTController::class, 'askToChatGpt']);
+Route::post('chatgpt/ask', [ChatGPTController::class, 'ask']);
+
 
 // ========== Staff route ====================
 Route::apiResource('staff', StaffLevelController::class);
