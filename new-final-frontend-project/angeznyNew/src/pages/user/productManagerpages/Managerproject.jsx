@@ -378,7 +378,7 @@ const Managerproject = () => {
     setTitle(event.target.value);
   };
   const handleProjectChange = (event) => {
-  }; 
+  };
 
   const handleTaskChange = (event) => {
     setSelectedDeveloperId(event.target.value);

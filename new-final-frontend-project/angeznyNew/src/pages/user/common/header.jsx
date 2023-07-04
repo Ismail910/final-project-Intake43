@@ -37,7 +37,7 @@ const Header = () => {
   };
 
   return (
-    <>
+    <div>
       <MDBNavbar expand='lg' light bgColor='light' className='mb-3'>
         <MDBContainer fluid>
           <Link className="nav-link  logoName " to="/">
@@ -111,8 +111,10 @@ const Header = () => {
           </>
         )}
       </div>
-    </>
+    </div>
+
   )
 }
 
 export default Header;
+
