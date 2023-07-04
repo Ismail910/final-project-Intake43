@@ -54,7 +54,6 @@ const Register = () => {
             console.log(res);
             localStorage.setItem("user_id", res.data.client.user.id);
             localStorage.setItem("user_name", res.data.client.user.name);
-            localStorage.setItem("user_userName", res.data.userName);
             localStorage.setItem("user_role", "Client");
             localStorage.setItem("token", res.data.token);
             // setCurrentUserData(userData);
@@ -78,11 +77,10 @@ const Register = () => {
             joinedDate: formattedDate,
           })
           .then((res) => {
-            const userData = res.data;
-            localStorage.setItem("user_id", res.data.client.user.id);
-            localStorage.setItem("user_name", res.data.client.user.name);
-            localStorage.setItem("user_role", "Client");
-            localStorage.setItem("user_access_token", res.data.token);
+            localStorage.setItem("user_id", res.data.freelancer.user.id);
+            localStorage.setItem("user_name", res.data.freelancer.user.name);
+            localStorage.setItem("user_role", "Freelancer");
+            localStorage.setItem("token", res.data.token);
             // setCurrentUserData(userData);
             toast.success("Registration successful");
             navigate("/");
@@ -141,7 +139,7 @@ const Register = () => {
         label="Gender"
         value={gender}
         onChange={(e) => setGender(e.target.value)}
-        options={["Male", "Female"]}
+        options={["male", "female"]}
       />
       <Button
         type="submit"

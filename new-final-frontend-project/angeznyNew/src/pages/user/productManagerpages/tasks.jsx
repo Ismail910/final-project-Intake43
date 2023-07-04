@@ -45,7 +45,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 // import { CometChatUI } from "./cometchat-pro-react-ui-kit/CometChatWorkspace/src";
 function Row(props) {
-  const token = "5|mfYgbX7HbdrG2lFSkipBbD6k98OSVIJghUI5rXOP";
+  const token = localStorage.getItem("token");
   const { row } = props;
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
@@ -129,7 +129,7 @@ function Row(props) {
         `http://127.0.0.1:8000/api/task/${row.id}`,
         {
           project_id: row.project.id,
-          product_manager_id: row.productManager.id,
+          // product_manager_id: row.productManager.id,
           task_title: title,
           task_description: description,
           task_start: startDate,
@@ -417,10 +417,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const Tasks = ({ statustask }) => {
-  const token = localStorage.getItem("user_id");
+  const token = localStorage.getItem("token");
   // const decodedToken = jwtDecode(token);
   // const id = decodedToken.user_id;
-  const id = 2;
+  const id = localStorage.getItem("user_id");
 
   const [tasks, setTasks] = React.useState([]);
   const [projects, setProjects] = React.useState([]);

@@ -43,6 +43,16 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
+        $id = Auth::user()->id;
+        $manager = Manager::where('user_id', $id)->first();
+        if ($request->has('product_manager_id')) {
+            // Update the ProductManager_id with the managerWithFewestProjects value
+            $request->merge(['product_manager_id' => $manager->id]);
+        } else {
+            // Append the new value to the request
+            $request->request->add(['product_manager_id' => $manager->id]);
+        }
+        // print($request->all());
         //
         $task = Task::create($request->all());
         // print($task->project->project_type);
