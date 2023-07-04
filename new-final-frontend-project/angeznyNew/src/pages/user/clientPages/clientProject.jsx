@@ -147,7 +147,7 @@ function Row(props) {
   const handleDelete= async (event)=>{
     event.preventDefault();
    await  axios
-      .delete(`http://127.0.0.1:8000/api/project/${row.id}`,  {
+      .delete(`http://127.0.0.1:8000/api/projects/${row.id}`,  {
         headers: {
           'Accept': 'application/json',
           'Authorization': `Bearer ${token}`
@@ -426,7 +426,7 @@ const ClientProject = () => {
     event.preventDefault();
     // console.log(id);
     await axios.post(
-      `http://127.0.0.1:8000/api/project`,
+      `http://127.0.0.1:8000/api/projects`,
       {
         client_id: id,
         project_type: type,

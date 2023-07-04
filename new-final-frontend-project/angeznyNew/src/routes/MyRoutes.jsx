@@ -136,19 +136,19 @@ const MyRoutes = () => {
             </Suspense>
           }
         />
-
-        {/* login and register */}
         <Route element={<LoggedInGuard />}>
           <Route
             path="/login"
             element={
-              <div className="App">
-                {currentForm === "Login" ? (
-                  <Login onFormSwitch={toggleForm} />
-                ) : (
-                  <Register onFormSwitch={toggleForm} />
-                )}
-              </div>
+                  <Login />
+            }
+          />
+        </Route>
+        <Route element={<LoggedInGuard />}>
+          <Route
+            path="/register"
+            element={
+                  <Register />
             }
           />
         </Route>
