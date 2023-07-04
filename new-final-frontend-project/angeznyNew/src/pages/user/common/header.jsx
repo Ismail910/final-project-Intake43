@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
-import NavBarC from '../clientPages/common/navBarC';
-import NavBarD from '../developerPages/common/navBarD';
-import NavBarF from '../freelancerpages/common/navBarF';
-import NavBarM from '../productManagerpages/common/navBarM';
-import NavBarO from '../productOwnerPages/common/navBarO';
-import user1 from '../../../assets/images/user.png'
-import './style.css';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Link } from "react-router-dom";
+import NavBarC from "../clientPages/common/navBarC";
+import NavBarD from "../developerPages/common/navBarD";
+import NavBarF from "../freelancerpages/common/navBarF";
+import NavBarM from "../productManagerpages/common/navBarM";
+import NavBarO from "../productOwnerPages/common/navBarO";
+import user1 from "../../../assets/images/user.png";
+import "./style.css";
 import {
   MDBContainer,
   MDBNavbar,
@@ -22,12 +22,12 @@ import {
   MDBDropdownMenu,
   MDBDropdownItem,
   MDBCollapse,
-} from 'mdb-react-ui-kit';
+} from "mdb-react-ui-kit";
 
 const Header = () => {
   const [showBasic, setShowBasic] = useState(false);
-  const userRole = localStorage.getItem('user_role');
-  const userName = localStorage.getItem('user_name');
+  const userRole = localStorage.getItem("user_role");
+  const userName = localStorage.getItem("user_name");
 
   const isLoggedIn = !!userRole; // Check if user data exists
 
@@ -37,41 +37,42 @@ const Header = () => {
   };
 
   return (
-    <div>
-      <MDBNavbar expand='lg' light bgColor='light' className='mb-3'>
+    <>
+      <MDBNavbar expand="lg" light bgColor="light" className="mb-3">
         <MDBContainer fluid>
           <Link className="nav-link  logoName " to="/">
-            <span className='firstLetter'>
-              A
-            </span>ngezny
+            <span className="firstLetter">A</span>ngezny
           </Link>
 
           <MDBNavbarToggler
-            aria-controls='navbarSupportedContent'
-            aria-expanded='false'
-            aria-label='Toggle navigation'
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
             onClick={() => setShowBasic(!showBasic)}
           >
-            <MDBIcon icon='bars' fas />
+            <MDBIcon icon="bars" fas />
           </MDBNavbarToggler>
 
-          <MDBCollapse navbar show={showBasic} >
-            <div className=' headerMenu col-9'>
-              <MDBNavbarNav className='mr-auto mb-2 mb-lg-0 linksMenu'>
-                <MDBNavbarItem className='linksWords'>
+          <MDBCollapse navbar show={showBasic}>
+            <div className=" headerMenu col-9">
+              <MDBNavbarNav className="mr-auto mb-2 mb-lg-0 linksMenu">
+                <MDBNavbarItem className="linksWords">
                   <Link className="nav-link text-secondary " to="/">
-                    <i className="font-weight-bold"></i> <span className="ml-3 text-dark">Home</span>
+                    <i className="font-weight-bold"></i>{" "}
+                    <span className="ml-3 text-dark">Home</span>
                   </Link>
                 </MDBNavbarItem>
-                <MDBNavbarItem className='linksWords'>
+                <MDBNavbarItem className="linksWords">
                   <Link className="nav-link text-secondary " to="/contactUs">
-                    <i className="font-weight-bold"></i> <span className="ml-3 text-dark">Countact Us</span>
+                    <i className="font-weight-bold"></i>{" "}
+                    <span className="ml-3 text-dark">Countact Us</span>
                   </Link>
                 </MDBNavbarItem>
 
-                <MDBNavbarItem className='linksWords'>
+                <MDBNavbarItem className="linksWords">
                   <Link className="nav-link text-secondary " to="/aboutUs">
-                    <i className="font-weight-bold"></i> <span className="ml-3 text-dark">About Us</span>
+                    <i className="font-weight-bold"></i>{" "}
+                    <span className="ml-3 text-dark">About Us</span>
                   </Link>
                 </MDBNavbarItem>
               </MDBNavbarNav>
@@ -79,7 +80,13 @@ const Header = () => {
 
             {!isLoggedIn && (
               <Link className="submissionSign" to="/login">
-                Signin
+                SignIn
+              </Link>
+            )}
+
+            {!isLoggedIn && (
+              <Link className="submissionSign" to="/register">
+                SignUp
               </Link>
             )}
 
@@ -89,14 +96,13 @@ const Header = () => {
                   <img src={user1} className="userprofile" alt="User Profile" />
                   <span className="caret">{userName}</span>
                 </MDBDropdownToggle>
-                <MDBDropdownMenu >
+                <MDBDropdownMenu>
                   <Link className="nav-link  " to="/" onClick={handleLogout}>
                     <MDBDropdownItem link>Log out</MDBDropdownItem>
                   </Link>
                 </MDBDropdownMenu>
               </MDBDropdown>
             )}
-
           </MDBCollapse>
         </MDBContainer>
       </MDBNavbar>
@@ -111,10 +117,8 @@ const Header = () => {
           </>
         )}
       </div>
-    </div>
-
-  )
-}
+    </>
+  );
+};
 
 export default Header;
-

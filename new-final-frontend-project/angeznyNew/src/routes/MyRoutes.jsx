@@ -21,13 +21,17 @@ import AboutUs from "../components/AboutUs";
 import UserProfile from "../components/UserProfile";
 
 import ClientProject from "../pages/user/clientPages/clientProject";
+import StatusClient from '../pages/user/clientPages/common/navBarstatusC'
 
 import DeveloperTask from "../pages/user/developerPages/task";
+import StatusDeveloper from '../pages/user/developerPages/common/navBarStatusD'
 
 import FreelancerTask from "../pages/user/freelancerpages/task";
+import StatusFreelancer from '../pages/user/freelancerpages/common/navBarStatusF'
 
 import Managerproject from "../pages/user/productManagerpages/Managerproject";
 import ManagerTask from "../pages/user/productManagerpages/tasks";
+import Status from '../pages/user/productManagerpages/common/navBarstatusM'
 
 import Ownerproject from "../pages/user/productOwnerPages/Ownerproject";
 
@@ -309,7 +313,8 @@ const MyRoutes = () => {
               }
             >
               <Header />
-              <ClientProject />
+              <StatusClient/>
+              {/* <ClientProject /> */}
               <Footer />
             </Suspense>
           }
@@ -378,7 +383,8 @@ const MyRoutes = () => {
               }
             >
               <Header />
-              <DeveloperTask />
+              <StatusDeveloper/>
+              {/* <DeveloperTask /> */}
               <Footer />
             </Suspense>
           }
@@ -431,7 +437,8 @@ const MyRoutes = () => {
               }
             >
               <Header />
-              <FreelancerTask />
+              {/* <FreelancerTask /> */}
+              <StatusFreelancer/>
               <Footer />
             </Suspense>
           }
@@ -499,7 +506,9 @@ const MyRoutes = () => {
               }
             >
               <Header />
-              <ManagerTask />
+              {/* <ManagerTask /> */}
+              <Status/>
+
               <Footer />
             </Suspense>
           }
@@ -532,7 +541,8 @@ const MyRoutes = () => {
               }
             >
               <Header />
-              <Managerproject />
+              {/* <Managerproject /> */}
+              <Status/>
               <Footer />
             </Suspense>
           }

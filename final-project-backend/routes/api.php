@@ -91,7 +91,7 @@ Route::apiResource('manager', ManagersController::class);
 
 // ========== search route ====================
 Route::get('search/{model}/{keyword}/{projectType?}', [SearchController::class, 'searchByName'])->name('search');
-Route::get('search/{projectType}/{keywords}', [SearchController::class, 'searchSkills'])->name('searchSkills');
+Route::get('searchUser/{projectType}/{keywords}', [SearchController::class, 'searchSkills'])->name('searchSkills');
 
 
 // ========== project route ====================
@@ -104,6 +104,7 @@ Route::get('projects/search/{status}', [ProjectController::class, 'searchProject
 // ========== task route ====================
 Route::get('task/searchTaskByUsers', [TaskController::class, 'searchTaskByUsers']);
 Route::apiResource('task', TaskController::class);
+Route::get('tasks/search/{status}', [TaskController::class, 'searchTaskByStatus'])->name('task.search');
 
 // ========== skill route ====================
 Route::apiResource('skill', SkillController::class);
