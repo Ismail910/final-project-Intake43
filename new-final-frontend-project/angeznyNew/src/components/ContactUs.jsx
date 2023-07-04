@@ -9,28 +9,28 @@ const ContactUs = () => {
     <section>
     <div className='container'>
     <div className='row justify-content-center p-5 '>
-    <h2 className='d-flex justify-content-around p-5 align-items-center text-info fw-bolder'>Contact us</h2>
+    
 
-    <div className='col-5 contact-us'>
+    <div className='col-7 contact-us'>
     <img src={contact} className='contactImg'></img>
     </div>
 
 
-    <div className='col-5 contactForm'>
-    <form id='form' className='text-center' style={{ width: '100%', maxWidth: '300px' }}>
-    
+    <div className='col-4 contactForm'>
+    <form id='form' className='' style={{ width: '100%', maxWidth: '300px' }}>
+    <h2 className='d-flex justify-content-around p-5 align-items-center  fw-bolder'>Contact us</h2>
 
-      <MDBInput label='Name' v-model='name' wrapperClass='mb-4' />
+    <p className='labels'>Name: </p><MDBInput  v-model='name' wrapperClass='mb-4'  class="inputs"/>
 
-      <MDBInput type='email' label='Email address' v-model='email' wrapperClass='mb-4' />
+    <p className='labels'>Email: </p> <MDBInput type='email' v-model='email' wrapperClass='mb-4' class="inputs" />
 
-      <MDBInput label='Subject' v-model='subject' wrapperClass='mb-4' />
+    <p className='labels'>Subject: </p>  <MDBInput  v-model='subject' wrapperClass='mb-4' class="inputs"/>
 
-      <MDBTextArea wrapperClass='mb-4' label='Message' />
+   
 
-      <MDBCheckbox wrapperClass='d-flex justify-content-center' label='Send me copy' />
+      
 
-      <MDBBtn  block color='info' className='  my-4 '>
+      <MDBBtn  block   class="contactButton ">
         Send
       </MDBBtn>
     </form>
