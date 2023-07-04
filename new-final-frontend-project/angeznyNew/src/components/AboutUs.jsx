@@ -7,6 +7,8 @@ import ismail from '../assets/images/ismail.jpg'
 import ibrahim from '../assets/images/Ibrahim.jpg'
 import norhan from '../assets/images/norhan.jpg'
 import omar from '../assets/images/omar.jpg'
+import yossef from '../assets/images/yossef.jpg'
+
 
 const AboutUs = () => {
   return (
@@ -93,7 +95,7 @@ const AboutUs = () => {
    
    </div>
    <div className='col-md-3 col-10 contactDIV mb-5'>
-   <img src={amira} className='contactImag '>
+   <img src={yossef} className='contactImag '>
    </img>
    <div style={{marginTop:'350px'}}>
    <h2 >Yossef mohamed</h2>
