@@ -10,44 +10,44 @@ import { Calendar } from "primereact/calendar";
 import { MultiSelect } from "primereact/multiselect";
 import { Slider } from "primereact/slider";
 import { Tag } from "primereact/tag";
+import { toast } from "react-toastify";
+
 import axios from "axios";
 import DeveloperEditForm from "./editForms/developerEditform";
 import UserForm from "./userform";
-import { toast } from "react-toastify";
+import ProjectEditForm from "./editForms/projectEditform";
 
-export default function Developer() {
+export default function Project() {
   // const [employees, setEmployees] = useState([]);
   const [showEditForm, setShowEditForm] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
 
   const [formData, setFormData] = useState({
-    user: {
-      name: "",
-      email: "",
-      password: "",
-      phone: "",
-      address: "",
-      joinedDate: "",
-      endDate: "",
-      profilePic: "",
-      country: "",
-    },
+    name: "",
+    email: "",
+    password: "",
+    phone: "",
+    address: "",
+    joinedDate: "",
+    endDate: "",
+    profilePic: "",
+    country: "",
   });
-  const [customers, setCustomers] = useState([]);
-  const [selectedCustomers, setSelectedCustomers] = useState([]);
+  const [projects, setprojects] = useState([]);
+  const [selectedprojects, setSelectedprojects] = useState([]);
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   });
   const [globalFilterValue, setGlobalFilterValue] = useState("");
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/employee")
+      .get("http://127.0.0.1:8000/api/projects")
       .then((response) => {
         console.log(response.data);
         if(response.status=== 200)
         {
-        setCustomers(response.data.data || []);
-        toast.success("employees fectched successfully");
+        setprojects(response.data.data || []);
+        toast.success("projects fectched successfully");
         }
         else{
           toast.error("failed to load the data");
@@ -72,7 +72,7 @@ export default function Developer() {
     console.log(formData);
     await axios
       .post(
-        "http://127.0.0.1:8000/api/register/manager",
+        "http://127.0.0.1:8000/api/projects",
         {
           name: formData.user.name,
           email: formData.user.email,
@@ -96,7 +96,7 @@ export default function Developer() {
       )
       .then((response) => {
         console.log(formData);
-        setCustomers([...customers, formData]);
+        setprojects([...projects, formData]);
         setFormData({
           user: {
             name: "",
@@ -119,15 +119,15 @@ export default function Developer() {
 
   const handleDelete = (employeeId) => {
     axios
-      .delete(`http://127.0.0.1:8000/api/employee/${employeeId}`, {
+      .delete(`http://127.0.0.1:8000/api/projects/${employeeId}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("user_access_token")}`,
+          Authorization: `Bearer 12|RCLIOWbiWhdbcRK4e3ljlGl7mIlwtJ9cdjAZ5ghu`,
         },
       })
       .then((response) => {
         console.log(response.data);
-        setCustomers(
-          customers.filter((employee) => employee.id !== employeeId)
+        setprojects(
+          projects.filter((employee) => employee.id !== employeeId)
         );
       })
       .catch((error) => {
@@ -145,35 +145,43 @@ export default function Developer() {
     console.log(updatedEmployee);
     axios
       .put(
-        `http://127.0.0.1:8000/api/user/${updatedEmployee.user.id}`,
-        updatedEmployee.user,
+        `http://127.0.0.1:8000/api/projects/${updatedEmployee.id}`,
+        {
+          project_title: updatedEmployee.name,
+          project_type: updatedEmployee.type,
+          project_description: updatedEmployee.description,
+          project_start: updatedEmployee.start,
+          project_end: updatedEmployee.end,
+          project_status: updatedEmployee.status,
+          ProductOwner_id: updatedEmployee.productOnwer.id,
+          ProductManager_id: updatedEmployee.ProductManager.id,
+          Client_id: updatedEmployee.client.id,
+        },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem(
-              "user_access_token"
-            )}`,
+            Authorization: `Bearer 12|RCLIOWbiWhdbcRK4e3ljlGl7mIlwtJ9cdjAZ5ghu`,
           },
         }
       )
       .then((response) => {
-        console.log(response.data);
-        const updatedEmployees = customers.map((employee) => {
+        console.log(response.data.data);
+
+        const updatedEmployees = projects.map((employee) => {
           if (employee.id === selectedEmployee.id) {
-            employee.user = response.data.data;
+            employee = response.data.data;
           }
           return employee;
         });
 
         console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         console.log(updatedEmployees);
-        setCustomers(updatedEmployees);
+        setprojects(updatedEmployees);
         setShowEditForm(false);
         setSelectedEmployee(null);
         // handleClose();
       })
       .catch((error) => {
         console.log("asdadadasdassdasdadas");
-
         console.error(error);
       });
   };
@@ -195,7 +203,7 @@ export default function Developer() {
   const renderHeader = () => {
     return (
       <div className="flex flex-wrap gap-2 justify-content-between align-items-center">
-        <h4 className="m-0">Employees</h4>
+        <h4 className="m-0">projects</h4>
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
           <InputText
@@ -215,14 +223,9 @@ export default function Developer() {
       <div className="row">
         <div className="col-2"></div>
         <div className="d-flex flex-column justify-content-center col-10 p-4 h-100">
-          <UserForm
-            formData={formData.user}
-            handleInputChange={handleInputChange}
-            handleSubmit={handleSubmit}
-          />
           <DataTable
             className="col-12"
-            value={customers}
+            value={projects}
             paginator
             header={header}
             rows={10}
@@ -230,8 +233,8 @@ export default function Developer() {
             rowsPerPageOptions={[10, 25, 50]}
             dataKey="id"
             selectionMode="checkbox"
-            selection={selectedCustomers}
-            onSelectionChange={(e) => setSelectedCustomers(e.value)}
+            selection={selectedprojects}
+            onSelectionChange={(e) => setSelectedprojects(e.value)}
             filters={filters}
             filterDisplay="menu"
             globalFilterFields={[
@@ -240,7 +243,7 @@ export default function Developer() {
               "user.phone",
               "user.country",
             ]}
-            emptyMessage="No customers found."
+            emptyMessage="No projects found."
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
           >
             <Column
@@ -248,22 +251,31 @@ export default function Developer() {
               headerStyle={{ width: "3rem" }}
             ></Column>
             <Column
-              field="user.name"
+              field="name"
               header="Name"
               sortable
               filter
               style={{ minWidth: "14rem" }}
             />
+
             <Column
-              field="user.email"
-              header="Email"
+              field="type"
+              header="Type"
+              sortable
+              filter
+              style={{ minWidth: "14rem" }}
+            />
+
+            <Column
+              field="start"
+              header="Start Date"
               sortable
               filter
               style={{ minWidth: "14rem" }}
             />
             <Column
-              field="user.phone"
-              header="Phone"
+              field="end"
+              header="End Date"
               sortable
               filter
               style={{ minWidth: "14rem" }}
@@ -271,13 +283,15 @@ export default function Developer() {
               //   rowData.user.skills.map((skill) => skill.name).join(", ")
               // }
             />
-
             <Column
-              field="user.country"
-              header="Country"
+              field="status"
+              header="Status"
               sortable
               filter
               style={{ minWidth: "14rem" }}
+              // body={(rowData) =>
+              //   rowData.user.skills.map((skill) => skill.name).join(", ")
+              // }
             />
 
             <Column
@@ -295,7 +309,7 @@ export default function Developer() {
                       Edit
                     </button> */}
 
-                    <DeveloperEditForm
+                    <ProjectEditForm
                       employee={rowData}
                       handleUpdate={handleUpdate}
                     />
@@ -560,7 +574,7 @@ export default function Developer() {
 // import { MultiSelect } from "primereact/multiselect";
 // import { Tag } from "primereact/tag";
 // import { TriStateCheckbox } from "primereact/tristatecheckbox";
-// import { CustomerService } from "./CustomerService";
+// import { projectservice } from "./projectservice";
 // import axios from "axios";
 
 // export function BasicFilterDemo() {
@@ -569,14 +583,14 @@ export default function Developer() {
 //       .get("http://127.0.0.1:8000/api/employee")
 //       .then((response) => {
 //         console.log(response.data);
-//         setCustomers(response.data.data || []);
+//         setprojects(response.data.data || []);
 //         setLoading(false);
 //       })
 //       .catch((error) => {
 //         console.error(error);
 //       });
 //   }, []);
-//   const [customers, setCustomers] = useState(CustomerService);
+//   const [projects, setprojects] = useState(projectservice);
 //   const [filters, setFilters] = useState({
 //     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 //     name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
@@ -627,13 +641,13 @@ export default function Developer() {
 //   };
 
 //   // useEffect(() => {
-//   // CustomerService.getCustomersMedium().then((data) => {
-//   // setCustomers(customers);
+//   // projectservice.getprojectsMedium().then((data) => {
+//   // setprojects(projects);
 //   // setLoading(false);
 //   // });
 //   // }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-//   const getCustomers = (data) => {
+//   const getprojects = (data) => {
 //     return [...(data || [])].map((d) => {
 //       d.date = new Date(d.date);
 
@@ -760,7 +774,7 @@ export default function Developer() {
 //   return (
 //     <div className="card">
 //       <DataTable
-//         value={customers}
+//         value={projects}
 //         paginator
 //         rows={10}
 //         dataKey="id"
@@ -774,7 +788,7 @@ export default function Developer() {
 //           "user.country",
 //         ]}
 //         header={header}
-//         emptyMessage="No customers found."
+//         emptyMessage="No projects found."
 //       >
 //         <Column
 //           field="user.name"

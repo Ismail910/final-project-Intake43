@@ -29,7 +29,7 @@ const Sidnave = () => {
             className="nav-link text-secondary text-light"
             to="/admin/product-manager"
           >
-            <i className="fas fa-user font-weight-bold"></i>{" "}
+            {/* <i className="fas fa-user font-weight-bold"></i>{" "} */}
             <span className="ml-3">Product Manager</span>
           </Link>
         </li>
@@ -65,6 +65,32 @@ const Sidnave = () => {
             <span className="ml-3">Payment</span>
           </Link>
         </li>
+        <li className="nav-item mb-2">
+          <Link
+            className="nav-link text-secondary text-light"
+            to="/admin/projects"
+          >
+            <span className="ml-3">Projects</span>
+          </Link>
+        </li>
+        <li className="nav-item mb-2">
+          <Link
+            className="nav-link text-secondary text-light"
+            to="/admin/tasks"
+          >
+            <span className="ml-3">Tasks</span>
+          </Link>
+        </li>
+        
+        <li className="nav-item mb-2">
+          <Link
+            className="nav-link text-secondary text-light"
+            to="/admin/skills"
+          >
+            <span className="ml-3">Skills</span>
+          </Link>
+        </li>
+        
       </ul>
     </div>
   );

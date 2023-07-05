@@ -11,8 +11,9 @@ import { MultiSelect } from "primereact/multiselect";
 import { Slider } from "primereact/slider";
 import { Tag } from "primereact/tag";
 import axios from "axios";
-import Editform from "./editform";
+import ProductOwnerEditForm from "./editForms/productOwnerEditform";
 import UserForm from "./userform";
+import { toast } from "react-toastify";
 
 export default function Developer() {
   // const [owners, setowners] = useState([]);
@@ -43,10 +44,18 @@ export default function Developer() {
       .get("http://127.0.0.1:8000/api/managers/ProductOwner")
       .then((response) => {
         console.log(response.data);
+        if(response.status=== 200)
+        {
         setowners(response.data.data || []);
+        toast.success("product owners fectched successfully");
+        }
+        else{
+          toast.error("failed to load the data");
+        }
       })
       .catch((error) => {
         console.error(error);
+        toast.error(error);
       });
   }, []);
   const handleInputChange = (event) => {
@@ -75,6 +84,9 @@ export default function Developer() {
         country: formData.user.country,
         role: formData.user.role,
         userName: formData.user.userName,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("user_access_token")}`,
+        },
       })
       .then((response) => {
         console.log(formData);
@@ -101,16 +113,14 @@ export default function Developer() {
 
   const handleDelete = (ownerId) => {
     axios
-      .delete(`http://127.0.0.1:8000/api/owner/${ownerId}`, {
+      .delete(`http://127.0.0.1:8000/api/manager/${ownerId}`, {
         headers: {
-          Authorization: "Bearer 5|wJK45DIqlgaXP59oWB6RL3iNxp52nlHaAVQPGJ5n",
+          Authorization: `Bearer ${localStorage.getItem("user_access_token")}`,
         },
       })
       .then((response) => {
         console.log(response.data);
-        setowners(
-          owners.filter((owner) => owner.id !== ownerId)
-        );
+        setowners(owners.filter((owner) => owner.id !== ownerId));
       })
       .catch((error) => {
         console.error(error);
@@ -131,7 +141,9 @@ export default function Developer() {
         updatedowner.user,
         {
           headers: {
-            Authorization: "Bearer 47|TeQrlI4SmHUN4rvJdxGZZx0eb9ryFBXmsNPNOHCY",
+            Authorization: `Bearer ${localStorage.getItem(
+              "user_access_token"
+            )}`,
           },
         }
       )
@@ -216,7 +228,7 @@ export default function Developer() {
             globalFilterFields={[
               "user.name",
               "user.email",
-              "user.nationalID",
+              "user.phone",
               "user.country",
             ]}
             emptyMessage="No owners found."
@@ -241,8 +253,8 @@ export default function Developer() {
               style={{ minWidth: "14rem" }}
             />
             <Column
-              field="user.nationalID"
-              header="National id"
+              field="user.phone"
+              header="Phone"
               sortable
               filter
               style={{ minWidth: "14rem" }}
@@ -260,14 +272,19 @@ export default function Developer() {
               bodyStyle={{ textAlign: "center", overflow: "visible" }}
               header="Actions"
               body={(rowData) => {
+                setSelectedowner(rowData);
                 return (
                   <div style={{ display: "flex" }}>
-                    <button
+                    <ProductOwnerEditForm
+                      employee={rowData}
+                      handleUpdate={handleUpdate}
+                    />
+                    {/* <button
                       className="btn btn-info me-2"
                       onClick={() => handleEdit(rowData)}
                     >
                       Edit
-                    </button>
+                    </button> */}
                     <button
                       className="btn btn-danger"
                       onClick={() => handleDelete(rowData.id)}
@@ -279,13 +296,13 @@ export default function Developer() {
               }}
             />
           </DataTable>
-          {showEditForm && (
+          {/* {showEditForm && (
             <Editform
               owner={selectedowner}
               handleUpdate={handleUpdate}
               handleClose={handleClose}
             />
-          )}
+          )} */}
         </div>
       </div>
     </div>
