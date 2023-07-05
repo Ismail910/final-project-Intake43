@@ -19,10 +19,10 @@ class TaskController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:sanctum', 'checkUser:ProductManager,Freelancer,Admin'])->only('store', 'destroy', 'update');
+
+        $this->middleware(['auth:sanctum', 'checkUser:ProductManager,Employee,Freelancer,Admin'])->only('store', 'destroy', 'update');
         $this->middleware(['auth:sanctum', 'checkUser:Freelancer,Admin,Employee,ProductManager'])->only('searchTaskByUsers');
         $this->middleware(['auth:sanctum', 'checkUser:ProductManager,Freelancer,Employee,Admin'])->only('searchTaskByStatus');
-
     }
     /**
      * Display a listing of the resource.
@@ -43,24 +43,34 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
+        $id = Auth::user()->id;
+        $manager = Manager::where('user_id', $id)->first();
+        if ($request->has('product_manager_id')) {
+            // Update the ProductManager_id with the managerWithFewestProjects value
+            $request->merge(['product_manager_id' => $manager->id]);
+        } else {
+            // Append the new value to the request
+            $request->request->add(['product_manager_id' => $manager->id]);
+        }
+        // print($request->all());
         //
         $task = Task::create($request->all());
         // print($task->project->project_type);
         if ($task->project->project_type == "mileStone") {
-             $freelancer =  Freelancer::find($request->input('assigned_to'));
-             if($freelancer){
+            $freelancer =  Freelancer::find($request->input('assigned_to'));
+            if ($freelancer) {
                 $freelancer->update([
                     'Status' => 0,
                     'task_id' => $task->id
                 ]);
-             }
+            }
 
             // print(Freelancer::find($request->input('assigned_to')));
         } else {
             $employee = Employee::find($request->input('assigned_to'));
-            if($employee){
+            if ($employee) {
                 $employee->update([
-                    'Status' => 0,
+                    // 'Status' => 0,
                     'task_id' => $task->id
                 ]);
             }
@@ -97,7 +107,7 @@ class TaskController extends Controller
                 // print(Freelancer::find($request->input('assigned_to')));
             } else {
                 Employee::where('task_id', $task->id)->update([
-                    'Status' => 1,
+                    // 'Status' => 1,
                     'task_id' => null
                 ]);
             }
@@ -111,7 +121,7 @@ class TaskController extends Controller
                 // print(Freelancer::find($request->input('assigned_to')));
             } else {
                 Employee::find($request->input('assigned_to'))->update([
-                    'Status' => 0,
+                    // 'Status' => 0,
                     'task_id' => $task->id
                 ]);
             }
@@ -174,7 +184,7 @@ class TaskController extends Controller
             $results = Task::where([
                 ['id', '=', $Freelancer->task_id],
             ])->get();
-        }else {
+        } else {
             return response()->json([
                 'error' => 'Not found project to this user'
             ], 404);
@@ -221,3 +231,4 @@ class TaskController extends Controller
         return TaskResource::collection($results);
     }
 }
+

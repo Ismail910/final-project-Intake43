@@ -103,7 +103,7 @@ export default function Developer() {
     axios
       .delete(`http://127.0.0.1:8000/api/employee/${employeeId}`, {
         headers: {
-          Authorization: "Bearer 5|wJK45DIqlgaXP59oWB6RL3iNxp52nlHaAVQPGJ5n",
+          Authorization: "Bearer 4|ozrUF8REUT2pKW3EKAI8qzeEIo3zSbF3DEnlrNbK",
         },
       })
       .then((response) => {
