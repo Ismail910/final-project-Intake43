@@ -3,11 +3,19 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { toast } from "react-toastify";
 import axios from "axios";
-import FormContainer from "./formitems/FormContainer";
-import InputField from "./formitems/InputField";
-import SelectField from "./formitems//SelectField";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import SelectField from "./formitems/SelectField";
 import { CometChat } from "@cometchat-pro/chat";
+import {
+  MDBBtn,
+  MDBContainer,
+  MDBCard,
+  MDBCardBody,
+  MDBCardImage,
+  MDBRow,
+  MDBCol,
+  MDBInput,
+} from "mdb-react-ui-kit";
+
 const handleUserChat = () => {
   const appID = "240169ef153c40df";
   const region = "US";
@@ -16,37 +24,30 @@ const handleUserChat = () => {
     .subscribePresenceForAllUsers()
     .setRegion(region)
     .build();
+
   CometChat.init(appID, appSetting).then(
     () => {
       console.log("Initialization completed successfully");
-      // You can now proceed with rendering your app or calling the login function.
       var uid = localStorage.getItem("user_id");
-      var name = localStorage.getItem("user_userName");
+      var name = localStorage.getItem("user_name");
       var user = new CometChat.User(uid);
       user.setName(name);
+
       CometChat.createUser(user, authKey).then(
         (user) => {
-          console.log("user created", user);
+          console.log("User created", user);
         },
         (error) => {
-          console.log("error", error);
+          console.log("Error creating user", error);
         }
       );
-      // CometChat.login(uid, authKey).then(
-      //   (user) => {
-      //     console.log("Login Successful:", { user });
-      //   },
-      //   (error) => {
-      //     console.log("Login failed with exception:", { error });
-      //   }
-      // );
     },
     (error) => {
       console.log("Initialization failed with error:", error);
-      // Check the reason for error and take appropriate action.
     }
   );
 };
+
 const Register = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
@@ -102,7 +103,7 @@ const Register = () => {
             // setCurrentUserData(userData);
             handleUserChat();
             toast.success("Registration successful");
-            navigate("/");
+            navigate("/client");
           })
           .catch((error) => {
             toast.error("register failed!");
@@ -131,7 +132,7 @@ const Register = () => {
             localStorage.setItem("token", res.data.token);
             // setCurrentUserData(userData);
             toast.success("Registration successful");
-            navigate("/");
+            navigate("/freelancer");
           })
           .catch((error) => {
             toast.error("register failed freelanser!");
@@ -144,65 +145,117 @@ const Register = () => {
       toast.error("Failed to register");
     }
   };
-
   return (
-    <FormContainer title="Register" onSubmit={handleRegister}>
-      <InputField
-        className="mt-4"
-        label="Name"
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <InputField
-        className="mt-4"
-        label="Username"
-        type="text"
-        value={userName}
-        onChange={(e) => setUserName(e.target.value)}
-      />
-      <InputField
-        className="mt-4"
-        label="Email"
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <InputField
-        className="mt-4"
-        label="Password"
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <SelectField
-        className="mt-4"
-        label="Role"
-        value={role}
-        onChange={(e) => setRole(e.target.value)}
-        options={["Client", "Freelancer"]}
-      />
-      <SelectField
-        className="mt-4"
-        label="Gender"
-        value={gender}
-        onChange={(e) => setGender(e.target.value)}
-        options={["male", "female"]}
-      />
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        className="mt-4"
-      >
-        SinUp
-      </Button>
-      <Link className="nav-link text-secondary " to="/login">
-        <Button variant="contained" color="primary" className="mt-5">
-          SinIn
-        </Button>
-      </Link>
-    </FormContainer>
+    <div>
+      <MDBContainer fluid className="bg-dark">
+        <MDBRow className="d-flex justify-content-center align-items-center h-100">
+          <MDBCol>
+            <MDBCard className="my-4">
+              <MDBRow className="g-0">
+                <MDBCol md="6" className="d-none d-md-block">
+                  <MDBCardImage
+                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
+                    alt="Sample photo"
+                    className="rounded-start"
+                    fluid
+                  />
+                </MDBCol>
+                <MDBCol md="6">
+                  <MDBCardBody className="text-black d-flex flex-column justify-content-center">
+                    <h3 className="mb-5 text-uppercase fw-bold">
+                      Student registration form
+                    </h3>
+
+
+                    <form onSubmit={handleRegister}>
+                      <MDBInput
+                        wrapperClass="mb-4"
+                        label="Enter Your Name"
+                        size="lg"
+                        id="form1"
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                      />
+
+                      <MDBInput
+                        wrapperClass="mb-4"
+                        label="Enter Your User Name"
+                        size="lg"
+                        id="form2"
+                        type="text"
+                        value={userName}
+                        onChange={(e) => setUserName(e.target.value)}
+                      />
+
+                      <MDBInput
+                        wrapperClass="mb-4"
+                        label="Enter Your Email"
+                        size="lg"
+                        id="form3"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+
+                      <MDBInput
+                        wrapperClass="mb-4"
+                        label="Enter Your Password"
+                        size="lg"
+                        id="form4"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+
+                  <MDBRow className='g-0 d-flex justify-content-between'>
+                    <MDBCol md='5'>
+                      <div className='d-md-flex ustify-content-start align-items-center mb-4'>
+                      <SelectField
+                          className="mt-4"
+                          label="Role"
+                          value={role}
+                          onChange={(e) => setRole(e.target.value)}
+                          options={["Client", "Freelancer"]}
+                        />
+                      </div>
+                      </MDBCol>
+                      <MDBCol md='5'>
+                      <div className='d-md-flex ustify-content-start align-items-center mb-4'>
+                        
+                        <SelectField
+                          className="mt-4"
+                          label="Gender"
+                          value={gender}
+                          onChange={(e) => setGender(e.target.value)}
+                          options={["male", "female"]}
+                        />
+                      </div>
+                      </MDBCol>
+                      </MDBRow>
+                      <div className="d-flex justify-content-end pt-3">
+                        <MDBBtn color="light" size="lg" type="reset">
+                          Reset all
+                        </MDBBtn>
+                        <MDBBtn
+                          className="ms-2"
+                          color="warning"
+                          size="lg"
+                          type="submit"
+                        >
+                          Submit form
+                        </MDBBtn>
+                      </div>
+                    </form>
+
+                  </MDBCardBody>
+                 </MDBCol>
+               </MDBRow>
+             </MDBCard>
+           </MDBCol>
+         </MDBRow>
+       </MDBContainer>
+     </div>
   );
 };
 
