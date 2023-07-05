@@ -85,13 +85,11 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div  className="LoginConatain">
       <form onSubmit={handleLogin}>
-        <MDBContainer className="card gradient-form mycard p-5" title="Login">
+        <MDBContainer className="card gradient-form mycard d-flex justify-content-center align-content-center px-5" title="Login">
           <MDBRow>
             <MDBCol col='6' className="mb-5">
-              {/* Rest of your login form */}
-              {/* ... */}
               <MDBInput
                 wrapperClass='mb-4'
                 label='Email address'
@@ -121,7 +119,7 @@ const Login = () => {
               <div className="d-flex flex-row align-items-center justify-content-center pb-4 mb-4">
                 <p className="mb-0">Don't have an account?</p>
                 <Link className="nav-link text-secondary " to="/register">
-                  <MDBBtn outline className='mx-2' color='danger'>
+                  <MDBBtn outline className='mx-2 registerbtn'>
                     create account
                   </MDBBtn>
                 </Link>

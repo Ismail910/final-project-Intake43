@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { toast } from "react-toastify";
 import axios from "axios";
+import bus2 from '../assets/images/bussiness/busssm.avif'
 import SelectField from "./formitems/SelectField";
+import './style.css';
 import { CometChat } from "@cometchat-pro/chat";
 import {
   MDBBtn,
@@ -146,24 +148,23 @@ const Register = () => {
     }
   };
   return (
-    <div>
-      <MDBContainer fluid className="bg-dark">
-        <MDBRow className="d-flex justify-content-center align-items-center h-100">
+    <div className="contain">
+      <MDBContainer fluid className="data">
+        <MDBRow className="d-flex justify-content-center align-items-center h-100 p-5">
           <MDBCol>
-            <MDBCard className="my-4">
+            <MDBCard className="my-4 pt-5 px-5">
               <MDBRow className="g-0">
                 <MDBCol md="6" className="d-none d-md-block">
                   <MDBCardImage
-                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
-                    alt="Sample photo"
-                    className="rounded-start"
+                    src={bus2}         alt="Sample photo"
+                    className="rounded-start h-100"
                     fluid
                   />
                 </MDBCol>
                 <MDBCol md="6">
                   <MDBCardBody className="text-black d-flex flex-column justify-content-center">
                     <h3 className="mb-5 text-uppercase fw-bold">
-                      Student registration form
+                      Angezny Company 
                     </h3>
 
 
@@ -234,16 +235,16 @@ const Register = () => {
                       </MDBCol>
                       </MDBRow>
                       <div className="d-flex justify-content-end pt-3">
-                        <MDBBtn color="light" size="lg" type="reset">
-                          Reset all
+                      <Link className="nav-link text-secondary " to="/login">
+                        <MDBBtn outline className='mx-2 signInBtn'>
+                          Sin In
                         </MDBBtn>
+                      </Link>
                         <MDBBtn
-                          className="ms-2"
-                          color="warning"
-                          size="lg"
+                          className=" mx-2 signInBtn"
                           type="submit"
                         >
-                          Submit form
+                          Sign UP
                         </MDBBtn>
                       </div>
                     </form>
@@ -256,6 +257,7 @@ const Register = () => {
          </MDBRow>
        </MDBContainer>
      </div>
+     
   );
 };
 
