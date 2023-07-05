@@ -1,25 +1,27 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
+import * as React from "react";
+
 import { useNavigate } from "react-router-dom";
-import { Button } from "@material-ui/core";
+// import { Button } from "@material-ui/core";
 import { toast } from "react-toastify";
 import axios from "axios";
 import FormContainer from "./formitems/FormContainer";
 import InputField from "./formitems/InputField";
 import { BrowserRouter as Router, Link } from "react-router-dom";
-import business from '../assets/images/bussiness/business.png'
-import './style.css';
+import business from "../assets/images/bussiness/business.png";
+import "./style.css";
 import {
   MDBBtn,
   MDBContainer,
   MDBRow,
   MDBCol,
-  MDBInput
-} from 'mdb-react-ui-kit';
+  MDBInput,
+} from "mdb-react-ui-kit";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -85,24 +87,27 @@ const Login = () => {
   };
 
   return (
-    <div  className="LoginConatain">
+    <div className="LoginConatain">
       <form onSubmit={handleLogin}>
-        <MDBContainer className="card gradient-form mycard d-flex justify-content-center align-content-center px-5" title="Login">
+        <MDBContainer
+          className="card gradient-form mycard d-flex justify-content-center align-content-center px-5"
+          title="Login"
+        >
           <MDBRow>
-            <MDBCol col='6' className="mb-5">
+            <MDBCol col="6" className="mb-5">
               <MDBInput
-                wrapperClass='mb-4'
-                label='Email address'
-                id='form1'
-                type='email'
+                wrapperClass="mb-4"
+                label="Email address"
+                id="form1"
+                type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
               <MDBInput
-                wrapperClass='mb-4'
-                label='Password'
-                id='form2'
-                type='password'
+                wrapperClass="mb-4"
+                label="Password"
+                id="form2"
+                type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -114,23 +119,29 @@ const Login = () => {
                 >
                   Sign in
                 </MDBBtn>
-                <a className="text-muted" href="#!">Forgot password?</a>
+                <a className="text-muted" href="#!">
+                  Forgot password?
+                </a>
               </div>
               <div className="d-flex flex-row align-items-center justify-content-center pb-4 mb-4">
                 <p className="mb-0">Don't have an account?</p>
                 <Link className="nav-link text-secondary " to="/register">
-                  <MDBBtn outline className='mx-2 registerbtn'>
+                  <MDBBtn outline className="mx-2 registerbtn">
                     create account
                   </MDBBtn>
                 </Link>
               </div>
             </MDBCol>
-            <MDBCol col='6' className="mb-5">
+            <MDBCol col="6" className="mb-5">
               <div className="d-flex flex-column  justify-content-center gradient-custom-2 h-100 mb-4">
                 <div className="text-white px-3 py-4 p-md-5 mx-md-4">
                   <h4 class="mb-4">We are more than just a company</h4>
-                  <p class="small mb-0">we have product owner and product mager , Product owner is a person who has a good experience in business and reasbonsable for dealing with Clients .
-                   Product manger or we can say team lead is reasbonsable for understanding and overseeing the the team on tasks
+                  <p class="small mb-0">
+                    we have product owner and product mager , Product owner is a
+                    person who has a good experience in business and
+                    reasbonsable for dealing with Clients . Product manger or we
+                    can say team lead is reasbonsable for understanding and
+                    overseeing the the team on tasks
                   </p>
                 </div>
               </div>
