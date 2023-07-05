@@ -11,48 +11,38 @@ import { MultiSelect } from "primereact/multiselect";
 import { Slider } from "primereact/slider";
 import { Tag } from "primereact/tag";
 import axios from "axios";
-import ClientEditForm from "./editForms/clientEditform";
+import DeveloperEditForm from "./editForms/developerEditform";
 import UserForm from "./userform";
-import { toast } from "react-toastify";
+import TaskEditForm from "./editForms/taskEditform";
 
-export default function Developer() {
-  // const [clients, setclients] = useState([]);
+export default function AdminTask() {
+  // const [employees, setEmployees] = useState([]);
   const [showEditForm, setShowEditForm] = useState(false);
-  const [selectedclient, setSelectedclient] = useState(null);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
 
   const [formData, setFormData] = useState({
-    user: {
-      name: "",
-      email: "",
-      password: "",
-      phone: "",
-      address: "",
-      joinedDate: "",
-      endDate: "",
-      profilePic: "",
-      country: "",
-    },
+    name: "",
+    email: "",
+    password: "",
+    phone: "",
+    address: "",
+    joinedDate: "",
+    endDate: "",
+    profilePic: "",
+    country: "",
   });
-  const [clients, setclients] = useState([]);
-  const [selectedclients, setSelectedclients] = useState([]);
+  const [customers, setCustomers] = useState([]);
+  const [selectedCustomers, setSelectedCustomers] = useState([]);
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   });
   const [globalFilterValue, setGlobalFilterValue] = useState("");
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/client")
+      .get("http://127.0.0.1:8000/api/task")
       .then((response) => {
         console.log(response.data);
-        if(response.status=== 200)
-        {
-        setclients(response.data.data || []);
-        toast.success("clients fectched successfully");
-        }
-        else{
-          toast.error("failed to load the data");
-        }
-        
+        setCustomers(response.data.data || []);
       })
       .catch((error) => {
         console.error(error);
@@ -72,22 +62,32 @@ export default function Developer() {
     // event.preventDefault();
     console.log(formData);
     await axios
-      .post("http://127.0.0.1:8000/api/register/manager", {
-        name: formData.user.name,
-        email: formData.user.email,
-        password: formData.user.password,
-        phone: formData.user.phone,
-        nationalID: formData.user.nationalID,
-        address: formData.user.address,
-        joinedDate: formData.user.joinedDate,
-        endDate: formData.user.endDate,
-        country: formData.user.country,
-        role: formData.user.role,
-        userName: formData.user.userName,
-      })
+      .post(
+        "http://127.0.0.1:8000/api/register/manager",
+        {
+          name: formData.user.name,
+          email: formData.user.email,
+          password: formData.user.password,
+          phone: formData.user.phone,
+          nationalID: formData.user.nationalID,
+          address: formData.user.address,
+          joinedDate: formData.user.joinedDate,
+          endDate: formData.user.endDate,
+          country: formData.user.country,
+          role: formData.user.role,
+          userName: formData.user.userName,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "user_access_token"
+            )}`,
+          },
+        }
+      )
       .then((response) => {
         console.log(formData);
-        setclients([...clients, formData]);
+        setCustomers([...customers, formData]);
         setFormData({
           user: {
             name: "",
@@ -108,66 +108,80 @@ export default function Developer() {
       });
   };
 
-  const handleDelete = (clientId) => {
+  const handleDelete = (employeeId) => {
     axios
-      .delete(`http://127.0.0.1:8000/api/client/${clientId}`, {
+      .delete(`http://127.0.0.1:8000/api/tasks/${employeeId}`, {
         headers: {
-          Authorization: "Bearer 5|wJK45DIqlgaXP59oWB6RL3iNxp52nlHaAVQPGJ5n",
+          Authorization: `Bearer ${localStorage.getItem("user_access_token")}`,
         },
       })
       .then((response) => {
         console.log(response.data);
-        setclients(clients.filter((client) => client.id !== clientId));
+        setCustomers(
+          customers.filter((employee) => employee.id !== employeeId)
+        );
       })
       .catch((error) => {
         console.error(error);
       });
   };
 
-  const handleEdit = (client) => {
-    // console.log(client);
-    setSelectedclient(client);
+  const handleEdit = (employee) => {
+    // console.log(employee);
+    setSelectedEmployee(employee);
     setShowEditForm(true);
   };
 
-  const handleUpdate = (updatedclient) => {
-    console.log(updatedclient);
+  const handleUpdate = (updatedEmployee) => {
+    console.log(updatedEmployee);
     axios
       .put(
-        `http://127.0.0.1:8000/api/user/${updatedclient.user.id}`,
-        updatedclient.user,
+        `http://127.0.0.1:8000/api/task/${updatedEmployee.id}`,
+        {
+          project_id: updatedEmployee.project.id,
+          product_manager_id: updatedEmployee.productManager.id,
+          task_title: updatedEmployee.name,
+          task_description: updatedEmployee.description,
+          task_start: updatedEmployee.start,
+          task_end: updatedEmployee.end,
+          status: updatedEmployee.status,
+          assigned_to: updatedEmployee.assigned_to.id,
+        },
         {
           headers: {
-            Authorization: "Bearer 47|TeQrlI4SmHUN4rvJdxGZZx0eb9ryFBXmsNPNOHCY",
+            Authorization: `Bearer ${localStorage.getItem(
+              "user_access_token"
+            )}`,
           },
         }
       )
       .then((response) => {
-        console.log(response.data);
-        const updatedclients = clients.map((client) => {
-          if (client.id === selectedclient.id) {
-            client.user = response.data.data;
+        console.log(response.data.data);
+
+        const updatedEmployees = customers.map((employee) => {
+          if (employee.id === selectedEmployee.id) {
+            employee = response.data.data;
           }
-          return client;
+          return employee;
         });
 
         console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        console.log(updatedclients);
-        setclients(updatedclients);
+        console.log(updatedEmployees);
+        setCustomers(updatedEmployees);
         setShowEditForm(false);
-        setSelectedclient(null);
+        setSelectedEmployee(null);
+        // handleClose();
       })
       .catch((error) => {
         console.log("asdadadasdassdasdadas");
-
         console.error(error);
       });
   };
 
-  const handleClose = () => {
-    setShowEditForm(false);
-    setSelectedclient(null);
-  };
+  // const handleClose = () => {
+  //   setShowEditForm(false);
+  //   setSelectedEmployee(null);
+  // };
   const onGlobalFilterChange = (e) => {
     const value = e.target.value;
     let _filters = { ...filters };
@@ -181,7 +195,7 @@ export default function Developer() {
   const renderHeader = () => {
     return (
       <div className="flex flex-wrap gap-2 justify-content-between align-items-center">
-        <h4 className="m-0">clients</h4>
+        <h4 className="m-0">Customers</h4>
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
           <InputText
@@ -203,7 +217,7 @@ export default function Developer() {
         <div className="d-flex flex-column justify-content-center col-10 p-4 h-100">
           <DataTable
             className="col-12"
-            value={clients}
+            value={customers}
             paginator
             header={header}
             rows={10}
@@ -211,17 +225,17 @@ export default function Developer() {
             rowsPerPageOptions={[10, 25, 50]}
             dataKey="id"
             selectionMode="checkbox"
-            selection={selectedclients}
-            onSelectionChange={(e) => setSelectedclients(e.value)}
+            selection={selectedCustomers}
+            onSelectionChange={(e) => setSelectedCustomers(e.value)}
             filters={filters}
             filterDisplay="menu"
             globalFilterFields={[
               "user.name",
               "user.email",
-              "user.nationalID",
+              "user.phone",
               "user.country",
             ]}
-            emptyMessage="No clients found."
+            emptyMessage="No customers found."
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
           >
             <Column
@@ -229,32 +243,47 @@ export default function Developer() {
               headerStyle={{ width: "3rem" }}
             ></Column>
             <Column
-              field="user.name"
-              header="Name"
+              field="name"
+              header="Task Name"
+              sortable
+              filter
+              style={{ minWidth: "14rem" }}
+            />
+
+            <Column
+              field="project.name"
+              header="Project Name"
+              sortable
+              filter
+              style={{ minWidth: "14rem" }}
+            />
+
+            <Column
+              field="start"
+              header="Start Date"
               sortable
               filter
               style={{ minWidth: "14rem" }}
             />
             <Column
-              field="user.email"
-              header="Email"
+              field="end"
+              header="End Date"
               sortable
               filter
               style={{ minWidth: "14rem" }}
+              // body={(rowData) =>
+              //   rowData.user.skills.map((skill) => skill.name).join(", ")
+              // }
             />
             <Column
-              field="user.nationalID"
-              header="National id"
+              field="status"
+              header="Status"
               sortable
               filter
               style={{ minWidth: "14rem" }}
-            />
-            <Column
-              field="user.country"
-              header="Country"
-              sortable
-              filter
-              style={{ minWidth: "14rem" }}
+              // body={(rowData) =>
+              //   rowData.user.skills.map((skill) => skill.name).join(", ")
+              // }
             />
 
             <Column
@@ -262,7 +291,7 @@ export default function Developer() {
               bodyStyle={{ textAlign: "center", overflow: "visible" }}
               header="Actions"
               body={(rowData) => {
-                setSelectedclient(rowData);
+                setSelectedEmployee(rowData);
                 return (
                   <div style={{ display: "flex" }}>
                     {/* <button
@@ -272,10 +301,11 @@ export default function Developer() {
                       Edit
                     </button> */}
 
-                    <ClientEditForm
+                    <TaskEditForm
                       employee={rowData}
                       handleUpdate={handleUpdate}
                     />
+
                     <button
                       className="btn btn-danger"
                       onClick={() => handleDelete(rowData.id)}
@@ -288,10 +318,10 @@ export default function Developer() {
             />
           </DataTable>
           {/* {showEditForm && (
-            <Editform
-              client={selectedclient}
+            <DeveloperEditForm
+              employee={selectedEmployee}
               handleUpdate={handleUpdate}
-              handleClose={handleClose}
+              // handleClose={handleClose}
             />
           )} */}
         </div>

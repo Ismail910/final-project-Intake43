@@ -11,8 +11,11 @@ import { MultiSelect } from "primereact/multiselect";
 import { Slider } from "primereact/slider";
 import { Tag } from "primereact/tag";
 import axios from "axios";
-import Editform from "./editform";
+import { toast } from "react-toastify";
+
+// import Editform from "./editform";
 import UserForm from "./userform";
+import ProductManagerEditForm from "./editForms/productManagerEditform";
 
 export default function Developer() {
   // const [mangers, setmangers] = useState([]);
@@ -43,7 +46,14 @@ export default function Developer() {
       .get("http://127.0.0.1:8000/api/managers/ProductManager")
       .then((response) => {
         console.log(response.data);
+        if(response.status=== 200)
+        {
         setmangers(response.data.data || []);
+        toast.success("product mangers fectched successfully");
+        }
+        else{
+          toast.error("failed to load the data");
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -108,9 +118,7 @@ export default function Developer() {
       })
       .then((response) => {
         console.log(response.data);
-        setmangers(
-          mangers.filter((manger) => manger.id !== mangerId)
-        );
+        setmangers(mangers.filter((manger) => manger.id !== mangerId));
       })
       .catch((error) => {
         console.error(error);
@@ -216,7 +224,7 @@ export default function Developer() {
             globalFilterFields={[
               "user.name",
               "user.email",
-              "user.nationalID",
+              "user.phone",
               "user.country",
             ]}
             emptyMessage="No mangers found."
@@ -241,8 +249,8 @@ export default function Developer() {
               style={{ minWidth: "14rem" }}
             />
             <Column
-              field="user.nationalID"
-              header="National id"
+              field="user.phone"
+              header="Phone"
               sortable
               filter
               style={{ minWidth: "14rem" }}
@@ -260,14 +268,19 @@ export default function Developer() {
               bodyStyle={{ textAlign: "center", overflow: "visible" }}
               header="Actions"
               body={(rowData) => {
+                setSelectedmanger(rowData);
                 return (
                   <div style={{ display: "flex" }}>
-                    <button
+                    {/* <button
                       className="btn btn-info me-2"
                       onClick={() => handleEdit(rowData)}
                     >
                       Edit
-                    </button>
+                    </button> */}
+                    <ProductManagerEditForm
+                      employee={rowData}
+                      handleUpdate={handleUpdate}
+                    />
                     <button
                       className="btn btn-danger"
                       onClick={() => handleDelete(rowData.id)}
@@ -279,13 +292,13 @@ export default function Developer() {
               }}
             />
           </DataTable>
-          {showEditForm && (
+          {/* {showEditForm && (
             <Editform
               manger={selectedmanger}
               handleUpdate={handleUpdate}
               handleClose={handleClose}
             />
-          )}
+          )} */}
         </div>
       </div>
     </div>

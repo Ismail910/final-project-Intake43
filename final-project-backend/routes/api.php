@@ -42,6 +42,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // ========== paypal payment ====================
 Route::post('paypal/pay', [PayPalController::class, 'pay']);
+
 Route::get('success', [PayPalController::class, 'success']);
 Route::get('error', [PayPalController::class, 'error']);
 

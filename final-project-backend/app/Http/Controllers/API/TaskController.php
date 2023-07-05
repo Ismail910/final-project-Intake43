@@ -231,3 +231,4 @@ class TaskController extends Controller
         return TaskResource::collection($results);
     }
 }
+

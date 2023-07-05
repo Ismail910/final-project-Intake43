@@ -183,7 +183,7 @@
 // };
 
 // export default UserForm;
-import React from 'react';
+
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -200,7 +200,7 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
   };
 
   return (
-    <div>
+    <>
       <Button className="btn btn-success mx-4" onClick={handleShow}>
         <i className="fa-solid fa-plus me-2"></i>
         <span>Add User</span>
@@ -208,7 +208,7 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add User</Modal.Title>
+          <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="my-2">
@@ -216,7 +216,7 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
             <div className="row justify-content-center my-3">
               <div className="col-md-6 col-sm-12">
                 <form className="d-flex flex-column">
-                  <div className="row my-3">
+                  <div className="row">
                     <label htmlFor="name">Name</label>
                     <input
                       type="text"
@@ -230,13 +230,13 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
                     />
                   </div>
 
-                  <div className="row mb-3">
+                  <div className="row">
                     <label htmlFor="userName">User name</label>
                     <input
                       type="text"
                       className="form-control"
                       id="userName"
-                      placeholder="Email"
+                      placeholder="userName"
                       name="userName"
                       value={formData.userName}
                       onChange={handleInputChange}
@@ -244,7 +244,7 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
                     />
                   </div>
 
-                  <div className="row mb-3">
+                  <div className="row">
                     <label htmlFor="email">Email</label>
                     <input
                       type="email"
@@ -258,7 +258,7 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
                     />
                   </div>
 
-                  <div className="row mb-3">
+                  <div className="row">
                     <label htmlFor="nationalID">National ID</label>
                     <input
                       type="number"
@@ -270,7 +270,7 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
                     />
                   </div>
 
-                  <div className="row mb-3">
+                  <div className="row">
                     <label htmlFor="password">Password</label>
                     <input
                       type="password"
@@ -284,7 +284,7 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
                     />
                   </div>
 
-                  <div className="row mb-3">
+                  <div className="row ">
                     <label htmlFor="phone">Phone</label>
                     <input
                       type="text"
@@ -298,7 +298,7 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
                     />
                   </div>
 
-                  <div className="row mb-3">
+                  <div className="row">
                     <label htmlFor="address">Address</label>
                     <input
                       type="text"
@@ -312,7 +312,7 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
                     />
                   </div>
 
-                  <div className="row mb-3">
+                  <div className="row ">
                     <label htmlFor="joinedDate">Joined Date</label>
                     <input
                       type="date"
@@ -325,7 +325,7 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
                     />
                   </div>
 
-                  <div className="row mb-3">
+                  <div className="row">
                     <label htmlFor="endDate">End Date</label>
                     <input
                       type="date"
@@ -337,7 +337,7 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
                     />
                   </div>
 
-                  <div className="row mb-3">
+                  <div className="row ">
                     <label htmlFor="profilePic">Profile Picture</label>
                     <input
                       type="file"
@@ -350,7 +350,7 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
                     />
                   </div>
 
-                  <div className="row mb-3">
+                  <div className="row">
                     <label htmlFor="country">Country</label>
                     <input
                       type="text"
@@ -363,7 +363,7 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
                     />
                   </div>
 
-                  <div className="row mb-3">
+                  <div className="row">
                     <label htmlFor="role">Role</label>
                     <select
                       className="form-select"
@@ -406,7 +406,7 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
           </Button>
         </Modal.Footer>
       </Modal>
-    </div>
+    </>
   );
 };
 

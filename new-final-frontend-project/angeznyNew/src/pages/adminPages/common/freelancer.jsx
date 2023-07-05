@@ -11,8 +11,9 @@ import { MultiSelect } from "primereact/multiselect";
 import { Slider } from "primereact/slider";
 import { Tag } from "primereact/tag";
 import axios from "axios";
-import Editform from "./editform";
+import FreelancerEditform from "./editForms/freelancerEditform";
 import UserForm from "./userform";
+import { toast } from "react-toastify";
 
 export default function Developer() {
   // const [freelancers, setfreelancers] = useState([]);
@@ -43,7 +44,14 @@ export default function Developer() {
       .get("http://127.0.0.1:8000/api/freelancer")
       .then((response) => {
         console.log(response.data);
+        if(response.status=== 200)
+        {
         setfreelancers(response.data.data || []);
+        toast.success("freelancers fectched successfully");
+        }
+        else{
+          toast.error("failed to load the data");
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -103,7 +111,7 @@ export default function Developer() {
     axios
       .delete(`http://127.0.0.1:8000/api/freelancer/${freelancerId}`, {
         headers: {
-          Authorization: "Bearer 10|UqIw40Af6X8Zc3VR6bySvl6aXRCAMUEZlpzdumvG",
+          Authorization: "Bearer 5|wJK45DIqlgaXP59oWB6RL3iNxp52nlHaAVQPGJ5n",
         },
       })
       .then((response) => {
@@ -194,11 +202,6 @@ export default function Developer() {
       <div className="row">
         <div className="col-2"></div>
         <div className="d-flex flex-column justify-content-center col-10 p-4 h-100">
-          <UserForm
-            formData={formData.user}
-            handleInputChange={handleInputChange}
-            handleSubmit={handleSubmit}
-          />
           <DataTable
             className="col-12"
             value={freelancers}
@@ -260,14 +263,20 @@ export default function Developer() {
               bodyStyle={{ textAlign: "center", overflow: "visible" }}
               header="Actions"
               body={(rowData) => {
+                setSelectedfreelancer(rowData);
                 return (
                   <div style={{ display: "flex" }}>
-                    <button
+                    {/* <button
                       className="btn btn-info me-2"
                       onClick={() => handleEdit(rowData)}
                     >
                       Edit
-                    </button>
+                    </button> */}
+
+                    <FreelancerEditform
+                      employee={rowData}
+                      handleUpdate={handleUpdate}
+                    />
                     <button
                       className="btn btn-danger"
                       onClick={() => handleDelete(rowData.id)}
@@ -279,13 +288,13 @@ export default function Developer() {
               }}
             />
           </DataTable>
-          {showEditForm && (
+          {/* {showEditForm && (
             <Editform
               freelancer={selectedfreelancer}
               handleUpdate={handleUpdate}
               handleClose={handleClose}
             />
-          )}
+          )} */}
         </div>
       </div>
     </div>
