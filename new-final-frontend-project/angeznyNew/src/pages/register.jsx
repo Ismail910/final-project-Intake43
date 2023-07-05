@@ -236,7 +236,7 @@ const Register = () => {
                       <div className="d-flex justify-content-end pt-3">
                         <Link className="nav-link text-secondary " to="/login">
                           <MDBBtn outline className="mx-2 signInBtn">
-                            Sin In
+                            Sign In
                           </MDBBtn>
                         </Link>
                         <MDBBtn className=" mx-2 signInBtn" type="submit">

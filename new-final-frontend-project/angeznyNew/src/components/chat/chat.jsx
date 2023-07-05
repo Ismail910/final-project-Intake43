@@ -13,8 +13,10 @@ const Chat = () => {
     () => {
       console.log("Initialization completed successfully");
       // You can now proceed with rendering your app or calling the login function.
-      var uid = "user1";
-      var name = "Kevin";
+      // var uid = "user1";
+      // var name = "Kevin";
+      var uid = localStorage.getItem("user_id");
+      var name = localStorage.getItem("user_userName");
       // var user = new CometChat.User(uid);
       // user.setName(name);
       // CometChat.createUser(user, authKey).then(
