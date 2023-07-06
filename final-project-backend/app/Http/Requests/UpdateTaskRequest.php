@@ -33,6 +33,7 @@ class UpdateTaskRequest extends FormRequest
             'task_start' => 'sometimes|required|date',
             'task_end' => 'required|date|after:task_start',
             'task_status' => 'sometimes|required|in:notStarted,inProgress,completed',
+            'price' => 'numeric|min:0',
         ];
     }
 

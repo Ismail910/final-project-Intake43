@@ -132,6 +132,7 @@ const Register = () => {
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("isLogin", true);
             // setCurrentUserData(userData);
+            handleUserChat();
             toast.success("Registration successful");
             navigate("/freelancer");
           })
