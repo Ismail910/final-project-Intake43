@@ -80,6 +80,18 @@ const NavBarO = () => {
               <span className="ml-3 ">Chat</span>
             </Link>
           </MDBNavbarItem>
+          <MDBNavbarItem className="linksWords">
+          <Link className="nav-link text-white " to="/owner/payment">
+              <i className="font-weight-bold"></i>{" "}
+              <span className="ml-3 ">Payment</span>
+            </Link>
+          </MDBNavbarItem>
+          <MDBNavbarItem className="linksWords">
+          <Link className="nav-link text-white " to="/owner/profile">
+              <i className="font-weight-bold"></i>{" "}
+              <span className="ml-3 ">Profile</span>
+            </Link>
+          </MDBNavbarItem>
         </MDBNavbarNav>
       </div>
     </MDBCollapse>

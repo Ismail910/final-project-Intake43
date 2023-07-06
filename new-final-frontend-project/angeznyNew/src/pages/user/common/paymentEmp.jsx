@@ -3,7 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const Payment = () => {
+const PaymentEmp = () => {
+
   const [project, setProject] = useState(0);
   const [amount, setAmount] = useState(0);
   const [paymentId, setPaymentId] = useState(null);
@@ -57,7 +58,6 @@ const Payment = () => {
       toast.error('Failed to cancel the payment.');
     }
   };
-
   return (
     <div>
       <h2>Pay with PayPal</h2>
@@ -72,4 +72,5 @@ const Payment = () => {
   );
 };
 
-export default Payment;
+export default PaymentEmp
+
