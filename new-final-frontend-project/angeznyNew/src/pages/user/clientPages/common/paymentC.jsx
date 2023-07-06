@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -77,18 +76,14 @@ const Payment = ({ projectId }) => {
       <h2>Pay with PayPal</h2>
       {project ? (
         <div>
-
-          <p>Project Name:  </p>
           <p>Project Name: {project.name}</p>
           <p>Project Budget: {project.budget}</p>
+          <input type="hidden" name="amount" value={project.budget} />
+          <button onClick={handlePayment}>Pay Now</button>
         </div>
       ) : (
         <p>No projects available.</p>
       )}
-      {project && (
-        <input type="hidden" name="amount" value={project.budget} />
-      )}
-      <button onClick={handlePayment}>Pay Now</button>
     </div>
   );
 };
