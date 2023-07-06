@@ -138,3 +138,16 @@ font-weight: bolder;
     .textFirst{
 text-align: center;
 }}
+
+/* after discussion */
+.imgSlidshow{
+    height: 600px !important;
+}
+.slidShowTitle{
+    color: white;
+    font-size: 35px;
+}
+.FontSlidshow{
+    font-size: 25px;
+    color: #FF7C03;
+}

@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { useNavigate,Link } from "react-router-dom";
-import { Button } from "@material-ui/core";
+import * as React from "react";
+import { useNavigate, Link } from "react-router-dom";
+// import { Button } from "@material-ui/core";
 import { toast } from "react-toastify";
 import axios from "axios";
-import bus2 from '../assets/images/bussiness/busssm.avif'
+import bus2 from "../assets/images/bussiness/busssm.avif";
 import SelectField from "./formitems/SelectField";
-import './style.css';
+import "./style.css";
 import { CometChat } from "@cometchat-pro/chat";
 import {
   MDBBtn,
@@ -52,12 +52,12 @@ const handleUserChat = () => {
 
 const Register = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState("");
-  const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("Client");
-  const [gender, setGender] = useState("male");
+  const [name, setName] = React.useState("");
+  const [userName, setUserName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [role, setRole] = React.useState("Client");
+  const [gender, setGender] = React.useState("male");
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -96,12 +96,10 @@ const Register = () => {
             console.log(res);
             localStorage.setItem("user_id", res.data.client.user.id);
             localStorage.setItem("user_name", res.data.client.user.name);
-            localStorage.setItem(
-              "user_userName",
-              res.data.client.user.userName
-            );
+            localStorage.setItem("user_userName", res.data.client.user.userName);
             localStorage.setItem("user_role", "Client");
             localStorage.setItem("token", res.data.token);
+            localStorage.setItem("isLogin", true);
             // setCurrentUserData(userData);
             handleUserChat();
             toast.success("Registration successful");
@@ -132,6 +130,7 @@ const Register = () => {
             localStorage.setItem("user_name", res.data.freelancer.user.name);
             localStorage.setItem("user_role", "Freelancer");
             localStorage.setItem("token", res.data.token);
+            localStorage.setItem("isLogin", true);
             // setCurrentUserData(userData);
             toast.success("Registration successful");
             navigate("/freelancer");
@@ -156,7 +155,8 @@ const Register = () => {
               <MDBRow className="g-0">
                 <MDBCol md="6" className="d-none d-md-block">
                   <MDBCardImage
-                    src={bus2}         alt="Sample photo"
+                    src={bus2}
+                    alt="Sample photo"
                     className="rounded-start h-100"
                     fluid
                   />
@@ -164,9 +164,8 @@ const Register = () => {
                 <MDBCol md="6">
                   <MDBCardBody className="text-black d-flex flex-column justify-content-center">
                     <h3 className="mb-5 text-uppercase fw-bold">
-                      Angezny Company 
+                      Angezny Company
                     </h3>
-
 
                     <form onSubmit={handleRegister}>
                       <MDBInput
@@ -209,55 +208,49 @@ const Register = () => {
                         onChange={(e) => setPassword(e.target.value)}
                       />
 
-                  <MDBRow className='g-0 d-flex justify-content-between'>
-                    <MDBCol md='5'>
-                      <div className='d-md-flex ustify-content-start align-items-center mb-4'>
-                      <SelectField
-                          className="mt-4"
-                          label="Role"
-                          value={role}
-                          onChange={(e) => setRole(e.target.value)}
-                          options={["Client", "Freelancer"]}
-                        />
-                      </div>
-                      </MDBCol>
-                      <MDBCol md='5'>
-                      <div className='d-md-flex ustify-content-start align-items-center mb-4'>
-                        
-                        <SelectField
-                          className="mt-4"
-                          label="Gender"
-                          value={gender}
-                          onChange={(e) => setGender(e.target.value)}
-                          options={["male", "female"]}
-                        />
-                      </div>
-                      </MDBCol>
+                      <MDBRow className="g-0 d-flex justify-content-between">
+                        <MDBCol md="5">
+                          <div className="d-md-flex ustify-content-start align-items-center mb-4">
+                            <SelectField
+                              className="mt-4"
+                              label="Role"
+                              value={role}
+                              onChange={(e) => setRole(e.target.value)}
+                              options={["Client", "Freelancer"]}
+                            />
+                          </div>
+                        </MDBCol>
+                        <MDBCol md="5">
+                          <div className="d-md-flex ustify-content-start align-items-center mb-4">
+                            <SelectField
+                              className="mt-4"
+                              label="Gender"
+                              value={gender}
+                              onChange={(e) => setGender(e.target.value)}
+                              options={["male", "female"]}
+                            />
+                          </div>
+                        </MDBCol>
                       </MDBRow>
                       <div className="d-flex justify-content-end pt-3">
-                      <Link className="nav-link text-secondary " to="/login">
-                        <MDBBtn outline className='mx-2 signInBtn'>
-                          Sin In
-                        </MDBBtn>
-                      </Link>
-                        <MDBBtn
-                          className=" mx-2 signInBtn"
-                          type="submit"
-                        >
+                        <Link className="nav-link text-secondary " to="/login">
+                          <MDBBtn outline className="mx-2 signInBtn">
+                            Sign In
+                          </MDBBtn>
+                        </Link>
+                        <MDBBtn className=" mx-2 signInBtn" type="submit">
                           Sign UP
                         </MDBBtn>
                       </div>
                     </form>
-
                   </MDBCardBody>
-                 </MDBCol>
-               </MDBRow>
-             </MDBCard>
-           </MDBCol>
-         </MDBRow>
-       </MDBContainer>
-     </div>
-     
+                </MDBCol>
+              </MDBRow>
+            </MDBCard>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
+    </div>
   );
 };
 
