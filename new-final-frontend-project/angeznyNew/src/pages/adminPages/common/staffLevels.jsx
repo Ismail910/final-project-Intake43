@@ -13,36 +13,41 @@ import { Tag } from "primereact/tag";
 import axios from "axios";
 import DeveloperEditForm from "./editForms/developerEditform";
 import UserForm from "./userform";
-import TaskEditForm from "./editForms/taskEditform";
+import SkillEditForm from "./editForms/SkillEditform";
+import StaffLevelEditForm from "./editForms/StaffLevelEditform";
+import { toast } from "react-toastify";
+import StaffLevelForm from "./StaffLevelform";
 
-export default function AdminTask() {
-  // const [employees, setEmployees] = useState([]);
+export default function AdminStaffLevel() {
+  // const [skills, setskills] = useState([]);
   const [showEditForm, setShowEditForm] = useState(false);
-  const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [selectedstaffLevel, setSelectedstaffLevel] = useState(null);
 
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
-    password: "",
-    phone: "",
-    address: "",
-    joinedDate: "",
-    endDate: "",
-    profilePic: "",
-    country: "",
+    salary: "",
   });
-  const [customers, setCustomers] = useState([]);
-  const [selectedCustomers, setSelectedCustomers] = useState([]);
+  const [staffLevels, setstaffLevels] = useState([]);
+  const [selectedstaffLevels, setSelectedstaffLevels] = useState([]);
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   });
   const [globalFilterValue, setGlobalFilterValue] = useState("");
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/task")
+      .get("http://127.0.0.1:8000/api/staff", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
       .then((response) => {
         console.log(response.data);
-        setCustomers(response.data.data || []);
+        if (response.status === 200) {
+          setstaffLevels(response.data.data || []);
+          toast.success("staff Levels fectched successfully");
+        } else {
+          toast.error("failed to load the data");
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -51,10 +56,8 @@ export default function AdminTask() {
   const handleInputChange = (event) => {
     setFormData({
       ...formData,
-      user: {
-        ...formData.user,
-        [event.target.name]: event.target.value,
-      },
+
+      [event.target.name]: event.target.value,
     });
   };
 
@@ -63,43 +66,24 @@ export default function AdminTask() {
     console.log(formData);
     await axios
       .post(
-        "http://127.0.0.1:8000/api/register/manager",
+        "http://127.0.0.1:8000/api/staff",
         {
-          name: formData.user.name,
-          email: formData.user.email,
-          password: formData.user.password,
-          phone: formData.user.phone,
-          nationalID: formData.user.nationalID,
-          address: formData.user.address,
-          joinedDate: formData.user.joinedDate,
-          endDate: formData.user.endDate,
-          country: formData.user.country,
-          role: formData.user.role,
-          userName: formData.user.userName,
+          name: formData.name,
+          salary: formData.salary,
         },
         {
           headers: {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       )
       .then((response) => {
         console.log(formData);
-        setCustomers([...customers, formData]);
+        setstaffLevels([...staffLevels, formData]);
         setFormData({
           user: {
             name: "",
-            email: "",
-            password: "",
-            phone: "",
-            nationalID: "",
-            address: "",
-            joinedDate: "",
-            endDate: "",
-            profilePic: "",
-            country: "",
+            salary: "",
           },
         });
       })
@@ -108,44 +92,37 @@ export default function AdminTask() {
       });
   };
 
-  const handleDelete = (employeeId) => {
+  const handleDelete = (staffId) => {
+    console.log(staffId);
     axios
-      .delete(`http://127.0.0.1:8000/api/tasks/${employeeId}`, {
+      .delete(`http://127.0.0.1:8000/api/staff/${staffId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
       .then((response) => {
         console.log(response.data);
-        setCustomers(
-          customers.filter((employee) => employee.id !== employeeId)
-        );
+        setstaffLevels(staffLevels.filter((staff) => staff.id !== staffId));
       })
       .catch((error) => {
         console.error(error);
       });
   };
 
-  const handleEdit = (employee) => {
-    // console.log(employee);
-    setSelectedEmployee(employee);
+  const handleEdit = (staff) => {
+    // console.log(skill);
+    setSelectedstaffLevel(staff);
     setShowEditForm(true);
   };
 
-  const handleUpdate = (updatedEmployee) => {
-    console.log(updatedEmployee);
+  const handleUpdate = (updatedstaff) => {
+    console.log(updatedstaff);
     axios
       .put(
-        `http://127.0.0.1:8000/api/task/${updatedEmployee.id}`,
+        `http://127.0.0.1:8000/api/staff/${updatedstaff.id}`,
         {
-          project_id: updatedEmployee.project.id,
-          product_manager_id: updatedEmployee.productManager.id,
-          task_title: updatedEmployee.name,
-          task_description: updatedEmployee.description,
-          task_start: updatedEmployee.start,
-          task_end: updatedEmployee.end,
-          status: updatedEmployee.status,
-          assigned_to: updatedEmployee.assigned_to.hisID,
+          name: updatedstaff.name,
+          salary: updatedstaff.salary,
         },
         {
           headers: {
@@ -156,18 +133,20 @@ export default function AdminTask() {
       .then((response) => {
         console.log(response.data.data);
 
-        const updatedEmployees = customers.map((employee) => {
-          if (employee.id === selectedEmployee.id) {
-            employee = response.data.data;
+        const updatedstaffs = staffLevels.map((staff) => {
+          if (staff.id === updatedstaff.id) {
+            staff = response.data.data;
           }
-          return employee;
+          return staff;
         });
 
-        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        console.log(updatedEmployees);
-        setCustomers(updatedEmployees);
+        // console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        // console.log(updatedskills);
+        setstaffLevels(updatedstaffs);
+        // setskills(updatedskills);
         setShowEditForm(false);
-        setSelectedEmployee(null);
+        setSelectedstaffLevel(null);
+        // setSelectedskill(null);
         // handleClose();
       })
       .catch((error) => {
@@ -178,7 +157,7 @@ export default function AdminTask() {
 
   // const handleClose = () => {
   //   setShowEditForm(false);
-  //   setSelectedEmployee(null);
+  //   setSelectedskill(null);
   // };
   const onGlobalFilterChange = (e) => {
     const value = e.target.value;
@@ -193,7 +172,7 @@ export default function AdminTask() {
   const renderHeader = () => {
     return (
       <div className="flex flex-wrap gap-2 justify-content-between align-items-center">
-        <h4 className="m-0">Customers</h4>
+        <h4 className="m-0">Staff Levels</h4>
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
           <InputText
@@ -213,9 +192,14 @@ export default function AdminTask() {
       <div className="row">
         <div className="col-2"></div>
         <div className="d-flex flex-column justify-content-center col-10 p-4 h-100">
+          <StaffLevelForm
+            formData={formData}
+            handleInputChange={handleInputChange}
+            handleSubmit={handleSubmit}
+          />
           <DataTable
             className="col-12"
-            value={customers}
+            value={staffLevels}
             paginator
             header={header}
             rows={10}
@@ -223,17 +207,12 @@ export default function AdminTask() {
             rowsPerPageOptions={[10, 25, 50]}
             dataKey="id"
             selectionMode="checkbox"
-            selection={selectedCustomers}
-            onSelectionChange={(e) => setSelectedCustomers(e.value)}
+            selection={selectedstaffLevels}
+            onSelectionChange={(e) => setSelectedstaffLevels(e.value)}
             filters={filters}
             filterDisplay="menu"
-            globalFilterFields={[
-              "user.name",
-              "user.email",
-              "user.phone",
-              "user.country",
-            ]}
-            emptyMessage="No customers found."
+            globalFilterFields={["name"]}
+            emptyMessage="No skills found."
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
           >
             <Column
@@ -242,46 +221,18 @@ export default function AdminTask() {
             ></Column>
             <Column
               field="name"
-              header="Task Name"
+              header="Name"
               sortable
               filter
               style={{ minWidth: "14rem" }}
             />
 
             <Column
-              field="project.name"
-              header="Project Name"
+              field="salary"
+              header="Salary"
               sortable
               filter
               style={{ minWidth: "14rem" }}
-            />
-
-            <Column
-              field="start"
-              header="Start Date"
-              sortable
-              filter
-              style={{ minWidth: "14rem" }}
-            />
-            <Column
-              field="end"
-              header="End Date"
-              sortable
-              filter
-              style={{ minWidth: "14rem" }}
-              // body={(rowData) =>
-              //   rowData.user.skills.map((skill) => skill.name).join(", ")
-              // }
-            />
-            <Column
-              field="status"
-              header="Status"
-              sortable
-              filter
-              style={{ minWidth: "14rem" }}
-              // body={(rowData) =>
-              //   rowData.user.skills.map((skill) => skill.name).join(", ")
-              // }
             />
 
             <Column
@@ -289,7 +240,9 @@ export default function AdminTask() {
               bodyStyle={{ textAlign: "center", overflow: "visible" }}
               header="Actions"
               body={(rowData) => {
-                setSelectedEmployee(rowData);
+                // console.log(rowData);
+                setSelectedstaffLevel(rowData);
+                // setSelectedskill(rowData);
                 return (
                   <div style={{ display: "flex" }}>
                     {/* <button
@@ -299,7 +252,7 @@ export default function AdminTask() {
                       Edit
                     </button> */}
 
-                    <TaskEditForm
+                    <StaffLevelEditForm
                       employee={rowData}
                       handleUpdate={handleUpdate}
                     />
@@ -317,7 +270,7 @@ export default function AdminTask() {
           </DataTable>
           {/* {showEditForm && (
             <DeveloperEditForm
-              employee={selectedEmployee}
+              skill={selectedskill}
               handleUpdate={handleUpdate}
               // handleClose={handleClose}
             />

@@ -582,3 +582,40 @@ const Managerproject = ({ statusProject }) => {
 };
 
 export default Managerproject;
+
+
+// import React, { useEffect, useState } from 'react';
+// import axios from 'axios';
+
+// const ClientProject = () => {
+//   const [projects, setProjects] = useState(null);
+
+//   useEffect(() => {
+//     axios.get('http://127.0.0.1:8000/api/projects')
+//       .then(response => {
+//         console.log(response);
+//         setProjects(response.data.data);
+//       })
+//       .catch(error => {
+//         console.error('Error fetching data:', error);
+//       });
+//   }, []);
+
+//   return (
+//     <div>
+//       {Array.isArray(projects) ? (
+//         <ul>
+//           {projects.map(item => (
+//             <li key={item.id}>{item.name} {item.type}</li>
+          
+//           ))}
+//         </ul>
+//       ) : (
+//         <p>Loading...</p>
+//       )}
+//     </div>
+//   );
+// }
+
+// export default ClientProject;
+

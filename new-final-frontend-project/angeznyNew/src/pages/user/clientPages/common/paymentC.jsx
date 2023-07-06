@@ -2,9 +2,61 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
+
+const Heading = styled.h2`
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+`;
+
+const ProjectInfo = styled.div`
+  margin-bottom: 20px;
+`;
+
+const ProjectName = styled.p`
+  font-size: 18px;
+  font-weight: bold;
+`;
+
+const ProjectBudget = styled.p`
+  font-size: 16px;
+  margin-top: 5px;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
+
+const Button = styled.button`
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
 
 const Payment = () => {
-  const client_id = localStorage.getItem('user_id')
+  const client_id = localStorage.getItem('user_id');
   const [project, setProject] = useState(null);
   const [paymentId, setPaymentId] = useState(null);
   const navigate = useNavigate();
@@ -41,8 +93,7 @@ const Payment = () => {
       const response = await axios.get('http://127.0.0.1:8000/api/success');
       if (response.status === 200 && response.data.message === 'Payment is Successful.') {
         // Handle successful payment
-        toast.success('Payment completed successfully to payment id = .', paymentId);
-        
+        toast.success('Payment completed successfully.');
         navigate('/client/');
       } else {
         // Handle other cases if needed
@@ -63,7 +114,9 @@ const Payment = () => {
         toast.info('Payment cancelled by the user.');
         navigate('/payment');
       } else {
-        // Handle other cases if needed
+        // Handle other casesHere's the rest of the updated code:
+
+
         toast.error('Failed to cancel the payment.');
       }
     } catch (error) {
@@ -74,19 +127,21 @@ const Payment = () => {
   };
 
   return (
-    <div>
-      <h2>Pay with PayPal</h2>
+    <Container>
+      <Heading>Pay with PayPal</Heading>
       {project ? (
-        <div>
-          <p>Project Name: {project.name}</p>
-          <p>Project Budget: {project.budget}</p>
-          <input type="hidden" name="amount" value={project.budget} />
-          <button onClick={handlePayment}>Pay Now</button>
-        </div>
+        <ProjectInfo>
+          <ProjectName>Project Name: {project.name}</ProjectName>
+          <ProjectBudget>Project Budget: {project.budget}</ProjectBudget>
+        </ProjectInfo>
       ) : (
         <p>No projects available.</p>
       )}
-    </div>
+      <Input type="number" readOnly name="amount" value={project?.budget || 0} />
+      <Button disabled={Number(project?.budget ) === 0} onClick={handlePayment}>Pay Now</Button>
+
+
+    </Container>
   );
 };
 

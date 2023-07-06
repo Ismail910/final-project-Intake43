@@ -1,4 +1,3 @@
-
 import React, { Suspense, useState } from "react";
 import {
   BrowserRouter,
@@ -21,23 +20,22 @@ import PaymentEmp from "../pages/user/common/paymentEmp";
 import PaymentC from "../pages/user/clientPages/common/paymentC";
 import PaymentF from "../pages/user/freelancerpages/common/paymentF";
 
-
 import ContactUs from "../components/ContactUs";
 import AboutUs from "../components/AboutUs";
 import UserProfile from "../components/UserProfile";
 
 import ClientProject from "../pages/user/clientPages/clientProject";
-import StatusClient from '../pages/user/clientPages/common/navBarstatusC'
+import StatusClient from "../pages/user/clientPages/common/navBarstatusC";
 
 import DeveloperTask from "../pages/user/developerPages/task";
-import StatusDeveloper from '../pages/user/developerPages/common/navBarStatusD'
+import StatusDeveloper from "../pages/user/developerPages/common/navBarStatusD";
 
 import FreelancerTask from "../pages/user/freelancerpages/task";
-import StatusFreelancer from '../pages/user/freelancerpages/common/navBarStatusF'
+import StatusFreelancer from "../pages/user/freelancerpages/common/navBarStatusF";
 
 import Managerproject from "../pages/user/productManagerpages/Managerproject";
 import ManagerTask from "../pages/user/productManagerpages/tasks";
-import Status from '../pages/user/productManagerpages/common/navBarstatusM'
+import Status from "../pages/user/productManagerpages/common/navBarstatusM";
 
 import Ownerproject from "../pages/user/productOwnerPages/Ownerproject";
 
@@ -49,6 +47,10 @@ import AdminDeveloper from "../pages/adminPages/common/developer";
 import AdminPayment from "../pages/adminPages/common/payment";
 import AdminManager from "../pages/adminPages/common/product_manger";
 import AdminOwner from "../pages/adminPages/common/product_owner";
+import AdminProject from "../pages/adminPages/common/project";
+import AdminTask from "../pages/adminPages/common/task";
+import AdminSkill from "../pages/adminPages/common/skills";
+import AdminStaffLevel from "../pages/adminPages/common/staffLevels";
 
 // imports all guards
 import LoggedInGuard from "../guard/LoggedInRoutes";
@@ -120,20 +122,34 @@ const MyRoutes = () => {
             </Suspense>
           }
         />
-          <Route
-            path="/login"
-            element={
-                  <Login />
-            }
-          />
-     
-          <Route
-            path="/register"
-            element={
-                  <Register />
-            }
-          />
 
+        <Route
+          path="/userprofile"
+          exact
+          element={
+            <Suspense
+              fallback={
+                <div className="grid place-items-center h-screen bg-black">
+                  <CircleSpinner size={60} />
+                </div>
+              }
+            >
+              <Header />
+              <UserProfile />
+              <Footer />
+            </Suspense>
+          }
+        />
+        {/* <Route element={<LoggedInGuard />}>
+          <Route path="/login" element={<Login />} />
+        </Route>
+        <Route element={<LoggedInGuard />}>
+          <Route path="/register" element={<Register />} />
+        </Route> */}
+
+        <Route path="/login" element={<Login />} />
+
+        <Route path="/register" element={<Register />} />
 
         {/* Admin Routes */}
         {/* <Route element={<LoggedInGuard />}> */}
@@ -251,9 +267,81 @@ const MyRoutes = () => {
                 </div>
               }
             >
-              <div className="row w-100 h-100">
+              <div className="w-100 h-100">
                 <AdminSidnave className="col-2" style={{}} />
                 <AdminClient className="col-10" />
+              </div>
+            </Suspense>
+          }
+        />
+
+        <Route
+          path="/admin/projects"
+          element={
+            <Suspense
+              fallback={
+                <div className="grid place-items-center h-screen bg-black">
+                  <CircleSpinner size={60} />
+                </div>
+              }
+            >
+              <div className="w-100 h-100">
+                <AdminSidnave className="col-2" style={{}} />
+                <AdminProject className="col-12" />
+              </div>
+            </Suspense>
+          }
+        />
+
+        <Route
+          path="/admin/tasks"
+          element={
+            <Suspense
+              fallback={
+                <div className="grid place-items-center h-screen bg-black">
+                  <CircleSpinner size={60} />
+                </div>
+              }
+            >
+              <div className="w-100 h-100">
+                <AdminSidnave className="col-2" style={{}} />
+                <AdminTask className="col-12" />
+              </div>
+            </Suspense>
+          }
+        />
+
+        <Route
+          path="/admin/skills"
+          element={
+            <Suspense
+              fallback={
+                <div className="grid place-items-center h-screen bg-black">
+                  <CircleSpinner size={60} />
+                </div>
+              }
+            >
+              <div className="w-100 h-100">
+                <AdminSidnave className="col-2" style={{}} />
+                <AdminSkill className="col-12" />
+              </div>
+            </Suspense>
+          }
+        />
+
+        <Route
+          path="/admin/staffLevels"
+          element={
+            <Suspense
+              fallback={
+                <div className="grid place-items-center h-screen bg-black">
+                  <CircleSpinner size={60} />
+                </div>
+              }
+            >
+              <div className="w-100 h-100">
+                <AdminSidnave className="col-2" style={{}} />
+                <AdminStaffLevel className="col-12" />
               </div>
             </Suspense>
           }
@@ -290,7 +378,7 @@ const MyRoutes = () => {
               }
             >
               <Header />
-              <StatusClient/>
+              <StatusClient />
               {/* <ClientProject /> */}
               <Footer />
             </Suspense>
@@ -329,7 +417,7 @@ const MyRoutes = () => {
             </Suspense>
           }
         />
-       <Route
+        <Route
           path="/client/profile"
           element={
             <Suspense
@@ -376,7 +464,7 @@ const MyRoutes = () => {
               }
             >
               <Header />
-              <StatusDeveloper/>
+              <StatusDeveloper />
               {/* <DeveloperTask /> */}
               <Footer />
             </Suspense>
@@ -414,7 +502,7 @@ const MyRoutes = () => {
             </Suspense>
           }
         />
-      <Route
+        <Route
           path="/developer/profile"
           element={
             <Suspense
@@ -463,7 +551,7 @@ const MyRoutes = () => {
             >
               <Header />
               {/* <FreelancerTask /> */}
-              <StatusFreelancer/>
+              <StatusFreelancer />
               <Footer />
             </Suspense>
           }
@@ -548,7 +636,7 @@ const MyRoutes = () => {
             >
               <Header />
               {/* <ManagerTask /> */}
-              <Status/>
+              <Status />
               <Footer />
             </Suspense>
           }
@@ -582,12 +670,12 @@ const MyRoutes = () => {
             >
               <Header />
               {/* <Managerproject /> */}
-              <Status/>
+              <Status />
               <Footer />
             </Suspense>
           }
         />
-                <Route
+        <Route
           path="/manager/payment"
           element={
             <Suspense
