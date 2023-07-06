@@ -172,7 +172,7 @@ const Home = () => {
 <div className='Analysis'>
 <i class="fa-solid fa-earth-americas icons " style={{ fontSize: '6rem' }}></i>
 <br></br>{totalCountries} +
-  </div>
+</div>
 </div>
 <div className='colum col-1'  ></div>
 <div className="col-md-4 col-12 comDiv d-flex justify-content-center">
