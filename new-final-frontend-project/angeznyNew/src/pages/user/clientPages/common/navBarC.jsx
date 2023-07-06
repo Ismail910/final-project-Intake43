@@ -56,6 +56,13 @@ const NavBarC = () => {
                     <span className="ml-3 ">Payment</span>
                   </Link>
                 </MDBNavbarItem>
+                <MDBNavbarItem className="linksWords">
+                <Link className="nav-link  text-white" to="/client/profile">
+                    <i className="font-weight-bold"></i>{" "}
+                    <span className="ml-3 ">profile</span>
+                  </Link>
+                </MDBNavbarItem>
+
               </MDBNavbarNav>
             </div>
           </MDBCollapse>
