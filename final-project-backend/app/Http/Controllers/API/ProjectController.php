@@ -161,7 +161,7 @@ class ProjectController extends Controller
     public function show(string $id)
     {
         try {
-            $project = Project::findOrFail($id);
+            $project = Project::where('clinte_id', $id)->first();
             return new ProjectResource($project);
         } catch (ModelNotFoundException $exception) {
             return response()->json(['error' => 'Project not found'], 404);

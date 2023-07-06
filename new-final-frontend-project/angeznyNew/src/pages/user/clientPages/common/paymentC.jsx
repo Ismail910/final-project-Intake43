@@ -3,7 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const Payment = ({ projectId }) => {
+const Payment = () => {
+  const client_id = localStorage.getItem('user_id')
   const [project, setProject] = useState(null);
   const [paymentId, setPaymentId] = useState(null);
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ const Payment = ({ projectId }) => {
   useEffect(() => {
     const fetchProject = async () => {
       try {
-        const response = await axios.get(`/api/projects/${projectId}`);
+        const response = await axios.get(`/api/projects/${client_id}`);
         setProject(response.data);
       } catch (error) {
         console.log(error.response?.data);
@@ -19,7 +20,7 @@ const Payment = ({ projectId }) => {
     };
 
     fetchProject();
-  }, [projectId]);
+  }, [client_id]);
 
   const handlePayment = async () => {
     try {
@@ -40,7 +41,8 @@ const Payment = ({ projectId }) => {
       const response = await axios.get('http://127.0.0.1:8000/api/success');
       if (response.status === 200 && response.data.message === 'Payment is Successful.') {
         // Handle successful payment
-        toast.success('Payment completed successfully.');
+        toast.success('Payment completed successfully to payment id = .', paymentId);
+        
         navigate('/client/');
       } else {
         // Handle other cases if needed
