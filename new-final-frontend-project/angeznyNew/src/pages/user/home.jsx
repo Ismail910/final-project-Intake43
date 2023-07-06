@@ -8,7 +8,14 @@ import project from '../../assets/images/download (1).jfif'
 import flag1 from '../../assets/images/download (2).png'
 import flag2 from '../../assets/images/download.png'
 import flag3 from '../../assets/images/flag-3d-round-250.png'
+import bus1 from '../../assets/images/bussiness/bus5.jpeg'
+import bus2 from '../../assets/images/bussiness/bus3.png'
+import bus3 from '../../assets/images/bussiness/bus4.jpg'
 import event from '../../assets/images/images.png'
+import {
+  MDBCarousel,
+  MDBCarouselItem,
+} from 'mdb-react-ui-kit';
 
 import axios from 'axios';
 
@@ -49,6 +56,38 @@ const Home = () => {
 
   return (
     <div>
+      <section className='SlidShow'>
+      <MDBCarousel showControls showIndicators>
+      <MDBCarouselItem
+        className='w-100 d-block imgSlidshow'
+        itemId={1}
+        src={bus1}
+        alt='...'
+      >
+        <h5 className='slidShowTitle'>First slide label</h5>
+        <p className='FontSlidshow'>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+      </MDBCarouselItem>
+      <MDBCarouselItem
+        className='w-100 d-block imgSlidshow'
+        itemId={2}
+        src={bus2}
+        alt='...'
+      >
+        <h5 className='slidShowTitle'>Second slide label</h5>
+        <p className='FontSlidshow'>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </MDBCarouselItem>
+      <MDBCarouselItem
+        className='w-100 d-block imgSlidshow'
+        itemId={3}
+        src={bus3}
+        alt='...'
+      >
+        <h5 className='slidShowTitle'>Third slide label</h5>
+        <p className='FontSlidshow'>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+      </MDBCarouselItem>
+    </MDBCarousel>
+
+      </section>
       <section>
         <div className="container">
           <div className="row">

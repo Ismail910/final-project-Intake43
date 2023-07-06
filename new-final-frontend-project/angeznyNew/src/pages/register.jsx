@@ -96,12 +96,10 @@ const Register = () => {
             console.log(res);
             localStorage.setItem("user_id", res.data.client.user.id);
             localStorage.setItem("user_name", res.data.client.user.name);
-            localStorage.setItem(
-              "user_userName",
-              res.data.client.user.userName
-            );
+            localStorage.setItem("user_userName", res.data.client.user.userName);
             localStorage.setItem("user_role", "Client");
             localStorage.setItem("token", res.data.token);
+            localStorage.setItem("isLogin", true);
             // setCurrentUserData(userData);
             handleUserChat();
             toast.success("Registration successful");
@@ -132,6 +130,7 @@ const Register = () => {
             localStorage.setItem("user_name", res.data.freelancer.user.name);
             localStorage.setItem("user_role", "Freelancer");
             localStorage.setItem("token", res.data.token);
+            localStorage.setItem("isLogin", true);
             // setCurrentUserData(userData);
             toast.success("Registration successful");
             navigate("/freelancer");

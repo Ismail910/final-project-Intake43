@@ -45,6 +45,7 @@ const Login = () => {
           localStorage.setItem("user_userName", res.data.userName);
           localStorage.setItem("user_role", res.data.role);
           localStorage.setItem("token", res.data.access_token);
+          localStorage.setItem("isLogin", true);
 
           switch (res.data.role) {
             case "Admin":
