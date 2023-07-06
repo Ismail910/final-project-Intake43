@@ -30,9 +30,9 @@ const ContactUs = () => {
 
       
 
-      <MDBBtn  block   class="contactButton ">
+      <button  block   class="contactButton ">
         Send
-      </MDBBtn>
+      </button>
     </form>
     </div>
     

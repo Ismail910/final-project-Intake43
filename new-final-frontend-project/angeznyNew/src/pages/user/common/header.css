@@ -44,7 +44,8 @@
     margin-right:15px;
 }
 .DropLogout{
-    background-color: #42B6D3 !important;
+    background: -webkit-linear-gradient(to right, #2362e9, #13619d, #369ddd, #45a0b4)
+    !important;
     border: none;
     border-radius: 10px;
 }

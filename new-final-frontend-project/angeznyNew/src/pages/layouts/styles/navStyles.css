@@ -1,5 +1,6 @@
 .navBarContainer{
-    background-color: #42B6D3;
+    background: -webkit-linear-gradient(to right, #2362e9, #13619d, #369ddd, #45a0b4);
+  
     display: flex;
     justify-content: center;
     align-items: center;

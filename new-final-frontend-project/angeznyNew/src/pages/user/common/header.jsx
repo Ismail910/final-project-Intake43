@@ -6,7 +6,7 @@ import NavBarF from "../freelancerpages/common/navBarF";
 import NavBarM from "../productManagerpages/common/navBarM";
 import NavBarO from "../productOwnerPages/common/navBarO";
 import user1 from "../../../assets/images/user.png";
-import "./style.css";
+import "./header.css";
 import {
   MDBContainer,
   MDBNavbar,
@@ -33,12 +33,13 @@ const Header = () => {
 
   const handleLogout = () => {
     localStorage.clear();
+    localStorage.setItem("isLogin",false);
     // Perform any additional logout actions
   };
 
   return (
     <>
-      <MDBNavbar expand="lg" light bgColor="light" className="mb-3">
+      <MDBNavbar expand="lg" light bgColor="light" className="mb-1">
         <MDBContainer fluid>
           <Link className="nav-link  logoName " to="/">
             <span className="firstLetter">A</span>ngezny
@@ -110,7 +111,7 @@ const Header = () => {
         {isLoggedIn && (
           <>
             {userRole === "Client" && <NavBarC />}
-            {userRole === "Developer" && <NavBarD />}
+            {userRole === "Employee" && <NavBarD />}
             {userRole === "Freelancer" && <NavBarF />}
             {userRole === "ProductManager" && <NavBarM />}
             {userRole === "ProductOwner" && <NavBarO />}
