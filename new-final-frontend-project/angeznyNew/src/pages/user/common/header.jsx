@@ -6,7 +6,7 @@ import NavBarF from "../freelancerpages/common/navBarF";
 import NavBarM from "../productManagerpages/common/navBarM";
 import NavBarO from "../productOwnerPages/common/navBarO";
 import user1 from "../../../assets/images/user.png";
-import "./style.css";
+import "./header.css";
 import {
   MDBContainer,
   MDBNavbar,
