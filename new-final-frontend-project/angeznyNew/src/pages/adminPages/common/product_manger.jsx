@@ -12,6 +12,7 @@ import { Slider } from "primereact/slider";
 import { Tag } from "primereact/tag";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { CometChat } from "@cometchat-pro/chat";
 
 // import Editform from "./editform";
 import UserForm from "./userform";
@@ -33,6 +34,7 @@ export default function Developer() {
       endDate: "",
       profilePic: "",
       country: "",
+      gender: "male",
     },
   });
   const [mangers, setmangers] = useState([]);
@@ -46,12 +48,10 @@ export default function Developer() {
       .get("http://127.0.0.1:8000/api/managers/ProductManager")
       .then((response) => {
         console.log(response.data);
-        if(response.status=== 200)
-        {
-        setmangers(response.data.data || []);
-        toast.success("product mangers fectched successfully");
-        }
-        else{
+        if (response.status === 200) {
+          setmangers(response.data.data || []);
+          toast.success("product mangers fectched successfully");
+        } else {
           toast.error("failed to load the data");
         }
       })
@@ -69,25 +69,75 @@ export default function Developer() {
     });
   };
 
+  const handleUserChat = (data) => {
+    const appID = "240169ef153c40df";
+    const region = "US";
+    const authKey = "581f246117c147b5f041cf28049c89388b3fc5cd";
+    const appSetting = new CometChat.AppSettingsBuilder()
+      .subscribePresenceForAllUsers()
+      .setRegion(region)
+      .build();
+    CometChat.init(appID, appSetting).then(
+      () => {
+        console.log("Initialization completed successfully");
+        // You can now proceed with rendering your app or calling the login function.
+        var uid = data.id.toString();
+        var name = data.userName;
+        var user = new CometChat.User(uid);
+        user.setName(name);
+        CometChat.createUser(user, authKey).then(
+          (user) => {
+            console.log("user created", user);
+          },
+          (error) => {
+            console.log("error", error);
+          }
+        );
+        // CometChat.login(uid, authKey).then(
+        //   (user) => {
+        //     console.log("Login Successful:", { user });
+        //   },
+        //   (error) => {
+        //     console.log("Login failed with exception:", { error });
+        //   }
+        // );
+      },
+      (error) => {
+        console.log("Initialization failed with error:", error);
+        // Check the reason for error and take appropriate action.
+      }
+    );
+  };
   const handleSubmit = async (event) => {
     // event.preventDefault();
     console.log(formData);
     await axios
-      .post("http://127.0.0.1:8000/api/register/manager", {
-        name: formData.user.name,
-        email: formData.user.email,
-        password: formData.user.password,
-        phone: formData.user.phone,
-        nationalID: formData.user.nationalID,
-        address: formData.user.address,
-        joinedDate: formData.user.joinedDate,
-        endDate: formData.user.endDate,
-        country: formData.user.country,
-        role: formData.user.role,
-        userName: formData.user.userName,
-      })
+      .post(
+        "http://127.0.0.1:8000/api/register/manager",
+        {
+          name: formData.user.name,
+          email: formData.user.email,
+          password: formData.user.password,
+          phone: formData.user.phone,
+          nationalID: formData.user.nationalID,
+          address: formData.user.address,
+          joinedDate: formData.user.joinedDate,
+          endDate: formData.user.endDate,
+          country: formData.user.country,
+          role: formData.user.role,
+          userName: formData.user.userName,
+          gender: formData.user.gender,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
       .then((response) => {
         console.log(formData);
+        handleUserChat(response.data.manager.user);
+
         setmangers([...mangers, formData]);
         setFormData({
           user: {
@@ -101,6 +151,7 @@ export default function Developer() {
             endDate: "",
             profilePic: "",
             country: "",
+            country: "male",
           },
         });
       })
@@ -111,9 +162,10 @@ export default function Developer() {
 
   const handleDelete = (mangerId) => {
     axios
-      .delete(`http://127.0.0.1:8000/api/manger/${mangerId}`, {
+      .delete(`http://127.0.0.1:8000/api/manager/${mangerId}`, {
         headers: {
-          Authorization: "Bearer 5|wJK45DIqlgaXP59oWB6RL3iNxp52nlHaAVQPGJ5n",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Accept: "application/json",
         },
       })
       .then((response) => {
@@ -139,14 +191,14 @@ export default function Developer() {
         updatedmanger.user,
         {
           headers: {
-            Authorization: "Bearer 47|TeQrlI4SmHUN4rvJdxGZZx0eb9ryFBXmsNPNOHCY",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       )
       .then((response) => {
         console.log(response.data);
         const updatedmangers = mangers.map((manger) => {
-          if (manger.id === selectedmanger.id) {
+          if (manger.id === updatedmanger.id) {
             manger.user = response.data.data;
           }
           return manger;

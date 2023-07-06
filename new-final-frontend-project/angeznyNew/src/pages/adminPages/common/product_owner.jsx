@@ -14,6 +14,7 @@ import axios from "axios";
 import ProductOwnerEditForm from "./editForms/productOwnerEditform";
 import UserForm from "./userform";
 import { toast } from "react-toastify";
+import { CometChat } from "@cometchat-pro/chat";
 
 export default function Developer() {
   // const [owners, setowners] = useState([]);
@@ -31,6 +32,7 @@ export default function Developer() {
       endDate: "",
       profilePic: "",
       country: "",
+      gender: "male",
     },
   });
   const [owners, setowners] = useState([]);
@@ -44,12 +46,10 @@ export default function Developer() {
       .get("http://127.0.0.1:8000/api/managers/ProductOwner")
       .then((response) => {
         console.log(response.data);
-        if(response.status=== 200)
-        {
-        setowners(response.data.data || []);
-        toast.success("product owners fectched successfully");
-        }
-        else{
+        if (response.status === 200) {
+          setowners(response.data.data || []);
+          toast.success("product owners fectched successfully");
+        } else {
           toast.error("failed to load the data");
         }
       })
@@ -68,6 +68,45 @@ export default function Developer() {
     });
   };
 
+  const handleUserChat = (data) => {
+    const appID = "240169ef153c40df";
+    const region = "US";
+    const authKey = "581f246117c147b5f041cf28049c89388b3fc5cd";
+    const appSetting = new CometChat.AppSettingsBuilder()
+      .subscribePresenceForAllUsers()
+      .setRegion(region)
+      .build();
+    CometChat.init(appID, appSetting).then(
+      () => {
+        console.log("Initialization completed successfully");
+        // You can now proceed with rendering your app or calling the login function.
+        var uid = data.id.toString();
+        var name = data.userName;
+        var user = new CometChat.User(uid);
+        user.setName(name);
+        CometChat.createUser(user, authKey).then(
+          (user) => {
+            console.log("user created", user);
+          },
+          (error) => {
+            console.log("error", error);
+          }
+        );
+        // CometChat.login(uid, authKey).then(
+        //   (user) => {
+        //     console.log("Login Successful:", { user });
+        //   },
+        //   (error) => {
+        //     console.log("Login failed with exception:", { error });
+        //   }
+        // );
+      },
+      (error) => {
+        console.log("Initialization failed with error:", error);
+        // Check the reason for error and take appropriate action.
+      }
+    );
+  };
   const handleSubmit = async (event) => {
     // event.preventDefault();
     console.log(formData);
@@ -84,12 +123,15 @@ export default function Developer() {
         country: formData.user.country,
         role: formData.user.role,
         userName: formData.user.userName,
+        gender: formData.user.gender,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("user_access_token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
       .then((response) => {
         console.log(formData);
+        handleUserChat(response.data.manager.user);
+
         setowners([...owners, formData]);
         setFormData({
           user: {
@@ -103,6 +145,7 @@ export default function Developer() {
             endDate: "",
             profilePic: "",
             country: "",
+            gender: "male",
           },
         });
       })
@@ -115,7 +158,7 @@ export default function Developer() {
     axios
       .delete(`http://127.0.0.1:8000/api/manager/${ownerId}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("user_access_token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
       .then((response) => {
@@ -135,22 +178,23 @@ export default function Developer() {
 
   const handleUpdate = (updatedowner) => {
     console.log(updatedowner);
+    // setSelectedowner(updatedowner);
+    // setSelectedowner(updatedowner);
+    // console.log(selectedowner);
     axios
       .put(
         `http://127.0.0.1:8000/api/user/${updatedowner.user.id}`,
         updatedowner.user,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem(
-              "user_access_token"
-            )}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       )
       .then((response) => {
         console.log(response.data);
         const updatedowners = owners.map((owner) => {
-          if (owner.id === selectedowner.id) {
+          if (owner.id === updatedowner.id) {
             owner.user = response.data.data;
           }
           return owner;
@@ -272,7 +316,6 @@ export default function Developer() {
               bodyStyle={{ textAlign: "center", overflow: "visible" }}
               header="Actions"
               body={(rowData) => {
-                setSelectedowner(rowData);
                 return (
                   <div style={{ display: "flex" }}>
                     <ProductOwnerEditForm

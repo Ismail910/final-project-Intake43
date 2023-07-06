@@ -44,12 +44,10 @@ export default function Project() {
       .get("http://127.0.0.1:8000/api/projects")
       .then((response) => {
         console.log(response.data);
-        if(response.status=== 200)
-        {
-        setprojects(response.data.data || []);
-        toast.success("projects fectched successfully");
-        }
-        else{
+        if (response.status === 200) {
+          setprojects(response.data.data || []);
+          toast.success("projects fectched successfully");
+        } else {
           toast.error("failed to load the data");
         }
       })
@@ -88,9 +86,7 @@ export default function Project() {
         },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem(
-              "user_access_token"
-            )}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       )
@@ -121,14 +117,12 @@ export default function Project() {
     axios
       .delete(`http://127.0.0.1:8000/api/projects/${employeeId}`, {
         headers: {
-          Authorization: `Bearer 12|RCLIOWbiWhdbcRK4e3ljlGl7mIlwtJ9cdjAZ5ghu`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
       .then((response) => {
         console.log(response.data);
-        setprojects(
-          projects.filter((employee) => employee.id !== employeeId)
-        );
+        setprojects(projects.filter((employee) => employee.id !== employeeId));
       })
       .catch((error) => {
         console.error(error);
@@ -159,7 +153,7 @@ export default function Project() {
         },
         {
           headers: {
-            Authorization: `Bearer 12|RCLIOWbiWhdbcRK4e3ljlGl7mIlwtJ9cdjAZ5ghu`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       )
