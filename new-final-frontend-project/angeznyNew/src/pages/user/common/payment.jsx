@@ -14,7 +14,7 @@ const Payment = () => {
       const response = await axios.post('http://127.0.0.1:8000/api/paypal/pay', { amount });
       setPaymentId(response.data?.paymentId);
       
-      // window.location.href = response.data?.redirectUrl;
+      window.location.href = response.data?.redirectUrl;
     } catch (error) {
       console.log(error.response?.data);
       // Handle error accordingly
