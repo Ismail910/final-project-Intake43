@@ -1,20 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const PaymentC = () => {
-
-  const [project, setProject] = useState(0);
-  const [amount, setAmount] = useState(0);
+const Payment = () => {
+  const client_id = localStorage.getItem('user_id')
+  const [project, setProject] = useState(null);
   const [paymentId, setPaymentId] = useState(null);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const fetchProject = async () => {
+      try {
+        const response = await axios.get(`/api/projects/${client_id}`);
+        setProject(response.data);
+      } catch (error) {
+        console.log(error.response?.data);
+      }
+    };
+
+    fetchProject();
+  }, [client_id]);
+
   const handlePayment = async () => {
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/paypal/pay', { amount });
+      const response = await axios.post('http://127.0.0.1:8000/api/paypal/pay', {
+        amount: project?.budget || 0
+      });
       setPaymentId(response.data?.paymentId);
-      
       window.location.href = response.data?.redirectUrl;
     } catch (error) {
       console.log(error.response?.data);
@@ -28,7 +41,8 @@ const PaymentC = () => {
       const response = await axios.get('http://127.0.0.1:8000/api/success');
       if (response.status === 200 && response.data.message === 'Payment is Successful.') {
         // Handle successful payment
-        toast.success('Payment completed successfully.');
+        toast.success('Payment completed successfully to payment id = .', paymentId);
+        
         navigate('/client/');
       } else {
         // Handle other cases if needed
@@ -58,19 +72,22 @@ const PaymentC = () => {
       toast.error('Failed to cancel the payment.');
     }
   };
+
   return (
     <div>
       <h2>Pay with PayPal</h2>
-      <input
-        type="number"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-      />
-      <button onClick={handlePayment}>Pay Now</button>
-      {paymentId && <h4>Payment ID: {paymentId}</h4>}
+      {project ? (
+        <div>
+          <p>Project Name: {project.name}</p>
+          <p>Project Budget: {project.budget}</p>
+          <input type="hidden" name="amount" value={project.budget} />
+          <button onClick={handlePayment}>Pay Now</button>
+        </div>
+      ) : (
+        <p>No projects available.</p>
+      )}
     </div>
   );
 };
 
-export default PaymentC
-
+export default Payment;
