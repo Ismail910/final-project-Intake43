@@ -1,6 +1,5 @@
 .contactForm{
-    background-color:#bdeffc;
-    background-image: linear-gradient(#d3f1f8, #d3f1f8,#d3f1f8);
+    background-color:rgb(230, 230, 230);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,8 +7,8 @@
     border-left: 0px ;
     border-bottom: 0px ;
     border-right: 1px ;
-border-radius: 0px 20px 20px 0px ;
-   border-color:  #42B6D3 ;
+    border-radius: 0px 20px 20px 0px ;
+    border-color:  #42B6D3 ;
     border-style:  solid;
     box-shadow: 10px 10px 10px 10px rgb(207, 207, 207);
     
@@ -27,10 +26,11 @@ border-radius: 0px 20px 20px 0px ;
 .labels{
     font-size: 1.2rem;
     font-weight: bold;
-    color: rgb(145, 145, 145);
+    color: rgb(0, 0, 0);
 }
 .contactButton{
-    background-color: #FF7C03;
+    background: -webkit-linear-gradient(to right, #2362e9, #13619d, #369ddd, #45a0b4);
+    background: linear-gradient(to right, #2362e9, #13619d, #369ddd, #45a0b4);
     color: white;
     border-radius: 20px;
     width: 120px;
