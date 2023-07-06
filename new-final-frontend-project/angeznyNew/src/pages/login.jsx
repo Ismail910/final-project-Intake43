@@ -126,8 +126,8 @@ const Login = () => {
               </div>
               <div className="d-flex flex-row align-items-center justify-content-center pb-4 mb-4">
                 <p className="mb-0">Don't have an account?</p>
-                <Link className="nav-link text-secondary " to="/register">
-                  <MDBBtn outline className="mx-2 registerbtn">
+                <Link className="nav-link text-white " to="/register">
+                  <MDBBtn outline className="mx-2 registerbtn ">
                     create account
                   </MDBBtn>
                 </Link>
