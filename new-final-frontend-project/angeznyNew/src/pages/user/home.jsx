@@ -8,7 +8,16 @@ import project from '../../assets/images/download (1).jfif'
 import flag1 from '../../assets/images/download (2).png'
 import flag2 from '../../assets/images/download.png'
 import flag3 from '../../assets/images/flag-3d-round-250.png'
+import bus1 from '../../assets/images/bussiness/bus5.jpeg'
+import bus2 from '../../assets/images/bussiness/bus3.png'
+import bus3 from '../../assets/images/bussiness/bus4.jpg'
 import event from '../../assets/images/images.png'
+import business from '../../assets/images/bussiness/bussiness-removebg-preview.png'
+
+import {
+  MDBCarousel,
+  MDBCarouselItem,
+} from 'mdb-react-ui-kit';
 
 import axios from 'axios';
 
@@ -45,10 +54,53 @@ const Home = () => {
       });
   }, []);
 
+  //totalusers
+  const [totalUsers, setTotalUsers] = useState(0);
+
+  useEffect(() => {
+    axios
+      .get('http://127.0.0.1:8000/api/user/count')
+      .then(response => {
+        console.log(response.data);
+        setTotalUsers(response.data["countUser"]|| 0);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, []);
 
 
   return (
     <div>
+      <section className='SlidShow'>
+      <MDBCarousel  showIndicators>
+      <MDBCarouselItem
+        className='w-100 d-block imgSlidshow'
+        itemId={1}
+        src={bus1}
+        alt='...'
+      >
+        <p className='FontSlidshow mb-5 text-white'>Company that specializes in providing software development services. These companies typically have a team of skilled programmers, developers, and engineers who work together to create and maintain software applications for clients.</p>
+      </MDBCarouselItem>
+      <MDBCarouselItem
+        className='w-100 d-block imgSlidshow'
+        itemId={2}
+        src={bus2}
+        alt='...'
+      >
+        <p className='FontSlidshow mb-5 text-white'>The services offered by a programming company can vary depending on their expertise and focus areas. Some common services provided by programming companies include:</p>
+      </MDBCarouselItem>
+      <MDBCarouselItem
+        className='w-100 d-block imgSlidshow'
+        itemId={3}
+        src={bus3}
+        alt='...'
+      >
+        <p className='FontSlidshow mb-5 text-white'>Building websites and web applications using programming languages like HTML, CSS, JavaScript, and frameworks like Laravel, Django, or Ruby on Rails.</p>
+      </MDBCarouselItem>
+    </MDBCarousel>
+
+      </section>
       <section>
         <div className="container">
           <div className="row">
@@ -58,14 +110,14 @@ const Home = () => {
                   Are you asking for a
                   <span className="text1Word">
                    
-                    <br></br>freelancer ?
+                    <br></br>job ?
                   </span>
                 </p>
                 <p className="text2">
                   Explore thousands of jobs <br />
-                  explore thousands of jobs
+                  Explore thousands of jobs
                   <br />
-                  explore thousands of jobs
+                  Explore thousands of jobs
                 </p>
                 <div className="textDiv d-flex justify-content-center">
                   <p className="textWelcome">
@@ -77,7 +129,7 @@ const Home = () => {
               <div className="col-md-5 col-12 imgDiv mt-5">
                 <img
                   className="imgside"
-                  src={cuteGirlImage}
+                  src={business}
                   alt="Girl in a jacket"
                   height="450"
                 ></img>
@@ -128,21 +180,36 @@ const Home = () => {
 <div className='row'>
 <p className="ComText pt-5" style={{ color: ' black' }}>Statistics</p>
 <div className="d-flex row justify-content-center">
-<div className="col-md-5 col-12 comDiv d-flex justify-content-center">
+<div className="col-md-3 col-12 comDiv d-flex justify-content-center">
 
 <div className='Analysis'>
 <i class="fa-solid fa-earth-americas icons " style={{ fontSize: '6rem' }}></i>
-<br></br>{totalCountries} +
+<br></br>
+<p className='fs-3 text-dark text-center'>Total countries</p>
+{totalCountries} +
+
   </div>
 </div>
 <div className='colum col-1'  ></div>
-<div className="col-md-4 col-12 comDiv d-flex justify-content-center">
+<div className="col-md-3 col-12 comDiv d-flex justify-content-center">
 <div className='Analysis'>
 <i class="fa-solid fa-laptop  icons" style={{ fontSize: '6rem' }}></i>
 <br></br>
+<p className='fs-3 text-dark'>Total projects</p>
 {totalProjects} +  
 </div>
 </div>
+
+<div className='colum col-1'  ></div>
+<div className="col-md-3 col-12 comDiv d-flex justify-content-center">
+<div className='Analysis'>
+<i class="fa-solid fa-users  icons" style={{ fontSize: '6rem' }}></i>
+<br></br>
+<p className='fs-3 text-dark'>Total users</p>
+{totalUsers} +  
+</div>
+</div>
+
 
 </div>
 

@@ -96,12 +96,10 @@ const Register = () => {
             console.log(res);
             localStorage.setItem("user_id", res.data.client.user.id);
             localStorage.setItem("user_name", res.data.client.user.name);
-            localStorage.setItem(
-              "user_userName",
-              res.data.client.user.userName
-            );
+            localStorage.setItem("user_userName", res.data.client.user.userName);
             localStorage.setItem("user_role", "Client");
             localStorage.setItem("token", res.data.token);
+            localStorage.setItem("isLogin", true);
             // setCurrentUserData(userData);
             handleUserChat();
             toast.success("Registration successful");
@@ -132,6 +130,7 @@ const Register = () => {
             localStorage.setItem("user_name", res.data.freelancer.user.name);
             localStorage.setItem("user_role", "Freelancer");
             localStorage.setItem("token", res.data.token);
+            localStorage.setItem("isLogin", true);
             // setCurrentUserData(userData);
             toast.success("Registration successful");
             navigate("/freelancer");
@@ -235,11 +234,11 @@ const Register = () => {
                       </MDBRow>
                       <div className="d-flex justify-content-end pt-3">
                         <Link className="nav-link text-secondary " to="/login">
-                          <MDBBtn outline className="mx-2 signInBtn">
+                          <MDBBtn  className="mx-2 signInBtn gradient-custom-2">
                             Sign In
                           </MDBBtn>
                         </Link>
-                        <MDBBtn className=" mx-2 signInBtn" type="submit">
+                        <MDBBtn className=" mx-2 signInBtn gradient-custom-2" type="submit">
                           Sign UP
                         </MDBBtn>
                       </div>

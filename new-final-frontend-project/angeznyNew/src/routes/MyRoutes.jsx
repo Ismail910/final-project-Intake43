@@ -16,7 +16,12 @@ import SignIn from "../pages/layouts/authentication/sign-in";
 import Register from "../pages/register";
 import Home from "../pages/user/home";
 import Chat from "../components/chat/chat";
-import Payment from "../pages/user/common/payment";
+
+import PaymentEmp from "../pages/user/common/paymentEmp";
+import PaymentC from "../pages/user/clientPages/common/paymentC";
+import PaymentF from "../pages/user/freelancerpages/common/paymentF";
+
+
 import ContactUs from "../components/ContactUs";
 import AboutUs from "../components/AboutUs";
 import UserProfile from "../components/UserProfile";
@@ -47,20 +52,10 @@ import AdminOwner from "../pages/adminPages/common/product_owner";
 
 // imports all guards
 import LoggedInGuard from "../guard/LoggedInRoutes";
-import AdminGuard from "../guard/AdminGuard";
-import clientGuard from "../guard/ClientGuard";
-import FreelancerGuard from "../guard/FreelancerGuard";
-import DeveloperGuard from "../guard/DeveloperGuard";
-import ProductOwnerGuard from "../guard/ProductOwnerGuard";
-import ProductManagerGuard from "../guard/ProductManagerGuard";
-
+import ClientGuard from "../guard/ClientGuard";
+import GuardRoute from "../guard/GuardRoute";
 //imports all components
 import Footer from "../pages/user/common/footer";
-import NavBarC from "../pages/user/clientPages/common/navBarC";
-import NavBarD from "../pages/user/developerPages/common/navBarD";
-import NavBarF from "../pages/user/freelancerpages/common/navBarF";
-import NavBarM from "../pages/user/productManagerpages/common/navBarM";
-import NavBarO from "../pages/user/productOwnerPages/common/navBarO";
 import Header from "../pages/user/common/header";
 import NotFound from "../components/NotFound";
 
@@ -125,39 +120,20 @@ const MyRoutes = () => {
             </Suspense>
           }
         />
-        <Route
-          path="/userprofile"
-          exact
-          element={
-            <Suspense
-              fallback={
-                <div className="grid place-items-center h-screen bg-black">
-                  <CircleSpinner size={60} />
-                </div>
-              }
-            >
-              <Header />
-              <UserProfile />
-              <Footer />
-            </Suspense>
-          }
-        />
-        <Route element={<LoggedInGuard />}>
           <Route
             path="/login"
             element={
                   <Login />
             }
           />
-        </Route>
-        <Route element={<LoggedInGuard />}>
+     
           <Route
             path="/register"
             element={
                   <Register />
             }
           />
-        </Route>
+
 
         {/* Admin Routes */}
         {/* <Route element={<LoggedInGuard />}> */}
@@ -348,7 +324,23 @@ const MyRoutes = () => {
               }
             >
               <Header />
-              <Payment />
+              <PaymentC />
+              <Footer />
+            </Suspense>
+          }
+        />
+       <Route
+          path="/client/profile"
+          element={
+            <Suspense
+              fallback={
+                <div className="grid place-items-center h-screen bg-black">
+                  <CircleSpinner size={60} />
+                </div>
+              }
+            >
+              <Header />
+              <UserProfile />
               <Footer />
             </Suspense>
           }
@@ -402,6 +394,38 @@ const MyRoutes = () => {
             >
               <Header />
               <Chat />
+              <Footer />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/developer/payment"
+          element={
+            <Suspense
+              fallback={
+                <div className="grid place-items-center h-screen bg-black">
+                  <CircleSpinner size={60} />
+                </div>
+              }
+            >
+              <Header />
+              <paymentEmp />
+              <Footer />
+            </Suspense>
+          }
+        />
+      <Route
+          path="/developer/profile"
+          element={
+            <Suspense
+              fallback={
+                <div className="grid place-items-center h-screen bg-black">
+                  <CircleSpinner size={60} />
+                </div>
+              }
+            >
+              <Header />
+              <UserProfile />
               <Footer />
             </Suspense>
           }
@@ -472,7 +496,23 @@ const MyRoutes = () => {
               }
             >
               <Header />
-              <Payment />
+              <PaymentF />
+              <Footer />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/freelancer/profile"
+          element={
+            <Suspense
+              fallback={
+                <div className="grid place-items-center h-screen bg-black">
+                  <CircleSpinner size={60} />
+                </div>
+              }
+            >
+              <Header />
+              <UserProfile />
               <Footer />
             </Suspense>
           }
@@ -509,7 +549,6 @@ const MyRoutes = () => {
               <Header />
               {/* <ManagerTask /> */}
               <Status/>
-
               <Footer />
             </Suspense>
           }
@@ -544,6 +583,38 @@ const MyRoutes = () => {
               <Header />
               {/* <Managerproject /> */}
               <Status/>
+              <Footer />
+            </Suspense>
+          }
+        />
+                <Route
+          path="/manager/payment"
+          element={
+            <Suspense
+              fallback={
+                <div className="grid place-items-center h-screen bg-black">
+                  <CircleSpinner size={60} />
+                </div>
+              }
+            >
+              <Header />
+              <paymentEmp />
+              <Footer />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/manager/profile"
+          element={
+            <Suspense
+              fallback={
+                <div className="grid place-items-center h-screen bg-black">
+                  <CircleSpinner size={60} />
+                </div>
+              }
+            >
+              <Header />
+              <UserProfile />
               <Footer />
             </Suspense>
           }
@@ -598,6 +669,38 @@ const MyRoutes = () => {
             >
               <Header />
               <Ownerproject />
+              <Footer />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/owner/payment"
+          element={
+            <Suspense
+              fallback={
+                <div className="grid place-items-center h-screen bg-black">
+                  <CircleSpinner size={60} />
+                </div>
+              }
+            >
+              <Header />
+              <paymentEmp />
+              <Footer />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/owner/profile"
+          element={
+            <Suspense
+              fallback={
+                <div className="grid place-items-center h-screen bg-black">
+                  <CircleSpinner size={60} />
+                </div>
+              }
+            >
+              <Header />
+              <UserProfile />
               <Footer />
             </Suspense>
           }
