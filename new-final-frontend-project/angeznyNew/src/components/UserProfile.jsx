@@ -22,7 +22,7 @@ const UserProfile  = () => {
   const userId =localStorage.getItem("user_id");
 
   const [user, setUser] = useState(userId);
-
+// get user
   useEffect(() => {
     axios
       .get(`http://127.0.0.1:8000/api/user/${userId}`)
@@ -36,6 +36,8 @@ const UserProfile  = () => {
   }, []);
   
   
+// get user projects
+
 
 
   return (
@@ -61,26 +63,28 @@ const UserProfile  = () => {
               <div className="p-4 text-black" style={{ backgroundColor: '#f8f9fa' }}>
                 <div className="d-flex justify-content-end text-center py-1">
                   <div>
-                    <MDBCardText className="mb-1 h5">253</MDBCardText>
-                    <MDBCardText className="small text-muted mb-0">Photos</MDBCardText>
+                    <MDBCardText className="mb-1 h5"><i class="fa-solid fa-heart fa-xl "></i></MDBCardText>
+                    
                   </div>
                   <div className="px-3">
-                    <MDBCardText className="mb-1 h5">1026</MDBCardText>
-                    <MDBCardText className="small text-muted mb-0">Followers</MDBCardText>
+                    <MDBCardText className="mb-1 h5"><i class="fa-solid fa-laptop-code fa-xl emoji"></i></MDBCardText>
+                    
                   </div>
                   <div>
-                    <MDBCardText className="mb-1 h5">478</MDBCardText>
-                    <MDBCardText className="small text-muted mb-0">Following</MDBCardText>
+                    <MDBCardText className="mb-1 h5"><i class="fa-solid fa-face-smile fa-xl "></i></MDBCardText>
+                   
                   </div>
                 </div>
               </div>
               <MDBCardBody className="text-black p-4">
                 <div className="mb-5">
-                  <p className="lead fw-normal mb-1">About</p>
+                  <p className="lead fw-normal mb-2">About</p>
                   <div className="p-4" style={{ backgroundColor: '#f8f9fa' }}>
-                    <MDBCardText className="font-italic mb-1">Web Developer</MDBCardText>
-                    <MDBCardText className="font-italic mb-1">Lives in New York</MDBCardText>
-                    <MDBCardText className="font-italic mb-0">Photographer</MDBCardText>
+                  <MDBCardText className="font-italic mb-2"><i class="fa-solid fa-user fa-lg"></i> User name : {user["userName"]}</MDBCardText>
+                    <MDBCardText className="font-italic mb-2">{user["gender"]=='female'?<i class="fa-solid fa-venus fa-lg"></i>:<i class="fa-solid fa-mars fa-lg"></i>} Gender :  {user["gender"]}</MDBCardText>
+                    <MDBCardText className="font-italic mb-2"><i class="fa-solid fa-location-dot fa-lg"></i> Address :{!user["address"]?"empty field":user["address"]} </MDBCardText>
+                    <MDBCardText className="font-italic mb-2"><i class="fa-solid fa-calendar fa-lg"></i> Goined date :{user["joinedDate"]} </MDBCardText>
+                    <MDBCardText className="font-italic mb-2"><i class="fa-solid fa-flag fa-lg"></i> Country : {!user["country"]?"empty field":user["address"]} </MDBCardText> <MDBCardText className="font-italic mb-2"><i class="fa-solid fa-address-card fa-lg"></i> National id : {!user["nationalID"]?"empty field":user["nationalID"]} </MDBCardText> <MDBCardText className="font-italic mb-2"><i class="fa-solid fa-phone fa-lg"></i> Phone : {!user["phone"]?"empty field":user["phone"]} </MDBCardText>
                   </div>
                 </div>
                 <div className="d-flex justify-content-between align-items-center mb-4">
