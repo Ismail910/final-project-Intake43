@@ -36,6 +36,7 @@ class UpdateProjectAPIRequest extends FormRequest
             'ProductManager_id' => ['sometimes', 'required', 'exists:managers,id', new ProductManagerValidationRule],
             'client_id' => 'sometimes|required|exists:clients,id',
             'project_status' => 'required|in:notStarted,inProgress,completed',
+            'budget' => 'numeric|min:0',
         ];
     }
     ## add new function failed validation

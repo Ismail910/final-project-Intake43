@@ -74,57 +74,88 @@ const Payment = () => {
     fetchProject();
   }, [client_id]);
 
+  
+    
+  // const handlePayment = async () => {
+  //   try {
+  //     const response = await axios.post('http://127.0.0.1:8000/api/paypal/pay', {
+  //       amount: project?.budget || 0
+  //     });
+  //     setPaymentId(response.data?.paymentId);
+  //     window.location.href = response.data?.redirectUrl;
+  //     handleSuccess(); 
+  //   } catch (error) {
+  //     console.log(error.response?.data);
+  //     handleError();
+  //     toast.error('Failed to initiate the payment.');
+  //   }
+  // };
+
+
   const handlePayment = async () => {
     try {
+      
       const response = await axios.post('http://127.0.0.1:8000/api/paypal/pay', {
-        amount: project?.budget || 0
+        amount:  100 ,//project?.budget || 0,
+        project_id: project?.id,
+        paymentId: paymentId,
+        client_id: client_id
       });
+      
+      
       setPaymentId(response.data?.paymentId);
       window.location.href = response.data?.redirectUrl;
+    
     } catch (error) {
       console.log(error.response?.data);
       // Handle error accordingly
       toast.error('Failed to initiate the payment.');
     }
   };
-
+ 
+  
   const handleSuccess = async () => {
-    try {
-      const response = await axios.get('http://127.0.0.1:8000/api/success');
-      if (response.status === 200 && response.data.message === 'Payment is Successful.') {
-        // Handle successful payment
-        toast.success('Payment completed successfully.');
-        navigate('/client/');
-      } else {
-        // Handle other cases if needed
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/api/success', {
+        paymentId: paymentId
+      });
+        if (response.status === 200 && response.data.message === 'Payment is Successful.') {
+          // Handle successful payment
+          toast.success('Payment completed successfully.');
+          navigate('/client/');
+        } else {
+          // Handle other cases if needed
+          toast.error('Failed to complete the payment.');
+        }
+      } catch (error) {
+        console.log(error.response?.data);
+        // Handle error accordingly
         toast.error('Failed to complete the payment.');
       }
-    } catch (error) {
-      console.log(error.response?.data);
-      // Handle error accordingly
-      toast.error('Failed to complete the payment.');
-    }
   };
+ 
 
   const handleError = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/error');
-      if (response.status === 200 && response.data === 'User declined the payment!') {
+    
         // Handle payment cancellation
         toast.info('Payment cancelled by the user.');
         navigate('/payment');
-      } else {
-        // Handle other casesHere's the rest of the updated code:
-
-
-        toast.error('Failed to cancel the payment.');
-      }
+     
     } catch (error) {
       console.log(error.response?.data);
       // Handle error accordingly
       toast.error('Failed to cancel the payment.');
     }
   };
+    
+  useEffect(() => {
+    if (window.location.href.includes('/success')) {
+      handleSuccess();
+    } else if (window.location.href.includes('/error')) {
+      handleError();
+    }
+  }, []);
 
   return (
     <Container>
@@ -138,7 +169,7 @@ const Payment = () => {
         <p>No projects available.</p>
       )}
       <Input type="number" readOnly name="amount" value={project?.budget || 0} />
-      <Button disabled={Number(project?.budget ) === 0} onClick={handlePayment}>Pay Now</Button>
+      <Button disabled={Number(project?.budget || 10 ) === 0} onClick={handlePayment}>Pay Now</Button>
 
 
     </Container>
@@ -146,3 +177,7 @@ const Payment = () => {
 };
 
 export default Payment;
+/////////////////////////////////////
+
+
+

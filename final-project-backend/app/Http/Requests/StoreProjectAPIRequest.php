@@ -33,10 +33,10 @@ class StoreProjectAPIRequest extends FormRequest
             'project_start' => 'required|date',
             'project_end' => 'required|date|after:project_start',
             'project_status' => 'required|in:notStarted,inProgress,completed',
-            'ProductOwner_id' => ['exists:managers,id', new ProductOwnerValidationRule],
-            'ProductManager_id' => ['exists:managers,id', new ProductManagerValidationRule],
+            // 'ProductOwner_id' => ['exists:managers,id', new ProductOwnerValidationRule],
+            // 'ProductManager_id' => ['exists:managers,id', new ProductManagerValidationRule],
             'client_id' => 'required|exists:clients,id',
-            'budget' => 'numeric|min:0|gt:0|default:0',
+            'budget' => 'numeric|min:0',
         ];
     }
     ## add new function failed validation

@@ -19,6 +19,7 @@ import {
 } from "mdb-react-ui-kit";
 
 const handleUserChat = () => {
+  console.log("asd");
   const appID = "240169ef153c40df";
   const region = "US";
   const authKey = "581f246117c147b5f041cf28049c89388b3fc5cd";
@@ -132,6 +133,7 @@ const Register = () => {
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("isLogin", true);
             // setCurrentUserData(userData);
+            handleUserChat();
             toast.success("Registration successful");
             navigate("/freelancer");
           })

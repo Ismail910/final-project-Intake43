@@ -13,6 +13,8 @@ import bus2 from '../../assets/images/bussiness/bus3.png'
 import bus3 from '../../assets/images/bussiness/bus4.jpg'
 import event from '../../assets/images/images.png'
 import business from '../../assets/images/bussiness/bussiness-removebg-preview.png'
+import Aos from 'aos';
+import 'aos/dist/aos.css';
 
 import {
   MDBCarousel,
@@ -23,6 +25,11 @@ import axios from 'axios';
 
 
 const Home = () => {
+  useEffect(()=>{
+    Aos.init();
+  },[]);
+
+
   const [totalCountries, setTotalCountries] = useState(0);
 
   useEffect(() => {
@@ -72,7 +79,9 @@ const Home = () => {
 
   return (
     <div>
-      <section className='SlidShow'>
+
+      {/* <section className='SlidShow'>
+      <section className='SlidShow' >
       <MDBCarousel  showIndicators>
       <MDBCarouselItem
         className='w-100 d-block imgSlidshow'
@@ -100,12 +109,12 @@ const Home = () => {
       </MDBCarouselItem>
     </MDBCarousel>
 
-      </section>
+      </section> */}
       <section>
         <div className="container">
           <div className="row">
             <div className="d-flex  row justify-content-around">
-              <div className="col-md-6 col-12 mb-3 textFirst mt-5 ">
+              <div className="col-md-6 col-12 mb-3 textFirst mt-5 " data-aos="zoom-out-right">
                 <p className="text1 ">
                   Are you asking for a
                   <span className="text1Word">
@@ -126,7 +135,7 @@ const Home = () => {
                   <button className="textbutton">Explore</button>
                 </div>
               </div>
-              <div className="col-md-5 col-12 imgDiv mt-5">
+              <div className="col-md-5 col-12 imgDiv mt-5" data-aos="zoom-out-down">
                 <img
                   className="imgside"
                   src={business}
@@ -142,8 +151,10 @@ const Home = () => {
       <section className="mt-5">
         <div className="container">
           <div className="row">
-            <div className="d-flex  row justify-content-around">
-              <div className="col-lg-6 col-12  projectSide row d-flex justify-content-center">
+            <div className="d-flex  row justify-content-around" data-aos="fade-right"
+            data-aos-offset="300"
+            data-aos-easing="ease-in-sine">
+              <div className="col-lg-6 col-12  projectSide row d-flex justify-content-center" >
                 <div className="col-12 d-flex justify-content-center">
                   <img src={logo1} alt="logo1" className="logo1 m-5"></img>
                   <img src={logo1} alt="logo1" className="logo2 mt-5"></img>
@@ -161,7 +172,10 @@ const Home = () => {
                 </div>
               </div>
 
-              <div className="col-lg-6 col-12 projectImg row">
+              <div className="col-lg-6 col-12 projectImg row "data-aos="fade-left"
+              data-aos-anchor="#example-anchor"
+              data-aos-offset="500"
+              data-aos-duration="500">
               
                 <img src={project} className="imgProject col-md-5 col-12"></img>
                 <img src={project} className="imgProject col-md-5 col-12"></img>
@@ -179,7 +193,7 @@ const Home = () => {
 <div className='container'>
 <div className='row'>
 <p className="ComText pt-5" style={{ color: ' black' }}>Statistics</p>
-<div className="d-flex row justify-content-center">
+<div className="d-flex row justify-content-center" data-aos="zoom-in-up">
 <div className="col-md-3 col-12 comDiv d-flex justify-content-center">
 
 <div className='Analysis'>

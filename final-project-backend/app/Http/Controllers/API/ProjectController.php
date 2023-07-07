@@ -85,6 +85,7 @@ if (!$managerWithFewestProjects || !$ownerWithFewestProjects) {
 // print("-------------------------");
 //     print($managerWithFewestProjects);
     // return;
+    
     if ($request->has('ProductManager_id')) {
             // Update the ProductManager_id with the managerWithFewestProjects value
             $request->merge(['ProductManager_id' => $managerWithFewestProjects]);
@@ -99,6 +100,16 @@ if (!$managerWithFewestProjects || !$ownerWithFewestProjects) {
         } else {
             // Append the new value to the request
             $request->request->add(['ProductOwner_id' => $ownerWithFewestProjects]);
+        }
+
+        $id = Auth::user()->id;
+        $client = Client::where('user_id', $id)->first();
+        if ($request->has('client_id')) {
+            // Update the ProductManager_id with the managerWithFewestProjects value
+            $request->merge(['client_id' => $client->id]);
+        } else {
+            // Append the new value to the request
+            $request->request->add(['client_id' => $client->id]);
         }
         $project = Project::create($request->all());
         return new ProjectResource($project);
