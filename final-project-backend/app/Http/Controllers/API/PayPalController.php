@@ -144,18 +144,15 @@ class PayPalController extends Controller
     {
         $paymentId = $request->input('paymentId');
         $payment = Payment::where('transaction_reference', $paymentId)->first();
-
         if ($payment) {
             return response()->json([
                 'success' => true,
                 'message' => 'Payment is already processed.',
             ]);
         }
-
         $transaction = $this->gateway->fetchTransaction([
             'transactionReference' => $paymentId,
         ])->send();
-
         if ($transaction->isSuccessful()) {
             return $this->storePayment($request, $paymentId);
         } else {
@@ -167,9 +164,10 @@ class PayPalController extends Controller
 
     public function error(Request $request)
     {
-        return response()->json([
-            'error' => 'Payment declined!',
-        ]);
+        return redirect('http://localhost:3000/');
+        // return response()->json([
+        //     'error' => 'Payment declined!',
+        // ]);
     }
 
     private function storePayment(Request $request, $transactionReference)

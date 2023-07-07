@@ -96,22 +96,16 @@ const Payment = () => {
     try {
       
       const response = await axios.post('http://127.0.0.1:8000/api/paypal/pay', {
-        amount: 100,
+        amount:  100 ,//project?.budget || 0,
         project_id: project?.id,
-        project_price: project?.price,
         paymentId: paymentId,
         client_id: client_id
       });
       
-      console.log();
-      console.log('====================================');
+      
       setPaymentId(response.data?.paymentId);
       window.location.href = response.data?.redirectUrl;
-      if (response.data.success) {
-        handleSuccess();
-      } else {
-        handleError();
-      }
+    
     } catch (error) {
       console.log(error.response?.data);
       // Handle error accordingly
@@ -121,23 +115,23 @@ const Payment = () => {
  
   
   const handleSuccess = async () => {
-    try {
-      const response = await axios.post('http://127.0.0.1:8000/api/success', {
-      paymentId: paymentId
-    });
-      if (response.status === 200 && response.data.message === 'Payment is Successful.') {
-        // Handle successful payment
-        toast.success('Payment completed successfully.');
-        navigate('/client/');
-      } else {
-        // Handle other cases if needed
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/api/success', {
+        paymentId: paymentId
+      });
+        if (response.status === 200 && response.data.message === 'Payment is Successful.') {
+          // Handle successful payment
+          toast.success('Payment completed successfully.');
+          navigate('/client/');
+        } else {
+          // Handle other cases if needed
+          toast.error('Failed to complete the payment.');
+        }
+      } catch (error) {
+        console.log(error.response?.data);
+        // Handle error accordingly
         toast.error('Failed to complete the payment.');
       }
-    } catch (error) {
-      console.log(error.response?.data);
-      // Handle error accordingly
-      toast.error('Failed to complete the payment.');
-    }
   };
  
 
