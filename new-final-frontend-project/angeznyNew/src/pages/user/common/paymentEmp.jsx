@@ -29,9 +29,11 @@ const PaymentEmp = ({ projectId }) => {
       });
       setPaymentId(response.data?.paymentId);
       window.location.href = response.data?.redirectUrl;
+
+      
     } catch (error) {
       console.log(error.response?.data);
-      // Handle error accordingly
+      
       toast.error('Failed to initiate the payment.');
     }
   };
@@ -87,7 +89,7 @@ const PaymentEmp = ({ projectId }) => {
       {project && (
         <input type="hidden" name="amount" value={project.budget} />
       )}
-      <button onClick={handlePayment}>Pay Now</button>
+      <button  onClick={handlePayment}>Pay Now</button>
     </div>
   );
 };

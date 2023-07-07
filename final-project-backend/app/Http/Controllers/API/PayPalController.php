@@ -123,10 +123,13 @@ class PayPalController extends Controller
         ])->send();
 
         if ($response->isRedirect()) {
+           
             return response()->json([
                 'redirectUrl' => $response->getRedirectUrl(),
-                'paymentId' => $response->getTransactionReference()
+                'paymentId' => $response->getTransactionReference(),
+                
             ]);
+           
         } else {
             return response()->json([
                 'error' => $response->getMessage()
@@ -142,6 +145,7 @@ class PayPalController extends Controller
 
     public function success(Request $request)
     {
+       
         $paymentId = $request->input('paymentId');
         $payment = Payment::where('transaction_reference', $paymentId)->first();
         if ($payment) {
@@ -164,6 +168,7 @@ class PayPalController extends Controller
 
     public function error(Request $request)
     {
+        dd('Error');
         return redirect('http://localhost:3000/');
         // return response()->json([
         //     'error' => 'Payment declined!',
@@ -182,6 +187,7 @@ class PayPalController extends Controller
         return response()->json([
             'success' => true,
             'paymentId' => $transactionReference,
+            
         ]);
     }
 }
