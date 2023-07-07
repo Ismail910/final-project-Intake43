@@ -626,7 +626,7 @@ import Slide from '@mui/material/Slide';
 const ClientProject = ({status}) => {
 
   const token = localStorage.getItem('token');
-  const usrID = 5;//localStorage.getItem('user_id');
+  const usrID = 4;//localStorage.getItem('user_id');
   const projectStatus = "notStarted";
   const [projects, setProjects] = useState(null);
   const [open, setOpen] = React.useState(false);
@@ -700,8 +700,7 @@ const ClientProject = ({status}) => {
             project_start: startDate,
             project_end: endDate,
             project_status:"notStarted",
-            client_id: usrID,
-            budget: budget
+            client_id: usrID
           },
           {
             headers: {
@@ -778,10 +777,10 @@ const ClientProject = ({status}) => {
                 <Input value={endDate} onChange={handleEndDateChange} autoFocus required type="date" />
               </FormControl>
 
-              <FormControl>
+              {/* <FormControl>
                 <FormLabel>Budget</FormLabel>
-                <TextareaAutosize  value={budget} onChange={handleBudgetChange} autoFocus required type="number" />
-              </FormControl>
+                <Input value={budget} onChange={handleBudgetChange} autoFocus required type="number" />
+              </FormControl> */}
               
               <FormControl>
                 <FormLabel>Description</FormLabel>
@@ -798,7 +797,7 @@ const ClientProject = ({status}) => {
         {Array.isArray(projects) ? (
           projects.map(item => (
             <Col key={item.id} lg={4} md={6} sm={12}>
-              <Card>
+              <Card className="mb-3">
                 <Card.Body>
                   <Card.Title>{item.name}</Card.Title>
                   <Card.Text>{item.type}</Card.Text>
