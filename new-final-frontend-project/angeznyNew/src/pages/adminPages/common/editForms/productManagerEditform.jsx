@@ -1,10 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import axios from "axios";
+import { toast } from "react-toastify";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 const ProductManagerEditForm = ({ employee, handleUpdate }) => {
   const [show, setShow] = useState(false);
   // console.log(employee);
   const [formData, setFormData] = useState(employee);
+
+  const [staffLevels, setStaffLevels] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:8000/api/staff", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        if (response.status === 200) {
+          setStaffLevels(response.data.data || []);
+          // toast.success("product owners fectched successfully");
+        } else {
+          toast.error("failed to load the data");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error("failed to load the data");
+
+        // toast.error(error);
+      });
+  }, []);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -38,11 +71,10 @@ const ProductManagerEditForm = ({ employee, handleUpdate }) => {
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Edit Product Manager</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="edit-form my-2">
-            <h3 className="text-center">Edit Employee</h3>
             <div className="row justify-content-center my-3">
               <div className="col-md-6 col-sm-12">
                 <form className="d-flex flex-column">
@@ -138,6 +170,24 @@ const ProductManagerEditForm = ({ employee, handleUpdate }) => {
                       onChange={handleInputChange}
                     />
                   </div>
+
+                  <Box sx={{ minWidth: 120 }}>
+                    <FormControl fullWidth>
+                      <label>Staff Level</label>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="staff"
+                        name="staff"
+                        value={formData.user.staff}
+                        onChange={handleInputChange}
+                        // autoFocus
+                      >
+                        {staffLevels.map((level) => (
+                          <MenuItem value={level.id}>{level.name}</MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Box>
                 </form>
               </div>
             </div>

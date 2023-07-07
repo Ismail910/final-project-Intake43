@@ -22,6 +22,8 @@ export default function Developer() {
   const [selectedEmployee, setSelectedEmployee] = useState(null);
 
   const [formData, setFormData] = useState({
+    staff_level: {},
+
     user: {
       name: "",
       email: "",
@@ -33,6 +35,7 @@ export default function Developer() {
       profilePic: "",
       country: "",
       gender: "male",
+      staff: 1,
     },
   });
   const [customers, setCustomers] = useState([]);
@@ -126,6 +129,7 @@ export default function Developer() {
           role: formData.user.role,
           userName: formData.user.userName,
           gender: formData.user.gender,
+          staff_level_id: formData.user.staff,
         },
         {
           headers: {
@@ -136,8 +140,39 @@ export default function Developer() {
       .then((response) => {
         console.log(formData);
         handleUserChat(response.data.employee.user);
-        setCustomers([...customers, formData]);
+        axios
+          .get("http://127.0.0.1:8000/api/staff", {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          })
+          .then((response) => {
+            // console.log(response.data);
+            if (response.status === 200) {
+              // setStaffLevels(response.data.data || []);
+              response.data.data.map((level) => {
+                if (level.id == formData.user.staff) {
+                  formData.staff_level = level;
+                  console.log(formData);
+                  setCustomers([...customers, formData]);
+
+                  // setowners([...owners, formData]);
+                }
+              });
+              // toast.success("product owners fectched successfully");
+            } else {
+              toast.error("failed to load the data");
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+            toast.error("failed to load the data");
+
+            // toast.error(error);
+          });
         setFormData({
+          staff_level: {},
+
           user: {
             name: "",
             email: "",
@@ -150,6 +185,7 @@ export default function Developer() {
             profilePic: "",
             country: "",
             gender: "male",
+            staff: 1,
           },
         });
       })
@@ -195,20 +231,39 @@ export default function Developer() {
         }
       )
       .then((response) => {
-        console.log(response.data);
-        const updatedEmployees = customers.map((employee) => {
-          if (employee.id === updatedEmployee.id) {
-            employee.user = response.data.data;
-          }
-          return employee;
-        });
+        // console.log(response.data);
+        axios
+          .put(
+            `http://127.0.0.1:8000/api/employee/${updatedEmployee.id}`,
+            {
+              staff_level_id: updatedEmployee.user.staff,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          )
+          .then((staffResponse) => {
+            console.log(staffResponse.data);
+            const updatedEmployees = customers.map((emp) => {
+              if (emp.id === updatedEmployee.id) {
+                emp.user = response.data.data;
+                emp.staff_level = staffResponse.data.data.staff_level;
+              }
+              return emp;
+            });
 
-        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        console.log(updatedEmployees);
-        setCustomers(updatedEmployees);
-        setShowEditForm(false);
-        setSelectedEmployee(null);
-        // handleClose();
+            console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            // console.log(updatedowners);
+            setCustomers(updatedEmployees);
+
+            setShowEditForm(false);
+            setSelectedCustomers(null);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
       })
       .catch((error) => {
         console.log("asdadadasdassdasdadas");
@@ -278,44 +333,59 @@ export default function Developer() {
               "user.email",
               "user.phone",
               "user.country",
+              "user.country",
+              "staff_level.name",
             ]}
             emptyMessage="No customers found."
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
           >
-            <Column
+            {/* <Column
               selectionMode="multiple"
               headerStyle={{ width: "3rem" }}
-            ></Column>
+            ></Column> */}
             <Column
               field="user.name"
               header="Name"
               sortable
-              filter
+              // filter
               style={{ minWidth: "14rem" }}
             />
             <Column
               field="user.email"
               header="Email"
               sortable
-              filter
+              // filter
               style={{ minWidth: "14rem" }}
             />
             <Column
               field="user.phone"
               header="Phone"
               sortable
-              filter
+              // filter
               style={{ minWidth: "14rem" }}
               // body={(rowData) =>
               //   rowData.user.skills.map((skill) => skill.name).join(", ")
               // }
             />
-
+            <Column
+              field="user.gender"
+              header="Gender"
+              sortable
+              // filter
+              style={{ minWidth: "14rem" }}
+            />
             <Column
               field="user.country"
               header="Country"
               sortable
-              filter
+              // filter
+              style={{ minWidth: "14rem" }}
+            />
+            <Column
+              field="staff_level.name"
+              header="Staff Level"
+              sortable
+              // filter
               style={{ minWidth: "14rem" }}
             />
 

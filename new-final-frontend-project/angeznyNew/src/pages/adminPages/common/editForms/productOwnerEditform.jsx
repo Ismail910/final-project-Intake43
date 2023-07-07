@@ -1,10 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import axios from "axios";
+import { toast } from "react-toastify";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+
 const ProductOwnerEditForm = ({ employee, handleUpdate }) => {
   const [show, setShow] = useState(false);
   // console.log(employee);
   const [formData, setFormData] = useState(employee);
+  const [staffLevels, setStaffLevels] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://127.0.0.1:8000/api/staff", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        if (response.status === 200) {
+          setStaffLevels(response.data.data || []);
+          // toast.success("product owners fectched successfully");
+        } else {
+          toast.error("failed to load the data");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error("failed to load the data");
+
+        // toast.error(error);
+      });
+  }, []);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -38,11 +71,11 @@ const ProductOwnerEditForm = ({ employee, handleUpdate }) => {
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Edit Product Owner</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="edit-form my-2">
-            <h3 className="text-center">Edit Employee</h3>
+            {/* <h3 className="text-center">Edit Employee</h3> */}
             <div className="row justify-content-center my-3">
               <div className="col-md-6 col-sm-12">
                 <form className="d-flex flex-column">
@@ -101,7 +134,7 @@ const ProductOwnerEditForm = ({ employee, handleUpdate }) => {
                   <div className="row mb-3">
                     <label>Joined Date</label>
                     <input
-                      type="text"
+                      type="date"
                       name="joinedDate"
                       className="form-control"
                       value={formData.user.joinedDate}
@@ -111,14 +144,14 @@ const ProductOwnerEditForm = ({ employee, handleUpdate }) => {
                   <div className="row mb-3">
                     <label>End Date</label>
                     <input
-                      type="text"
+                      type="date"
                       name="endDate"
                       className="form-control"
                       value={formData.user.endDate}
                       onChange={handleInputChange}
                     />
                   </div>
-                  <div className="row mb-3">
+                  {/* <div className="row mb-3">
                     <label>Profile Picture</label>
                     <input
                       type="text"
@@ -127,7 +160,7 @@ const ProductOwnerEditForm = ({ employee, handleUpdate }) => {
                       value={formData.user.profilePic}
                       onChange={handleInputChange}
                     />
-                  </div>
+                  </div> */}
                   <div className="row mb-3">
                     <label>Country</label>
                     <input
@@ -138,6 +171,38 @@ const ProductOwnerEditForm = ({ employee, handleUpdate }) => {
                       onChange={handleInputChange}
                     />
                   </div>
+                  {/* 
+                  <div className="row">
+                    <label htmlFor="staff">Staff Level</label>
+                    <select
+                      className="form-select"
+                      id="staff"
+                      name="staff"
+                      value={formData.user.staff}
+                      onChange={handleInputChange}
+                    >
+                      {staffLevels.map((level) => (
+                        <option value={level.id}>{level.name}</option>
+                      ))}
+                    </select>
+                  </div> */}
+                  <Box sx={{ minWidth: 120 }}>
+                    <FormControl fullWidth>
+                      <label>Staff Level</label>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="staff"
+                        name="staff"
+                        value={formData.user.staff}
+                        onChange={handleInputChange}
+                        // autoFocus
+                      >
+                        {staffLevels.map((level) => (
+                          <MenuItem value={level.id}>{level.name}</MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Box>
                 </form>
               </div>
             </div>
