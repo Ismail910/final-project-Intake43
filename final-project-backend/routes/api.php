@@ -41,10 +41,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 // ========== paypal payment ====================
-Route::post('paypal/pay', [PayPalController::class, 'pay']);
+// Route::post('paypal/pay', [PayPalController::class, 'pay']);
 
-Route::get('success', [PayPalController::class, 'success']);
-Route::get('error', [PayPalController::class, 'error']);
+// Route::post('success', [PayPalController::class, 'success']);
+// Route::get('error', [PayPalController::class, 'error']);
+
+
+    Route::post('paypal/pay', [PayPalController::class, 'pay'])->name('paypal/pay');
+    Route::get('paypal/success', [PayPalController::class, 'success'])->name('paypal.success');
+    Route::get('paypal/error', [PayPalController::class, 'error'])->name('paypal.error');
+
 
 // ========== Chat route ====================
 
