@@ -72,7 +72,7 @@ const Home = () => {
 
   return (
     <div>
-      <section className='SlidShow'>
+      {/* <section className='SlidShow'>
       <MDBCarousel  showIndicators>
       <MDBCarouselItem
         className='w-100 d-block imgSlidshow'
@@ -100,7 +100,7 @@ const Home = () => {
       </MDBCarouselItem>
     </MDBCarousel>
 
-      </section>
+      </section> */}
       <section>
         <div className="container">
           <div className="row">

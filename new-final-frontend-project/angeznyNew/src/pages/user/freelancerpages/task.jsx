@@ -114,6 +114,7 @@ function Row(props) {
       )
       .then(() => {
         toast.success("Task Updated");
+        row.status=status; 
       })
       .catch((error) => toast.error("Error updating Task:" + error.message));
     setOpenDialog(false);
