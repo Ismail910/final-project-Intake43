@@ -28,6 +28,8 @@ class RegisterController extends Controller
     }
     public function RegisterUser(StoreUserRequest $request)
     {
+        // print($request);
+        // return dd(($request));
         $user = User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
@@ -39,8 +41,8 @@ class RegisterController extends Controller
             'joinedDate' => $request->input('joinedDate'),
             'endDate' => $request->input('endDate'),
             'country' => $request->input('country'),
-            'userName'=>$request->input('userName'),
-            'gender'=>$request->input('gender')
+            'userName' => $request->input('userName'),
+            'gender' => $request->input('gender')
         ]);
         $this->save_image($request->profilePic, $user);
 
@@ -74,7 +76,7 @@ class RegisterController extends Controller
 
             return response()->json([
                 'success' => true,
-                'employee' =>new EmployeeResource($employee),
+                'employee' => new EmployeeResource($employee),
                 'token'  => $result['token']
             ], 201);
         } elseif ($request->input('role') == 'ProductManager' || $request->input('role') == 'ProductOwner' || $request->input('role') == 'Admin') {

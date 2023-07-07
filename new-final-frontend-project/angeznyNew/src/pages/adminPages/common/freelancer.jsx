@@ -44,12 +44,10 @@ export default function Developer() {
       .get("http://127.0.0.1:8000/api/freelancer")
       .then((response) => {
         console.log(response.data);
-        if(response.status=== 200)
-        {
-        setfreelancers(response.data.data || []);
-        toast.success("freelancers fectched successfully");
-        }
-        else{
+        if (response.status === 200) {
+          setfreelancers(response.data.data || []);
+          toast.success("freelancers fectched successfully");
+        } else {
           toast.error("failed to load the data");
         }
       })
@@ -71,19 +69,27 @@ export default function Developer() {
     // event.preventDefault();
     console.log(formData);
     await axios
-      .post("http://127.0.0.1:8000/api/register/manager", {
-        name: formData.user.name,
-        email: formData.user.email,
-        password: formData.user.password,
-        phone: formData.user.phone,
-        nationalID: formData.user.nationalID,
-        address: formData.user.address,
-        joinedDate: formData.user.joinedDate,
-        endDate: formData.user.endDate,
-        country: formData.user.country,
-        role: formData.user.role,
-        userName: formData.user.userName,
-      })
+      .post(
+        "http://127.0.0.1:8000/api/register/manager",
+        {
+          name: formData.user.name,
+          email: formData.user.email,
+          password: formData.user.password,
+          phone: formData.user.phone,
+          nationalID: formData.user.nationalID,
+          address: formData.user.address,
+          joinedDate: formData.user.joinedDate,
+          endDate: formData.user.endDate,
+          country: formData.user.country,
+          role: formData.user.role,
+          userName: formData.user.userName,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
       .then((response) => {
         console.log(formData);
         setfreelancers([...freelancers, formData]);
@@ -111,7 +117,7 @@ export default function Developer() {
     axios
       .delete(`http://127.0.0.1:8000/api/freelancer/${freelancerId}`, {
         headers: {
-          Authorization: "Bearer 5|wJK45DIqlgaXP59oWB6RL3iNxp52nlHaAVQPGJ5n",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
       .then((response) => {
@@ -139,14 +145,14 @@ export default function Developer() {
         updatedfreelancer.user,
         {
           headers: {
-            Authorization: "Bearer 47|TeQrlI4SmHUN4rvJdxGZZx0eb9ryFBXmsNPNOHCY",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       )
       .then((response) => {
         console.log(response.data);
         const updatedfreelancers = freelancers.map((freelancer) => {
-          if (freelancer.id === selectedfreelancer.id) {
+          if (freelancer.id === updatedfreelancer.id) {
             freelancer.user = response.data.data;
           }
           return freelancer;

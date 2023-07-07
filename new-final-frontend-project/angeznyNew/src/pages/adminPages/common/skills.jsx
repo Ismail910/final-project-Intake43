@@ -13,8 +13,9 @@ import { Tag } from "primereact/tag";
 import axios from "axios";
 import DeveloperEditForm from "./editForms/developerEditform";
 import UserForm from "./userform";
-import skillEditForm from "./editForms/skillEditform";
+import SkillEditForm from "./editForms/SkillEditform";
 import { toast } from "react-toastify";
+import SkillForm from "./Skillform";
 
 export default function Adminskill() {
   // const [skills, setskills] = useState([]);
@@ -43,12 +44,10 @@ export default function Adminskill() {
       .get("http://127.0.0.1:8000/api/skill")
       .then((response) => {
         console.log(response.data);
-        if(response.status=== 200)
-        {
-        setskills(response.data.data || []);
-        toast.success("skills fectched successfully");
-        }
-        else{
+        if (response.status === 200) {
+          setskills(response.data.data || []);
+          toast.success("skills fectched successfully");
+        } else {
           toast.error("failed to load the data");
         }
       })
@@ -59,10 +58,8 @@ export default function Adminskill() {
   const handleInputChange = (event) => {
     setFormData({
       ...formData,
-      user: {
-        ...formData.user,
-        [event.target.name]: event.target.value,
-      },
+
+      [event.target.name]: event.target.value,
     });
   };
 
@@ -73,23 +70,11 @@ export default function Adminskill() {
       .post(
         "http://127.0.0.1:8000/api/skill",
         {
-          name: formData.user.name,
-          email: formData.user.email,
-          password: formData.user.password,
-          phone: formData.user.phone,
-          nationalID: formData.user.nationalID,
-          address: formData.user.address,
-          joinedDate: formData.user.joinedDate,
-          endDate: formData.user.endDate,
-          country: formData.user.country,
-          role: formData.user.role,
-          userName: formData.user.userName,
+          name: formData.name,
         },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem(
-              "user_access_token"
-            )}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       )
@@ -120,14 +105,12 @@ export default function Adminskill() {
     axios
       .delete(`http://127.0.0.1:8000/api/skill/${skillId}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("user_access_token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
       .then((response) => {
         console.log(response.data);
-        setskills(
-          skills.filter((skill) => skill.id !== skillId)
-        );
+        setskills(skills.filter((skill) => skill.id !== skillId));
       })
       .catch((error) => {
         console.error(error);
@@ -146,20 +129,11 @@ export default function Adminskill() {
       .put(
         `http://127.0.0.1:8000/api/skill/${updatedskill.id}`,
         {
-          project_id: updatedskill.project.id,
-          product_manager_id: updatedskill.productManager.id,
-          skill_title: updatedskill.name,
-          skill_description: updatedskill.description,
-          skill_start: updatedskill.start,
-          skill_end: updatedskill.end,
-          status: updatedskill.status,
-          assigned_to: updatedskill.assigned_to.id,
+          name: updatedskill.name,
         },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem(
-              "user_access_token"
-            )}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       )
@@ -167,7 +141,7 @@ export default function Adminskill() {
         console.log(response.data.data);
 
         const updatedskills = skills.map((skill) => {
-          if (skill.id === selectedskill.id) {
+          if (skill.id === updatedskill.id) {
             skill = response.data.data;
           }
           return skill;
@@ -223,6 +197,11 @@ export default function Adminskill() {
       <div className="row">
         <div className="col-2"></div>
         <div className="d-flex flex-column justify-content-center col-10 p-4 h-100">
+          <SkillForm
+            formData={formData}
+            handleInputChange={handleInputChange}
+            handleSubmit={handleSubmit}
+          />
           <DataTable
             className="col-12"
             value={skills}
@@ -237,12 +216,7 @@ export default function Adminskill() {
             onSelectionChange={(e) => setSelectedskills(e.value)}
             filters={filters}
             filterDisplay="menu"
-            globalFilterFields={[
-              "user.name",
-              "user.email",
-              "user.phone",
-              "user.country",
-            ]}
+            globalFilterFields={["name"]}
             emptyMessage="No skills found."
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
           >
@@ -259,46 +233,11 @@ export default function Adminskill() {
             />
 
             <Column
-              field="project.name"
-              header="Project Name"
-              sortable
-              filter
-              style={{ minWidth: "14rem" }}
-            />
-
-            <Column
-              field="start"
-              header="Start Date"
-              sortable
-              filter
-              style={{ minWidth: "14rem" }}
-            />
-            <Column
-              field="end"
-              header="End Date"
-              sortable
-              filter
-              style={{ minWidth: "14rem" }}
-              // body={(rowData) =>
-              //   rowData.user.skills.map((skill) => skill.name).join(", ")
-              // }
-            />
-            <Column
-              field="status"
-              header="Status"
-              sortable
-              filter
-              style={{ minWidth: "14rem" }}
-              // body={(rowData) =>
-              //   rowData.user.skills.map((skill) => skill.name).join(", ")
-              // }
-            />
-
-            <Column
               headerStyle={{ width: "5rem", textAlign: "center" }}
               bodyStyle={{ textAlign: "center", overflow: "visible" }}
               header="Actions"
               body={(rowData) => {
+                console.log(rowData);
                 setSelectedskill(rowData);
                 return (
                   <div style={{ display: "flex" }}>
@@ -309,8 +248,8 @@ export default function Adminskill() {
                       Edit
                     </button> */}
 
-                    <skillEditForm
-                      skill={rowData}
+                    <SkillEditForm
+                      employee={rowData}
                       handleUpdate={handleUpdate}
                     />
 

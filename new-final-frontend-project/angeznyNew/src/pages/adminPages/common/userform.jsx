@@ -259,6 +259,20 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
                   </div>
 
                   <div className="row">
+                    <label htmlFor="gender">Gender</label>
+                    <select
+                      className="form-select"
+                      id="gender"
+                      name="gender"
+                      value={formData.gender}
+                      onChange={handleInputChange}
+                    >
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>
+                  </div>
+
+                  <div className="row">
                     <label htmlFor="nationalID">National ID</label>
                     <input
                       type="number"
@@ -337,7 +351,7 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
                     />
                   </div>
 
-                  <div className="row ">
+                  {/* <div className="row ">
                     <label htmlFor="profilePic">Profile Picture</label>
                     <input
                       type="file"
@@ -348,7 +362,7 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
                       value={formData.profilePic}
                       onChange={handleInputChange}
                     />
-                  </div>
+                  </div> */}
 
                   <div className="row">
                     <label htmlFor="country">Country</label>
@@ -372,7 +386,6 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
                       value={formData.role}
                       onChange={handleInputChange}
                     >
-                      <option value="">Select a role</option>
                       <option value="Admin">Admin</option>
                       <option value="ProductManager">Product Manager</option>
                       <option value="ProductOwner">Product Owner</option>

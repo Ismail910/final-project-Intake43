@@ -79,9 +79,9 @@ export default function AdminTask() {
         },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem(
-              "user_access_token"
-            )}`,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
           },
         }
       )
@@ -112,7 +112,7 @@ export default function AdminTask() {
     axios
       .delete(`http://127.0.0.1:8000/api/tasks/${employeeId}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("user_access_token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
       .then((response) => {
@@ -145,13 +145,11 @@ export default function AdminTask() {
           task_start: updatedEmployee.start,
           task_end: updatedEmployee.end,
           status: updatedEmployee.status,
-          assigned_to: updatedEmployee.assigned_to.id,
+          assigned_to: updatedEmployee.assigned_to.hisID,
         },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem(
-              "user_access_token"
-            )}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       )

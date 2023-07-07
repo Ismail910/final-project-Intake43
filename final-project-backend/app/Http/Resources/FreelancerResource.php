@@ -17,6 +17,7 @@ class FreelancerResource extends JsonResource
     public function toArray(Request $request): array
     {
         $Task = $this->task ? new TaskResource($this->task) : null;
+        // $staff_level = $this->staff_level ? new StaffLevelResource($this->staff_level) : null;
         return [
             'id' => $this->id,
             'rate' => $this->rate,

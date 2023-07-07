@@ -20,11 +20,11 @@ const ContactUs = () => {
     <form id='form' className='' style={{ width: '100%', maxWidth: '300px' }}>
     <h2 className='d-flex justify-content-around p-5 align-items-center  fw-bolder'>Contact us</h2>
 
-    <p className='labels'>Name: </p><MDBInput  v-model='name' wrapperClass='mb-4'  class="inputs"/>
+    <p className='labels'>Name: </p><input  v-model='name' wrapperClass='mb-4'  class="inputs"/>
 
-    <p className='labels'>Email: </p> <MDBInput type='email' v-model='email' wrapperClass='mb-4' class="inputs" />
+    <p className='labels'>Email: </p> <input type='email' v-model='email' wrapperClass='mb-4' class="inputs" />
 
-    <p className='labels'>Subject: </p>  <MDBInput  v-model='subject' wrapperClass='mb-4' class="inputs"/>
+    <p className='labels'>Subject: </p>  <input  v-model='subject' wrapperClass='mb-4' class="inputs mb-5"/>
 
    
 
