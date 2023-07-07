@@ -1,9 +1,43 @@
-import React from 'react';
+import React, { useEffect,useState }  from 'react';
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBBtn, MDBTypography } from 'mdb-react-ui-kit';
+import axios from 'axios';
+// import jwt from 'jsonwebtoken';
+import WebFont from 'webfontloader';
 import '../styles/userProfile.css';
 const UserProfile  = () => {
 
   
+  React.useEffect(() => {
+    WebFont.load({
+      google: {
+        families: ['Font1', 'Font2:ital,wght@0,400;0,700;1,400;1,700&display=swap'],
+      },
+    });
+  }, []);
+
+  const userName =localStorage.getItem("user_userName");
+  const name =localStorage.getItem("user_name");
+  const role =localStorage.getItem("user_role");
+  // const name =localStorage.getItem("user_userName");
+  const userId =localStorage.getItem("user_id");
+
+  const [user, setUser] = useState(userId);
+
+  useEffect(() => {
+    axios
+      .get(`http://127.0.0.1:8000/api/user/${userId}`)
+      .then(response => {
+        console.log(response.data.data);
+        setUser(response.data.data|| 0);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, []);
+  
+  
+
+
   return (
     <div className="" style={{  }}>
       <MDBContainer className="py-5 h-100">
@@ -19,9 +53,9 @@ const UserProfile  = () => {
                     <i class="fa-solid fa-pen-to-square mx-1 "></i>
                   </MDBBtn>
                 </div>
-                <div className="ms-3" style={{ marginTop: '130px' }}>
-                  <MDBTypography tag="h5">Andy Horwitz</MDBTypography>
-                  <MDBCardText>New York</MDBCardText>
+                <div className="ms-3" style={{ marginTop: '120px' }}>
+                  <MDBTypography tag="h5" className='nameFont fs-1'style={{ fontFamily: 'Font1, Caprasimo' }}>{user["name"]}</MDBTypography>
+                  <MDBCardText>{user["email"]}</MDBCardText>
                 </div>
               </div>
               <div className="p-4 text-black" style={{ backgroundColor: '#f8f9fa' }}>
