@@ -16,6 +16,7 @@ import UserForm from "./userform";
 import SkillEditForm from "./editForms/SkillEditform";
 import { toast } from "react-toastify";
 import SkillForm from "./Skillform";
+import AddSkillToUserForm from "./editForms/AddSkillToUserform";
 
 export default function Adminskill() {
   // const [skills, setskills] = useState([]);
@@ -177,7 +178,7 @@ export default function Adminskill() {
   const renderHeader = () => {
     return (
       <div className="flex flex-wrap gap-2 justify-content-between align-items-center">
-        <h4 className="m-0">skills</h4>
+        <h4 className="m-0">Skills</h4>
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
           <InputText
@@ -220,20 +221,20 @@ export default function Adminskill() {
             emptyMessage="No skills found."
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
           >
-            <Column
+            {/* <Column
               selectionMode="multiple"
               headerStyle={{ width: "3rem" }}
-            ></Column>
+            ></Column> */}
             <Column
               field="name"
               header="skill Name"
               sortable
-              filter
-              style={{ minWidth: "14rem" }}
+              // filter
+              style={{ width: "35rem" }}
             />
 
             <Column
-              headerStyle={{ width: "5rem", textAlign: "center" }}
+              headerStyle={{ width: "10rem", textAlign: "center" }}
               bodyStyle={{ textAlign: "center", overflow: "visible" }}
               header="Actions"
               body={(rowData) => {
@@ -248,6 +249,13 @@ export default function Adminskill() {
                       Edit
                     </button> */}
 
+                    <AddSkillToUserForm skill={rowData}></AddSkillToUserForm>
+                    {/* <button
+                      className="btn btn-warning me-4"
+                      onClick={() => handleDelete(rowData.id)}
+                    >
+                      Add to User
+                    </button> */}
                     <SkillEditForm
                       employee={rowData}
                       handleUpdate={handleUpdate}

@@ -81,7 +81,7 @@ const Sidnave = () => {
             <span className="ml-3">Tasks</span>
           </Link>
         </li>
-        
+
         <li className="nav-item mb-2">
           <Link
             className="nav-link text-secondary text-light"
@@ -90,7 +90,15 @@ const Sidnave = () => {
             <span className="ml-3">Skills</span>
           </Link>
         </li>
-        
+
+        <li className="nav-item mb-2">
+          <Link
+            className="nav-link text-secondary text-light"
+            to="/admin/stafflevels"
+          >
+            <span className="ml-3">Staff Levels</span>
+          </Link>
+        </li>
       </ul>
     </div>
   );
