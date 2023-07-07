@@ -42,13 +42,9 @@ function Row(props) {
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
   const [managers, setManagers] = React.useState([]);
-  const [selectedManagerId, setSelectedManagerId] = React.useState(
-    row.ProductManager.id
-  );
+  const [selectedManagerId, setSelectedManagerId] = React.useState(row.ProductManager.id);
   const [owners, setOwners] = React.useState([]);
-  const [selectedOwnerId, setSelectedOwnerId] = React.useState(
-    row.productOnwer.id
-  );
+  const [selectedOwnerId, setSelectedOwnerId] = React.useState(row.productOnwer.id);
   const [status, setStatus] = React.useState(row.status);
   const [type, setType] = React.useState(row.type);
   const [title, setTitle] = React.useState(row.name);
@@ -57,14 +53,15 @@ function Row(props) {
   const [endDate, setEndDate] = React.useState(row.start);
 
   const getClassByStatus = (status) => {
-    if (status == "completed") {
+    if (status === "completed") {
       return "green"; // Apply green color for 'completed' status
-    } else if (status == "in_progress") {
+    } else if (status === "in_progress") {
       return "warning"; // Apply warning color for 'in_progress' status
     } else {
       return "red"; // Apply red color for other statuses
     }
   };
+
   React.useEffect(() => {
     const startdate = row.start.split(" ")[0]; // Extract the date part from row.start
     setStartDate(startdate);
@@ -98,7 +95,6 @@ function Row(props) {
   };
   const handleSave = async (event) => {
     event.preventDefault();
-    console.log(row);
     await axios
       .put(
         `http://127.0.0.1:8000/api/projects/${row.id}`,
@@ -112,6 +108,7 @@ function Row(props) {
           ProductManager_id: row.ProductManager.id,
           client_id: row.client.id,
           project_status: status,
+          budget:row.budget
         },
         {
           headers: {
@@ -121,80 +118,22 @@ function Row(props) {
         }
       )
       .then(() => {
-        // Update the task data in the local state
-        // setTasks((prevTasks) => {
-        //   const updatedTasks = prevTasks.map((task) => {
-        //     if (task.id === row.id) {
-        //       // Update the task properties with the new values
-        //       return {
-        //         ...task,
-        //         task_title: title,
-        //         task_description: description,
-        //         task_start: startDate,
-        //         task_end: endDate,
-        //         status: status,
-        //       };
-        //     }
-        //     return task;
-        //   });
-        //   return updatedTasks;
-        // });
         toast.success("Task Updated");
+        row.name = title;
+        row.type = type;
+        row.description = description;
+        row.start = startDate;
+        row.end = endDate;
+        row.status = status;
       })
-      .catch((error) => toast.error("Error updating Task:" + error.message));
+    .catch((error) => toast.error("Error updating Task:" + error.message));
     setOpenDialog(false);
   };
-  const handleOpenDialaog = (event) => {
+
+  const handleOpenDialog = (event) => {
     setOpenDialog(true);
-    const fetchManager = async () => {
-      try {
-        var response = await fetch(
-          `http://127.0.0.1:8000/api/managers/ProductManager`,
-          {
-            headers: {
-              Accept: "application/json",
-            },
-          }
-        );
-
-        if (response.ok) {
-          const data = await response.json();
-          if (data) {
-            setManagers(data.data);
-          }
-        } else {
-          toast.error("Failed to fetch Project data");
-        }
-      } catch (error) {
-        toast.error(error);
-      }
-    };
-    const fetchOwner = async () => {
-      try {
-        var response = await fetch(
-          `http://127.0.0.1:8000/api/managers/ProductOwner`,
-          {
-            headers: {
-              Accept: "application/json",
-            },
-          }
-        );
-
-        if (response.ok) {
-          const data = await response.json();
-          if (data) {
-            setOwners(data.data);
-          }
-        } else {
-          toast.error("Failed to fetch Project data");
-        }
-      } catch (error) {
-        toast.error(error);
-      }
-    };
-    fetchManager();
-    fetchOwner();
   };
+
   return (
     <React.Fragment>
       <style>
@@ -243,7 +182,7 @@ function Row(props) {
           <Button
             variant="outlined"
             color="neutral"
-            onClick={handleOpenDialaog}
+            onClick={handleOpenDialog}
           >
             <EditIcon variant="contained" className="ms-2" color="warning" />
           </Button>
@@ -311,36 +250,8 @@ function Row(props) {
                         onChange={handleEndDateChange}
                         autoFocus
                         required
-                        type="date"
-                      />
-                    </FormControl>
-                    <FormControl>
-                      <FormLabel>Product Manager</FormLabel>
-                      <Select
-                        value={selectedManagerId}
-                        onChange={handleManagerChange}
-                        autoFocus
-                      >
-                        {managers.map((manager) => (
-                          <MenuItem key={manager.id} value={manager.id}>
-                            {manager.user.name}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                    <FormControl>
-                      <FormLabel>Product Owner</FormLabel>
-                      <Select
-                        value={selectedOwnerId}
-                        onChange={handleOwnerChange}
-                        autoFocus
-                      >
-                        {owners.map((owner) => (
-                          <MenuItem key={owner.id} value={owner.id}>
-                            {owner.user.name}
-                          </MenuItem>
-                        ))}
-                      </Select>
+                        type="date"/>
+                      
                     </FormControl>
                     <FormControl>
                       <FormLabel>Description</FormLabel>

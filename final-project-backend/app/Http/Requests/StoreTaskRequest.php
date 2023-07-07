@@ -32,6 +32,7 @@ class StoreTaskRequest extends FormRequest
             'task_start' => 'required|date',
             'task_end' => 'required|date|after:task_start',
             'task_status' => 'required|in:notStarted,inProgress,completed',
+            'price' => 'numeric|min:0',
         ];
     }
 

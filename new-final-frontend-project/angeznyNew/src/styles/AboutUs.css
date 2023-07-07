@@ -1,6 +1,7 @@
 .header{
-    font-size: 4.2rem;
+    font-size: 3.2rem;
     font-weight: bolder;
+    color: rgb(41, 41, 41);
 }
 .buttonHeader{
     background-color:#FF7C03 ;
@@ -10,7 +11,7 @@
 }
 .DivCONTAINER{
    margin-bottom: 100px;
-    height: 350px;
+    height: 500px;
     margin-top: 100px;
 }
 .Div-CONTAINER{

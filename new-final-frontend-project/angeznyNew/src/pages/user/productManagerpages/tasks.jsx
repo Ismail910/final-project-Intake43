@@ -44,20 +44,23 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 // import { CometChatUI } from "./cometchat-pro-react-ui-kit/CometChatWorkspace/src";
-function Row(props) {
+function Row(props,onDelete ) {
   const token = localStorage.getItem("token");
   const { row } = props;
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
   const [developers, setDevelopers] = React.useState([]);
-  const [selectedDeveloperId, setSelectedDeveloperId] = React.useState();
+  const [selectedDeveloperId, setSelectedDeveloperId] = React.useState(row.assigned_to?.hisID);
   const [openDialogDelete, setOpenDialogDelete] = React.useState(false);
   const [status, setStatus] = React.useState(row.status);
   const [title, setTitle] = React.useState(row.name);
   const [description, setDescription] = React.useState(row.description);
   const [startDate, setStartDate] = React.useState(row.start);
   const [endDate, setEndDate] = React.useState(row.start);
-
+  const [price, setPrice] = React.useState(row.price);
+  const handlePriceChange = (event) => {
+    setPrice(event.target.value);
+  };
   const getClassByStatus = (status) => {
     if (status == "completed") {
       return "green"; // Apply green color for 'completed' status
@@ -145,42 +148,20 @@ function Row(props) {
         }
       )
       .then(() => {
-        // Update the task data in the local state
-        // setTasks((prevTasks) => {
-        //   const updatedTasks = prevTasks.map((task) => {
-        //     if (task.id === row.id) {
-        //       // Update the task properties with the new values
-        //       return {
-        //         ...task,
-        //         task_title: title,
-        //         task_description: description,
-        //         task_start: startDate,
-        //         task_end: endDate,
-        //         status: status,
-        //       };
-        //     }
-        //     return task;
-        //   });
-        //   return updatedTasks;
-        // });
         toast.success("Task Updated");
+        row.name = title;
+        row.price = price;
+        row.description = description;
+        row.start = startDate;
+        row.end = endDate;
+        row.status = status;
       })
       .catch((error) => toast.error("Error updating Task:" + error.message));
     setOpenDialog(false);
   };
   const handleDelete = async (event) => {
     event.preventDefault();
-    await axios
-      .delete(`http://127.0.0.1:8000/api/task/${row.id}`, {
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then(() => {
-        toast.success("Task Deleted");
-      })
-      .catch((error) => toast.error("Error Deleted Task:", error));
+    onDelete(row.id);
     setOpenDialogDelete(false);
   };
   return (
@@ -220,6 +201,9 @@ function Row(props) {
         <StyledTableCell component="th" scope="row">
           {row.project.name}
         </StyledTableCell>
+        <StyledTableCell component="th" scope="row">
+          {row.price}
+        </StyledTableCell>
         <StyledTableCell align="right" className={getClassByStatus(row.status)}>
           {row.status}
         </StyledTableCell>
@@ -255,6 +239,16 @@ function Row(props) {
                       value={title}
                       onChange={handleTitleChange}
                       autoFocus
+                      required
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>Price</FormLabel>
+                    <Input
+                      value={price}
+                      onChange={handlePriceChange}
+                      autoFocus
+                      type="number"
                       required
                     />
                   </FormControl>
@@ -430,6 +424,7 @@ const Tasks = ({ statustask }) => {
   const [open, setOpen] = React.useState(false);
   const [status, setStatus] = React.useState("");
   const [title, setTitle] = React.useState("");
+  const [price, setPrice] = React.useState(0);
   const [description, setDescription] = React.useState("");
   const [startDate, setStartDate] = React.useState("");
   const [endDate, setEndDate] = React.useState("");
@@ -492,6 +487,20 @@ const Tasks = ({ statustask }) => {
       fetchTasksByStatus();
     }
   }, [statustask]);
+  const handleDelete = async (taskId) => {
+    try {
+      await axios.delete(`http://127.0.0.1:8000/api/task/${taskId}`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+      toast.success("Task Deleted");
+    } catch (error) {
+      toast.error("Error Deleting Task: " + error.message);
+    }
+  };
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
   };
@@ -547,6 +556,9 @@ const Tasks = ({ statustask }) => {
   const handleStatusChange = (event) => {
     setStatus(event.target.value);
   };
+  const handlePriceChange = (event) => {
+    setPrice(event.target.value);
+  };
   const handleStartDateChange = (event) => {
     setStartDate(event.target.value);
   };
@@ -590,6 +602,7 @@ const Tasks = ({ statustask }) => {
           task_end: endDate,
           task_status: status,
           assigned_to: selectedDeveloperId,
+          price:price
         },
         {
           headers: {
@@ -598,7 +611,8 @@ const Tasks = ({ statustask }) => {
           },
         }
       )
-      .then(() => {
+      .then((response) => {
+        setTasks((prevTasks) => [...prevTasks, response.data.data]);
         toast.success("Task Created");
       })
       .catch((error) => {
@@ -637,7 +651,7 @@ const Tasks = ({ statustask }) => {
     setOpen(true);
   };
 
-  const handleSend = () => {
+  const handleSend = (userID) => {
     const appID = "240169ef153c40df";
     const region = "US";
     const authKey = "581f246117c147b5f041cf28049c89388b3fc5cd";
@@ -651,15 +665,15 @@ const Tasks = ({ statustask }) => {
         console.log("Initialization completed successfully");
         // You can now proceed with rendering your app or calling the login function.
         const messageText = message;
-        const receiverID = "user2";
+        const receiverID = userID;
         const receiverType = CometChat.RECEIVER_TYPE.USER;
-
+        const senderID = localStorage.getItem("user_id"); 
         const textMessage = new CometChat.TextMessage(
           receiverID,
           messageText,
           receiverType
         );
-
+        textMessage.setSenderUID(senderID);
         CometChat.sendMessage(textMessage).then(
           (message) => {
             console.log("Message sent successfully:", message);
@@ -746,6 +760,17 @@ const Tasks = ({ statustask }) => {
                       required
                     />
                   </FormControl>
+                  <FormControl>
+                    <FormLabel>Price</FormLabel>
+                    <Input
+                      value={price}
+                      onChange={handlePriceChange}
+                      autoFocus
+                      type="number"
+                      required
+                    />
+                  </FormControl>
+                  
                   <FormControl>
                     <FormLabel>Project Name</FormLabel>
                     <Select
@@ -841,7 +866,7 @@ const Tasks = ({ statustask }) => {
                   <ListItem component="div" disablePadding>
                     <ListItemButton>
                       <ListItemText primary={`User Name: ${user.userName}`} />
-                      <SendIcon onClick={handleSend} />
+                      <SendIcon onClick={() => handleSend(user.id)} />
                     </ListItemButton>
                   </ListItem>
                 </Box>
@@ -862,6 +887,7 @@ const Tasks = ({ statustask }) => {
                   <StyledTableCell />
                   <StyledTableCell>Title</StyledTableCell>
                   <StyledTableCell>Project Name</StyledTableCell>
+                  <StyledTableCell>Price</StyledTableCell>
                   <StyledTableCell align="right">Status</StyledTableCell>
                   <StyledTableCell align="center">Start</StyledTableCell>
                   <StyledTableCell align="center">End</StyledTableCell>
@@ -871,7 +897,7 @@ const Tasks = ({ statustask }) => {
               </TableHead>
               <TableBody>
                 {tasks.map((task) => (
-                  <Row key={task.id} row={task} />
+                  <Row key={task.id} row={task}  onDelete={handleDelete}/>
                 ))}
               </TableBody>
             </Table>
