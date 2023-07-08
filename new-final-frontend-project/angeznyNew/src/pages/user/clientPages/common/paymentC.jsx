@@ -94,13 +94,15 @@ const Payment = () => {
 
   const handlePayment = async () => {
     try {
-      
-      const response = await axios.post('http://127.0.0.1:8000/api/paypal/pay', {
-        amount:  100 ,//project?.budget || 0,
-        project_id: project?.id,
-        paymentId: paymentId,
-        client_id: client_id
-      });
+      const data ={
+        amount: 1100 ,
+        project_id: 2 ,
+        user_id: 1 ,
+       
+      } 
+      const response = await axios.post('http://127.0.0.1:8000/api/paypal/pay', 
+      data
+       );
       
       
       setPaymentId(response.data?.paymentId);
@@ -124,12 +126,12 @@ const Payment = () => {
           toast.success('Payment completed successfully.');
           navigate('/client/');
         } else {
-          // Handle other cases if needed
+          
           toast.error('Failed to complete the payment.');
         }
       } catch (error) {
         console.log(error.response?.data);
-        // Handle error accordingly
+        
         toast.error('Failed to complete the payment.');
       }
   };
@@ -138,13 +140,13 @@ const Payment = () => {
   const handleError = async () => {
     try {
     
-        // Handle payment cancellation
+        
         toast.info('Payment cancelled by the user.');
         navigate('/payment');
      
     } catch (error) {
       console.log(error.response?.data);
-      // Handle error accordingly
+     
       toast.error('Failed to cancel the payment.');
     }
   };
@@ -177,7 +179,7 @@ const Payment = () => {
 };
 
 export default Payment;
-/////////////////////////////////////
+
 
 
 

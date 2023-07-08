@@ -112,14 +112,16 @@ const Payment = () => {
   //   }
   // }
   const handlePayment = async () => {
+    const data ={
+      amount: 1100 ,
+      project_id: 1 ,
+      user_id: 16 ,
+      paymentId: paymentId
+    } 
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/paypal/pay', {
-        params: {
-          amount: 100,
-          project_id: 1,
-          user_id: 16,
-        }
-      });
+      const response = await axios.post('http://127.0.0.1:8000/api/paypal/pay', 
+        JSON.stringify(data)
+      );
   
       setPaymentId(response.data?.paymentId);
       window.location.href = response.data?.redirectUrl;
@@ -127,8 +129,6 @@ const Payment = () => {
       console.log(error.response?.data);
     }
   };
-  
-  
   
   
   const handleSuccess = async () => {
