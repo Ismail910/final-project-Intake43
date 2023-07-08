@@ -14,7 +14,7 @@ class PayPalController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth:sanctum', 'checkUser:Client, Admin']);
+        // $this->middleware(['auth:sanctum', 'checkUser:Client, Admin']);
         $this->gateway = Omnipay::create('PayPal_Rest');
         $this->gateway->setClientId(env('PAYPAL_CLIENT_ID'));
         $this->gateway->setSecret(env('PAYPAL_SECRET'));
@@ -215,7 +215,7 @@ class PayPalController extends Controller
 //     $payment->transaction_reference = $paymentId;
 //     $payment->save();
 
-//     // اضافة الكود الخاص بالرجوع إلى الصفحة الرئيسية في الفرنت إذا كنت ترغب في ذلك
+//    
 
 //     return response()->json([
 //         'success' => true,
