@@ -6,9 +6,11 @@
 }
 .cardData{
   position:relative;
-  background-image: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+  /* background-image: linear-gradient(to right, #0f0c29, #302b63, #24243e); */
+  background-color: #1560bd !important;
   color:white !important;
   padding:10px;
+  height: 16 em;
   
 }
 .deleteBtn{
@@ -36,23 +38,19 @@
   position:absolute;
   width:20px;
   height:20px;
-  border-radius:50%;
-  top:0;
-  left:0;
+  bottom:10;
+  right: 6%;
 
 }
 
 .green{
-  background-color:green;
-  border:1px solid white;
+  color:green;
 }
 .red{
-  background-color:red;
-  border:1px solid white;
+ color:red;
 }
 .yellow{
-  background-color:yellow;
-  border:1px solid white;
+  color:yellow;
 }
 .blocked{
   display: block;
