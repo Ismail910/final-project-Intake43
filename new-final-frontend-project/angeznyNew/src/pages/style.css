@@ -4,7 +4,7 @@
   
     /* Chrome 10-25, Safari 5.1-6 */
     background: -webkit-linear-gradient(to right, #2362e9, #13619d, #369ddd, #45a0b4);
-  
+    
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     background: linear-gradient(to right, #2362e9, #13619d, #369ddd, #45a0b4);
   }
@@ -24,6 +24,7 @@
 .mycard{
     margin-top: 60px;
     height: 600px !important;
+    borderRadius:2rem;
 }
 .registerbtn{
     background: -webkit-linear-gradient(to right, #2362e9, #13619d, #369ddd, #45a0b4);
