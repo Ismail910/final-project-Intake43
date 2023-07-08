@@ -11,6 +11,7 @@ import Input from "@mui/joy/Input";
 import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import Stack from "@mui/joy/Stack";
+import './styles.css'
 
 const ClientProject = ({ statusProject }) => {
 
@@ -209,8 +210,9 @@ const ClientProject = ({ statusProject }) => {
   };
 
   return (
-    <div>
+    <div className="d-flex justify-content-center row">
       <Button
+        className="mt-4 w-25 mb-5 addbtn" 
         variant="outlined"
         color="neutral"
         sx={{ width: "95%", marginLeft: "30px", marginBottom: "5px" }}
@@ -308,37 +310,37 @@ const ClientProject = ({ statusProject }) => {
         </ModalDialog>
       </Modal>
       <div>
-        <Row>
+        <Row className="d-flex justify-content-center">
           {Array.isArray(projects) ? (
             projects.map((item) => (
-              <Col key={item.id} lg={4} md={6} sm={12}>
-                <Card className="mb-3">
+              <Col key={item.id} lg={5} md={5} sm={5}>
+                <Card className="mb-4 cardData">
                   <Card.Body>
-                    <Card.Title>{item.name}</Card.Title>
+                    <Card.Title>Title of project : {item.name}</Card.Title>
                     <Card.Text>{item.type}</Card.Text>
                     <Card.Text>{item.description}</Card.Text>
-                    <Card.Text>{}</Card.Text>
 
                     <Button
-                      variant="primary"
                       onClick={() => handleEdit(item)}
                       disabled={item.status !== "notStarted"}
                     >
-                      Edit
+                      <i class="fa-solid fa-pen-to-square"></i>
                     </Button>
                     <Button
-                      variant="danger"
+                      className="deleteBtn"
                       onClick={() => handleDelete(item.id)}
                       disabled={item.status !== "notStarted"}
                     >
-                      Delete
+                      <i class="fa-solid fa-circle-xmark"></i>
                     </Button>
                   </Card.Body>
                 </Card>
               </Col>
             ))
           ) : (
-            <p>Loading...</p>
+            <Typography component="div" align="center" color="danger">
+              No projects found.
+            </Typography>
           )}
         </Row>
       </div>

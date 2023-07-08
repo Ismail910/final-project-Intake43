@@ -1,11 +1,26 @@
-.green {
-    color: green;
-  }
-  
-  .warning {
-    color: yellow;
-  }
-  
-  .red {
-    color: red;
-  }
+.cardData{
+  position:relative;
+  background-image: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+  color:white !important;
+}
+.deleteBtn{
+  position:absolute;
+  top:-10%;
+  right:-1%;
+  width:30px;
+  height:30px;
+  border-radius:50% !important;
+  background-color: rgb(143, 4, 4)!important;
+  border: none !important;
+  text-align: center;
+  padding: 0 !important;
+}
+.deleteBtn:hover{
+  background-color: red !important;
+}
+.addbtn{
+  background-color:#FF7C03 !important;
+  color:white !important;
+  font-weight:600px !important;
+
+}
