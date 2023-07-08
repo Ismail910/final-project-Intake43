@@ -156,14 +156,12 @@ export default function Developer() {
           return client;
         });
 
-        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         console.log(updatedclients);
         setclients(updatedclients);
         setShowEditForm(false);
         setSelectedclient(null);
       })
       .catch((error) => {
-        console.log("asdadadasdassdasdadas");
 
         console.error(error);
       });
@@ -267,13 +265,6 @@ export default function Developer() {
                 setSelectedclient(rowData);
                 return (
                   <div style={{ display: "flex" }}>
-                    {/* <button
-                      className="btn btn-info me-2"
-                      onClick={() => handleEdit(rowData)}
-                    >
-                      Edit
-                    </button> */}
-
                     <ClientEditForm
                       employee={rowData}
                       handleUpdate={handleUpdate}

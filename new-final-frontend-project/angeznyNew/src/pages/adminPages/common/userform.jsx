@@ -42,7 +42,7 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
 
   return (
     <>
-     <div className="col-4">
+     <div className="col-4 ">
       <Button className="btn btn-success mx-4" onClick={handleShow}>
         <i className="fa-solid fa-plus me-2"></i>
         <span>Add User</span>
