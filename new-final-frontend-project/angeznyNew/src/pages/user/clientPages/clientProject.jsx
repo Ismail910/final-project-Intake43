@@ -11,10 +11,9 @@ import Input from "@mui/joy/Input";
 import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import Stack from "@mui/joy/Stack";
-import './styles.css'
+import "./styles.css";
 
 const ClientProject = ({ statusProject }) => {
-
   const token = localStorage.getItem("token");
   const usrID = localStorage.getItem("user_id");
   const [projects, setProjects] = useState(null);
@@ -25,7 +24,7 @@ const ClientProject = ({ statusProject }) => {
   const [description, setDescription] = React.useState("");
   const [startDate, setStartDate] = React.useState("");
   const [endDate, setEndDate] = React.useState("");
-  const [budget, setBudget] = React.useState("");
+  const [budget, setBudget] = React.useState(0);
   const [selectedProject, setSelectedProject] = React.useState(null);
 
   const getClassByStatus = (statusProject) => {
@@ -97,6 +96,12 @@ const ClientProject = ({ statusProject }) => {
 
   const handleEdit = (project) => {
     setSelectedProject(project);
+    setTitle(selectedProject?.name);
+    setType(selectedProject?.project_type);
+    setDescription(selectedProject?.description);
+    setStartDate(selectedProject?.start);
+    setEndDate(selectedProject?.end);
+    setBudget(selectedProject?.budget);
     setOpen(true);
   };
 
@@ -184,7 +189,7 @@ const ClientProject = ({ statusProject }) => {
             project_description: description,
             project_start: startDate,
             project_end: endDate,
-            budget: budget,
+            budget: 0,
             project_status: "notStarted",
             client_id: usrID,
             ProductOwner_id: 99,
@@ -222,7 +227,7 @@ const ClientProject = ({ statusProject }) => {
   return (
     <div className="container-fluid d-flex justify-content-center row">
       <Button
-        className="mt-4 w-25 mb-5 addbtn" 
+        className="mt-4 w-25 mb-5 addbtn"
         variant="outlined"
         color="neutral"
         sx={{ width: "95%", marginLeft: "30px", marginBottom: "5px" }}
@@ -254,7 +259,7 @@ const ClientProject = ({ statusProject }) => {
               <FormControl>
                 <FormLabel>Title</FormLabel>
                 <Input
-                  value={title || selectedProject?.name}
+                  value={title}
                   onChange={handleTitleChange}
                   autoFocus
                   required
@@ -263,7 +268,7 @@ const ClientProject = ({ statusProject }) => {
               <FormControl>
                 <FormLabel>Type Project</FormLabel>
                 <Select
-                  value={type || selectedProject?.project_type}
+                  value={type}
                   onChange={handleTypeChange}
                   autoFocus
                   required
@@ -275,7 +280,7 @@ const ClientProject = ({ statusProject }) => {
               <FormControl>
                 <FormLabel>Start</FormLabel>
                 <Input
-                  value={startDate || selectedProject?.start}
+                  value={startDate}
                   onChange={handleStartDateChange}
                   autoFocus
                   required
@@ -285,28 +290,28 @@ const ClientProject = ({ statusProject }) => {
               <FormControl>
                 <FormLabel>End</FormLabel>
                 <Input
-                  value={endDate || selectedProject?.end}
+                  value={endDate}
                   onChange={handleEndDateChange}
                   autoFocus
                   required
                   type="date"
                 />
               </FormControl>
-              <FormControl>
+              {/* <FormControl>
                 <FormLabel>Budget</FormLabel>
                 <Input
-                  value={budget || selectedProject?.budget}
+                  value={budget}
                   onChange={handleBudgetChange}
                   autoFocus
                   required
                   type="number"
                 />
-              </FormControl>
+              </FormControl> */}
               <FormControl>
                 <FormLabel>Description</FormLabel>
                 <TextareaAutosize
                   minRows={3}
-                  value={description || selectedProject?.description}
+                  value={description}
                   onChange={handleDescriptionChange}
                   autoFocus
                   required
