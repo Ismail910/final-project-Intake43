@@ -777,7 +777,7 @@ const MyRoutes = () => {
             >
               <Header />
               {/* <Ownerproject /> */}
-              <StatusOwner/>
+              <StatusOwner />
               <Footer />
             </Suspense>
           }
