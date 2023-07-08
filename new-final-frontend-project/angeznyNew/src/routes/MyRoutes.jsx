@@ -62,6 +62,8 @@ import GuardRoute from "../guard/GuardRoute";
 import Footer from "../pages/user/common/footer";
 import Header from "../pages/user/common/header";
 import NotFound from "../components/NotFound";
+import Failed from "../pages/user/clientPages/common/failed"
+import Success from "../pages/user/clientPages/common/success"
 
 const MyRoutes = () => {
   // const [currentForm, setCurrentForm] = useState("Login");
@@ -437,6 +439,41 @@ const MyRoutes = () => {
             </Suspense>
           }
         />
+
+        <Route
+          path="/client/payment/success"
+          element={
+            <Suspense
+              fallback={
+                <div className="grid place-items-center h-screen bg-black">
+                  <CircleSpinner size={60} />
+                </div>
+              }
+            >   
+              <Header />
+              <Success/>
+              <Footer />
+            </Suspense>
+          }
+        />
+        
+        <Route
+          path="/client/payment/failed"
+          element={
+            <Suspense
+              fallback={
+                <div className="grid place-items-center h-screen bg-black">
+                  <CircleSpinner size={60} />
+                </div>
+              }
+            >
+              
+              <Header />
+              <Failed/>
+              <Footer />
+            </Suspense>
+          }
+        /> 
         <Route
           path="/client/profile"
           element={

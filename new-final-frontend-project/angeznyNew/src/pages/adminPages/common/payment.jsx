@@ -3,9 +3,10 @@ import React, { Component } from 'react'
 export class payment extends Component {
   render() {
     return (
-      <div className="col main pt-5 mt-3">
-       <p className='fs-1 text-center'>Payment history</p>
-       
+      <div className="flex flex-wrap gap-2 justify-content-between align-items-center">
+      <h4 className="m-0">History</h4>
+
+           
       </div>
     )
   }

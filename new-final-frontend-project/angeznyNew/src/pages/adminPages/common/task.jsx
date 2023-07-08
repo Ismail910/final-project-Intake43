@@ -248,7 +248,7 @@ export default function AdminTask() {
               header="Task Name"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
 
             <Column
@@ -256,7 +256,7 @@ export default function AdminTask() {
               header="Project Name"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
 
             <Column
@@ -264,28 +264,28 @@ export default function AdminTask() {
               header="Task Creator"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="assigned_to.name"
               header="Assigned to"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="start"
               header="Start Date"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="end"
               header="End Date"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
               // body={(rowData) =>
               //   rowData.user.skills.map((skill) => skill.name).join(", ")
               // }
@@ -295,7 +295,7 @@ export default function AdminTask() {
               header="Status"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
               // body={(rowData) =>
               //   rowData.user.skills.map((skill) => skill.name).join(", ")
               // }
