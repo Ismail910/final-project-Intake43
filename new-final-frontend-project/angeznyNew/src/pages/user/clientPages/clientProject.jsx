@@ -28,6 +28,16 @@ const ClientProject = ({ statusProject }) => {
   const [budget, setBudget] = React.useState("");
   const [selectedProject, setSelectedProject] = React.useState(null);
 
+  const getClassByStatus = (statusProject) => {
+    if (statusProject === "completed") {
+      return "green"; // Apply green color for 'completed' status
+    } else if (statusProject === "inProgress") {
+      return "yellow"; // Apply warning color for 'in_progress' status
+    } else {
+      return "red"; // Apply red color for other statuses
+    }
+  };
+
   React.useEffect(() => {
     const fetchProjects = async () => {
       try {
@@ -210,7 +220,7 @@ const ClientProject = ({ statusProject }) => {
   };
 
   return (
-    <div className="d-flex justify-content-center row">
+    <div className="container-fluid d-flex justify-content-center row">
       <Button
         className="mt-4 w-25 mb-5 addbtn" 
         variant="outlined"
@@ -319,6 +329,7 @@ const ClientProject = ({ statusProject }) => {
                     <Card.Title>Title of project : {item.name}</Card.Title>
                     <Card.Text>{item.type}</Card.Text>
                     <Card.Text>{item.description}</Card.Text>
+                    <span className={getClassByStatus(item.status)}></span>
 
                     <Button
                       onClick={() => handleEdit(item)}
