@@ -60,7 +60,7 @@ const StaffLevelEditForm = ({ employee, handleUpdate }) => {
                     <label>Staff Salary</label>
                     <input
                       type="text"
-                      name="name"
+                      name="salary"
                       className="form-control"
                       value={formData.salary}
                       onChange={handleInputChange}
