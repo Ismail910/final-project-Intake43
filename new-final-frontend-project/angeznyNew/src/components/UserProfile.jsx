@@ -310,22 +310,19 @@ useEffect(() => {
                     </div>
                   </MDBCard>
 
-                  <div className="mb-5">
-                    <p className="lead fw-normal mb-2 text-center fs-4 Icons fw-bolder pt-5">About</p>
-
-
-                   
+                  <div className="mb-5 ">
+                    <p className="lead fw-normal mb-2 text-center fs-4 Icons fw-bolder pt-3 pb-3">About</p>
                     {' '}
-                    <div className="mb-5">
-                    
+                    <div className="mb-5 d-flex">
+                    <MDBCard className='w-50 mx-3'>
                   <MDBCardText className="font-italic mb-2 text-center mt-4 fs-5" data-aos="fade-left"
                   data-aos-anchor="#example-anchor"
                   data-aos-offset="500"
                   data-aos-duration="500">
                     {user['gender'] == 'female' ? (
-                      <i class="fa-solid fa-venus fa-lg"></i>
+                      <i class="fa-solid fa-venus fa-lg Icons"></i>
                     ) : (
-                      <i class="fa-solid fa-mars fa-lg"></i>
+                      <i class="fa-solid fa-mars fa-lg Icons"></i>
                     )}{' '}
                     Gender : {user['gender']}
                   </MDBCardText>
@@ -333,28 +330,30 @@ useEffect(() => {
                   data-aos-anchor="#example-anchor"
                   data-aos-offset="500"
                   data-aos-duration="500">
-                    <i class="fa-solid fa-location-dot fa-lg"></i> Address :
+                    <i class="fa-solid fa-location-dot fa-lg Icons"></i> Address :
                     {!user['address'] ? 'empty field' : user['address']}{' '}
                   </MDBCardText>
-                  <MDBCardText className="font-italic mb-2 text-center mt-4 fs-5" data-aos="fade-left"
+                  <MDBCardText className="font-italic mb-2 text-center mt-4 fs-5 pb-4" data-aos="fade-left "
                   data-aos-anchor="#example-anchor"
                   data-aos-offset="500"
                   data-aos-duration="500">
-                    <i class="fa-solid fa-calendar fa-lg"></i> Goined date :
+                    <i class="fa-solid fa-calendar fa-lg Icons"></i> Goined date :
                     {user['joinedDate']}{' '}
                   </MDBCardText>
+                  </MDBCard>
+                  <MDBCard className='w-50'>
                   <MDBCardText className="font-italic mb-2 text-center mt-4 fs-5" data-aos="fade-left"
                   data-aos-anchor="#example-anchor"
                   data-aos-offset="500"
                   data-aos-duration="500">
-                    <i class="fa-solid fa-flag fa-lg"></i> Country :{' '}
+                    <i class="fa-solid fa-flag fa-lg Icons"></i> Country :{' '}
                     {!user['country'] ? 'empty field' : user['address']}{' '}
                   </MDBCardText>{' '}
                   <MDBCardText className="font-italic mb-2 text-center mt-4 fs-5" data-aos="fade-left"
                   data-aos-anchor="#example-anchor"
                   data-aos-offset="500"
                   data-aos-duration="500">
-                    <i class="fa-solid fa-address-card fa-lg"></i> National
+                    <i class="fa-solid fa-address-card fa-lg Icons"></i> National
                     id :{' '}
                     {!user['nationalID']
                       ? 'empty field'
@@ -364,10 +363,10 @@ useEffect(() => {
                   data-aos-anchor="#example-anchor"
                   data-aos-offset="500"
                   data-aos-duration="500">
-                    <i class="fa-solid fa-phone fa-lg"></i> Phone :{' '}
+                    <i class="fa-solid fa-phone fa-lg Icons"></i> Phone :{' '}
                     {!user['phone'] ? 'empty field' : user['phone']}{' '}
                   </MDBCardText>
-                      
+                      </MDBCard>
                     </div>
                  
                   
