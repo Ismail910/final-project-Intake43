@@ -41,7 +41,7 @@ const Header = () => {
     <>
       <MDBNavbar expand="lg" light bgColor="light" className="mb-1">
         <MDBContainer fluid>
-          <Link className="nav-link  logoName " to="/">
+          <Link className="nav-link  logoName mx-5  " to="/">
             <span className="firstLetter">A</span>ngezny
           </Link>
 
@@ -97,7 +97,11 @@ const Header = () => {
                   <img src={user1} className="userprofile" alt="User Profile" />
                   <span className="caret">{userName}</span>
                 </MDBDropdownToggle>
+
+                
+
                 <MDBDropdownMenu>
+                
                   <Link className="nav-link  " to="/" onClick={handleLogout}>
                     <MDBDropdownItem link>Log out</MDBDropdownItem>
                   </Link>

@@ -35,12 +35,12 @@ const NavBarC = () => {
           </MDBNavbarToggler>
 
           <MDBCollapse navbar show={showBasic}>
-            <div className=" headerMenu col-9">
+            <div className=" headerMenu col-11">
               <MDBNavbarNav className="mr-auto mb-2 mb-lg-0 linksMenu">
                 <MDBNavbarItem className="linksWords">
                 <Link className="nav-link  text-white" to="/client/project">
                     <i className="font-weight-bold"></i>{" "}
-                    <span className="ml-3 ">project</span>
+                    <span className="ml-3 ">Project</span>
                   </Link>
                 </MDBNavbarItem>
                 <MDBNavbarItem className="linksWords">
@@ -59,7 +59,7 @@ const NavBarC = () => {
                 <MDBNavbarItem className="linksWords">
                 <Link className="nav-link  text-white" to="/client/profile">
                     <i className="font-weight-bold"></i>{" "}
-                    <span className="ml-3 ">profile</span>
+                    <span className="ml-3 ">Profile</span>
                   </Link>
                 </MDBNavbarItem>
 
