@@ -95,9 +95,9 @@ const Payment = () => {
   const handlePayment = async () => {
     try {
       const data ={
-        amount: 1100 ,
-        project_id: 2 ,
-        user_id: 1 ,
+        amount: project?.budget || 0,
+        project_id:project?.id,
+        user_id:client_id
        
       } 
       const response = await axios.post('http://127.0.0.1:8000/api/paypal/pay', 

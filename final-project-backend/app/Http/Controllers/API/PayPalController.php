@@ -60,7 +60,17 @@ class PayPalController extends Controller
 
     public function success(Request $request)
     {
-        // dd($request->all());
+        $paymentId = $request->input('paymentId');
+       
+        $payment = PaymentPaypal::where('transaction_reference', $paymentId)->first();
+    
+        if ($payment) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Payment is already processed.',
+            ]);
+        }
+
         if($request->input('paymentId') && $request->input('PayerID')){
             $transaction = $this->gateway->completePurchase(array(
                 'payerId'=> $request->input('PayerID'),
@@ -77,7 +87,7 @@ class PayPalController extends Controller
                     $payment->amount = $request->amount;
                     $payment->transaction_reference = $request->paymentId;
                     $payment->save();
-                    
+
                     $project = Project::findOrFail( $payment->project_id);
                     $project->is_payed = true;
                     $project->update();
