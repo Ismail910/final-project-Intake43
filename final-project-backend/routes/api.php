@@ -14,6 +14,7 @@ use App\Http\Controllers\API\SkillController;
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\Payment\CreditController;
 use App\Http\Controllers\API\PayPalController;
+use App\Http\Controllers\API\ContactUsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
@@ -47,9 +48,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Route::get('error', [PayPalController::class, 'error']);
 
 
-    Route::post('paypal/pay', [PayPalController::class, 'pay'])->name('paypal/pay');
-    Route::get('paypal/success', [PayPalController::class, 'success'])->name('paypal.success');
-    Route::get('paypal/error', [PayPalController::class, 'error'])->name('paypal.error');
+Route::post('paypal/pay', [PayPalController::class, 'pay'])->name('paypal/pay');
+Route::get('paypal/success', [PayPalController::class, 'success'])->name('paypal.success');
+Route::get('paypal/error', [PayPalController::class, 'error'])->name('paypal.error');
 
 
 // ========== Chat route ====================
@@ -115,6 +116,10 @@ Route::get('tasks/search/{status}', [TaskController::class, 'searchTaskByStatus'
 
 // ========== skill route ====================
 Route::apiResource('skill', SkillController::class);
+
+// ========== contactUs route ====================
+// Route::apiResource('contact-us', [ContactUsController::class]);
+Route::apiResource('contact-us', '\App\Http\Controllers\API\ContactUsController');
 
 
 
