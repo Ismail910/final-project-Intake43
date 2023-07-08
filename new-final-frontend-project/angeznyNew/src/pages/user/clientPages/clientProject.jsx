@@ -12,6 +12,7 @@ import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import Stack from "@mui/joy/Stack";
 import "./styles.css";
+import { CometChat } from "@cometchat-pro/chat";
 
 const ClientProject = ({ statusProject }) => {
   const token = localStorage.getItem("token");
@@ -36,6 +37,91 @@ const ClientProject = ({ statusProject }) => {
       return "red"; // Apply red color for other statuses
     }
   };
+
+  function createChatGroup(
+    projectID,
+    projectName,
+    productOwnerId,
+    productManagerId
+  ) {
+    const appID = "240169ef153c40df";
+    const region = "US";
+    const authKey = "581f246117c147b5f041cf28049c89388b3fc5cd";
+    const appSetting = new CometChat.AppSettingsBuilder()
+      .subscribePresenceForAllUsers()
+      .setRegion(region)
+      .build();
+    CometChat.init(appID, appSetting).then(
+      () => {
+        console.log("Initialization completed successfully");
+        // You can now proceed with rendering your app or calling the login function.
+        // var uid = "user1";
+        // var name = "Kevin";
+        var uid = localStorage.getItem("user_id");
+        var name = localStorage.getItem("user_userName");
+        CometChat.login(uid, authKey).then(
+          (user) => {
+            console.log("Login Successful:", { user });
+
+            // Create a group
+            const groupType = CometChat.GROUP_TYPE.PUBLIC;
+            const groupName = "Group Chat";
+            const membersList = [
+              productOwnerId,
+              productManagerId,
+              localStorage.getItem("user_id"),
+            ]; // User IDs of user1 and user2
+
+            const group = new CometChat.Group("2", groupName, groupType, "");
+            CometChat.createGroup(group).then(
+              (createdGroup) => {
+                console.log("Group created successfully:", createdGroup);
+
+                // Add current user and other users to the group
+                const groupMembers = membersList.map(
+                  (member) =>
+                    new CometChat.GroupMember(
+                      member,
+                      CometChat.GROUP_MEMBER_SCOPE.PARTICIPANT
+                    )
+                );
+
+                console.log(
+                  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                );
+                console.log(groupMembers);
+                CometChat.addMembersToGroup(
+                  createdGroup.guid,
+                  groupMembers,
+                  []
+                ).then(
+                  (response) => {
+                    console.log("Members added successfully:", response);
+                    // Handle successful group creation and member addition
+                  },
+                  (error) => {
+                    console.log("Error adding members to group:", error);
+                    // Handle error adding members to the group
+                  }
+                );
+              },
+              (error) => {
+                console.log("Error creating group:", error);
+                // Handle error creating group
+              }
+            );
+          },
+          (error) => {
+            console.log("Login failed with exception:", { error });
+          }
+        );
+      },
+      (error) => {
+        console.log("Initialization failed with error:", error);
+        // Check the reason for error and take appropriate action.
+      }
+    );
+  }
 
   React.useEffect(() => {
     const fetchProjects = async () => {
@@ -204,6 +290,17 @@ const ClientProject = ({ statusProject }) => {
         )
         .then((response) => {
           toast.success("Project Created");
+
+          const productOwnerId = response.data.data.productOnwer.id;
+          const productManagerId = response.data.data.ProductManager.id;
+          const projectID = response.data.data.id;
+          const projectName = response.data.data.id;
+          createChatGroup(
+            projectID,
+            projectName,
+            productOwnerId,
+            productManagerId
+          );
           setOpen(false);
         })
         .catch((error) => {

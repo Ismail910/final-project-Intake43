@@ -74,7 +74,7 @@ export default function ProductManager() {
   const handleUserChat = (data) => {
     const appID = "240169ef153c40df";
     const region = "US";
-    const authKey = "581f246117c107b5f041cf28049c89388b3fc5cd";
+    const authKey = "581f246117c147b5f041cf28049c89388b3fc5cd";
     const appSetting = new CometChat.AppSettingsBuilder()
       .subscribePresenceForAllUsers()
       .setRegion(region)

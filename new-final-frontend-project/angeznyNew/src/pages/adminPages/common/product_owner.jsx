@@ -72,7 +72,7 @@ export default function ProductOwner() {
   //     },
   //   });
   // };
-  
+
   // const handleInputChange = (event) => {
   //   if (event.target.files && event.target.files.length > 0) {
   //     setFormData({
@@ -93,7 +93,7 @@ export default function ProductOwner() {
   //     });
   //   }
   // };
-  
+
   // const handleInputChange = (event) => {
   //   const file = event.target.files[0];
   //   setImagedata(file);
@@ -114,7 +114,6 @@ export default function ProductOwner() {
     }
   };
 
-  
   const handleUserChat = (data) => {
     const appID = "240169ef153c40df";
     const region = "US";
@@ -154,7 +153,6 @@ export default function ProductOwner() {
       }
     );
   };
-
 
   // const handleSubmit = async (event) => {
   //   // event.preventDefault();
@@ -241,9 +239,10 @@ export default function ProductOwner() {
 
   const handleSubmit = async (event) => {
     // event.preventDefault();
-    
+
+    // console.log(formData.user.profilePic);
     const data = new FormData();
-    data.append("profilePic", data);
+    data.append("profilePic", formData.user.profilePic);
     data.append("name", formData.user.name);
     data.append("email", formData.user.email);
     data.append("password", formData.user.password);
@@ -257,27 +256,33 @@ export default function ProductOwner() {
     data.append("userName", formData.user.userName);
     data.append("gender", formData.user.gender);
     data.append("staff_level_id", formData.user.staff);
-  
+
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/register/manager", data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-  
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/register/manager",
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
       console.log(response.data.manager.user);
       handleUserChat(response.data.manager.user);
-  
+
       const staffResponse = await axios.get("http://127.0.0.1:8000/api/staff", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-  
+
       if (staffResponse.status === 200) {
-        const level = staffResponse.data.data.find((level) => level.id === formData.user.staff);
-  
+        const level = staffResponse.data.data.find(
+          (level) => level.id === formData.user.staff
+        );
+
         if (level) {
           formData.staff_level = level;
           setowners([...owners, formData]);
@@ -287,7 +292,7 @@ export default function ProductOwner() {
       } else {
         // toast.error("failed to load the data");
       }
-  
+
       setFormData({
         staff_level: {},
         user: {
@@ -309,8 +314,6 @@ export default function ProductOwner() {
       console.error(error);
     }
   };
-  
-  
 
   const handleDelete = (ownerId) => {
     axios
