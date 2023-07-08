@@ -92,32 +92,44 @@ const Payment = () => {
   // };
 
 
+  // const handlePayment = async () => {
+  //   try {
+      
+  //     const response = await axios.post('http://127.0.0.1:8000/api/paypal/pay', {
+  //       amount:  100 ,//project?.budget || 0,
+  //       project_id:1,// project?.id,
+  //       user_id:16,// client_id
+  //     });
+      
+     
+  //     setPaymentId(response.data?.paymentId);
+  //     window.location.href = response.data?.redirectUrl;
+    
+  //   } catch (error) {
+  //     console.log(error.response?.data);
+     
+
+  //   }
+  // }
   const handlePayment = async () => {
     try {
-      console.log('====================================');
-      const response = await axios.post('http://127.0.0.1:8000/api/paypal/pay', {
-        amount: 100,// project?.budget || 0,
-        project_id: 1,//project?.id|| 1,
-        paymentId: paymentId,
-        client_id:16,// client_id,
+      const response = await axios.get('http://127.0.0.1:8000/api/paypal/pay', {
+        params: {
+          amount: 100,
+          project_id: 1,
+          user_id: 16,
+        }
       });
-      
-    
-    console.log(response.data?.redirectUrl);
-    console.log('====================================');
+  
       setPaymentId(response.data?.paymentId);
       window.location.href = response.data?.redirectUrl;
-      if (response.data.success) {
-        handleSuccess();
-      } else {
-        handleError();
-      }
-    
     } catch (error) {
       console.log(error.response?.data);
-      // Handle error accordingly
-
     }
+  };
+  
+  
+  
   
   const handleSuccess = async () => {
     try {
@@ -146,14 +158,14 @@ const Payment = () => {
         console.log(error.response?.data);
         // Handle error accordingly
         toast.error('Failed to complete the payment.');
-      }}
-    } catch(error) {
+      }
+    }
+  } catch (error) {
       console.log(error.response?.data);
       // Handle error accordingly
       toast.error('Failed to complete the payment.');
     }
-  }
-}
+  };
  
 
   const handleError = async () => {
@@ -170,6 +182,13 @@ const Payment = () => {
     }
   };
     
+  useEffect(() => {
+    if (window.location.href.includes('/success')) {
+      handleSuccess();
+    } else if (window.location.href.includes('/error')) {
+      handleError();
+    }
+  }, []);
 
   return (
     <Container>
@@ -183,7 +202,7 @@ const Payment = () => {
         <p>No projects available.</p>
       )}
       <Input type="number" readOnly name="amount" value={project?.budget || 0} />
-      <Button disabled={Number(project?.budget || 0 ) === 0} onClick={handlePayment}>Pay Now</Button>
+      <Button disabled={Number(project?.budget || 10 ) === 0} onClick={handlePayment}>Pay Now</Button>
 
 
     </Container>
@@ -191,3 +210,7 @@ const Payment = () => {
 };
 
 export default Payment;
+/////////////////////////////////////
+
+
+

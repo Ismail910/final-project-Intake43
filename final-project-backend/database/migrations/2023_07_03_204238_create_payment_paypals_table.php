@@ -13,14 +13,12 @@ return new class extends Migration
     {
         Schema::create('payment_paypals', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('project_id');
-            $table->unsignedBigInteger('client_id');
-            $table->decimal('amount', 8, 2);
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('set null');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null'); 
+            $table->decimal('amount', 10, 2);
             $table->string('transaction_reference');
+            $table->json('additional_data')->nullable();
             $table->timestamps();
-
-            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
-            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
         });
     }
 
