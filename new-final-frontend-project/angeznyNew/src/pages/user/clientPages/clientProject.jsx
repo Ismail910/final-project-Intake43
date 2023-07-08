@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from "react-toastify";
-import { Card, Row, Col } from 'react-bootstrap';
+import { Button, Card, Row, Col } from 'react-bootstrap';
 import Typography from '@mui/joy/Typography';
-import Button from '@mui/joy/Button';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
 import { Select, MenuItem } from '@mui/material';
@@ -16,19 +15,17 @@ import Stack from '@mui/joy/Stack';
 const ClientProject = ({ statusProject }) => {
   const token = localStorage.getItem('token');
   const usrID = localStorage.getItem('user_id');
-  const projectStatus = "notStarted";
   const [projects, setProjects] = useState(null);
-  const [open, setOpen] = React.useState(false);
-  const [status, setStatus] = React.useState('');
-  const [title, setTitle] = React.useState('');
-  const [type, setType] = React.useState('');
-  const [description, setDescription] = React.useState('');
-  const [startDate, setStartDate] = React.useState('');
-  const [endDate, setEndDate] = React.useState('');
-  const [budget, setBudget] = React.useState('');
-  const [selectedProject, setSelectedProject] = React.useState(null);
+  const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState('');
+  const [type, setType] = useState('');
+  const [description, setDescription] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [budget, setBudget] = useState('');
+  const [selectedProject, setSelectedProject] = useState(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchProjects = async () => {
       try {
         const response = await fetch(`http://127.0.0.1:8000/api/projects/searchProjectByUsers`, {
@@ -41,6 +38,7 @@ const ClientProject = ({ statusProject }) => {
           const data = await response.json();
           if (data) {
             setProjects(data.data);
+            console.log(projects.json());
           }
         } else {
           setProjects([]);
@@ -80,6 +78,11 @@ const ClientProject = ({ statusProject }) => {
 
   const handleEdit = (project) => {
     setSelectedProject(project);
+    setTitle(project.project_title);
+    setType(project.project_type);
+    setDescription(project.project_description);
+    setStartDate(project.project_start);
+    setEndDate(project.project_end);
     setOpen(true);
   };
 
@@ -92,7 +95,7 @@ const ClientProject = ({ statusProject }) => {
         },
       });
       toast.success(`Project with ID: ${projectId} deleted successfully`);
-      setProjects(projects.filter(project => project.id !== projectId));
+      setProjects(projects.filter((project) => project.id !== projectId));
     } catch (error) {
       toast.error("Error deleting project: " + error.message);
     }
@@ -126,61 +129,60 @@ const ClientProject = ({ statusProject }) => {
     event.preventDefault();
     if (selectedProject) {
       // Update existing project
-      await axios.patch(
-        `http://127.0.0.1:8000/api/projects/${selectedProject.id}`,
-        {
-          project_title: title || selectedProject.project_title,
-          project_type: type || selectedProject.project_type,
-          project_description: description || selectedProject.project_description,
-          project_start: startDate || selectedProject.project_start,
-          project_end: endDate || selectedProject.project_end,
-          ProductOwner_id: selectedProject.ProductOwner_id,
-          ProductManager_id: selectedProject.ProductManager_id
-        },
-        {
-          headers: {
-            'Accept': 'application/json',
-            'Authorization': `Bearer ${token}`,
+      try {
+        await axios.patch(
+          `http://127.0.0.1:8000/api/projects/${selectedProject.id}`,
+          {
+            project_title: title,
+            project_type: type,
+            project_description: description,
+            project_start: startDate,
+            project_end: endDate,
+            project_status: "notStarted",
+            ProductOwner_id: selectedProject.ProductOwner_id,
+            ProductManager_id: selectedProject.ProductManager_id
           },
-        }
-      )
-        .then((response) => {
-          toast.success("Project Updated");
-          setOpen(false);
-          setSelectedProject(null);
-        })
-        .catch((error) => {
-          toast.error("Error updating project: " + error.message);
-        });
+          {
+            headers: {
+              'Accept': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            },
+          }
+        );
+        toast.success("Project Updated");
+        setOpen(false);
+        setSelectedProject(null);
+      } catch (error) {
+        toast.error("Error updating project: " + error.message);
+      }
     } else {
       // Create new project
-      await axios.post(
-        `http://127.0.0.1:8000/api/projects`,
-        {
-          project_title: title,
-          project_type: type,
-          project_description: description,
-          project_start: startDate,
-          project_end: endDate,
-          project_status: "notStarted",
-          client_id: 3,
-          ProductOwner_id: 99,
-          ProductManager_id: 99
-        },
-        {
-          headers: {
-            'Accept': 'application/json',
-            'Authorization': `Bearer ${token}`,
+      try {
+        await axios.post(
+          `http://127.0.0.1:8000/api/projects`,
+          {
+            project_title: title,
+            project_type: type,
+            project_description: description,
+            project_start: startDate,
+            project_end: endDate,
+            project_status: "notStarted",
+            client_id: 3,
+            ProductOwner_id: 99,
+            ProductManager_id: 99
           },
-        }
-      )
-        .then((response) => {
-          toast.success("Project Created");
-          setOpen(false);
-        })
-        .catch((error) => {
-          toast.error("Error Creating project: " + error.message);
-        });
+          {
+            headers: {
+              'Accept': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            },
+          }
+        );
+        toast.success("Project Created");
+        setOpen(false);
+      } catch (error) {
+        toast.error("Error Creating project: " + error.message);
+      }
     }
   };
 
@@ -222,16 +224,16 @@ const ClientProject = ({ statusProject }) => {
             <Stack spacing={2}>
               <FormControl>
                 <FormLabel>Title</FormLabel>
-                <Input value={title || selectedProject?.project_title} onChange={handleTitleChange} autoFocus required />
+                <Input value={selectedProject ? selectedProject.project_title : title} onChange={handleTitleChange} autoFocus required />
               </FormControl>
-
               <FormControl>
                 <FormLabel>Type Project</FormLabel>
                 <Select
-                  value={type || selectedProject?.project_type}
+                  value={type}
                   onChange={handleTypeChange}
                   autoFocus
                   required
+
                 >
                   <MenuItem value="mileStone">mileStone</MenuItem>
                   <MenuItem value="byProject">byProject</MenuItem>
@@ -239,15 +241,15 @@ const ClientProject = ({ statusProject }) => {
               </FormControl>
               <FormControl>
                 <FormLabel>Start</FormLabel>
-                <Input value={startDate || selectedProject?.project_start} onChange={handleStartDateChange} autoFocus required type="date" />
+                <Input value={startDate} onChange={handleStartDateChange} autoFocus required type="date" />
               </FormControl>
               <FormControl>
                 <FormLabel>End</FormLabel>
-                <Input value={endDate || selectedProject?.project_end} onChange={handleEndDateChange} autoFocus required type="date" />
+                <Input value={endDate} onChange={handleEndDateChange} autoFocus required type="date" />
               </FormControl>
               <FormControl>
                 <FormLabel>Description</FormLabel>
-                <TextareaAutosize minRows={3} value={description || selectedProject?.project_description} onChange={handleDescriptionChange} autoFocus required />
+                <TextareaAutosize minRows={3} value={description} onChange={handleDescriptionChange} autoFocus required />
               </FormControl>
               <Button type="submit">{selectedProject ? 'Update' : 'Submit'}</Button>
             </Stack>
@@ -264,8 +266,9 @@ const ClientProject = ({ statusProject }) => {
                     <Card.Title>{item.name}</Card.Title>
                     <Card.Text>{item.type}</Card.Text>
                     <Card.Text>{item.description}</Card.Text>
-                    <Button variant="primary" onClick={() => handleEdit(item)}>Edit</Button>
-                    <Button variant="danger" onClick={() => handleDelete(item.id)}>Delete</Button>
+                    <Card.Text>{}</Card.Text>
+                    <Button variant="primary" onClick={() => handleEdit(item)} disabled={item.status !== "notStarted"}>Edit</Button>
+                    <Button variant="danger" onClick={() => handleDelete(item.id)} disabled={item.status !== "notStarted"}>Delete</Button>
                   </Card.Body>
                 </Card>
               </Col>
