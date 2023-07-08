@@ -45,7 +45,7 @@ const Sidnave = () => {
             className="nav-link text-secondary text-light"
             to="/admin/developer"
           >
-            <span className="ml-3">Developer</span>
+            <span className="ml-3">Employee</span>
           </Link>
         </li>
         <li className="nav-item mb-2">
@@ -64,14 +64,7 @@ const Sidnave = () => {
             <span className="ml-3">Client</span>
           </Link>
         </li>
-        <li className="nav-item mb-2">
-          <Link
-            className="nav-link text-secondary text-light"
-            to="/admin/payment"
-          >
-            <span className="ml-3">Payment</span>
-          </Link>
-        </li>
+
         <li className="nav-item mb-2">
           <Link
             className="nav-link text-secondary text-light"
@@ -104,6 +97,24 @@ const Sidnave = () => {
             to="/admin/stafflevels"
           >
             <span className="ml-3">Staff Levels</span>
+          </Link>
+        </li>
+
+        <li className="nav-item mb-2">
+          <Link
+            className="nav-link text-secondary text-light"
+            to="/admin/payment"
+          >
+            <span className="ml-3">Payment</span>
+          </Link>
+        </li>
+
+        <li className="nav-item mb-2">
+          <Link
+            className="nav-link text-secondary text-light"
+            to="/admin/contactUsForm"
+          >
+            <span className="ml-3">Contact Us</span>
           </Link>
         </li>
       </ul>

@@ -3,8 +3,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { useLocation } from 'react-router-dom';
-import ManagerProject from '../Managerproject';
-import ManagerTask from '../tasks';
+import OwnerProject from '../Ownerproject';
 export default function Status() {
   const [value, setValue] = React.useState('all');
   const location = useLocation();
@@ -41,10 +40,10 @@ export default function Status() {
     </Tabs></Box>
     <Box sx={{ width: '100%' }}>
       
-    {location.pathname === '/manager/project' ? (
-          <ManagerProject status={value} />
+    {location.pathname === '/owner/project' ? (
+          <OwnerProject status={value} />
         ) : (
-          <ManagerTask statustask={value} />
+            <p>not found location</p>
         )}
   </Box>
     </Box>

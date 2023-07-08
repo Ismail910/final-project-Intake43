@@ -35,7 +35,7 @@ class StoreProjectAPIRequest extends FormRequest
             'project_status' => 'required|in:notStarted,inProgress,completed',
             // 'ProductOwner_id' => ['exists:managers,id', new ProductOwnerValidationRule],
             // 'ProductManager_id' => ['exists:managers,id', new ProductManagerValidationRule],
-            'client_id' => 'required|exists:clients,id',
+            'client_id' => 'required|exists:users,id',
             'budget' => 'numeric|min:0',
         ];
     }

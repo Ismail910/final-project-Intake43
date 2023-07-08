@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('currency');
             $table->string('payment_method');
             $table->timestamps();
+            
         });
     }
 
