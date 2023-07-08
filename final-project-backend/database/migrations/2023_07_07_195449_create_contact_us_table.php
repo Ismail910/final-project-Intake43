@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('subject');
             $table->foreignId('Admin_id')->nullable()->cascadeOnUpdate()->constrained('managers')->onDelete('set null');
             $table->boolean('replayed')->default(false);
-            $table->timestamps();
+            $table->timestamps();   
         });
     }
 

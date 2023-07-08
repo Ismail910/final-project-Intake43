@@ -1,104 +1,12 @@
 <?php
 
-// namespace App\Http\Controllers\API;
-
-// use App\Http\Controllers\Controller;
-// use Illuminate\Http\Request;
-// use Srmklive\PayPal\Services\ExpressCheckout;
-// use App\Models\Payment;
-// use Omnipay\Omnipay;
-
-// class PayPalController extends Controller
-// {
-//     private $gateway;
-
-//     public function __construct()
-//     {
-//         $this->gateway = Omnipay::create('PayPal_Rest');
-//         $this->gateway->setClientId(env('PAYPAL_CLIENT_ID'));
-//         $this->gateway->setSecret(env('PAYPAL_CLIENT_SECRET'));
-//         $this->gateway->setTestMode(true);
-//     }
-
-//     public function pay(Request $request)
-//     {
-//         try {
-//             $response = $this->gateway->purchase([
-//                 'amount' => $request->amount,
-//                 'currency' => env('PAYPAL_CURRENCY'),
-//                 'returnUrl' => url('success'),
-//                 'cancelUrl' => url('error')
-//                 ])->send();
-
-//                 if ($response->isRedirect()) {
-//                     return response()->json([
-//                         'redirectUrl' => $response->getRedirectUrl(),
-//                         'paymentId' => $response->getTransactionReference()
-//                     ]);
-//                 } else {
-//                     return response()->json([
-//                         'error' => $response->getMessage()
-//                     ]);
-//                 }
-//             } catch (\Throwable $th) {
-//                 return response()->json([
-//                     'error' => $th->getMessage()
-//                 ]);
-//             }
-//         }
-        
-//         public function success(Request $request)
-//         {
-//             if ($request->input('paymentId') && $request->input('PayerID')) {
-//                 $transaction = $this->gateway->completePurchase([
-//                     'payer_id' => $request->input('PayerID'),
-//                     'transactionReference' => $request->input('paymentId')
-//                 ]);
-        
-//                 $response = $transaction->send();
-        
-//                 if ($response->isSuccessful()) {
-//                     $arr = $response->getData();
-        
-//                     $payment = new Payment();
-//                     $payment->payment_id = $arr['id'];
-//                     $payment->payer_id = $arr['payer']['payer_info']['payer_id'];
-//                     $payment->payer_email = $arr['payer']['payer_info']['email'];
-//                     $payment->amount = $arr['transactions'][0]['amount']['total'];
-//                     $payment->currency = env('PAYPAL_CURRENCY');
-//                     $payment->payment_status = $arr['state'];
-        
-//                     // Additional fields
-//                     $payment->project_id = $request->input('project_id');
-//                     $payment->project_price = $request->input('project_price');
-//                     $payment->client_id = $request->input('client_id');
-        
-//                     $payment->save();
-        
-//                     return 'Payment is Successful. Your Transaction Id is: ' . $arr['id'];
-//                 } else {
-//                     return $response->getMessage();
-//                 }
-//             } else {
-//                 return 'Payment declined!!';
-//             }
-//         }
-        
-        
-//         public function error()
-//         {
-//             return response()->json('User declined the payment!');
-//         }
-//     }          
-///////////////////////////////
-
-
 namespace App\Http\Controllers\API;
-
+use App\Models\Project;
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Omnipay\Omnipay;
-use App\Models\Payment;
+use App\Models\PaymentPaypal;
 
 class PayPalController extends Controller
 {
@@ -106,6 +14,7 @@ class PayPalController extends Controller
 
     public function __construct()
     {
+      
         $this->gateway = Omnipay::create('PayPal_Rest');
         $this->gateway->setClientId(env('PAYPAL_CLIENT_ID'));
         $this->gateway->setSecret(env('PAYPAL_SECRET'));
@@ -113,81 +22,196 @@ class PayPalController extends Controller
     }
 
     public function pay(Request $request)
-{
-    try {
-        $response = $this->gateway->purchase([
-            'amount' => $request->amount,
-            'currency' => env('PAYPAL_CURRENCY'),
-            'returnUrl' => route('paypal.success'),
-            'cancelUrl' => route('paypal.error')
-        ])->send();
+    {
 
-        if ($response->isRedirect()) {
+       
+        try {
            
-            return response()->json([
-                'redirectUrl' => $response->getRedirectUrl(),
-                'paymentId' => $response->getTransactionReference(),
+            $amount =$request->amount;
+            $project_id = $request->project_id;
+            $user_id = $request->user_id;
+
                 
-            ]);
-           
-        } else {
+            $response = $this->gateway->purchase([
+                'amount' => $request->amount,
+                'currency' => env('PAYPAL_CURRENCY'),
+                'returnUrl' => url('/api/paypal/success').'?amount='.$amount.'&project_id='.$project_id.'&user_id='.$user_id,
+                'cancelUrl' => route('paypal.error')
+            ])->send();
+
+            if ($response->isRedirect()) {
+               
+                return response()->json([
+                        'redirectUrl' => $response->getRedirectUrl(),
+                        // 'paymentId' => $response->getTransactionReference(),
+                ]);
+
+            } else {
+                return response()->json([
+                    'error' => $response->getMessage()
+                ]);
+            }
+        } catch (\Throwable $th) {
             return response()->json([
-                'error' => $response->getMessage()
+                'error' => $th->getMessage()
             ]);
         }
-    } catch (\Throwable $th) {
-        return response()->json([
-            'error' => $th->getMessage()
-        ]);
     }
-}
-
 
     public function success(Request $request)
     {
-       
-        $paymentId = $request->input('paymentId');
-        $payment = Payment::where('transaction_reference', $paymentId)->first();
-        if ($payment) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Payment is already processed.',
-            ]);
+        // dd($request->all());
+        if($request->input('paymentId') && $request->input('PayerID')){
+            $transaction = $this->gateway->completePurchase(array(
+                'payerId'=> $request->input('PayerID'),
+                'transactionReference' => $request->input('paymentId')
+            ));
+
+            
+            $response = $transaction->send();
+            if($response->isSuccessful()){
+                $arr = $response->getData();
+                $payment = new PaymentPaypal();
+                    $payment->project_id =$request->project_id;
+                    $payment->client_id = $request->user_id;
+                    $payment->amount = $request->amount;
+                    $payment->transaction_reference = $request->paymentId;
+                    $payment->save();
+                    
+                    $project = Project::findOrFail( $payment->project_id);
+                    $project->is_payed = true;
+                    $project->update();
+
+                    return redirect('http://localhost:3000/');
+               
+            }
+            else{
+                return $response->getMessage();
+            }
+
         }
-        $transaction = $this->gateway->fetchTransaction([
-            'transactionReference' => $paymentId,
-        ])->send();
-        if ($transaction->isSuccessful()) {
-            return $this->storePayment($request, $paymentId);
-        } else {
-            return response()->json([
-                'error' => $transaction->getMessage(),
-            ]);
+        else{
+            return redirect('http://localhost:8000/error');
         }
     }
+
+    
+       
+     
 
     public function error(Request $request)
     {
-        dd('Error');
-        return redirect('http://localhost:3000/');
-        // return response()->json([
-        //     'error' => 'Payment declined!',
-        // ]);
+        return redirect('http://localhost:3000/error');
     }
 
-    private function storePayment(Request $request, $transactionReference)
-    {
-        $payment = new Payment();
-        $payment->project_id = $request->input('project_id');
-        $payment->client_id = $request->input('client_id');
-        $payment->amount = $request->input('amount');
-        $payment->transaction_reference = $transactionReference;
-        $payment->save();
+    // private function storePayment(Request $request, $transactionReference)
+    // {
+    //     dd($request->all());
+    //     dd($transactionReference);
+    //     // $payment = new PaymentPaypal();
+    //     // $payment->project_id = $request->input('project_id');
+    //     // $payment->client_id = $request->input('client_id');
+    //     // $payment->amount = $request->input('amount');
+    //     // $payment->transaction_reference = $transactionReference;
+    //     // $payment->save();
 
-        return response()->json([
-            'success' => true,
-            'paymentId' => $transactionReference,
-            
-        ]);
-    }
+    //     return  redirect('http://localhost:3000');
+    //     // response()->json([
+    //     //     'success' => true,
+    //     //     'paymentId' => $transactionReference,
+    //     // ]);
+    // }
+
+
+
+
+
+
+
+//     //////////////////////////////
+//     public function pay(Request $request)
+//     {
+//         try {
+//             $data = [
+//                 'amount' => $request->amount,
+//                 'project_id' => $request->project_id,
+//                 'user_id' => $request->user_id,
+//             ];
+    
+//             $query = http_build_query($data);
+//             $returnUrl = route('paypal.success') . '?' . $query;
+    
+//             $request->session()->put('payment_data', $data);
+    
+//             $response = $this->gateway->purchase([
+//                 'amount' => $request->amount,
+//                 'currency' => env('PAYPAL_CURRENCY'),
+//                 'returnUrl' => $returnUrl,
+//                 'cancelUrl' => route('paypal.error')
+//             ])->send();
+    
+//             if ($response->isRedirect()) {
+//                 return response()->json([
+//                     'redirectUrl' => $response->getRedirectUrl(),
+//                     'paymentId' => $response->getTransactionReference(),
+//                 ]);
+//             } else {
+//                 return response()->json([
+//                     'error' => $response->getMessage()
+//                 ]);
+//             }
+//         } catch (\Throwable $th) {
+//             return response()->json([
+//                 'error' => $th->getMessage()
+//             ]);
+//         }
+//     }
+    
+//     public function success(Request $request)
+//     {
+//         dd($request->all());
+//         $paymentId = $request->input('paymentId');
+//         $payment = PaymentPaypal::where('transaction_reference', $paymentId)->first();
+    
+//         if ($payment) {
+//             return response()->json([
+//                 'success' => true,
+//                 'message' => 'Payment is already processed.',
+//             ]);
+//         }
+    
+//         $projectId = $request->query('project_id');
+//         $userId = $request->query('user_id');
+//         $amount = $request->query('amount');
+        
+        
+//         dd($amount);
+//         if ($projectId && $userId && $amount) {
+//             return $this->storePayment($projectId, $userId, $amount, $paymentId);
+//         } else {
+//             return response()->json([
+//                 'error' => 'Incomplete payment data.',
+//             ]);
+//         }
+//     }
+    
+    
+// private function storePayment($project_id, $user_id, $amount, $paymentId)
+// {
+//     $payment = new PaymentPaypal();
+//     $payment->project_id = $project_id;
+//     $payment->client_id = $user_id;
+//     $payment->amount = $amount;
+//     $payment->transaction_reference = $paymentId;
+//     $payment->save();
+
+//     // اضافة الكود الخاص بالرجوع إلى الصفحة الرئيسية في الفرنت إذا كنت ترغب في ذلك
+
+//     return response()->json([
+//         'success' => true,
+//         'message' => 'Payment processed successfully.',
+//     ]);
+// }
+
+    
 }

@@ -13,7 +13,17 @@ import bus2 from "../../assets/images/bussiness/bus3.png";
 import bus3 from "../../assets/images/bussiness/bus4.jpg";
 import event from "../../assets/images/images.png";
 import business from "../../assets/images/bussiness/bussiness-removebg-preview.png";
+import woman from "../../assets/images/Woman.jpg"
 import Aos from "aos";
+import Carousel from 'react-bootstrap/Carousel';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Image from 'react-bootstrap/Image';
+import Row from 'react-bootstrap/Row';
+import spon1 from '../../assets/images/sponsor1.jfif'
+import spon2 from '../../assets/images/sponsor2.jfif'
+import spon3 from '../../assets/images/download.jfif'
+
 import "aos/dist/aos.css";
 
 // import {
@@ -105,6 +115,54 @@ const Home = () => {
     </MDBCarousel>
 
       </section> */}
+
+<section>
+
+    <Carousel slide={false} controls={false}>
+      <Carousel.Item >
+        <img
+          className="d-block w-100"
+          src={bus1}
+          alt="First slide"
+        />
+        <Carousel.Caption>
+          <h3 className="mb-5">Company that specializes in providing software development services. These companies typically have a team of skilled programmers, developers, and engineers who work together to create and maintain software applications for clients.</h3>
+         
+        </Carousel.Caption>
+      </Carousel.Item>
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src={bus3}
+          alt="Second slide"
+        />
+
+        <Carousel.Caption>
+          <h3 className="mb-5">The services offered by a programming company can vary depending on their expertise and focus areas. Some common services provided by programming companies </h3>
+        </Carousel.Caption>
+      </Carousel.Item>
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src={bus2}
+          alt="Third slide"
+        />
+
+        <Carousel.Caption>
+          <h3 className="mb-5">Building websites and web applications using programming languages like HTML, CSS, JavaScript, and frameworks like Laravel, Django, or Ruby on Rails.</h3>
+        </Carousel.Caption>
+      </Carousel.Item>
+    </Carousel>
+  
+
+
+</section>
+
+
+
+
+
+
       <section>
         <div className="container">
           <div className="row">
@@ -138,7 +196,7 @@ const Home = () => {
               >
                 <img
                   className="imgside"
-                  src={business}
+                  src={woman}
                   alt="Girl in a jacket"
                   height="450"
                 ></img>
@@ -240,6 +298,38 @@ const Home = () => {
             </div>
           </div>
         </div>
+      </section>
+
+
+      <section>
+      <div className="container">
+      <div className="row">
+     
+      
+      
+          <Container>
+          
+            <Row className="m-5" data-aos="flip-left"
+            data-aos-easing="ease-out-cubic"
+            data-aos-duration="2000">
+            <h1 className="text-center fw-bold mb-5 mt-5"  style={{ fontSize: " 4rem" }}>Top sponsors</h1>
+              <Col xs={6} md={4}>
+                <Image src={spon1} rounded />
+                <h3>Mr.max tailor</h3>
+              </Col>
+              <Col xs={6} md={4}>
+                <Image src={spon3} rounded />
+                <h3>Mrs.sara wiliam</h3>
+              </Col>
+              <Col xs={6} md={4}>
+                <Image src={spon2} rounded />
+                <h3>Mr.max tailor</h3>
+              </Col>
+            </Row>
+          </Container>
+    
+      </div>
+      </div>
       </section>
     </div>
   );
