@@ -455,6 +455,7 @@ export default function ProductOwner() {
               "user.email",
               "user.phone",
               "user.gender",
+              "user.profilePic",
               "user.country",
               "staff_level.name",
             ]}
@@ -493,6 +494,18 @@ export default function ProductOwner() {
               // filter
               style={{ minWidth: "10rem" }}
             />
+            <Column
+              field="user.profilePic"
+              header="Profile Picture"
+              body={(rowData) => (
+                <img
+                  src={`http://localhost:8000/images/users/${rowData.user.profilePic}`}
+                  alt="Profile Picture"
+                  style={{ width: "100px" }}
+                />
+              )}
+            />
+
             <Column
               field="user.country"
               header="Country"

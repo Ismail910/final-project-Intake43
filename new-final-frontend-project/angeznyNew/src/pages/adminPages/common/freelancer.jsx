@@ -160,14 +160,12 @@ export default function Freelancer() {
           return freelancer;
         });
 
-        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         console.log(updatedfreelancers);
         setfreelancers(updatedfreelancers);
         setShowEditForm(false);
         setSelectedfreelancer(null);
       })
       .catch((error) => {
-        console.log("asdadadasdassdasdadas");
 
         console.error(error);
       });
@@ -229,6 +227,7 @@ export default function Freelancer() {
               "user.email",
               "user.nationalID",
               "user.country",
+              "user.profilePic",
               "status",
               "balance",
             ]}
@@ -259,6 +258,17 @@ export default function Freelancer() {
               sortable
               // filter
               style={{ minWidth: "10rem" }}
+            />
+              <Column
+              field="user.profilePic"
+              header="Profile Picture"
+              body={(rowData) => (
+                <img
+                  src={`http://localhost:8000/images/users/${rowData.user.profilePic}`}
+                  alt="Profile Picture"
+                  style={{ width: "100px" }}
+                />
+              )}
             />
             <Column
               field="user.country"

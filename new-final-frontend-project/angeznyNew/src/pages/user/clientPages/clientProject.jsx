@@ -11,32 +11,26 @@ import Input from "@mui/joy/Input";
 import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import Stack from "@mui/joy/Stack";
+import Aos from "aos";
 import "./styles.css";
+
 import { CometChat } from "@cometchat-pro/chat";
+
+import "aos/dist/aos.css";
 
 const ClientProject = ({ statusProject }) => {
   const token = localStorage.getItem("token");
   const usrID = localStorage.getItem("user_id");
-  const [projects, setProjects] = useState(null);
-  const [open, setOpen] = React.useState(false);
-  const [status, setStatus] = React.useState("");
-  const [title, setTitle] = React.useState("");
-  const [type, setType] = React.useState("");
-  const [description, setDescription] = React.useState("");
-  const [startDate, setStartDate] = React.useState("");
-  const [endDate, setEndDate] = React.useState("");
-  const [budget, setBudget] = React.useState(0);
-  const [selectedProject, setSelectedProject] = React.useState(null);
-
-  const getClassByStatus = (statusProject) => {
-    if (statusProject === "completed") {
-      return "green"; // Apply green color for 'completed' status
-    } else if (statusProject === "inProgress") {
-      return "yellow"; // Apply warning color for 'in_progress' status
-    } else {
-      return "red"; // Apply red color for other statuses
-    }
-  };
+  const [projects, setProjects] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [status, setStatus] = useState("");
+  const [title, setTitle] = useState("");
+  const [type, setType] = useState("");
+  const [description, setDescription] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [budget, setBudget] = useState("");
+  const [selectedProject, setSelectedProject] = useState(null);
 
   function createChatGroup(
     projectID,
@@ -123,7 +117,11 @@ const ClientProject = ({ statusProject }) => {
     );
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
+    Aos.init();
+  }, []);
+
+  useEffect(() => {
     const fetchProjects = async () => {
       try {
         const response = await fetch(
@@ -139,13 +137,12 @@ const ClientProject = ({ statusProject }) => {
           const data = await response.json();
           if (data) {
             setProjects(data.data);
-            console.log(projects.json());
           }
         } else {
           setProjects([]);
         }
       } catch (error) {
-        toast.error(error);
+        toast.error(error.message);
       }
     };
 
@@ -169,7 +166,7 @@ const ClientProject = ({ statusProject }) => {
           setProjects([]);
         }
       } catch (error) {
-        toast.error(error);
+        toast.error(error.message);
       }
     };
 
@@ -179,6 +176,16 @@ const ClientProject = ({ statusProject }) => {
       fetchProjectsByStatus();
     }
   }, [statusProject]);
+
+  const getClassByStatus = (statusProject) => {
+    if (statusProject === "completed") {
+      return "green";
+    } else if (statusProject === "inProgress") {
+      return "yellow";
+    } else {
+      return "red";
+    }
+  };
 
   const handleEdit = (project) => {
     setSelectedProject(project);
@@ -234,8 +241,8 @@ const ClientProject = ({ statusProject }) => {
     event.preventDefault();
     if (selectedProject) {
       // Update existing project
-      await axios
-        .patch(
+      try {
+        await axios.patch(
           `http://127.0.0.1:8000/api/projects/${selectedProject.id}`,
           {
             project_title: title || selectedProject.project_title,
@@ -255,17 +262,17 @@ const ClientProject = ({ statusProject }) => {
               Authorization: `Bearer ${token}`,
             },
           }
-        )
-        .then((response) => {
-          toast.success("Project Updated");
-          setOpen(false);
-          setSelectedProject(null);
-        })
-        .catch((error) => {
-          toast.error("Error updating project: " + error.message);
-        });
+        );
+        toast.success("Project Updated");
+        setOpen(false);
+        setSelectedProject(null);
+        refreshProjects();
+      } catch (error) {
+        toast.error("Error updating project: " + error.message);
+      }
     } else {
       // Create new project
+
       await axios
         .post(
           `http://127.0.0.1:8000/api/projects`,
@@ -321,17 +328,43 @@ const ClientProject = ({ statusProject }) => {
     setOpen(true);
   };
 
+  const refreshProjects = async () => {
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/projects/searchProjectByUsers`,
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        if (data) {
+          setProjects(data.data);
+        }
+      } else {
+        setProjects([]);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   return (
-    <div className="container-fluid d-flex justify-content-center row">
+    <div className="container-fluid d-flex justify-content-center row conatingData">
       <Button
+        disabled={statusProject !== "all"}
         className="mt-4 w-25 mb-5 addbtn"
         variant="outlined"
         color="neutral"
         sx={{ width: "95%", marginLeft: "30px", marginBottom: "5px" }}
         onClick={openHandleSave}
       >
-        ADD Project
+        Create New Project
       </Button>
+
       <Modal
         sx={{ overflow: "auto" }}
         open={open}
@@ -423,10 +456,10 @@ const ClientProject = ({ statusProject }) => {
       </Modal>
       <div>
         <Row className="d-flex justify-content-center">
-          {Array.isArray(projects) ? (
+          {Array.isArray(projects) && projects.length > 0 ? (
             projects.map((item) => (
               <Col key={item.id} lg={5} md={5} sm={5}>
-                <Card className="mb-4 cardData">
+                <Card className="mb-4 cardData " div data-aos="zoom-in-up">
                   <Card.Body>
                     <Card.Title>Title of project : {item.name}</Card.Title>
                     <Card.Text>{item.type}</Card.Text>

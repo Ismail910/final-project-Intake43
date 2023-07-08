@@ -334,6 +334,7 @@ export default function Developer() {
               "user.phone",
               "user.country",
               "user.country",
+              "user.profilePic",
               "staff_level.name",
             ]}
             emptyMessage="No Employees found."
@@ -373,6 +374,17 @@ export default function Developer() {
               sortable
               // filter
               style={{ minWidth: "10rem" }}
+            />
+            <Column
+              field="user.profilePic"
+              header="Profile Picture"
+              body={(rowData) => (
+                <img
+                  src={`http://localhost:8000/images/users/${rowData.user.profilePic}`}
+                  alt="Profile Picture"
+                  style={{ width: "100px" }}
+                />
+              )}
             />
             <Column
               field="user.country"
