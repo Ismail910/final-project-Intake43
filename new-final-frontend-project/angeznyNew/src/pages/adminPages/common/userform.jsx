@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
   const [show, setShow] = useState(false);
   const [staffLevels, setStaffLevels] = useState([]);
-
+  const [imagedata,setImagedata]=useState('');
   useEffect(() => {
     axios
       .get("http://127.0.0.1:8000/api/staff", {
@@ -42,10 +42,13 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
 
   return (
     <>
+     <div className="col-4">
       <Button className="btn btn-success mx-4" onClick={handleShow}>
         <i className="fa-solid fa-plus me-2"></i>
         <span>Add User</span>
       </Button>
+    </div>
+
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -57,6 +60,13 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
             <div className="row justify-content-center my-3">
               <div className="col-md-6 col-sm-12">
                 <form className="d-flex flex-column">
+{/*                   
+                  <div className="row">
+                    <label htmlFor="name">Name</label>
+                    <input type="text" className="form-control"id="name" placeholder="Name"
+                      name="name" value={formData.name} onChange={handleInputChange} required/>
+                  </div> */}
+
                   <div className="row">
                     <label htmlFor="name">Name</label>
                     <input
@@ -68,46 +78,30 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
                       value={formData.name}
                       onChange={handleInputChange}
                       required
+                      onBlur={() => {
+                        if (formData.name.trim() === '') {
+                          toast.error("Name is required");
+                        }
+                      }}
                     />
                   </div>
 
                   <div className="row">
                     <label htmlFor="userName">User name</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="userName"
-                      placeholder="userName"
-                      name="userName"
-                      value={formData.userName}
-                      onChange={handleInputChange}
-                      required
-                    />
+                    <input type="text" className="form-control" id="userName" placeholder="userName" name="userName"
+                      value={formData.userName} onChange={handleInputChange}required/>
                   </div>
 
                   <div className="row">
                     <label htmlFor="email">Email</label>
-                    <input
-                      type="email"
-                      className="form-control"
-                      id="email"
-                      placeholder="Email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      required
-                    />
+                    <input type="email" className="form-control" id="email"
+                      placeholder="Email"name="email" value={formData.email} onChange={handleInputChange}required/>
                   </div>
 
                   <div className="row">
                     <label htmlFor="gender">Gender</label>
-                    <select
-                      className="form-select"
-                      id="gender"
-                      name="gender"
-                      value={formData.gender}
-                      onChange={handleInputChange}
-                    >
+                    <select className="form-select"
+                      id="gender" name="gender" value={formData.gender} onChange={handleInputChange}>
                       <option value="male">Male</option>
                       <option value="female">Female</option>
                     </select>
@@ -115,16 +109,17 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
 
                   <div className="row">
                     <label htmlFor="nationalID">National ID</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="nationalID"
-                      name="nationalID"
-                      value={formData.nationalID}
-                      onChange={handleInputChange}
-                    />
+                    <input type="number" className="form-control" id="nationalID"
+                      name="nationalID" value={formData.nationalID} onChange={handleInputChange}/>
                   </div>
 
+                  {/* <div className="row">
+                    <label htmlFor="password">Password</label>
+                    <input type="password"className="form-control"
+                      id="password" placeholder="Password"name="password"
+                      value={formData.password}onChange={handleInputChange}required/>
+                  </div> */}
+                  
                   <div className="row">
                     <label htmlFor="password">Password</label>
                     <input
@@ -136,10 +131,22 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
                       value={formData.password}
                       onChange={handleInputChange}
                       required
+                      minLength={6} // Set minimum length to 6 characters
+                      onBlur={() => {
+                        if (formData.password.length < 6) {
+                          toast.error("Password should be at least 6 characters");
+                        }
+                      }}
                     />
                   </div>
 
-                  <div className="row ">
+                {/* <div className="row ">
+                    <label htmlFor="phone">Phone</label>
+                    <input type="number"className="form-control" id="phone"
+                      placeholder="Phone" name="phone" value={formData.phone} onChange={handleInputChange} required />
+                  </div> */}
+
+                  <div className="row">
                     <label htmlFor="phone">Phone</label>
                     <input
                       type="number"
@@ -150,46 +157,31 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
                       value={formData.phone}
                       onChange={handleInputChange}
                       required
+                      minLength={11} 
+                      onBlur={() => {
+                        if (formData.phone.length < 11) {
+                          toast.error("Phone number should be at least 11 digits");
+                        }
+                      }}
                     />
                   </div>
 
                   <div className="row">
                     <label htmlFor="address">Address</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="address"
-                      placeholder="Address"
-                      name="address"
-                      value={formData.address}
-                      onChange={handleInputChange}
-                      required
-                    />
+                    <input type="text" className="form-control" id="address"
+                    placeholder="Address" name="address" value={formData.address}onChange={handleInputChange}required/>
                   </div>
 
                   <div className="row ">
                     <label htmlFor="joinedDate">Joined Date</label>
-                    <input
-                      type="date"
-                      className="form-control"
-                      id="joinedDate"
-                      name="joinedDate"
-                      value={formData.joinedDate}
-                      onChange={handleInputChange}
-                      required
-                    />
+                    <input type="date" className="form-control"id="joinedDate"
+                      name="joinedDate"value={formData.joinedDate}onChange={handleInputChange}required/>
                   </div>
 
                   <div className="row">
                     <label htmlFor="endDate">End Date</label>
-                    <input
-                      type="date"
-                      className="form-control"
-                      id="endDate"
-                      name="endDate"
-                      value={formData.endDate}
-                      onChange={handleInputChange}
-                    />
+                    <input type="date" className="form-control" id="endDate"
+                      name="endDate" value={formData.endDate} onChange={handleInputChange}/>
                   </div>
 
                   {/* <div className="row ">
@@ -203,30 +195,28 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
                       value={formData.profilePic}
                       onChange={handleInputChange}
                     />
-                  </div> */}
+                  </div>   */}
+
+                  <input
+                    type="file"
+                    className="form-control"
+                    id="profilePic"
+                    placeholder="Profile Picture"
+                    name="profilePic"
+                    onChange={handleInputChange}
+                  />
+
 
                   <div className="row">
                     <label htmlFor="country">Country</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="country"
-                      placeholder="Country"
-                      name="country"
-                      value={formData.country}
-                      onChange={handleInputChange}
-                    />
+                    <input type="text" className="form-control" id="country" placeholder="Country"
+                      name="country"value={formData.country}onChange={handleInputChange}/>
                   </div>
 
                   <div className="row">
                     <label htmlFor="role">Role</label>
-                    <select
-                      className="form-select"
-                      id="role"
-                      name="role"
-                      value={formData.role}
-                      onChange={handleInputChange}
-                    >
+                    <select className="form-select"id="role"
+                      name="role" value={formData.role} onChange={handleInputChange}>
                       <option value="Admin">Admin</option>
                       <option value="ProductManager">Product Manager</option>
                       <option value="ProductOwner">Product Owner</option>
@@ -236,13 +226,7 @@ const UserForm = ({ formData, handleInputChange, handleSubmit }) => {
 
                   <div className="row">
                     <label htmlFor="role">Staff level</label>
-                    <select
-                      className="form-select"
-                      id="staff"
-                      name="staff"
-                      value={formData.staff}
-                      onChange={handleInputChange}
-                    >
+                    <select className="form-select"id="staff" name="staff" value={formData.staff} onChange={handleInputChange}>
                       {staffLevels.map((level) => (
                         <option value={level.id}>{level.name}</option>
                       ))}

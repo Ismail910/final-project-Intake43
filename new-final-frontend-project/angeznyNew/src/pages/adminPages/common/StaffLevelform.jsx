@@ -15,10 +15,13 @@ const StaffLevelForm = ({ formData, handleInputChange, handleSubmit }) => {
 
   return (
     <>
-      <Button className="btn btn-success mx-4" onClick={handleShow}>
-        <i className="fa-solid fa-plus me-2"></i>
-        <span>Add Staff</span>
-      </Button>
+      <div className="col-4">
+        <Button className="btn btn-success mx-4" onClick={handleShow}>
+          <i className="fa-solid fa-plus me-2"></i>
+          <span>Add Staff</span>
+        </Button>
+      </div>
+
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

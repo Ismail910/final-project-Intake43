@@ -7,23 +7,19 @@ const Sidnave = () => {
       className="col-md-3 col-lg-2 sidebar-offcanvas pl-0 h-100"
       id="sidebar"
       role="navigation"
-      style={{ backgroundColor: "#2a52be", position: "fixed", zIndex: 1000 }}
-    >
+      style={{
+        backgroundImage: "linear-gradient(#63a0d4, #4f93ce, #337ab7, #285f8f)",
+        position: "fixed",
+        zIndex: 1000
+      }}
+          >
       <ul className="nav flex-column sticky-top pl-0 pt-5 p-3 mt-3 h-100">
         <li className="nav-item mb-2 mt-3">
           <Link className="nav-link text-secondary text-light" to="/admin">
             <h5>Admin Dashboard</h5>
           </Link>
         </li>
-        <li className="nav-item mb-2">
-          <Link
-            className="nav-link text-secondary text-light"
-            to="/admin/product-owner"
-          >
-            <i className="font-weight-bold"></i>{" "}
-            <span className="ml-3">Product Owner</span>
-          </Link>
-        </li>
+   
         <li className="nav-item mb-2">
           <Link
             className="nav-link text-secondary text-light"
@@ -33,6 +29,17 @@ const Sidnave = () => {
             <span className="ml-3">Product Manager</span>
           </Link>
         </li>
+
+        <li className="nav-item mb-2">
+          <Link
+            className="nav-link text-secondary text-light"
+            to="/admin/product-owner"
+          >
+            <i className="font-weight-bold"></i>{" "}
+            <span className="ml-3">Product Owner</span>
+          </Link>
+        </li>
+        
         <li className="nav-item mb-2">
           <Link
             className="nav-link text-secondary text-light"

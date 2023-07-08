@@ -16,10 +16,11 @@ import UserForm from "./userform";
 import { toast } from "react-toastify";
 import { CometChat } from "@cometchat-pro/chat";
 
-export default function Developer() {
+export default function ProductOwner() {
   // const [owners, setowners] = useState([]);
   const [showEditForm, setShowEditForm] = useState(false);
   const [selectedowner, setSelectedowner] = useState(null);
+  const [imagedata, setImagedata] = useState("");
 
   const [formData, setFormData] = useState({
     staff_level: {},
@@ -60,16 +61,42 @@ export default function Developer() {
         toast.error(error);
       });
   }, []);
-  const handleInputChange = (event) => {
-    setFormData({
-      ...formData,
-      user: {
-        ...formData.user,
-        [event.target.name]: event.target.value,
-      },
-    });
-  };
 
+  // const handleInputChange = (event) => {
+  //   setFormData({
+  //     ...formData,
+  //     user: {
+  //       ...formData.user,
+  //       imagedata:event.target.files [0],
+  //       [event.target.name]: event.target.value,
+  //     },
+  //   });
+  // };
+  
+  const handleInputChange = (event) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setFormData({
+        ...formData,
+        user: {
+          ...formData.user,
+          profilePic: event.target.files[0],
+          [event.target.name]: event.target.value,
+        },
+      });
+    } else {
+      setFormData({
+        ...formData,
+        user: {
+          ...formData.user,
+          [event.target.name]: event.target.value,
+        },
+      });
+    }
+  };
+  
+  
+
+  
   const handleUserChat = (data) => {
     const appID = "240169ef153c40df";
     const region = "US";
@@ -109,9 +136,14 @@ export default function Developer() {
       }
     );
   };
+
+
   const handleSubmit = async (event) => {
     // event.preventDefault();
     console.log(formData);
+    const data =new FormData();
+    data.append("profilePic", imagedata);
+   console.log(formData.user.profilePic);
     await axios
       .post("http://127.0.0.1:8000/api/register/manager", {
         name: formData.user.name,
@@ -126,11 +158,13 @@ export default function Developer() {
         role: formData.user.role,
         userName: formData.user.userName,
         gender: formData.user.gender,
+        profilePic:formData.user.profilePic,
         staff_level_id: formData.user.staff,
         headers: {
+          "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      })
+      },data)
       .then((response) => {
         console.log(formData);
         handleUserChat(response.data.manager.user);
@@ -187,6 +221,9 @@ export default function Developer() {
       });
   };
 
+  
+  
+
   const handleDelete = (ownerId) => {
     axios
       .delete(`http://127.0.0.1:8000/api/manager/${ownerId}`, {
@@ -197,9 +234,11 @@ export default function Developer() {
       .then((response) => {
         console.log(response.data);
         setowners(owners.filter((owner) => owner.id !== ownerId));
+        toast.success("User deleted successfully");
       })
       .catch((error) => {
         console.error(error);
+        toast.error("Failed to delete user");
       });
   };
 
@@ -340,42 +379,42 @@ export default function Developer() {
               header="Name"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="user.email"
               header="Email"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="user.phone"
               header="Phone"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="user.gender"
               header="Gender"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="user.country"
               header="Country"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="staff_level.name"
               header="Staff Level"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               headerStyle={{ width: "5rem", textAlign: "center" }}
@@ -383,7 +422,7 @@ export default function Developer() {
               header="Actions"
               body={(rowData) => {
                 return (
-                  <div style={{ display: "flex" }}>
+                  <div style={{ display: "flex", justifyContent: "center" }}>
                     <ProductOwnerEditForm
                       employee={rowData}
                       handleUpdate={handleUpdate}

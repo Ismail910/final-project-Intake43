@@ -73,7 +73,7 @@ export default function Developer() {
   const handleUserChat = (data) => {
     const appID = "240169ef153c40df";
     const region = "US";
-    const authKey = "581f246117c147b5f041cf28049c89388b3fc5cd";
+    const authKey = "581f246117c107b5f041cf28049c89388b3fc5cd";
     const appSetting = new CometChat.AppSettingsBuilder()
       .subscribePresenceForAllUsers()
       .setRegion(region)
@@ -348,21 +348,21 @@ export default function Developer() {
               header="Name"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="user.email"
               header="Email"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="user.phone"
               header="Phone"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
               // body={(rowData) =>
               //   rowData.user.skills.map((skill) => skill.name).join(", ")
               // }
@@ -372,21 +372,21 @@ export default function Developer() {
               header="Gender"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="user.country"
               header="Country"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="staff_level.name"
               header="Staff Level"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
 
             <Column
@@ -835,7 +835,7 @@ export default function Developer() {
 //         placeholder="Any"
 //         className="p-column-filter"
 //         maxSelectedLabels={1}
-//         style={{ minWidth: "14rem" }}
+//         style={{ minWidth: "10rem" }}
 //       />
 //     );
 //   };
@@ -901,9 +901,9 @@ export default function Developer() {
 //           header="National id"
 //           filterField="user.nationalID"
 //           field="user.nationalID"
-//           style={{ minWidth: "14rem" }}
+//           style={{ minWidth: "10rem" }}
 //           // showFilterMenu={false}
-//           // filterMenuStyle={{ width: "14rem" }}
+//           // filterMenuStyle={{ width: "10rem" }}
 //           // body={representativeBodyTemplate}
 //           // filter
 //           // filterElement={representativeRowFilterTemplate}
@@ -912,7 +912,7 @@ export default function Developer() {
 //           field="user.country"
 //           header="Country"
 //           style={{ minWidth: "12rem" }}
-//           // filterMenuStyle={{ width: "14rem" }}
+//           // filterMenuStyle={{ width: "10rem" }}
 //           // showFilterMenu={false}
 //           // body={statusBodyTemplate}
 //           // filter

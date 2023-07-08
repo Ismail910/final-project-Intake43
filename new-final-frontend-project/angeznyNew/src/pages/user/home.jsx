@@ -1,4 +1,3 @@
-// import React from 'react'
 import React, { useState,useEffect } from 'react';
 import '../../styles/home.css'
 import cuteGirlImage from '../../assets/images/cute-freelance-girl-using-laptop-sitting-floor-smiling.jpg'
@@ -238,55 +237,55 @@ const Home = () => {
 }
 
 export default Home
-// <section className="comSection">
-//         <div className="container">
-//           <div className="row">
-//             <p className="ComText">Our communities</p>
-//             <div className="d-flex row justify-content-center">
-//               <div className="col-md-3 col-12 comDiv d-flex justify-content-center">
-//                 <img src={flag1} className="comImage1"></img>
-//                 <p className="commText">MOROCCO</p>
-//               </div>
-//               <div className="col-md-3 col-12 comDiv d-flex justify-content-center">
-//                 <img src={flag2} className="comImage2 "></img>
-//                 <p className="commText">SAUDI</p>
-//               </div>
-//               <div className="col-md-3 col-12 comDiv d-flex justify-content-center">
-//                 <img src={flag3} className="comImage3"></img>
-//                 <p className="commText">UNITED STATES</p>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </section>
+{/* <section className="comSection">
+        <div className="container">
+          <div className="row">
+            <p className="ComText">Our communities</p>
+            <div className="d-flex row justify-content-center">
+              <div className="col-md-3 col-12 comDiv d-flex justify-content-center">
+                <img src={flag1} className="comImage1"></img>
+                <p className="commText">MOROCCO</p>
+              </div>
+              <div className="col-md-3 col-12 comDiv d-flex justify-content-center">
+                <img src={flag2} className="comImage2 "></img>
+                <p className="commText">SAUDI</p>
+              </div>
+              <div className="col-md-3 col-12 comDiv d-flex justify-content-center">
+                <img src={flag3} className="comImage3"></img>
+                <p className="commText">UNITED STATES</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
 
 
-// <section>
-// <div className='container'>
-// <div className='row'>
-// <div className="d-flex row justify-content-between">
-// <div className="col-md-5 col-12 comDiv d-flex justify-content-center">
-// <div>
-// <img src={event}></img>
-// <br></br>
-// <p className="ComText pt-5" style={{ color: ' black' }}>Count down</p>
+<section>
+<div className='container'>
+<div className='row'>
+<div className="d-flex row justify-content-between">
+<div className="col-md-5 col-12 comDiv d-flex justify-content-center">
+<div>
+<img src={event}></img>
+<br></br>
+<p className="ComText pt-5" style={{ color: ' black' }}>Count down</p>
 
-// </div>
+</div>
 
-// </div>
-// <div className="col-md-5 col-12 comDiv d-flex justify-content-center">
-// <div>
-// <img src={event} className="mb-3 mt-4"></img>
-// <img src={event} className="mb-3"></img>
-// <img src={event}></img>
+</div>
+<div className="col-md-5 col-12 comDiv d-flex justify-content-center">
+<div>
+<img src={event} className="mb-3 mt-4"></img>
+<img src={event} className="mb-3"></img>
+<img src={event}></img>
 
-// </div>
-// </div>
+</div>
+</div>
 
-// </div>
+</div>
 
-// </div>
-// </div>
+</div>
+</div>
 
-// </section>
+</section> */}

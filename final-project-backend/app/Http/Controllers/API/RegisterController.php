@@ -44,6 +44,7 @@ class RegisterController extends Controller
             'userName' => $request->input('userName'),
             'gender' => $request->input('gender')
         ]);
+        // print($request->profilePic);
         $this->save_image($request->profilePic, $user);
 
         $token = $user->createToken('token-name', ['user_id' => $user->id, 'email' => $user->email, 'name' => $user->name, 'role' => $user->role])->plainTextToken;
@@ -133,7 +134,9 @@ class RegisterController extends Controller
 
     private function save_image($image, $article)
     {
+
         if ($image) {
+            print($image->extension);
             $image_name = time() . '.' . $image->extension();
             $image->move(public_path('images/users'), $image_name);
             $article->profilePic = $image_name;
