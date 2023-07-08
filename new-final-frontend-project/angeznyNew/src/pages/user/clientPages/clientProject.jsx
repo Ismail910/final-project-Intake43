@@ -14,8 +14,6 @@ import Stack from '@mui/joy/Stack';
 
 const ClientProject = ({ statusProject }) => {
   const token = localStorage.getItem('token');
-  const usrID = localStorage.getItem('user_id');
-  const projectStatus = "notStarted";
   const [projects, setProjects] = useState(null);
   const [open, setOpen] = React.useState(false);
   const [status, setStatus] = React.useState('');
