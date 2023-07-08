@@ -38,6 +38,7 @@ import ManagerTask from "../pages/user/productManagerpages/tasks";
 import Status from "../pages/user/productManagerpages/common/navBarstatusM";
 
 import Ownerproject from "../pages/user/productOwnerPages/Ownerproject";
+import StatusOwner from "../pages/user/productOwnerPages/common/navBarstatusO";
 
 import AdminClient from "../pages/adminPages/common/client";
 import AdminDash from "../pages/adminPages/common/Dashboard";
@@ -775,7 +776,8 @@ const MyRoutes = () => {
               }
             >
               <Header />
-              <Ownerproject />
+              {/* <Ownerproject /> */}
+              <StatusOwner/>
               <Footer />
             </Suspense>
           }
