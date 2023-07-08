@@ -55,7 +55,7 @@ const Dashboard = () => {
     <div>
       <div className="row my-5 d-flex flex-column justify-conetent-center align-items-center">
         <div className="col-4">
-        <Card style={{ width: '20rem' , backgroundColor: "#63a0d4"}} className="shadow p-3 mb-5 bg-body rounded">
+        <Card style={{ width: '20rem' , backgroundColor:"yellow !important"}} className="shadow p-3 mb-5 bg-body rounded">
           <Card.Body>
             <Card.Title>Total Users</Card.Title>
             <Card.Text>

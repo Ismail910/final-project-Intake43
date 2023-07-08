@@ -456,7 +456,6 @@ const MyRoutes = () => {
             </Suspense>
           }
         />
-        
         <Route
           path="/client/payment/failed"
           element={
