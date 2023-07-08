@@ -51,6 +51,7 @@ import AdminProject from "../pages/adminPages/common/project";
 import AdminTask from "../pages/adminPages/common/task";
 import AdminSkill from "../pages/adminPages/common/skills";
 import AdminStaffLevel from "../pages/adminPages/common/staffLevels";
+import AdminContactUs from "../pages/adminPages/common/contact-us";
 
 // imports all guards
 import LoggedInGuard from "../guard/LoggedInRoutes";
@@ -342,6 +343,24 @@ const MyRoutes = () => {
               <div className="w-100 h-100">
                 <AdminSidnave className="col-2" style={{}} />
                 <AdminStaffLevel className="col-12" />
+              </div>
+            </Suspense>
+          }
+        />
+
+        <Route
+          path="/admin/contactUsForm"
+          element={
+            <Suspense
+              fallback={
+                <div className="grid place-items-center h-screen bg-black">
+                  <CircleSpinner size={60} />
+                </div>
+              }
+            >
+              <div className="w-100 h-100">
+                <AdminSidnave className="col-2" style={{}} />
+                <AdminContactUs className="col-12" />
               </div>
             </Suspense>
           }

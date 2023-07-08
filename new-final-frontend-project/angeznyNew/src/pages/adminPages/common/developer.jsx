@@ -82,7 +82,7 @@ export default function Developer() {
       () => {
         console.log("Initialization completed successfully");
         // You can now proceed with rendering your app or calling the login function.
-        var uid = data.id;
+        var uid = data.id.toString();
         var name = data.userName;
         var user = new CometChat.User(uid);
         user.setName(name);
