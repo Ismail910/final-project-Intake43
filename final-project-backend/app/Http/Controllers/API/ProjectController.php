@@ -182,7 +182,7 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectAPIRequest $request, string $id)
     {
-        //
+        
         try {
             $project = Project::findOrFail($id);
             $project->update($request->all());
@@ -200,7 +200,6 @@ class ProjectController extends Controller
      */
     public function destroy(string $id)
     {
-        //
 
         try {
             $project = Project::findOrFail($id);

@@ -286,12 +286,14 @@ export default function CustomizedTables() {
               <StyledTableCell align="right">
                 <Button
                   // onClick={() => handlePayedStatusChange(row.id, !row.is_payed)}
+                  onClick={handlePayment}
                   variant="contained"
                   color="primary"
                   size="small"
                 >
                   PAY
                 </Button>
+                
               </StyledTableCell>
             </StyledTableRow>
           ))}
