@@ -45,48 +45,48 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectAPIRequest $request)
     {
-            $ownerWithFewestProjects = Manager::join('users', 'managers.user_id', '=', 'users.id')
+        $ownerWithFewestProjects = Manager::join('users', 'managers.user_id', '=', 'users.id')
             ->where('users.role', 'ProductOwner')
             ->leftJoin('projects', 'managers.id', '=', 'projects.ProductOwner_id')
             ->select('managers.id')
             ->orderByRaw('COUNT(projects.id) ASC')
             ->groupBy('managers.id')
             ->value('managers.id');
-// Find the manager with the fewest projects assigned as a product manager
-            $managerWithFewestProjects = Manager::join('users', 'managers.user_id', '=', 'users.id')
+        // Find the manager with the fewest projects assigned as a product manager
+        $managerWithFewestProjects = Manager::join('users', 'managers.user_id', '=', 'users.id')
             ->where('users.role', 'ProductManager')
             ->leftJoin('projects', 'managers.id', '=', 'projects.ProductManager_id')
             ->select('managers.id')
             ->orderByRaw('COUNT(projects.id) ASC')
             ->groupBy('managers.id')
             ->value('managers.id');
-//     print($ownerWithFewestProjects);
-// print("-------------------------");
+        //     print($ownerWithFewestProjects);
+        // print("-------------------------");
 
-//     print($managerWithFewestProjects);
-// Check if $managerWithFewestProjects or $ownerWithFewestProjects is null
-if (!$managerWithFewestProjects || !$ownerWithFewestProjects) {
-    // If any of the variables is null, retrieve the manager(s) with the fewest projects using a separate query
-    $managerWithFewestProjects = Manager::join('projects', 'managers.id', '=', 'projects.ProductManager_id')
-        // ->where('users.role', 'ProductManager')
-        ->select('managers.id')
-        ->orderByRaw('COUNT(*) ASC')
-        ->groupBy('managers.id')
-        ->value('managers.id');
+        //     print($managerWithFewestProjects);
+        // Check if $managerWithFewestProjects or $ownerWithFewestProjects is null
+        if (!$managerWithFewestProjects || !$ownerWithFewestProjects) {
+            // If any of the variables is null, retrieve the manager(s) with the fewest projects using a separate query
+            $managerWithFewestProjects = Manager::join('projects', 'managers.id', '=', 'projects.ProductManager_id')
+                // ->where('users.role', 'ProductManager')
+                ->select('managers.id')
+                ->orderByRaw('COUNT(*) ASC')
+                ->groupBy('managers.id')
+                ->value('managers.id');
 
-    $ownerWithFewestProjects = Manager::join('projects', 'managers.id', '=', 'projects.ProductOwner_id')
-        // ->where('users.role', 'ProductOwner')
-        ->select('managers.id')
-        ->orderByRaw('COUNT(*) ASC')
-        ->groupBy('managers.id')
-        ->value('managers.id');
-}
-// print($ownerWithFewestProjects);
-// print("-------------------------");
-//     print($managerWithFewestProjects);
-    // return;
-    
-    if ($request->has('ProductManager_id')) {
+            $ownerWithFewestProjects = Manager::join('projects', 'managers.id', '=', 'projects.ProductOwner_id')
+                // ->where('users.role', 'ProductOwner')
+                ->select('managers.id')
+                ->orderByRaw('COUNT(*) ASC')
+                ->groupBy('managers.id')
+                ->value('managers.id');
+        }
+        // print($ownerWithFewestProjects);
+        // print("-------------------------");
+        //     print($managerWithFewestProjects);
+        // return;
+
+        if ($request->has('ProductManager_id')) {
             // Update the ProductManager_id with the managerWithFewestProjects value
             $request->merge(['ProductManager_id' => $managerWithFewestProjects]);
         } else {
@@ -104,6 +104,7 @@ if (!$managerWithFewestProjects || !$ownerWithFewestProjects) {
 
         $id = Auth::user()->id;
         $client = Client::where('user_id', $id)->first();
+        // dd($client);
         if ($request->has('client_id')) {
             // Update the ProductManager_id with the managerWithFewestProjects value
             $request->merge(['client_id' => $client->id]);

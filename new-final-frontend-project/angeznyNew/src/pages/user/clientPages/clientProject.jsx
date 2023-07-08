@@ -67,7 +67,7 @@
 //     const enddate = row.end.split(' ')[0];
 //     setEndDate(enddate);
 //   }, [row.start,row.end]);
-  
+
 //   const handleTitleChange = (event) => {
 //     setTitle(event.target.value);
 //   };
@@ -135,15 +135,14 @@
 //   const handleOpenDialaog= (event)=>{
 //     setOpenDialog(true);
 //     const fetchManager = async () => {
-      
+
 //       try {
 //              var response = await fetch(`http://127.0.0.1:8000/api/managers/ProductManager`, {
 //               headers: {
 //                 'Accept': 'application/json',
 //               }
-//             }); 
-          
-           
+//             });
+
 //         if (response.ok) {
 //           const data = await response.json();
 //           if (data) {
@@ -154,21 +153,19 @@
 
 //         }
 
-        
 //       } catch (error) {
 //           toast.error(error);
 //       }
 //      };
 //      const fetchOwner = async () => {
-      
+
 //       try {
 //              var response = await fetch(`http://127.0.0.1:8000/api/managers/ProductOwner`, {
 //               headers: {
 //                 'Accept': 'application/json',
 //               }
-//             }); 
-          
-           
+//             });
+
 //         if (response.ok) {
 //           const data = await response.json();
 //           if (data) {
@@ -179,7 +176,6 @@
 
 //         }
 
-        
 //       } catch (error) {
 //           toast.error(error);
 //       }
@@ -195,18 +191,18 @@
 //           .green {
 //             color: green;
 //           }
-          
+
 //           .warning {
 //             color: yellow;
 //           }
-          
+
 //           .red {
 //             color: red;
 //           }
 //           `
 //         }
 //       </style>
-      
+
 //       <StyledTableRow component={Paper} sx={{ '& > *': { borderBottom: 'unset' } }}>
 //         <StyledTableCell>
 //           <IconButton
@@ -238,7 +234,7 @@
 //       >
 //        <EditIcon variant="contained" className="ms-2" color="warning" />
 //       </Button>
-        
+
 //         <Modal open={openDialog} onClose={() => setOpenDialog(false)}>
 //         <ModalDialog
 //           aria-labelledby="basic-modal-dialog-title"
@@ -314,13 +310,12 @@
 //             </Stack>
 //           </form>
 //           </div>
-          
+
 //         </ModalDialog>
 //       </Modal>
 
-     
 //         </StyledTableCell>
-        
+
 //       </StyledTableRow>
 //       <TableRow>
 //         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -376,116 +371,114 @@
 //   const [description, setDescription] = React.useState('');
 //   const [startDate, setStartDate] = React.useState('');
 //   const [endDate, setEndDate] = React.useState('');
-  // React.useEffect(() => {
-  //   // Fetch questions from backend API
-  //   const fetchProjects = async () => {
-      
-  //           try {
-  //               const response = await fetch(`http://127.0.0.1:8000/api/projects/searchProjectByUsers`, {
-  //                 headers: {
-  //                   'Accept': 'application/json',
-  //                   'Authorization': `Bearer ${token}`
-  //                 }}); 
-  //             if (response.ok) {
-  //               const data = await response.json();
-  //               if (data) {
-  //                 setProjects(data.data);
-  //               }
-  //             } else {
-  //               setProjects([]);
+// React.useEffect(() => {
+//   // Fetch questions from backend API
+//   const fetchProjects = async () => {
 
-  //             }
-  //           } catch (error) {
-  //               toast.error(error);
-  //           }
-  //          };
-  //          const fetchProjectsByStatus = async () => {
-      
-  //           try {
-  //               const response = await fetch(`http://127.0.0.1:8000/api/projects/search/${status}`, {
-  //                 headers: {
-  //                   'Accept': 'application/json',
-  //                   'Authorization': `Bearer ${token}`
-  //                 }}); 
-  //             if (response.ok) {
-  //               const data = await response.json();
-  //               if (data) {
-  //                 setProjects(data.data);
-  //                 console.log(data);
-  //               }
-  //             } else {
-  //               setProjects([]);
+//           try {
+//               const response = await fetch(`http://127.0.0.1:8000/api/projects/searchProjectByUsers`, {
+//                 headers: {
+//                   'Accept': 'application/json',
+//                   'Authorization': `Bearer ${token}`
+//                 }});
+//             if (response.ok) {
+//               const data = await response.json();
+//               if (data) {
+//                 setProjects(data.data);
+//               }
+//             } else {
+//               setProjects([]);
 
-  //             }
-  //           } catch (error) {
-  //               toast.error(error);
-  //           }
-  //          };
-  //         if(status=='all'){
-  //          fetchProjects();
-  //         }else{
-  //           fetchProjectsByStatus();
-  //         }
-    
-    
+//             }
+//           } catch (error) {
+//               toast.error(error);
+//           }
+//          };
+//          const fetchProjectsByStatus = async () => {
 
-  // },  [status]);
+//           try {
+//               const response = await fetch(`http://127.0.0.1:8000/api/projects/search/${status}`, {
+//                 headers: {
+//                   'Accept': 'application/json',
+//                   'Authorization': `Bearer ${token}`
+//                 }});
+//             if (response.ok) {
+//               const data = await response.json();
+//               if (data) {
+//                 setProjects(data.data);
+//                 console.log(data);
+//               }
+//             } else {
+//               setProjects([]);
 
-  // const handleTitleChange = (event) => {
-  //   setTitle(event.target.value);
-  // };
-  // const handleTypeChange = (event) => {
-  //   setType(event.target.value);
-  // };
-  
-  // const handleDescriptionChange = (event) => {
-  //   setDescription(event.target.value);
-  // };
-  
-  // const handleStartDateChange = (event) => {
-  //   setStartDate(event.target.value);
-  // };
-  // const handleEndDateChange = (event) => {
-  //   setEndDate(event.target.value);
-  // };
-  // const handleSave=async (event) => {
-  //   event.preventDefault();
-  //   // console.log(id);
-  //   await axios.post(
-  //     `http://127.0.0.1:8000/api/projects`,
-  //     {
-  //       project_title: title,
-  //       project_type: type,
-  //       project_description: description,
-  //       project_start: startDate,
-  //       project_end: endDate,
-  //       project_status:"notStarted",
-  //       client_id: id,
-  //     },
-  //     {
-  //       headers: {
-  //         'Accept': 'application/json',
-  //         'Authorization': `Bearer ${token}`,
-  //       },
-  //     }
-  //   )
-  //     .then(() => {
-  //       toast.success("Task Created");
-  //     })
-  //     .catch((error) => {
-  //       toast.error("Error Creating Task: " + error.message);
-  //     });
-  //   setOpen(false);
-  // }
-  // const openHandleSave=async (event) => {
-  //   event.preventDefault();
-   
-  //   setOpen(true);
-  // }
-  
+//             }
+//           } catch (error) {
+//               toast.error(error);
+//           }
+//          };
+//         if(status=='all'){
+//          fetchProjects();
+//         }else{
+//           fetchProjectsByStatus();
+//         }
+
+// },  [status]);
+
+// const handleTitleChange = (event) => {
+//   setTitle(event.target.value);
+// };
+// const handleTypeChange = (event) => {
+//   setType(event.target.value);
+// };
+
+// const handleDescriptionChange = (event) => {
+//   setDescription(event.target.value);
+// };
+
+// const handleStartDateChange = (event) => {
+//   setStartDate(event.target.value);
+// };
+// const handleEndDateChange = (event) => {
+//   setEndDate(event.target.value);
+// };
+// const handleSave=async (event) => {
+//   event.preventDefault();
+//   // console.log(id);
+//   await axios.post(
+//     `http://127.0.0.1:8000/api/projects`,
+//     {
+//       project_title: title,
+//       project_type: type,
+//       project_description: description,
+//       project_start: startDate,
+//       project_end: endDate,
+//       project_status:"notStarted",
+//       client_id: id,
+//     },
+//     {
+//       headers: {
+//         'Accept': 'application/json',
+//         'Authorization': `Bearer ${token}`,
+//       },
+//     }
+//   )
+//     .then(() => {
+//       toast.success("Task Created");
+//     })
+//     .catch((error) => {
+//       toast.error("Error Creating Task: " + error.message);
+//     });
+//   setOpen(false);
+// }
+// const openHandleSave=async (event) => {
+//   event.preventDefault();
+
+//   setOpen(true);
+// }
+
 //   return (
 //     <Box sx={{ marginTop: '30px', overflowX: 'auto' }}>
-   
+
 //    <Button
 //     variant="outlined"
 //     color="neutral"
@@ -514,7 +507,6 @@
 //                 <FormLabel>Title</FormLabel>
 //                 <Input value={title} onChange={handleTitleChange} autoFocus required />
 //               </FormControl>
-              
 
 //               <FormControl>
 //                 <FormLabel>Type Project</FormLabel>
@@ -536,7 +528,7 @@
 //                 <FormLabel>End</FormLabel>
 //                 <Input value={endDate} onChange={handleEndDateChange} autoFocus required type="date" />
 //               </FormControl>
-              
+
 //               <FormControl>
 //                 <FormLabel>Description</FormLabel>
 //                 <TextareaAutosize minRows={3} value={description} onChange={handleDescriptionChange} autoFocus required />
@@ -548,7 +540,7 @@
 //       </Modal>
 
 //       {projects.length >0 ?(
-//         <Container>   
+//         <Container>
 //         <TableContainer component={Paper}>
 //           <Table aria-label="collapsible table">
 //             <TableHead>
@@ -561,7 +553,7 @@
 //                 <StyledTableCell align="center">End</StyledTableCell>
 //                 <StyledTableCell align="right">productOnwer</StyledTableCell>
 //                 <StyledTableCell align="right">Client</StyledTableCell>
-  
+
 //                 <StyledTableCell align="center">Action</StyledTableCell>
 //               </TableRow>
 //             </TableHead>
@@ -584,116 +576,115 @@
 
 // export default Managerproject;
 
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { toast } from "react-toastify";
-import { Card, Row, Col } from 'react-bootstrap';
+import { Card, Row, Col } from "react-bootstrap";
 // //////////////////////////////////
-import { styled } from '@mui/material/styles';
-import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/joy/Typography';
-import Paper from '@mui/material/Paper';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import Button from '@mui/joy/Button';
-import FormControl from '@mui/joy/FormControl';
-import FormLabel from '@mui/joy/FormLabel';
-import InputLabel from '@mui/material/InputLabel';
-import {  Select, MenuItem } from '@mui/material';
-import TextareaAutosize from '@mui/material/TextareaAutosize';
-import Input from '@mui/joy/Input';
-import Modal from '@mui/joy/Modal';
-import ModalDialog from '@mui/joy/ModalDialog';
-import Stack from '@mui/joy/Stack';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import CssBaseline from '@mui/material/CssBaseline';
-import useScrollTrigger from '@mui/material/useScrollTrigger';
-import Container from '@mui/material/Container';
-import Slide from '@mui/material/Slide';
+import { styled } from "@mui/material/styles";
+import PropTypes from "prop-types";
+import Box from "@mui/material/Box";
+import Collapse from "@mui/material/Collapse";
+import IconButton from "@mui/material/IconButton";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/joy/Typography";
+import Paper from "@mui/material/Paper";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import Button from "@mui/joy/Button";
+import FormControl from "@mui/joy/FormControl";
+import FormLabel from "@mui/joy/FormLabel";
+import InputLabel from "@mui/material/InputLabel";
+import { Select, MenuItem } from "@mui/material";
+import TextareaAutosize from "@mui/material/TextareaAutosize";
+import Input from "@mui/joy/Input";
+import Modal from "@mui/joy/Modal";
+import ModalDialog from "@mui/joy/ModalDialog";
+import Stack from "@mui/joy/Stack";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import CssBaseline from "@mui/material/CssBaseline";
+import useScrollTrigger from "@mui/material/useScrollTrigger";
+import Container from "@mui/material/Container";
+import Slide from "@mui/material/Slide";
 
-const ClientProject = ({statusProject}) => {
-
-  const token = localStorage.getItem('token');
-  const usrID =localStorage.getItem('user_id');
+const ClientProject = ({ statusProject }) => {
+  const token = localStorage.getItem("token");
+  const usrID = localStorage.getItem("user_id");
   const projectStatus = "notStarted";
   const [projects, setProjects] = useState(null);
   const [open, setOpen] = React.useState(false);
-  const [status, setStatus] = React.useState('');
-  const [title, setTitle] = React.useState('');
-  const [type, setType] = React.useState('');
-  const [description, setDescription] = React.useState('');
-  const [startDate, setStartDate] = React.useState('');
-  const [endDate, setEndDate] = React.useState('');
-  const [budget, setBudget] = React.useState('');
+  const [status, setStatus] = React.useState("");
+  const [title, setTitle] = React.useState("");
+  const [type, setType] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const [startDate, setStartDate] = React.useState("");
+  const [endDate, setEndDate] = React.useState("");
+  const [budget, setBudget] = React.useState("");
 
-
-React.useEffect(() => {
+  React.useEffect(() => {
     // Fetch questions from backend API
     const fetchProjects = async () => {
-      
-            try {
-                const response = await fetch(`http://127.0.0.1:8000/api/projects/searchProjectByUsers`, {
-                  headers: {
-                    'Accept': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                  }}); 
-              if (response.ok) {
-                const data = await response.json();
-                if (data) {
-                  setProjects(data.data);
-                }
-              } else {
-                setProjects([]);
-
-              }
-            } catch (error) {
-                toast.error(error);
-            }
-           };
-           const fetchProjectsByStatus = async () => {
-      
-            try {
-                const response = await fetch(`http://127.0.0.1:8000/api/projects/search/${statusProject}`, {
-                  headers: {
-                    'Accept': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                  }}); 
-              if (response.ok) {
-                const data = await response.json();
-                if (data) {
-                  setProjects(data.data);
-                  console.log(data);
-                }
-              } else {
-                setProjects([]);
-
-              }
-            } catch (error) {
-                toast.error(error);
-            }
-           };
-
-          if(statusProject=='all'){
-           fetchProjects();
-          }else{
-            fetchProjectsByStatus();
+      try {
+        const response = await fetch(
+          `http://127.0.0.1:8000/api/projects/searchProjectByUsers`,
+          {
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${token}`,
+            },
           }
-    
-    
+        );
+        if (response.ok) {
+          const data = await response.json();
+          if (data) {
+            setProjects(data.data);
+          }
+        } else {
+          setProjects([]);
+        }
+      } catch (error) {
+        toast.error(error);
+      }
+    };
+    const fetchProjectsByStatus = async () => {
+      try {
+        const response = await fetch(
+          `http://127.0.0.1:8000/api/projects/search/${statusProject}`,
+          {
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (response.ok) {
+          const data = await response.json();
+          if (data) {
+            setProjects(data.data);
+            console.log(data);
+          }
+        } else {
+          setProjects([]);
+        }
+      } catch (error) {
+        toast.error(error);
+      }
+    };
 
-  },  [statusProject]);
+    if (statusProject == "all") {
+      fetchProjects();
+    } else {
+      fetchProjectsByStatus();
+    }
+  }, [statusProject]);
   const handleEdit = (projectId) => {
     // Handle edit logic here
     toast.info(`Edit project with ID: ${projectId}`);
@@ -704,124 +695,152 @@ React.useEffect(() => {
     toast.error(`Delete project with ID: ${projectId}`);
   };
 
-      const handleTitleChange = (event) => {
-        setTitle(event.target.value);
-      };
-      const handleTypeChange = (event) => {
-        setType(event.target.value);
-      };
-      
-      const handleDescriptionChange = (event) => {
-        setDescription(event.target.value);
-      };
-      
-      const handleStartDateChange = (event) => {
-        setStartDate(event.target.value);
-      };
-      const handleEndDateChange = (event) => {
-        setEndDate(event.target.value);
-      };
-      const handleBudgetChange = (event) => {
-        setBudget(event.target.value);
-      };
-      const handleSave=async (event) => {
-        event.preventDefault();
-        // console.log(id);
-        await axios.post(
-          `http://127.0.0.1:8000/api/projects`,
-          {
-            project_title: title,
-            project_type: type,
-            project_description: description,
-            project_start: startDate,
-            project_end: endDate,
-            project_status:"notStarted",
-            client_id: 1,
-            ProductOwner_id:99,
-            ProductManager_id:99
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
+  const handleTypeChange = (event) => {
+    setType(event.target.value);
+  };
+
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
+  };
+
+  const handleStartDateChange = (event) => {
+    setStartDate(event.target.value);
+  };
+  const handleEndDateChange = (event) => {
+    setEndDate(event.target.value);
+  };
+  const handleBudgetChange = (event) => {
+    setBudget(event.target.value);
+  };
+  const handleSave = async (event) => {
+    event.preventDefault();
+    // console.log(id);
+    await axios
+      .post(
+        `http://127.0.0.1:8000/api/projects`,
+        {
+          project_title: title,
+          project_type: type,
+          project_description: description,
+          project_start: startDate,
+          project_end: endDate,
+          project_status: "notStarted",
+          client_id: 1,
+          ProductOwner_id: 99,
+          ProductManager_id: 99,
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
           },
-          {
-            headers: {
-              'Accept': 'application/json',
-              'Authorization': `Bearer ${token}`,
-            },
-          }
-        )
-          .then((response) => {
-            toast.success("Task Created");
-          })
-          .catch((error) => {
-            toast.error("Error Creating Task: " + error.message);
-          });
-        setOpen(false);
-      }
-      const openHandleSave=async (event) => {
-        event.preventDefault();
-       
-        setOpen(true);
-      }
+        }
+      )
+      .then((response) => {
+        toast.success("Task Created");
+      })
+      .catch((error) => {
+        toast.error("Error Creating Task: " + error.message);
+      });
+    setOpen(false);
+  };
+  const openHandleSave = async (event) => {
+    event.preventDefault();
+
+    setOpen(true);
+  };
 
   return (
     <div>
-    <Button
-    variant="outlined"
-    color="neutral"
-    sx={{ width: '95%',marginLeft:'30px',marginBottom:'5px' }}
-    onClick={openHandleSave}
-  >
-    ADD Project
-  </Button>
-      <Modal sx={{overflow: 'auto'}} open={open} onClose={() => setOpen(false)}>
+      <Button
+        variant="outlined"
+        color="neutral"
+        sx={{ width: "95%", marginLeft: "30px", marginBottom: "5px" }}
+        onClick={openHandleSave}
+      >
+        ADD Project
+      </Button>
+      <Modal
+        sx={{ overflow: "auto" }}
+        open={open}
+        onClose={() => setOpen(false)}
+      >
         <ModalDialog
           aria-labelledby="basic-modal-dialog-title"
           aria-describedby="basic-modal-dialog-description"
-          sx={{ maxWidth: 500,overflow: 'auto' }}
+          sx={{ maxWidth: 500, overflow: "auto" }}
         >
           <Typography id="basic-modal-dialog-title" component="h2">
             Create new Project
           </Typography>
-          <Typography id="basic-modal-dialog-description" textColor="text.tertiary">
+          <Typography
+            id="basic-modal-dialog-description"
+            textColor="text.tertiary"
+          >
             Fill in the information of the Project.
           </Typography>
-          <form
-            onSubmit={handleSave}
-          >
+          <form onSubmit={handleSave}>
             <Stack spacing={2}>
               <FormControl>
                 <FormLabel>Title</FormLabel>
-                <Input value={title} onChange={handleTitleChange} autoFocus required />
+                <Input
+                  value={title}
+                  onChange={handleTitleChange}
+                  autoFocus
+                  required
+                />
               </FormControl>
-              
 
               <FormControl>
                 <FormLabel>Type Project</FormLabel>
                 <Select
-                value={type}
-                onChange={handleTypeChange}
-                autoFocus
-                required
-              >
-                <MenuItem value="mileStone">mileStone</MenuItem>
-                <MenuItem value="byProject">byProject</MenuItem>
-              </Select>
+                  value={type}
+                  onChange={handleTypeChange}
+                  autoFocus
+                  required
+                >
+                  <MenuItem value="mileStone">mileStone</MenuItem>
+                  <MenuItem value="byProject">byProject</MenuItem>
+                </Select>
               </FormControl>
               <FormControl>
                 <FormLabel>Start</FormLabel>
-                <Input value={startDate} onChange={handleStartDateChange} autoFocus required type="date" />
+                <Input
+                  value={startDate}
+                  onChange={handleStartDateChange}
+                  autoFocus
+                  required
+                  type="date"
+                />
               </FormControl>
               <FormControl>
                 <FormLabel>End</FormLabel>
-                <Input value={endDate} onChange={handleEndDateChange} autoFocus required type="date" />
+                <Input
+                  value={endDate}
+                  onChange={handleEndDateChange}
+                  autoFocus
+                  required
+                  type="date"
+                />
               </FormControl>
 
               {/* <FormControl>
                 <FormLabel>Budget</FormLabel>
                 <Input value={budget} onChange={handleBudgetChange} autoFocus required type="number" />
               </FormControl> */}
-              
+
               <FormControl>
                 <FormLabel>Description</FormLabel>
-                <TextareaAutosize minRows={3} value={description} onChange={handleDescriptionChange} autoFocus required />
+                <TextareaAutosize
+                  minRows={3}
+                  value={description}
+                  onChange={handleDescriptionChange}
+                  autoFocus
+                  required
+                />
               </FormControl>
 
               <Button type="submit">Submit</Button>
@@ -829,31 +848,39 @@ React.useEffect(() => {
           </form>
         </ModalDialog>
       </Modal>
-    <div>
-      <Row>
-        {Array.isArray(projects) ? (
-          projects.map(item => (
-            <Col key={item.id} lg={4} md={6} sm={12}>
-              <Card className="mb-3">
-                <Card.Body>
-                  <Card.Title>{item.name}</Card.Title>
-                  <Card.Text>{item.type}</Card.Text>
-                  <Card.Text>{item.description}</Card.Text>
-                  <Button variant="primary" onClick={() => handleEdit(item.id)}>Edit</Button>
-                  <Button variant="danger" onClick={() => handleDelete(item.id)}>Delete</Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))
-        ) : (
-          <p>Loading...</p>
-        )}
-      </Row>
-    </div>
+      <div>
+        <Row>
+          {Array.isArray(projects) ? (
+            projects.map((item) => (
+              <Col key={item.id} lg={4} md={6} sm={12}>
+                <Card className="mb-3">
+                  <Card.Body>
+                    <Card.Title>{item.name}</Card.Title>
+                    <Card.Text>{item.type}</Card.Text>
+                    <Card.Text>{item.description}</Card.Text>
+                    <Button
+                      variant="primary"
+                      onClick={() => handleEdit(item.id)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="danger"
+                      onClick={() => handleDelete(item.id)}
+                    >
+                      Delete
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))
+          ) : (
+            <p>Loading...</p>
+          )}
+        </Row>
+      </div>
     </div>
   );
-}
+};
 
 export default ClientProject;
-
-
