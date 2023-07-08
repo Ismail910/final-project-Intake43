@@ -238,12 +238,12 @@ export default function CustomizedTables() {
     }
   }, []);
   
-  const handlePayment = async () => {
+  const handlePayment = async (row) => {
         try {
           const data ={
-            amount: 1100 ,
-            project_id: 2 ,
-            user_id: 1 ,
+            amount: row.budget || 0,
+            project_id:row.id || 0,
+            user_id:client_id,
     
           }
           const response = await axios.post('http://127.0.0.1:8000/api/paypal/pay',
@@ -255,7 +255,7 @@ export default function CustomizedTables() {
     
         } catch (error) {
           console.log(error.response?.data);
-          // Handle error accordingly
+         
           toast.error('Failed to initiate the payment.');
         }
   };
@@ -285,8 +285,7 @@ export default function CustomizedTables() {
               </StyledTableCell>
               <StyledTableCell align="right">
                 <Button
-                  // onClick={() => handlePayedStatusChange(row.id, !row.is_payed)}
-                  onClick={handlePayment}
+                  onClick={() => handlePayment(row)}
                   variant="contained"
                   color="primary"
                   size="small"

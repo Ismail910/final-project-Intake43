@@ -92,7 +92,7 @@ class PayPalController extends Controller
                     $project->is_payed = true;
                     $project->update();
 
-                    return redirect('http://localhost:3000/');
+                    return redirect('http://localhost:3000/client/payment/success');
                
             }
             else{
@@ -101,7 +101,7 @@ class PayPalController extends Controller
 
         }
         else{
-            return redirect('http://localhost:8000/error');
+            return redirect('http://localhost:8000/client/payment/failed');
         }
     }
 
