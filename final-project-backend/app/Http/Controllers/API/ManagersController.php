@@ -29,10 +29,13 @@ class ManagersController extends Controller
             $users = User::where('role', $type)->get();
             foreach ($users as $user) {
                 $manager = Manager::where('user_id', $user->id)->first();
-                array_push($managers, $manager);
+                if($manager){
+                    array_push($managers, $manager);
+                }
             }
             // return $managers;
             return ManagersResource::collection($managers);
+            // return $managers;
         } catch (ModelNotFoundException $e) {
             return response()->json([
                 'error' => 'not found mangers collection',

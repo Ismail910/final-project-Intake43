@@ -124,7 +124,7 @@ const ProductOwnerEditForm = ({ employee, handleUpdate }) => {
                   <div className="row mb-3">
                     <label>National ID</label>
                     <input
-                      type="text"
+                      type="number"
                       name="nationalID"
                       className="form-control"
                       value={formData.user.nationalID}
