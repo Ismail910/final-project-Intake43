@@ -135,7 +135,7 @@ export default function AdminContactUs() {
             filters={filters}
             filterDisplay="menu"
             globalFilterFields={["name"]}
-            emptyMessage="No skills found."
+            emptyMessage="No Messages found."
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
           >
             <Column
