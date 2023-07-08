@@ -156,14 +156,12 @@ export default function Developer() {
           return client;
         });
 
-        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         console.log(updatedclients);
         setclients(updatedclients);
         setShowEditForm(false);
         setSelectedclient(null);
       })
       .catch((error) => {
-        console.log("asdadadasdassdasdadas");
 
         console.error(error);
       });
@@ -224,6 +222,7 @@ export default function Developer() {
               "user.name",
               "user.email",
               "user.nationalID",
+              "user.profilePic",
               "user.country",
               // "balance",
             ]}
@@ -251,6 +250,17 @@ export default function Developer() {
               // filter
               style={{ minWidth: "14rem" }}
             />
+               <Column
+              field="user.profilePic"
+              header="Profile Picture"
+              body={(rowData) => (
+                <img
+                  src={`http://localhost:8000/images/users/${rowData.user.profilePic}`}
+                  alt="Profile Picture"
+                  style={{ width: "100px" }}
+                />
+              )}
+            />
             <Column
               field="user.country"
               header="Country"
@@ -267,13 +277,6 @@ export default function Developer() {
                 setSelectedclient(rowData);
                 return (
                   <div style={{ display: "flex" }}>
-                    {/* <button
-                      className="btn btn-info me-2"
-                      onClick={() => handleEdit(rowData)}
-                    >
-                      Edit
-                    </button> */}
-
                     <ClientEditForm
                       employee={rowData}
                       handleUpdate={handleUpdate}

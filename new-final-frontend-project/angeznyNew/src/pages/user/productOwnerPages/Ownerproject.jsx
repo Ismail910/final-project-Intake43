@@ -40,13 +40,17 @@ import Slide from "@mui/material/Slide";
 // import { CometChatUI } from "./cometchat-pro-react-ui-kit/CometChatWorkspace/src";
 function Row(props) {
   const token = localStorage.getItem("token");
-  const { row,onDelete  } = props;
+  const { row, onDelete } = props;
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
   const [managers, setManagers] = React.useState([]);
-  const [selectedManagerId, setSelectedManagerId] = React.useState(row.ProductManager.id);
+  const [selectedManagerId, setSelectedManagerId] = React.useState(
+    row.ProductManager.id
+  );
   const [owners, setOwners] = React.useState([]);
-  const [selectedOwnerId, setSelectedOwnerId] = React.useState(row.productOnwer.id);
+  const [selectedOwnerId, setSelectedOwnerId] = React.useState(
+    row.productOnwer.id
+  );
   const [status, setStatus] = React.useState(row.status);
   const [type, setType] = React.useState(row.type);
   const [title, setTitle] = React.useState(row.name);
@@ -102,7 +106,7 @@ function Row(props) {
   //         Authorization: `Bearer ${token}`,
   //       },
   //     });
-      
+
   //     toast.success("project Deleted");
   //   } catch (error) {
   //     toast.error("Error Deleting project: " + error.message);
@@ -111,7 +115,7 @@ function Row(props) {
   // };
   const handleSave = async (event) => {
     event.preventDefault();
-    if(price<0){
+    if (price < 0) {
       toast.error("budget must be greater than 0");
       return;
     }
@@ -128,7 +132,7 @@ function Row(props) {
           ProductManager_id: row.ProductManager.id,
           client_id: row.client.id,
           project_status: status,
-          budget:price
+          budget: price,
         },
         {
           headers: {
@@ -147,7 +151,7 @@ function Row(props) {
         row.status = status;
         row.budget = price;
       })
-    .catch((error) => toast.error("Error updating Task:" + error.message));
+      .catch((error) => toast.error("Error updating Task:" + error.message));
     setOpenDialog(false);
   };
 
@@ -204,11 +208,7 @@ function Row(props) {
         <StyledTableCell align="right">{row.budget}</StyledTableCell>
         <StyledTableCell align="right">{row.client.name}</StyledTableCell>
         <StyledTableCell align="center">
-          <Button
-            variant="outlined"
-            color="neutral"
-            onClick={handleOpenDialog}
-          >
+          <Button variant="outlined" color="neutral" onClick={handleOpenDialog}>
             <EditIcon variant="contained" className="ms-2" color="warning" />
           </Button>
 
@@ -234,16 +234,16 @@ function Row(props) {
                       />
                     </FormControl>
                     <FormControl>
-                    <FormLabel>Budget</FormLabel>
-                    <Input
-                      value={price}
-                      onChange={handlePriceChange}
-                      autoFocus
-                      type="number"
-                      inputProps={{ min: 0 }}
-                      required
-                    />
-                  </FormControl>
+                      <FormLabel>Budget</FormLabel>
+                      <Input
+                        value={price}
+                        onChange={handlePriceChange}
+                        autoFocus
+                        type="number"
+                        inputProps={{ min: 0 }}
+                        required
+                      />
+                    </FormControl>
                     <FormControl>
                       <FormLabel>Status</FormLabel>
                       <Select
@@ -286,8 +286,8 @@ function Row(props) {
                         onChange={handleEndDateChange}
                         autoFocus
                         required
-                        type="date"/>
-                      
+                        type="date"
+                      />
                     </FormControl>
                     <FormControl>
                       <FormLabel>Description</FormLabel>
@@ -364,10 +364,6 @@ function Row(props) {
               </Box>
             </ModalDialog>
           </Modal>
-
-
-
-
         </StyledTableCell>
       </StyledTableRow>
       <TableRow>
@@ -476,11 +472,11 @@ const Ownerproject = ({ status }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      
+
       setProjects((prevProjects) =>
         prevProjects.filter((project) => project.id !== projectId)
       );
-      
+
       toast.success("Project deleted");
     } catch (error) {
       toast.error("Error deleting project: " + error.message);
@@ -509,10 +505,10 @@ const Ownerproject = ({ status }) => {
               <TableBody>
                 {projects.map((project) => (
                   <Row
-                  key={project.id}
-                  row={project}
-                  onDelete={() => handleDelete(project.id)}
-                />
+                    key={project.id}
+                    row={project}
+                    onDelete={() => handleDelete(project.id)}
+                  />
                 ))}
               </TableBody>
             </Table>

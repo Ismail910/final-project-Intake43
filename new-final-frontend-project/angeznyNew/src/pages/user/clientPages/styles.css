@@ -1,11 +1,62 @@
-.green {
-    color: green;
-  }
+
+.conatingData{
+  background-image: url("../../../assets/images/bussiness/pr1.jpg");
+  background-repeat:no-repeat;
+  background-size: cover;
+}
+.cardData{
+  position:relative;
+  background-image: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+  color:white !important;
+  padding:10px;
   
-  .warning {
-    color: yellow;
-  }
-  
-  .red {
-    color: red;
-  }
+}
+.deleteBtn{
+  position:absolute;
+  top:-10%;
+  right:-1%;
+  width:30px;
+  height:30px;
+  border-radius:50% !important;
+  background-color: rgb(143, 4, 4)!important;
+  border: none !important;
+  text-align: center;
+  padding: 0 !important;
+}
+.deleteBtn:hover{
+  background-color: red !important;
+}
+.addbtn{
+  background-color:#FF7C03 !important;
+  color:white !important;
+  font-weight:600px !important;
+
+}
+.green ,.red ,.yellow{
+  position:absolute;
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  top:0;
+  left:0;
+
+}
+
+.green{
+  background-color:green;
+  border:1px solid white;
+}
+.red{
+  background-color:red;
+  border:1px solid white;
+}
+.yellow{
+  background-color:yellow;
+  border:1px solid white;
+}
+.blocked{
+  display: block;
+}
+.noneDiv{
+  display: none;
+}

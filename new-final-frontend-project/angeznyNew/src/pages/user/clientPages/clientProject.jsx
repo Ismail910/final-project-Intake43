@@ -11,23 +11,31 @@ import Input from "@mui/joy/Input";
 import Modal from "@mui/joy/Modal";
 import ModalDialog from "@mui/joy/ModalDialog";
 import Stack from "@mui/joy/Stack";
+import Aos from "aos";
+import "./styles.css";
+import "aos/dist/aos.css";
+
 
 const ClientProject = ({ statusProject }) => {
-
   const token = localStorage.getItem("token");
   const usrID = localStorage.getItem("user_id");
-  const [projects, setProjects] = useState(null);
-  const [open, setOpen] = React.useState(false);
-  const [status, setStatus] = React.useState("");
-  const [title, setTitle] = React.useState("");
-  const [type, setType] = React.useState("");
-  const [description, setDescription] = React.useState("");
-  const [startDate, setStartDate] = React.useState("");
-  const [endDate, setEndDate] = React.useState("");
-  const [budget, setBudget] = React.useState("");
-  const [selectedProject, setSelectedProject] = React.useState(null);
+  const [projects, setProjects] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [status, setStatus] = useState("");
+  const [title, setTitle] = useState("");
+  const [type, setType] = useState("");
+  const [description, setDescription] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [budget, setBudget] = useState("");
+  const [selectedProject, setSelectedProject] = useState(null);
 
-  React.useEffect(() => {
+
+  useEffect(() => {
+    Aos.init();
+  }, []);
+
+  useEffect(() => {
     const fetchProjects = async () => {
       try {
         const response = await fetch(
@@ -43,13 +51,12 @@ const ClientProject = ({ statusProject }) => {
           const data = await response.json();
           if (data) {
             setProjects(data.data);
-            console.log(projects.json());
           }
         } else {
           setProjects([]);
         }
       } catch (error) {
-        toast.error(error);
+        toast.error(error.message);
       }
     };
 
@@ -73,7 +80,7 @@ const ClientProject = ({ statusProject }) => {
           setProjects([]);
         }
       } catch (error) {
-        toast.error(error);
+        toast.error(error.message);
       }
     };
 
@@ -84,8 +91,25 @@ const ClientProject = ({ statusProject }) => {
     }
   }, [statusProject]);
 
+  const getClassByStatus = (statusProject) => {
+    if (statusProject === "completed") {
+      return "green";
+    } else if (statusProject === "inProgress") {
+      return "yellow";
+    } else {
+      return "red";
+    }
+  };
+
+
   const handleEdit = (project) => {
     setSelectedProject(project);
+    setTitle(selectedProject?.name);
+    setType(selectedProject?.project_type);
+    setDescription(selectedProject?.description);
+    setStartDate(selectedProject?.start);
+    setEndDate(selectedProject?.end);
+    setBudget(selectedProject?.budget);
     setOpen(true);
   };
 
@@ -132,14 +156,14 @@ const ClientProject = ({ statusProject }) => {
     event.preventDefault();
     if (selectedProject) {
       // Update existing project
-      await axios
-        .patch(
+      try {
+        await axios.patch(
           `http://127.0.0.1:8000/api/projects/${selectedProject.id}`,
           {
             project_title: title || selectedProject.project_title,
             project_type: type || selectedProject.project_type,
             project_description:
-              description || selectedProject.project_description,
+            description || selectedProject.project_description,
             project_start: startDate || selectedProject.project_start,
             project_end: endDate || selectedProject.project_end,
             project_status: "notStarted",
@@ -153,19 +177,18 @@ const ClientProject = ({ statusProject }) => {
               Authorization: `Bearer ${token}`,
             },
           }
-        )
-        .then((response) => {
-          toast.success("Project Updated");
-          setOpen(false);
-          setSelectedProject(null);
-        })
-        .catch((error) => {
-          toast.error("Error updating project: " + error.message);
-        });
+        );
+        toast.success("Project Updated");
+        setOpen(false);
+        setSelectedProject(null);
+        refreshProjects();
+      } catch (error) {
+        toast.error("Error updating project: " + error.message);
+      }
     } else {
       // Create new project
-      await axios
-        .post(
+      try {
+        await axios.post(
           `http://127.0.0.1:8000/api/projects`,
           {
             project_title: title,
@@ -173,7 +196,7 @@ const ClientProject = ({ statusProject }) => {
             project_description: description,
             project_start: startDate,
             project_end: endDate,
-            budget: budget,
+            budget: 0,
             project_status: "notStarted",
             client_id: usrID,
             ProductOwner_id: 99,
@@ -185,14 +208,13 @@ const ClientProject = ({ statusProject }) => {
               Authorization: `Bearer ${token}`,
             },
           }
-        )
-        .then((response) => {
-          toast.success("Project Created");
-          setOpen(false);
-        })
-        .catch((error) => {
-          toast.error("Error Creating project: " + error.message);
-        });
+        );
+        toast.success("Project Created");
+        setOpen(false);
+        refreshProjects();
+      } catch (error) {
+        toast.error("Error Creating project: " + error.message);
+      }
     }
   };
 
@@ -208,16 +230,44 @@ const ClientProject = ({ statusProject }) => {
     setOpen(true);
   };
 
+  const refreshProjects = async () => {
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/projects/searchProjectByUsers`,
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        if (data) {
+          setProjects(data.data);
+        }
+      } else {
+        setProjects([]);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   return (
-    <div>
+    <div className="container-fluid d-flex justify-content-center row conatingData">
+    
       <Button
+       disabled={statusProject !== "all"}
+        className="mt-4 w-25 mb-5 addbtn"
         variant="outlined"
         color="neutral"
         sx={{ width: "95%", marginLeft: "30px", marginBottom: "5px" }}
         onClick={openHandleSave}
       >
-        ADD Project
+        Create New Project
       </Button>
+      
       <Modal
         sx={{ overflow: "auto" }}
         open={open}
@@ -242,7 +292,7 @@ const ClientProject = ({ statusProject }) => {
               <FormControl>
                 <FormLabel>Title</FormLabel>
                 <Input
-                  value={title || selectedProject?.name}
+                  value={title}
                   onChange={handleTitleChange}
                   autoFocus
                   required
@@ -251,7 +301,7 @@ const ClientProject = ({ statusProject }) => {
               <FormControl>
                 <FormLabel>Type Project</FormLabel>
                 <Select
-                  value={type || selectedProject?.project_type}
+                  value={type}
                   onChange={handleTypeChange}
                   autoFocus
                   required
@@ -263,7 +313,7 @@ const ClientProject = ({ statusProject }) => {
               <FormControl>
                 <FormLabel>Start</FormLabel>
                 <Input
-                  value={startDate || selectedProject?.start}
+                  value={startDate}
                   onChange={handleStartDateChange}
                   autoFocus
                   required
@@ -273,28 +323,28 @@ const ClientProject = ({ statusProject }) => {
               <FormControl>
                 <FormLabel>End</FormLabel>
                 <Input
-                  value={endDate || selectedProject?.end}
+                  value={endDate}
                   onChange={handleEndDateChange}
                   autoFocus
                   required
                   type="date"
                 />
               </FormControl>
-              <FormControl>
+              {/* <FormControl>
                 <FormLabel>Budget</FormLabel>
                 <Input
-                  value={budget || selectedProject?.budget}
+                  value={budget}
                   onChange={handleBudgetChange}
                   autoFocus
                   required
                   type="number"
                 />
-              </FormControl>
+              </FormControl> */}
               <FormControl>
                 <FormLabel>Description</FormLabel>
                 <TextareaAutosize
                   minRows={3}
-                  value={description || selectedProject?.description}
+                  value={description}
                   onChange={handleDescriptionChange}
                   autoFocus
                   required
@@ -308,37 +358,38 @@ const ClientProject = ({ statusProject }) => {
         </ModalDialog>
       </Modal>
       <div>
-        <Row>
-          {Array.isArray(projects) ? (
+        <Row className="d-flex justify-content-center">
+          {Array.isArray(projects) && projects.length > 0 ? (
             projects.map((item) => (
-              <Col key={item.id} lg={4} md={6} sm={12}>
-                <Card className="mb-3">
+              <Col key={item.id} lg={5} md={5} sm={5}>
+                <Card className="mb-4 cardData " div data-aos="zoom-in-up">
                   <Card.Body>
-                    <Card.Title>{item.name}</Card.Title>
+                    <Card.Title>Title of project : {item.name}</Card.Title>
                     <Card.Text>{item.type}</Card.Text>
                     <Card.Text>{item.description}</Card.Text>
-                    <Card.Text>{}</Card.Text>
+                    <span className={getClassByStatus(item.status)}></span>
 
                     <Button
-                      variant="primary"
                       onClick={() => handleEdit(item)}
                       disabled={item.status !== "notStarted"}
                     >
-                      Edit
+                      <i class="fa-solid fa-pen-to-square"></i>
                     </Button>
                     <Button
-                      variant="danger"
+                      className="deleteBtn"
                       onClick={() => handleDelete(item.id)}
                       disabled={item.status !== "notStarted"}
                     >
-                      Delete
+                      <i class="fa-solid fa-circle-xmark"></i>
                     </Button>
                   </Card.Body>
                 </Card>
               </Col>
             ))
           ) : (
-            <p>Loading...</p>
+            <Typography component="div" align="center" color="danger">
+              No projects found.
+            </Typography>
           )}
         </Row>
       </div>
