@@ -18,7 +18,7 @@ import { CometChat } from "@cometchat-pro/chat";
 import UserForm from "./userform";
 import ProductManagerEditForm from "./editForms/productManagerEditform";
 
-export default function Developer() {
+export default function ProductManager() {
   // const [mangers, setmangers] = useState([]);
   const [showEditForm, setShowEditForm] = useState(false);
   const [selectedmanger, setSelectedmanger] = useState(null);
@@ -74,7 +74,7 @@ export default function Developer() {
   const handleUserChat = (data) => {
     const appID = "240169ef153c40df";
     const region = "US";
-    const authKey = "581f246117c147b5f041cf28049c89388b3fc5cd";
+    const authKey = "581f246117c107b5f041cf28049c89388b3fc5cd";
     const appSetting = new CometChat.AppSettingsBuilder()
       .subscribePresenceForAllUsers()
       .setRegion(region)
@@ -345,42 +345,42 @@ export default function Developer() {
               header="Name"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="user.email"
               header="Email"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="user.phone"
               header="Phone"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="user.gender"
               header="Gender"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="user.country"
               header="Country"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="staff_level.name"
               header="Staff Level"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               headerStyle={{ width: "5rem", textAlign: "center" }}

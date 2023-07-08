@@ -251,7 +251,7 @@ export default function Project() {
               header="Name"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
 
             <Column
@@ -259,7 +259,7 @@ export default function Project() {
               header="Type"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
 
             <Column
@@ -267,14 +267,14 @@ export default function Project() {
               header="Start Date"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="end"
               header="End Date"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
               // body={(rowData) =>
               //   rowData.user.skills.map((skill) => skill.name).join(", ")
               // }
@@ -284,7 +284,7 @@ export default function Project() {
               header="Status"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
               // body={(rowData) =>
               //   rowData.user.skills.map((skill) => skill.name).join(", ")
               // }
@@ -295,7 +295,7 @@ export default function Project() {
               header="Budget"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
               // body={(rowData) =>
               //   rowData.user.skills.map((skill) => skill.name).join(", ")
               // }
@@ -747,7 +747,7 @@ export default function Project() {
 //         placeholder="Any"
 //         className="p-column-filter"
 //         maxSelectedLabels={1}
-//         style={{ minWidth: "14rem" }}
+//         style={{ minWidth: "10rem" }}
 //       />
 //     );
 //   };
@@ -813,9 +813,9 @@ export default function Project() {
 //           header="National id"
 //           filterField="user.nationalID"
 //           field="user.nationalID"
-//           style={{ minWidth: "14rem" }}
+//           style={{ minWidth: "10rem" }}
 //           // showFilterMenu={false}
-//           // filterMenuStyle={{ width: "14rem" }}
+//           // filterMenuStyle={{ width: "10rem" }}
 //           // body={representativeBodyTemplate}
 //           // filter
 //           // filterElement={representativeRowFilterTemplate}
@@ -824,7 +824,7 @@ export default function Project() {
 //           field="user.country"
 //           header="Country"
 //           style={{ minWidth: "12rem" }}
-//           // filterMenuStyle={{ width: "14rem" }}
+//           // filterMenuStyle={{ width: "10rem" }}
 //           // showFilterMenu={false}
 //           // body={statusBodyTemplate}
 //           // filter

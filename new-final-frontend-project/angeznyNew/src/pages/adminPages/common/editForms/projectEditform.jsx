@@ -118,57 +118,6 @@ const ProjectEditForm = ({ employee, handleUpdate }) => {
                       onChange={handleInputChange}
                     />
                   </div>
-
-                  {/* <div className="row mb-3">
-                    <label>National ID</label>
-                    <input
-                      type="text"
-                      name="nationalID"
-                      className="form-control"
-                      value={formData.user.nationalID}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="row mb-3">
-                    <label>Joined Date</label>
-                    <input
-                      type="text"
-                      name="joinedDate"
-                      className="form-control"
-                      value={formData.user.joinedDate}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="row mb-3">
-                    <label>End Date</label>
-                    <input
-                      type="text"
-                      name="endDate"
-                      className="form-control"
-                      value={formData.user.endDate}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="row mb-3">
-                    <label>Profile Picture</label>
-                    <input
-                      type="text"
-                      name="profilePic"
-                      className="form-control"
-                      value={formData.user.profilePic}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="row mb-3">
-                    <label>Country</label>
-                    <input
-                      type="text"
-                      name="country"
-                      className="form-control"
-                      value={formData.user.country}
-                      onChange={handleInputChange}
-                    />
-                  </div> */}
                 </form>
               </div>
             </div>
