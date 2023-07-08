@@ -22,6 +22,7 @@ class FreelancerResource extends JsonResource
             'id' => $this->id,
             'rate' => $this->rate,
             'status' => $this->Status,
+            'balance' => $this->balance,
             'user' => new UserResource($this->user),
             'task' => $Task
         ];

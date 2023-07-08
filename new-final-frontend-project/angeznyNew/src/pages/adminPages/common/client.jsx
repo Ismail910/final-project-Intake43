@@ -186,7 +186,7 @@ export default function Developer() {
   const renderHeader = () => {
     return (
       <div className="flex flex-wrap gap-2 justify-content-between align-items-center">
-        <h4 className="m-0">clients</h4>
+        <h4 className="m-0">Clients</h4>
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
           <InputText
@@ -225,40 +225,37 @@ export default function Developer() {
               "user.email",
               "user.nationalID",
               "user.country",
+              // "balance",
             ]}
             emptyMessage="No clients found."
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
           >
             <Column
-              selectionMode="multiple"
-              headerStyle={{ width: "3rem" }}
-            ></Column>
-            <Column
               field="user.name"
               header="Name"
               sortable
-              filter
+              // filter
               style={{ minWidth: "14rem" }}
             />
             <Column
               field="user.email"
               header="Email"
               sortable
-              filter
+              // filter
               style={{ minWidth: "14rem" }}
             />
             <Column
               field="user.nationalID"
               header="National id"
               sortable
-              filter
+              // filter
               style={{ minWidth: "14rem" }}
             />
             <Column
               field="user.country"
               header="Country"
               sortable
-              filter
+              // filter
               style={{ minWidth: "14rem" }}
             />
 

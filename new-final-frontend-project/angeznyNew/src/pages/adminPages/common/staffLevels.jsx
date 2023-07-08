@@ -215,15 +215,15 @@ export default function AdminStaffLevel() {
             emptyMessage="No skills found."
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
           >
-            <Column
+            {/* <Column
               selectionMode="multiple"
               headerStyle={{ width: "3rem" }}
-            ></Column>
+            ></Column> */}
             <Column
               field="name"
               header="Name"
               sortable
-              filter
+              // filter
               style={{ minWidth: "14rem" }}
             />
 
@@ -231,7 +231,7 @@ export default function AdminStaffLevel() {
               field="salary"
               header="Salary"
               sortable
-              filter
+              // filter
               style={{ minWidth: "14rem" }}
             />
 

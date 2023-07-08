@@ -193,7 +193,7 @@ export default function AdminTask() {
   const renderHeader = () => {
     return (
       <div className="flex flex-wrap gap-2 justify-content-between align-items-center">
-        <h4 className="m-0">Customers</h4>
+        <h4 className="m-0">Tasks</h4>
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
           <InputText
@@ -228,23 +228,26 @@ export default function AdminTask() {
             filters={filters}
             filterDisplay="menu"
             globalFilterFields={[
-              "user.name",
-              "user.email",
-              "user.phone",
-              "user.country",
+              "name",
+              "project.name",
+              "productManager.name",
+              "assigned_to.name",
+              "start",
+              "end",
+              "status",
             ]}
             emptyMessage="No customers found."
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
           >
-            <Column
+            {/* <Column
               selectionMode="multiple"
               headerStyle={{ width: "3rem" }}
-            ></Column>
+            ></Column> */}
             <Column
               field="name"
               header="Task Name"
               sortable
-              filter
+              // filter
               style={{ minWidth: "14rem" }}
             />
 
@@ -252,22 +255,36 @@ export default function AdminTask() {
               field="project.name"
               header="Project Name"
               sortable
-              filter
+              // filter
               style={{ minWidth: "14rem" }}
             />
 
             <Column
+              field="productManager.name"
+              header="Task Creator"
+              sortable
+              // filter
+              style={{ minWidth: "14rem" }}
+            />
+            <Column
+              field="assigned_to.name"
+              header="Assigned to"
+              sortable
+              // filter
+              style={{ minWidth: "14rem" }}
+            />
+            <Column
               field="start"
               header="Start Date"
               sortable
-              filter
+              // filter
               style={{ minWidth: "14rem" }}
             />
             <Column
               field="end"
               header="End Date"
               sortable
-              filter
+              // filter
               style={{ minWidth: "14rem" }}
               // body={(rowData) =>
               //   rowData.user.skills.map((skill) => skill.name).join(", ")
@@ -277,7 +294,7 @@ export default function AdminTask() {
               field="status"
               header="Status"
               sortable
-              filter
+              // filter
               style={{ minWidth: "14rem" }}
               // body={(rowData) =>
               //   rowData.user.skills.map((skill) => skill.name).join(", ")

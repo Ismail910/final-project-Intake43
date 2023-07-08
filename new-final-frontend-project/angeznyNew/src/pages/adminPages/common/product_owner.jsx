@@ -22,6 +22,7 @@ export default function Developer() {
   const [selectedowner, setSelectedowner] = useState(null);
 
   const [formData, setFormData] = useState({
+    staff_level: {},
     user: {
       name: "",
       email: "",
@@ -33,6 +34,7 @@ export default function Developer() {
       profilePic: "",
       country: "",
       gender: "male",
+      staff: 1,
     },
   });
   const [owners, setowners] = useState([]);
@@ -124,6 +126,7 @@ export default function Developer() {
         role: formData.user.role,
         userName: formData.user.userName,
         gender: formData.user.gender,
+        staff_level_id: formData.user.staff,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -132,8 +135,37 @@ export default function Developer() {
         console.log(formData);
         handleUserChat(response.data.manager.user);
 
-        setowners([...owners, formData]);
+        axios
+          .get("http://127.0.0.1:8000/api/staff", {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          })
+          .then((response) => {
+            // console.log(response.data);
+            if (response.status === 200) {
+              // setStaffLevels(response.data.data || []);
+              response.data.data.map((level) => {
+                if (level.id == formData.user.staff) {
+                  formData.staff_level = level;
+                  console.log(formData);
+                  setowners([...owners, formData]);
+                }
+              });
+              // toast.success("product owners fectched successfully");
+            } else {
+              toast.error("failed to load the data");
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+            toast.error("failed to load the data");
+
+            // toast.error(error);
+          });
+
         setFormData({
+          staff_level: {},
           user: {
             name: "",
             email: "",
@@ -146,6 +178,7 @@ export default function Developer() {
             profilePic: "",
             country: "",
             gender: "male",
+            staff: 1,
           },
         });
       })
@@ -192,19 +225,37 @@ export default function Developer() {
         }
       )
       .then((response) => {
-        console.log(response.data);
-        const updatedowners = owners.map((owner) => {
-          if (owner.id === updatedowner.id) {
-            owner.user = response.data.data;
-          }
-          return owner;
-        });
+        axios
+          .put(
+            `http://127.0.0.1:8000/api/manager/${updatedowner.id}`,
+            {
+              staff_level_id: updatedowner.user.staff,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          )
+          .then((staffResponse) => {
+            console.log(staffResponse.data);
+            const updatedowners = owners.map((owner) => {
+              if (owner.id === updatedowner.id) {
+                owner.user = response.data.data;
+                owner.staff_level = staffResponse.data.data.staff_level;
+              }
+              return owner;
+            });
 
-        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        console.log(updatedowners);
-        setowners(updatedowners);
-        setShowEditForm(false);
-        setSelectedowner(null);
+            console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            console.log(updatedowners);
+            setowners(updatedowners);
+            setShowEditForm(false);
+            setSelectedowner(null);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
       })
       .catch((error) => {
         console.log("asdadadasdassdasdadas");
@@ -230,7 +281,7 @@ export default function Developer() {
   const renderHeader = () => {
     return (
       <div className="flex flex-wrap gap-2 justify-content-between align-items-center">
-        <h4 className="m-0">owners</h4>
+        <h4 className="m-0">Product Owners</h4>
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
           <InputText
@@ -273,44 +324,59 @@ export default function Developer() {
               "user.name",
               "user.email",
               "user.phone",
+              "user.gender",
               "user.country",
+              "staff_level.name",
             ]}
             emptyMessage="No owners found."
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
           >
-            <Column
+            {/* <Column
               selectionMode="multiple"
               headerStyle={{ width: "3rem" }}
-            ></Column>
+            ></Column> */}
             <Column
               field="user.name"
               header="Name"
               sortable
-              filter
+              // filter
               style={{ minWidth: "14rem" }}
             />
             <Column
               field="user.email"
               header="Email"
               sortable
-              filter
+              // filter
               style={{ minWidth: "14rem" }}
             />
             <Column
               field="user.phone"
               header="Phone"
               sortable
-              filter
+              // filter
+              style={{ minWidth: "14rem" }}
+            />
+            <Column
+              field="user.gender"
+              header="Gender"
+              sortable
+              // filter
               style={{ minWidth: "14rem" }}
             />
             <Column
               field="user.country"
               header="Country"
               sortable
-              filter
+              // filter
               style={{ minWidth: "14rem" }}
             />
-
+            <Column
+              field="staff_level.name"
+              header="Staff Level"
+              sortable
+              // filter
+              style={{ minWidth: "14rem" }}
+            />
             <Column
               headerStyle={{ width: "5rem", textAlign: "center" }}
               bodyStyle={{ textAlign: "center", overflow: "visible" }}

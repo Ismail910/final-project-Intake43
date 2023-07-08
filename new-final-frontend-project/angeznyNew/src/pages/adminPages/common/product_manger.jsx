@@ -24,6 +24,7 @@ export default function Developer() {
   const [selectedmanger, setSelectedmanger] = useState(null);
 
   const [formData, setFormData] = useState({
+    staff_level: {},
     user: {
       name: "",
       email: "",
@@ -35,6 +36,7 @@ export default function Developer() {
       profilePic: "",
       country: "",
       gender: "male",
+      staff: 1,
     },
   });
   const [mangers, setmangers] = useState([]);
@@ -127,6 +129,7 @@ export default function Developer() {
           role: formData.user.role,
           userName: formData.user.userName,
           gender: formData.user.gender,
+          staff_level_id: formData.user.staff,
         },
         {
           headers: {
@@ -138,8 +141,37 @@ export default function Developer() {
         console.log(formData);
         handleUserChat(response.data.manager.user);
 
-        setmangers([...mangers, formData]);
+        axios
+          .get("http://127.0.0.1:8000/api/staff", {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          })
+          .then((response) => {
+            // console.log(response.data);
+            if (response.status === 200) {
+              // setStaffLevels(response.data.data || []);
+              response.data.data.map((level) => {
+                if (level.id == formData.user.staff) {
+                  formData.staff_level = level;
+                  console.log(formData);
+
+                  setmangers([...mangers, formData]);
+                }
+              });
+              // toast.success("product owners fectched successfully");
+            } else {
+              toast.error("failed to load the data");
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+            toast.error("failed to load the data");
+
+            // toast.error(error);
+          });
         setFormData({
+          staff_level: {},
           user: {
             name: "",
             email: "",
@@ -152,6 +184,7 @@ export default function Developer() {
             profilePic: "",
             country: "",
             country: "male",
+            staff: 1,
           },
         });
       })
@@ -196,19 +229,38 @@ export default function Developer() {
         }
       )
       .then((response) => {
-        console.log(response.data);
-        const updatedmangers = mangers.map((manger) => {
-          if (manger.id === updatedmanger.id) {
-            manger.user = response.data.data;
-          }
-          return manger;
-        });
+        // console.log(response.data);
+        axios
+          .put(
+            `http://127.0.0.1:8000/api/manager/${updatedmanger.id}`,
+            {
+              staff_level_id: updatedmanger.user.staff,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          )
+          .then((staffResponse) => {
+            console.log(staffResponse.data);
+            const updatedmangers = mangers.map((manager) => {
+              if (manager.id === updatedmanger.id) {
+                manager.user = response.data.data;
+                manager.staff_level = staffResponse.data.data.staff_level;
+              }
+              return manager;
+            });
 
-        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        console.log(updatedmangers);
-        setmangers(updatedmangers);
-        setShowEditForm(false);
-        setSelectedmanger(null);
+            console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            console.log(updatedmangers);
+            setmangers(updatedmangers);
+            setShowEditForm(false);
+            setSelectedmanger(null);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
       })
       .catch((error) => {
         console.log("asdadadasdassdasdadas");
@@ -234,7 +286,7 @@ export default function Developer() {
   const renderHeader = () => {
     return (
       <div className="flex flex-wrap gap-2 justify-content-between align-items-center">
-        <h4 className="m-0">mangers</h4>
+        <h4 className="m-0">Product Managers</h4>
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
           <InputText
@@ -277,44 +329,59 @@ export default function Developer() {
               "user.name",
               "user.email",
               "user.phone",
+              "user.gender",
               "user.country",
+              "staff_level.name",
             ]}
             emptyMessage="No mangers found."
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
           >
-            <Column
+            {/* <Column
               selectionMode="multiple"
               headerStyle={{ width: "3rem" }}
-            ></Column>
+            ></Column> */}
             <Column
               field="user.name"
               header="Name"
               sortable
-              filter
+              // filter
               style={{ minWidth: "14rem" }}
             />
             <Column
               field="user.email"
               header="Email"
               sortable
-              filter
+              // filter
               style={{ minWidth: "14rem" }}
             />
             <Column
               field="user.phone"
               header="Phone"
               sortable
-              filter
+              // filter
+              style={{ minWidth: "14rem" }}
+            />
+            <Column
+              field="user.gender"
+              header="Gender"
+              sortable
+              // filter
               style={{ minWidth: "14rem" }}
             />
             <Column
               field="user.country"
               header="Country"
               sortable
-              filter
+              // filter
               style={{ minWidth: "14rem" }}
             />
-
+            <Column
+              field="staff_level.name"
+              header="Staff Level"
+              sortable
+              // filter
+              style={{ minWidth: "14rem" }}
+            />
             <Column
               headerStyle={{ width: "5rem", textAlign: "center" }}
               bodyStyle={{ textAlign: "center", overflow: "visible" }}
