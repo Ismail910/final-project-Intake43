@@ -20,7 +20,7 @@ class ProjectController extends Controller
     {
 
         $this->middleware(['auth:sanctum', 'checkUser:ProductOwner,Client'])->only('store', 'delete');
-        $this->middleware(['auth:sanctum', 'checkUser:ProductOwner,ProductManager,Admin'])->only('update');
+        $this->middleware(['auth:sanctum', 'checkUser:ProductOwner,ProductManager,Admin,Client'])->only('update');
         $this->middleware(['auth:sanctum', 'checkUser:ProductOwner,ProductManager,Client,Admin'])->only('searchProjectByStatus');
         $this->middleware(['auth:sanctum', 'checkUser:ProductOwner,Client,Admin,ProductManager'])->only('searchProjectByUsers');
     }
