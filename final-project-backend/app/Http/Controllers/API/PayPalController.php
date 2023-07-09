@@ -64,7 +64,7 @@ class PayPalController extends Controller
     public function success(Request $request)
     {
 
-        // $client_id = Client::where
+        
         $client = Client::where('user_id', $request->user_id)->first();
 
         $paymentId = $request->input('paymentId');
