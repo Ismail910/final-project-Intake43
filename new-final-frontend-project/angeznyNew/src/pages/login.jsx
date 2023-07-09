@@ -89,6 +89,9 @@ const Login = () => {
 
   return (
     <div className="LoginConatain">
+                <Link className="nav-link  logoL mx-5  " to="/">
+            <span className="firstLetter">A</span>ngezny
+          </Link>
       <form onSubmit={handleLogin}>
         <MDBContainer
           className="card gradient-form mycard d-flex justify-content-center align-content-center px-5"

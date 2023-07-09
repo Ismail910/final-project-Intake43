@@ -150,6 +150,9 @@ const Register = () => {
   };
   return (
     <div className="contain">
+                      <Link className="nav-link  logoL mx-5  " to="/">
+            <span className="firstLetter">A</span>ngezny
+          </Link>
       <MDBContainer fluid className="data">
         <MDBRow className="d-flex justify-content-center align-items-center h-100 p-5">
           <MDBCol>
