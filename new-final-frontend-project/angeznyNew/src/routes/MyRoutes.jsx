@@ -53,6 +53,7 @@ import AdminTask from "../pages/adminPages/common/task";
 import AdminSkill from "../pages/adminPages/common/skills";
 import AdminStaffLevel from "../pages/adminPages/common/staffLevels";
 import AdminContactUs from "../pages/adminPages/common/contact-us";
+import NavbarAdmin from "../pages/adminPages/common/NavbarAdmin";
 
 // imports all guards
 import LoggedInGuard from "../guard/LoggedInRoutes";
@@ -167,9 +168,16 @@ const MyRoutes = () => {
                 </div>
               }
             >
-              <div className="row w-100 h-100">
-                <AdminSidnave className="col-2 h-100" />
-                <AdminDash className="col-10" />
+              <div className="container-fluid p-0 m-0">
+              <div className="row">
+                <div className="col-2">
+                <AdminSidnave/>
+                </div>
+                <div className="col-10 row">
+                <NavbarAdmin className="col-12"/>
+                <AdminDash className="col-12"/>
+                </div>
+              </div>
               </div>
             </Suspense>
           }
@@ -185,10 +193,17 @@ const MyRoutes = () => {
                 </div>
               }
             >
-              <div className="w-100 h-100">
-                <AdminSidnave className="col-2" />
-                <AdminOwner className="col-12" />
+            <div className="container-fluid p-0 m-0">
+              <div className="row">
+                <div className="col-2">
+                <AdminSidnave/>
+                </div>
+                <div className="col-10 row">
+                <NavbarAdmin/>
+                <AdminOwner/>
+                </div>
               </div>
+            </div>
             </Suspense>
           }
         />

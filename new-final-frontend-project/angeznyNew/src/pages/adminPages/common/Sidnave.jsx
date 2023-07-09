@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 const Sidnave = () => {
   return (
     <div
-      className="col-md-3 col-lg-2 sidebar-offcanvas pl-0 h-100"
+      className="sidebar-offcanvas pl-0 h-100 col-2"
       id="sidebar"
       role="navigation"
       style={{ backgroundImage: "linear-gradient(#63a0d4, #4f93ce, #337ab7, #285f8f)",position: "fixed",zIndex: 1000
