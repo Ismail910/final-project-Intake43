@@ -10,6 +10,8 @@ import InputField from "./formitems/InputField";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import business from "../assets/images/bussiness/business.png";
 import "./style.css";
+import { CometChat } from "@cometchat-pro/chat";
+
 import {
   MDBBtn,
   MDBContainer,
@@ -23,6 +25,37 @@ const Login = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
+  function chatLogin() {
+    const appID = "240169ef153c40df";
+    const region = "US";
+    const authKey = "581f246117c147b5f041cf28049c89388b3fc5cd";
+    const appSetting = new CometChat.AppSettingsBuilder()
+      .subscribePresenceForAllUsers()
+      .setRegion(region)
+      .build();
+    CometChat.init(appID, appSetting).then(
+      () => {
+        console.log("Initialization completed successfully");
+        // You can now proceed with rendering your app or calling the login function.
+        // var uid = "user1";
+        // var name = "Kevin";
+        var uid = localStorage.getItem("user_id");
+        var name = localStorage.getItem("user_userName");
+        CometChat.login(uid, authKey).then(
+          (user) => {
+            console.log("Login Successful:", { user });
+          },
+          (error) => {
+            console.log("Login failed with exception:", { error });
+          }
+        );
+      },
+      (error) => {
+        console.log("Initialization failed with error:", error);
+        // Check the reason for error and take appropriate action.
+      }
+    );
+  }
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -47,6 +80,7 @@ const Login = () => {
           localStorage.setItem("token", res.data.access_token);
           localStorage.setItem("isLogin", true);
 
+          chatLogin();
           switch (res.data.role) {
             case "Admin":
               toast.success("Login successful");

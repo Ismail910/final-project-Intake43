@@ -13,8 +13,10 @@ import ModalDialog from "@mui/joy/ModalDialog";
 import Stack from "@mui/joy/Stack";
 import Aos from "aos";
 import "./styles.css";
-import "aos/dist/aos.css";
 
+import { CometChat } from "@cometchat-pro/chat";
+
+import "aos/dist/aos.css";
 
 const ClientProject = ({ statusProject }) => {
   const token = localStorage.getItem("token");
@@ -30,6 +32,90 @@ const ClientProject = ({ statusProject }) => {
   const [budget, setBudget] = useState("");
   const [selectedProject, setSelectedProject] = useState(null);
 
+  function createChatGroup(
+    projectID,
+    projectName,
+    productOwnerId,
+    productManagerId
+  ) {
+    const appID = "240169ef153c40df";
+    const region = "US";
+    const authKey = "581f246117c147b5f041cf28049c89388b3fc5cd";
+    const appSetting = new CometChat.AppSettingsBuilder()
+      .subscribePresenceForAllUsers()
+      .setRegion(region)
+      .build();
+    CometChat.init(appID, appSetting).then(
+      () => {
+        console.log("Initialization completed successfully");
+        // You can now proceed with rendering your app or calling the login function.
+        // var uid = "user1";
+        // var name = "Kevin";
+        var uid = localStorage.getItem("user_id");
+        var name = localStorage.getItem("user_userName");
+        CometChat.login(uid, authKey).then(
+          (user) => {
+            console.log("Login Successful:", { user });
+
+            // Create a group
+            const groupType = CometChat.GROUP_TYPE.PUBLIC;
+            const groupName = "Group Chat";
+            const membersList = [
+              productOwnerId,
+              productManagerId,
+              localStorage.getItem("user_id"),
+            ]; // User IDs of user1 and user2
+
+            const group = new CometChat.Group("2", groupName, groupType, "");
+            CometChat.createGroup(group).then(
+              (createdGroup) => {
+                console.log("Group created successfully:", createdGroup);
+
+                // Add current user and other users to the group
+                const groupMembers = membersList.map(
+                  (member) =>
+                    new CometChat.GroupMember(
+                      member,
+                      CometChat.GROUP_MEMBER_SCOPE.PARTICIPANT
+                    )
+                );
+
+                console.log(
+                  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                );
+                console.log(groupMembers);
+                CometChat.addMembersToGroup(
+                  createdGroup.guid,
+                  groupMembers,
+                  []
+                ).then(
+                  (response) => {
+                    console.log("Members added successfully:", response);
+                    // Handle successful group creation and member addition
+                  },
+                  (error) => {
+                    console.log("Error adding members to group:", error);
+                    // Handle error adding members to the group
+                  }
+                );
+              },
+              (error) => {
+                console.log("Error creating group:", error);
+                // Handle error creating group
+              }
+            );
+          },
+          (error) => {
+            console.log("Login failed with exception:", { error });
+          }
+        );
+      },
+      (error) => {
+        console.log("Initialization failed with error:", error);
+        // Check the reason for error and take appropriate action.
+      }
+    );
+  }
 
   useEffect(() => {
     Aos.init();
@@ -101,7 +187,6 @@ const ClientProject = ({ statusProject }) => {
     }
   };
 
-
   const handleEdit = (project) => {
     setSelectedProject(project);
     setTitle(selectedProject?.name);
@@ -163,7 +248,7 @@ const ClientProject = ({ statusProject }) => {
             project_title: title || selectedProject.project_title,
             project_type: type || selectedProject.project_type,
             project_description:
-            description || selectedProject.project_description,
+              description || selectedProject.project_description,
             project_start: startDate || selectedProject.project_start,
             project_end: endDate || selectedProject.project_end,
             project_status: "notStarted",
@@ -187,8 +272,9 @@ const ClientProject = ({ statusProject }) => {
       }
     } else {
       // Create new project
-      try {
-        await axios.post(
+
+      await axios
+        .post(
           `http://127.0.0.1:8000/api/projects`,
           {
             project_title: title,
@@ -208,13 +294,25 @@ const ClientProject = ({ statusProject }) => {
               Authorization: `Bearer ${token}`,
             },
           }
-        );
-        toast.success("Project Created");
-        setOpen(false);
-        refreshProjects();
-      } catch (error) {
-        toast.error("Error Creating project: " + error.message);
-      }
+        )
+        .then((response) => {
+          toast.success("Project Created");
+
+          const productOwnerId = response.data.data.productOnwer.id;
+          const productManagerId = response.data.data.ProductManager.id;
+          const projectID = response.data.data.id;
+          const projectName = response.data.data.id;
+          createChatGroup(
+            projectID,
+            projectName,
+            productOwnerId,
+            productManagerId
+          );
+          setOpen(false);
+        })
+        .catch((error) => {
+          toast.error("Error Creating project: " + error.message);
+        });
     }
   };
 
@@ -256,9 +354,8 @@ const ClientProject = ({ statusProject }) => {
 
   return (
     <div className="container-fluid d-flex justify-content-center row conatingData">
-    
       <Button
-       disabled={statusProject !== "all"}
+        disabled={statusProject !== "all"}
         className="mt-4 w-25 mb-5 addbtn"
         variant="outlined"
         color="neutral"
@@ -267,7 +364,7 @@ const ClientProject = ({ statusProject }) => {
       >
         Create New Project
       </Button>
-      
+
       <Modal
         sx={{ overflow: "auto" }}
         open={open}
@@ -364,16 +461,16 @@ const ClientProject = ({ statusProject }) => {
               <Col key={item.id} lg={4} md={6} sm={12}>
                 <Card className="mb-4 cardData border " div data-aos="zoom-in-up">
                   <Card.Body>
-                    <Card.Title className="mb-4">Title of project : {item.name}</Card.Title>
-                    <Card.Text >{item.type}</Card.Text>
-                    <Card.Text>{item.description}</Card.Text>
+                    <Card.Title className="mb-4 text-center fs-3 fw-bold"><i class="fa-solid fa-diagram-project fa-sm " style={{color:'#13619d'}}></i> Project name <br></br><p className="text-center fs-4 fw-bold " style={{color:'#13619d'}}> {item.name}</p></Card.Title>
+                    <Card.Text className="mb-2 text-center fs-5 " >{item.type}</Card.Text>
+                    <Card.Text className="mb-2 text-center fs-5 ">{item.description}</Card.Text>
                     <span className={getClassByStatus(item.status)}><i class="fa-solid fa-star  fs-4 "></i></span>
 
                     <Button
                       onClick={() => handleEdit(item)}
                       disabled={item.status !== "notStarted"}
                     >
-                    <i class="fa-solid fa-pen-to-square" style={{ color: "#ffff00" }}></i>
+                    <i class="fa-solid fa-pen-to-square" style={{ color: "#fff" }}></i>
 
                       {/* <i class="fa-solid fa-pen-to-square " ></i> */}
                     </Button>

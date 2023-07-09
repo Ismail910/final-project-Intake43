@@ -39,6 +39,14 @@ const handleUserChat = () => {
       CometChat.createUser(user, authKey).then(
         (user) => {
           console.log("User created", user);
+          CometChat.login(uid, authKey).then(
+            (user) => {
+              console.log("Login Successful:", { user });
+            },
+            (error) => {
+              console.log("Login failed with exception:", { error });
+            }
+          );
         },
         (error) => {
           console.log("Error creating user", error);
@@ -97,7 +105,10 @@ const Register = () => {
             console.log(res);
             localStorage.setItem("user_id", res.data.client.user.id);
             localStorage.setItem("user_name", res.data.client.user.name);
-            localStorage.setItem("user_userName", res.data.client.user.userName);
+            localStorage.setItem(
+              "user_userName",
+              res.data.client.user.userName
+            );
             localStorage.setItem("user_role", "Client");
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("isLogin", true);
@@ -239,11 +250,14 @@ const Register = () => {
                       </MDBRow>
                       <div className="d-flex justify-content-end pt-3">
                         <Link className="nav-link text-secondary " to="/login">
-                          <MDBBtn  className="mx-2 signInBtn gradient-custom-2">
+                          <MDBBtn className="mx-2 signInBtn gradient-custom-2">
                             Sign In
                           </MDBBtn>
                         </Link>
-                        <MDBBtn className=" mx-2 signInBtn gradient-custom-2" type="submit">
+                        <MDBBtn
+                          className=" mx-2 signInBtn gradient-custom-2"
+                          type="submit"
+                        >
                           Sign UP
                         </MDBBtn>
                       </div>

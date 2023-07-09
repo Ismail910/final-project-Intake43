@@ -6,8 +6,8 @@
 .cardData{
   position:relative;
   /* background-image: linear-gradient(to right, #0f0c29, #302b63, #24243e); */
-  background-color: #1560bd !important;
-  color:white !important;
+  background-color: #fff !important;
+  color:black !important;
   padding:10px;
   height: 16 em;
   
@@ -49,7 +49,7 @@
  color:red;
 }
 .yellow{
-  color:yellow;
+  color:rgba(246, 246, 6, 0.857);
 }
 .blocked{
   display: block;
