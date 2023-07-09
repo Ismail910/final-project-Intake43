@@ -151,16 +151,18 @@ const ProductOwnerEditForm = ({ employee, handleUpdate }) => {
                       onChange={handleInputChange}
                     />
                   </div>
-                  {/* <div className="row mb-3">
+                  
+                  <div className="row mb-3">
                     <label>Profile Picture</label>
                     <input
-                      type="text"
+                      type="file"
                       name="profilePic"
                       className="form-control"
                       value={formData.user.profilePic}
                       onChange={handleInputChange}
                     />
-                  </div> */}
+                  </div>
+
                   <div className="row mb-3">
                     <label>Country</label>
                     <input
