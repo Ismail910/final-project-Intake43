@@ -364,16 +364,16 @@ const ClientProject = ({ statusProject }) => {
               <Col key={item.id} lg={4} md={6} sm={12}>
                 <Card className="mb-4 cardData border " div data-aos="zoom-in-up">
                   <Card.Body>
-                    <Card.Title className="mb-4">Title of project : {item.name}</Card.Title>
-                    <Card.Text >{item.type}</Card.Text>
-                    <Card.Text>{item.description}</Card.Text>
+                    <Card.Title className="mb-4 text-center fs-3 fw-bold"><i class="fa-solid fa-diagram-project fa-sm " style={{color:'#13619d'}}></i> Project name <br></br><p className="text-center fs-4 fw-bold " style={{color:'#13619d'}}> {item.name}</p></Card.Title>
+                    <Card.Text className="mb-2 text-center fs-5 " >{item.type}</Card.Text>
+                    <Card.Text className="mb-2 text-center fs-5 ">{item.description}</Card.Text>
                     <span className={getClassByStatus(item.status)}><i class="fa-solid fa-star  fs-4 "></i></span>
 
                     <Button
                       onClick={() => handleEdit(item)}
                       disabled={item.status !== "notStarted"}
                     >
-                    <i class="fa-solid fa-pen-to-square" style={{ color: "#ffff00" }}></i>
+                    <i class="fa-solid fa-pen-to-square" style={{ color: "#fff" }}></i>
 
                       {/* <i class="fa-solid fa-pen-to-square " ></i> */}
                     </Button>
