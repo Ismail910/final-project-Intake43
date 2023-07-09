@@ -243,7 +243,7 @@ export default function Freelancer() {
               header="Name"
               sortable
               // filter
-              style={{ minWidth: "10rem" }}
+              style={{ minWidth: "8rem" }}
             />
             <Column
               field="user.email"
@@ -257,7 +257,7 @@ export default function Freelancer() {
               header="National id"
               sortable
               // filter
-              style={{ minWidth: "10rem" }}
+              style={{ minWidth: "8rem" }}
             />
               <Column
               field="user.profilePic"
@@ -275,7 +275,7 @@ export default function Freelancer() {
               header="Country"
               sortable
               // filter
-              style={{ minWidth: "10rem" }}
+              style={{ minWidth: "6rem" }}
             />
 
             <Column
@@ -292,8 +292,8 @@ export default function Freelancer() {
               field="balance"
               header="Balance"
               sortable
-              // filter
-              style={{ minWidth: "10rem" }}
+              // filte
+              style={{ minWidth: "6rem" }}
             />
 
             <Column
