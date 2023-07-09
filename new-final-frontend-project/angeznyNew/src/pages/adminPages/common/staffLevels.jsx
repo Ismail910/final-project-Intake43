@@ -212,7 +212,7 @@ export default function AdminStaffLevel() {
             filters={filters}
             filterDisplay="menu"
             globalFilterFields={["name"]}
-            emptyMessage="No skills found."
+            emptyMessage="No StaffLevel found."
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
           >
             {/* <Column

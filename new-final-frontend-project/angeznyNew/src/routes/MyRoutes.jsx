@@ -53,6 +53,7 @@ import AdminTask from "../pages/adminPages/common/task";
 import AdminSkill from "../pages/adminPages/common/skills";
 import AdminStaffLevel from "../pages/adminPages/common/staffLevels";
 import AdminContactUs from "../pages/adminPages/common/contact-us";
+import NavbarAdmin from "../pages/adminPages/common/NavbarAdmin";
 
 // imports all guards
 import LoggedInGuard from "../guard/LoggedInRoutes";
@@ -167,10 +168,12 @@ const MyRoutes = () => {
                 </div>
               }
             >
-              <div className="row w-100 h-100">
-                <AdminSidnave className="col-2 h-100" />
-                <AdminDash className="col-10" />
+              <div className="w-100 h-100">
+              <NavbarAdmin className="col-12"/>
+                <AdminSidnave className="col-2"style={{}}/>
+                <AdminDash className="col-12" />
               </div>
+              
             </Suspense>
           }
         />
@@ -185,8 +188,10 @@ const MyRoutes = () => {
                 </div>
               }
             >
-              <div className="w-100 h-100">
-                <AdminSidnave className="col-2" />
+            
+                <div className="w-100 h-100">
+                <NavbarAdmin className="col-12"/>
+                <AdminSidnave className="col-2"style={{}}/>
                 <AdminOwner className="col-12" />
               </div>
             </Suspense>
@@ -198,12 +203,13 @@ const MyRoutes = () => {
             <Suspense
               fallback={
                 <div className="grid place-items-center h-screen bg-black">
-                  <CircleSpinner size={60} />
+                  <CircleSpinner size={60}/>
                 </div>
               }
             >
               <div className="w-100 h-100">
-                <AdminSidnave className="col-2" />
+                <NavbarAdmin className="col-12"/>
+                <AdminSidnave className="col-2"style={{}}/>
                 <AdminManager className="col-12" />
               </div>
             </Suspense>
@@ -220,7 +226,8 @@ const MyRoutes = () => {
               }
             >
               <div className="w-100 h-100">
-                <AdminSidnave className="col-2" />
+              <NavbarAdmin className="col-12"/>
+                <AdminSidnave className="col-2"style={{}}/>
                 <AdminDeveloper className="col-12" />
               </div>
             </Suspense>
@@ -237,7 +244,8 @@ const MyRoutes = () => {
               }
             >
               <div className="w-100 h-100">
-                <AdminSidnave className="col-2" />
+              <NavbarAdmin className="col-12"/>
+                <AdminSidnave className="col-2"style={{}}/>
                 <AdminFreelancer className="col-12" />
               </div>
             </Suspense>
@@ -255,6 +263,7 @@ const MyRoutes = () => {
               }
             >
               <div className="row w-100 h-100">
+                <NavbarAdmin className="col-12"/>
                 <AdminSidnave className="col-2" style={{}} />
                 <AdminPayment className="col-10" />
               </div>
@@ -272,6 +281,7 @@ const MyRoutes = () => {
               }
             >
               <div className="w-100 h-100">
+              <NavbarAdmin className="col-12"/>
                 <AdminSidnave className="col-2" style={{}} />
                 <AdminClient className="col-10" />
               </div>
@@ -290,6 +300,7 @@ const MyRoutes = () => {
               }
             >
               <div className="w-100 h-100">
+              <NavbarAdmin className="col-12"/>
                 <AdminSidnave className="col-2" style={{}} />
                 <AdminProject className="col-12" />
               </div>
@@ -308,6 +319,7 @@ const MyRoutes = () => {
               }
             >
               <div className="w-100 h-100">
+              <NavbarAdmin className="col-12"/>
                 <AdminSidnave className="col-2" style={{}} />
                 <AdminTask className="col-12" />
               </div>
@@ -326,6 +338,7 @@ const MyRoutes = () => {
               }
             >
               <div className="w-100 h-100">
+              <NavbarAdmin className="col-12"/>
                 <AdminSidnave className="col-2" style={{}} />
                 <AdminSkill className="col-12" />
               </div>
@@ -344,6 +357,7 @@ const MyRoutes = () => {
               }
             >
               <div className="w-100 h-100">
+              <NavbarAdmin className="col-12"/>
                 <AdminSidnave className="col-2" style={{}} />
                 <AdminStaffLevel className="col-12" />
               </div>
@@ -362,6 +376,7 @@ const MyRoutes = () => {
               }
             >
               <div className="w-100 h-100">
+              <NavbarAdmin className="col-12"/>
                 <AdminSidnave className="col-2" style={{}} />
                 <AdminContactUs className="col-12" />
               </div>

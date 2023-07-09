@@ -60,5 +60,12 @@
     width: 80% !important;
 }
 
+/* logoname */
 
-
+.firstLetter{
+  color:#FF7C03;
+}
+.logoL{
+  font-size:50px !important;
+  font-weight:bolder !important;
+}
