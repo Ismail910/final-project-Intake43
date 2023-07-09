@@ -1,3 +1,9 @@
+
+.conatingData{
+  background-image: url("../../../assets/images/bussiness/pr1.jpg");
+  background-repeat:no-repeat;
+  background-size: cover;
+}
 .cardData{
   position:relative;
   background-image: linear-gradient(to right, #0f0c29, #302b63, #24243e);
