@@ -14,7 +14,7 @@ class PayPalController extends Controller
 
     public function __construct()
     {
-        // $this->middleware(['auth:sanctum', 'checkUser:Client, Admin']);
+        $this->middleware(['auth:sanctum', 'checkUser:Client, Admin']);
         $this->gateway = Omnipay::create('PayPal_Rest');
         $this->gateway->setClientId(env('PAYPAL_CLIENT_ID'));
         $this->gateway->setSecret(env('PAYPAL_SECRET'));
@@ -83,7 +83,7 @@ class PayPalController extends Controller
                 $arr = $response->getData();
                 $payment = new PaymentPaypal();
                     $payment->project_id =$request->project_id;
-                    $payment->client_id = $request->user_id;
+                    $payment->user_id = $request->user_id;
                     $payment->amount = $request->amount;
                     $payment->transaction_reference = $request->paymentId;
                     $payment->save();
@@ -91,9 +91,7 @@ class PayPalController extends Controller
                     $project = Project::findOrFail( $payment->project_id);
                     $project->is_payed = true;
                     $project->update();
-
                     return redirect('http://localhost:3000/client/payment/success');
-               
             }
             else{
                 return $response->getMessage();
