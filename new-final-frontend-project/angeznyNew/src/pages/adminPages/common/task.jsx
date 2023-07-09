@@ -239,15 +239,10 @@ export default function AdminTask() {
             emptyMessage="No customers found."
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
           >
-            {/* <Column
-              selectionMode="multiple"
-              headerStyle={{ width: "3rem" }}
-            ></Column> */}
             <Column
               field="name"
               header="Task Name"
               sortable
-              // filter
               style={{ minWidth: "10rem" }}
             />
 
@@ -255,7 +250,6 @@ export default function AdminTask() {
               field="project.name"
               header="Project Name"
               sortable
-              // filter
               style={{ minWidth: "10rem" }}
             />
 
@@ -263,42 +257,31 @@ export default function AdminTask() {
               field="productManager.name"
               header="Task Creator"
               sortable
-              // filter
-              style={{ minWidth: "10rem" }}
+              style={{ minWidth: "9rem" }}
             />
             <Column
               field="assigned_to.name"
               header="Assigned to"
               sortable
-              // filter
-              style={{ minWidth: "10rem" }}
+              style={{ minWidth: "9rem" }}
             />
             <Column
               field="start"
               header="Start Date"
               sortable
-              // filter
-              style={{ minWidth: "10rem" }}
+              style={{ minWidth: "9rem" }}
             />
             <Column
               field="end"
               header="End Date"
               sortable
-              // filter
-              style={{ minWidth: "10rem" }}
-              // body={(rowData) =>
-              //   rowData.user.skills.map((skill) => skill.name).join(", ")
-              // }
+              style={{ minWidth: "9rem" }}
             />
             <Column
               field="status"
               header="Status"
               sortable
-              // filter
-              style={{ minWidth: "10rem" }}
-              // body={(rowData) =>
-              //   rowData.user.skills.map((skill) => skill.name).join(", ")
-              // }
+              style={{ minWidth: "9rem" }}
             />
 
             <Column
@@ -309,18 +292,10 @@ export default function AdminTask() {
                 setSelectedEmployee(rowData);
                 return (
                   <div style={{ display: "flex" }}>
-                    {/* <button
-                      className="btn btn-info me-2"
-                      onClick={() => handleEdit(rowData)}
-                    >
-                      Edit
-                    </button> */}
-
                     <TaskEditForm
                       employee={rowData}
                       handleUpdate={handleUpdate}
                     />
-
                     <button
                       className="btn btn-danger"
                       onClick={() => handleDelete(rowData.id)}
@@ -332,13 +307,6 @@ export default function AdminTask() {
               }}
             />
           </DataTable>
-          {/* {showEditForm && (
-            <DeveloperEditForm
-              employee={selectedEmployee}
-              handleUpdate={handleUpdate}
-              // handleClose={handleClose}
-            />
-          )} */}
         </div>
       </div>
     </div>
