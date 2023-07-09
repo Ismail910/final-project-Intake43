@@ -39,104 +39,103 @@ useEffect(() => {
   Aos.init();
 }, []);
 
-  const token = localStorage.getItem('token')
-  const userId = localStorage.getItem('user_id')
-  const [user, setUser] = useState(userId)
+const token = localStorage.getItem('token');
+const userId = localStorage.getItem('user_id');
+const [user, setUser] = useState(userId);
 
-  const [name, setName] = useState('')
-  const [open, setOpen] = React.useState(false)
-  const [password, setPassword] = React.useState('')
-  const [address, setAddress] = React.useState('')
-  const [country, setCountry] = React.useState('')
-  const [nationalID, setNationalID] = React.useState('')
-  const [phone, setPhone] = React.useState('')
-  const [selectedUser, setSelectedUser] = React.useState()
+const [name, setName] = useState('');
+const [open, setOpen] = useState(false);
+const [password, setPassword] = useState('');
+const [address, setAddress] = useState('');
+const [country, setCountry] = useState('');
+const [nationalID, setNationalID] = useState('');
+const [phone, setPhone] = useState('');
+const [selectedUser, setSelectedUser] = useState();
 
-  const handleNameChange = (event) => {
-    setName(event.target.value)
-  }
+const handleNameChange = (event) => {
+  setName(event.target.value);
+};
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value)
-  }
-  const handleAddressChange = (event) => {
-    setAddress(event.target.value)
-  }
-  const handleCountryChange = (event) => {
-    setCountry(event.target.value)
-  }
-  const handleIDChange = (event) => {
-    setNationalID(event.target.value)
-  }
-  const handlePhoneChange = (event) => {
-    setPhone(event.target.value)
-  }
+const handlePasswordChange = (event) => {
+  setPassword(event.target.value);
+};
+const handleAddressChange = (event) => {
+  setAddress(event.target.value);
+};
+const handleCountryChange = (event) => {
+  setCountry(event.target.value);
+};
+const handleIDChange = (event) => {
+  setNationalID(event.target.value);
+};
+const handlePhoneChange = (event) => {
+  setPhone(event.target.value);
+};
 
-  const handleEdit = async (event) => {
-    event.preventDefault()
+const handleEdit = async (event) => {
+  event.preventDefault();
 
-    await axios
-      .put(
-        `http://127.0.0.1:8000/api/user/${userId}`,
-        {
-          name: name || selectedUser.name,
-          email: user.email,
-          password: password,
-          address: address,
-          phone: phone,
-          country: country,
-          nationalID: nationalID,
-          profilePic: null,
-        },
-        {
-          headers: {
-            Accept: 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      )
-      .then((response) => {
-        toast.success('user Updated')
-        setOpen(false)
-        setSelectedUser(null)
-      })
-      .catch((error) => {
-        toast.error('Error updating user: ' + error.message)
-      })
-  }
-
-  const handleEditBtn = () => {
-    setSelectedUser(user)
-    setOpen(true)
-  }
-
-  React.useEffect(() => {
-    WebFont.load({
-      google: {
-        families: [
-          'Font1',
-          'Font2:ital,wght@0,400;0,700;1,400;1,700&display=swap',
-        ],
+  try {
+    await axios.put(
+      `http://127.0.0.1:8000/api/user/${userId}`,
+      {
+        name: name || selectedUser.name,
+        email: user.email,
+        password: password,
+        address: address,
+        phone: phone,
+        country: country,
+        nationalID: nationalID,
+        profilePic: null,
       },
+      {
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    toast.success('User updated');
+
+    // Fetch updated data
+    getUserData();
+  } catch (error) {
+    toast.error('Error updating user: ' + error.message);
+  } finally {
+    setOpen(false);
+    setSelectedUser(null);
+  }
+};
+
+const handleEditBtn = () => {
+  setSelectedUser(user);
+  setOpen(true);
+};
+
+useEffect(() => {
+  WebFont.load({
+    google: {
+      families: ['Font1', 'Font2:ital,wght@0,400;0,700;1,400;1,700&display=swap'],
+    },
+  });
+}, []);
+
+// Fetch user data
+const getUserData = () => {
+  axios
+    .get(`http://127.0.0.1:8000/api/user/${userId}`)
+    .then((response) => {
+      console.log(response.data.data);
+      setUser(response.data.data || 0);
     })
-  }, [])
+    .catch((error) => {
+      console.error(error);
+    });
+};
 
-  // const name =localStorage.getItem("user_userName");
-
-  // get user
-  useEffect(() => {
-    axios
-      .get(`http://127.0.0.1:8000/api/user/${userId}`)
-      .then((response) => {
-        console.log(response.data.data)
-        setUser(response.data.data || 0)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-  }, [userId])
-
-  // get user projects
+useEffect(() => {
+  getUserData();
+}, [userId]);
 
   return (
     <div>
