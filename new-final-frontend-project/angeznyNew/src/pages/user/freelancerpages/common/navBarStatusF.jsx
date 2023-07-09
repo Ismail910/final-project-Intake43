@@ -30,8 +30,8 @@ export default function Status() {
       <Tabs
         value={value}
         onChange={handleChange}
-        textColor="secondary"
-        indicatorColor="secondary"
+        textColor="primary"
+        indicatorColor="primary"
         aria-label="secondary tabs example"
       >
         <Tab value="all" label="All" />

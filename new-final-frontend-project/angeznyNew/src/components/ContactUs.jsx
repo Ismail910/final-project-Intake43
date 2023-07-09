@@ -72,7 +72,7 @@ const ContactUs = () => {
                   class="inputs mb-5"
                   onChange={(event) => setSubject(event.target.value)}
                 />
-                <button type="submit" class="contactButton ">
+                <button type="submit" class="contactButton " onClick={handleSubmit}>
                   Send
                 </button>
               </form>

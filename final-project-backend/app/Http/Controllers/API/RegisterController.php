@@ -118,8 +118,6 @@ class RegisterController extends Controller
     public function RegisterClient(StoreUserRequest $request)
     {
         $result = $this->RegisterUser($request);
-
-
         $client = Client::create([
             'user_id' => $result['user']->id,
             'balance' => 0,
