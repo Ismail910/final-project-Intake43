@@ -16,10 +16,11 @@ import UserForm from "./userform";
 import { toast } from "react-toastify";
 import { CometChat } from "@cometchat-pro/chat";
 
-export default function Developer() {
+export default function ProductOwner() {
   // const [owners, setowners] = useState([]);
   const [showEditForm, setShowEditForm] = useState(false);
   const [selectedowner, setSelectedowner] = useState(null);
+  const [imagedata, setImagedata] = useState("");
 
   const [formData, setFormData] = useState({
     staff_level: {},
@@ -60,16 +61,60 @@ export default function Developer() {
         toast.error(error);
       });
   }, []);
+
+  // const handleInputChange = (event) => {
+  //   setFormData({
+  //     ...formData,
+  //     user: {
+  //       ...formData.user,
+  //       imagedata:event.target.files [0],
+  //       [event.target.name]: event.target.value,
+  //     },
+  //   });
+  // };
+  
+  // const handleInputChange = (event) => {
+  //   if (event.target.files && event.target.files.length > 0) {
+  //     setFormData({
+  //       ...formData,
+  //       user: {
+  //         ...formData.user,
+  //         profilePic: event.target.files[0],
+  //         [event.target.name]: event.target.value,
+  //       },
+  //     });
+  //   } else {
+  //     setFormData({
+  //       ...formData,
+  //       user: {
+  //         ...formData.user,
+  //         [event.target.name]: event.target.value,
+  //       },
+  //     });
+  //   }
+  // };
+  
+  // const handleInputChange = (event) => {
+  //   const file = event.target.files[0];
+  //   setImagedata(file);
+  // };
+
   const handleInputChange = (event) => {
-    setFormData({
-      ...formData,
-      user: {
-        ...formData.user,
-        [event.target.name]: event.target.value,
-      },
-    });
+    if (event.target.files && event.target.files.length > 0) {
+      setImagedata(event.target.files[0]);
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        user: {
+          ...prevFormData.user,
+          profilePic: event.target.files && event.target.files[0],
+          [event.target.name]: event.target.value,
+        },
+      }));
+    }
   };
 
+  
   const handleUserChat = (data) => {
     const appID = "240169ef153c40df";
     const region = "US";
@@ -109,83 +154,163 @@ export default function Developer() {
       }
     );
   };
+
+
+  // const handleSubmit = async (event) => {
+  //   // event.preventDefault();
+  //   console.log(formData);
+  //   const data =new FormData();
+  //   data.append("profilePic", imagedata);
+  //  console.log(formData.user.profilePic);
+  //   await axios
+  //     .post("http://127.0.0.1:8000/api/register/manager", {
+  //       name: formData.user.name,
+  //       email: formData.user.email,
+  //       password: formData.user.password,
+  //       phone: formData.user.phone,
+  //       nationalID: formData.user.nationalID,
+  //       address: formData.user.address,
+  //       joinedDate: formData.user.joinedDate,
+  //       endDate: formData.user.endDate,
+  //       country: formData.user.country,
+  //       role: formData.user.role,
+  //       userName: formData.user.userName,
+  //       gender: formData.user.gender,
+  //       profilePic:formData.user.profilePic,
+  //       staff_level_id: formData.user.staff,
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //         Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //       },
+  //     },data)
+  //     .then((response) => {
+  //       console.log(formData);
+  //       handleUserChat(response.data.manager.user);
+
+  //       axios
+  //         .get("http://127.0.0.1:8000/api/staff", {
+  //           headers: {
+  //             Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //           },
+  //         })
+  //         .then((response) => {
+  //           // console.log(response.data);
+  //           if (response.status === 200) {
+  //             // setStaffLevels(response.data.data || []);
+  //             response.data.data.map((level) => {
+  //               if (level.id == formData.user.staff) {
+  //                 formData.staff_level = level;
+  //                 console.log(formData);
+  //                 setowners([...owners, formData]);
+  //               }
+  //             });
+  //             // toast.success("product owners fectched successfully");
+  //           } else {
+  //             toast.error("failed to load the data");
+  //           }
+  //         })
+  //         .catch((error) => {
+  //           console.error(error);
+  //           toast.error("failed to load the data");
+
+  //           // toast.error(error);
+  //         });
+
+  //       setFormData({
+  //         staff_level: {},
+  //         user: {
+  //           name: "",
+  //           email: "",
+  //           password: "",
+  //           phone: "",
+  //           nationalID: "",
+  //           address: "",
+  //           joinedDate: "",
+  //           endDate: "",
+  //           profilePic: "",
+  //           country: "",
+  //           gender: "male",
+  //           staff: 1,
+  //         },
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // };
+
   const handleSubmit = async (event) => {
     // event.preventDefault();
-    console.log(formData);
-    await axios
-      .post("http://127.0.0.1:8000/api/register/manager", {
-        name: formData.user.name,
-        email: formData.user.email,
-        password: formData.user.password,
-        phone: formData.user.phone,
-        nationalID: formData.user.nationalID,
-        address: formData.user.address,
-        joinedDate: formData.user.joinedDate,
-        endDate: formData.user.endDate,
-        country: formData.user.country,
-        role: formData.user.role,
-        userName: formData.user.userName,
-        gender: formData.user.gender,
-        staff_level_id: formData.user.staff,
+    
+    const data = new FormData();
+    data.append("profilePic", data);
+    data.append("name", formData.user.name);
+    data.append("email", formData.user.email);
+    data.append("password", formData.user.password);
+    data.append("phone", formData.user.phone);
+    data.append("nationalID", formData.user.nationalID);
+    data.append("address", formData.user.address);
+    data.append("joinedDate", formData.user.joinedDate);
+    data.append("endDate", formData.user.endDate);
+    data.append("country", formData.user.country);
+    data.append("role", formData.user.role);
+    data.append("userName", formData.user.userName);
+    data.append("gender", formData.user.gender);
+    data.append("staff_level_id", formData.user.staff);
+  
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/api/register/manager", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+  
+      console.log(response.data.manager.user);
+      handleUserChat(response.data.manager.user);
+  
+      const staffResponse = await axios.get("http://127.0.0.1:8000/api/staff", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      })
-      .then((response) => {
-        console.log(formData);
-        handleUserChat(response.data.manager.user);
-
-        axios
-          .get("http://127.0.0.1:8000/api/staff", {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          })
-          .then((response) => {
-            // console.log(response.data);
-            if (response.status === 200) {
-              // setStaffLevels(response.data.data || []);
-              response.data.data.map((level) => {
-                if (level.id == formData.user.staff) {
-                  formData.staff_level = level;
-                  console.log(formData);
-                  setowners([...owners, formData]);
-                }
-              });
-              // toast.success("product owners fectched successfully");
-            } else {
-              toast.error("failed to load the data");
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-            toast.error("failed to load the data");
-
-            // toast.error(error);
-          });
-
-        setFormData({
-          staff_level: {},
-          user: {
-            name: "",
-            email: "",
-            password: "",
-            phone: "",
-            nationalID: "",
-            address: "",
-            joinedDate: "",
-            endDate: "",
-            profilePic: "",
-            country: "",
-            gender: "male",
-            staff: 1,
-          },
-        });
-      })
-      .catch((error) => {
-        console.error(error);
       });
+  
+      if (staffResponse.status === 200) {
+        const level = staffResponse.data.data.find((level) => level.id === formData.user.staff);
+  
+        if (level) {
+          formData.staff_level = level;
+          setowners([...owners, formData]);
+          console.log(formData);
+          // toast.success("product owners fetched successfully");
+        }
+      } else {
+        // toast.error("failed to load the data");
+      }
+  
+      setFormData({
+        staff_level: {},
+        user: {
+          name: "",
+          email: "",
+          password: "",
+          phone: "",
+          nationalID: "",
+          address: "",
+          joinedDate: "",
+          endDate: "",
+          profilePic: "",
+          country: "",
+          gender: "male",
+          staff: 1,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
+  
+  
 
   const handleDelete = (ownerId) => {
     axios
@@ -197,9 +322,11 @@ export default function Developer() {
       .then((response) => {
         console.log(response.data);
         setowners(owners.filter((owner) => owner.id !== ownerId));
+        toast.success("User deleted successfully");
       })
       .catch((error) => {
         console.error(error);
+        toast.error("Failed to delete user");
       });
   };
 
@@ -340,42 +467,42 @@ export default function Developer() {
               header="Name"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="user.email"
               header="Email"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="user.phone"
               header="Phone"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="user.gender"
               header="Gender"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="user.country"
               header="Country"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="staff_level.name"
               header="Staff Level"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               headerStyle={{ width: "5rem", textAlign: "center" }}
@@ -383,7 +510,7 @@ export default function Developer() {
               header="Actions"
               body={(rowData) => {
                 return (
-                  <div style={{ display: "flex" }}>
+                  <div style={{ display: "flex", justifyContent: "center" }}>
                     <ProductOwnerEditForm
                       employee={rowData}
                       handleUpdate={handleUpdate}

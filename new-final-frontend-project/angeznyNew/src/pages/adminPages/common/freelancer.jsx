@@ -15,7 +15,7 @@ import FreelancerEditform from "./editForms/freelancerEditform";
 import UserForm from "./userform";
 import { toast } from "react-toastify";
 
-export default function Developer() {
+export default function Freelancer() {
   // const [freelancers, setfreelancers] = useState([]);
   const [showEditForm, setShowEditForm] = useState(false);
   const [selectedfreelancer, setSelectedfreelancer] = useState(null);
@@ -113,23 +113,25 @@ export default function Developer() {
       });
   };
 
-  const handleDelete = (freelancerId) => {
+  
+  const handleDelete = (ownerId) => {
     axios
-      .delete(`http://127.0.0.1:8000/api/freelancer/${freelancerId}`, {
+      .delete(`http://127.0.0.1:8000/api/manager/${ownerId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
       .then((response) => {
         console.log(response.data);
-        setfreelancers(
-          freelancers.filter((freelancer) => freelancer.id !== freelancerId)
-        );
+        setfreelancers(freelancers.filter((owner) => owner.id !== ownerId));
+        toast.success("User deleted successfully");
       })
       .catch((error) => {
         console.error(error);
+        toast.error("Failed to delete user");
       });
   };
+  
 
   const handleEdit = (freelancer) => {
     // console.log(freelancer);
@@ -242,28 +244,28 @@ export default function Developer() {
               header="Name"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="user.email"
               header="Email"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="user.nationalID"
               header="National id"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
             <Column
               field="user.country"
               header="Country"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
 
             <Column
@@ -271,7 +273,7 @@ export default function Developer() {
               header="Status"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
               body={(rowData) =>
                 rowData.status === 1 ? "Available" : "Not available"
               }
@@ -281,7 +283,7 @@ export default function Developer() {
               header="Balance"
               sortable
               // filter
-              style={{ minWidth: "14rem" }}
+              style={{ minWidth: "10rem" }}
             />
 
             <Column

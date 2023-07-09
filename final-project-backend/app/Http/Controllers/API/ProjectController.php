@@ -235,17 +235,37 @@ class ProjectController extends Controller
                 ['project_status', '=', $searchTerm]
             ])->get();
         } elseif (Auth::user()->role == 'ProductOwner') {
-            $owner = Manager::where('user_id', $id)->first();
-            $results = Project::where([
-                ['ProductOwner_id', '=', $owner->id],
-                ['project_status', '=', $searchTerm]
-            ])->get();
+            if ($searchTerm == "unpaid") {
+                $owner = Manager::where('user_id', $id)->first();
+                $results = Project::where([
+                    ['ProductOwner_id', '=', $owner->id],
+                    ['is_payed', '=', false],
+                    ['budget', '=', 0]
+                ])->get();
+            } else {
+
+                $owner = Manager::where('user_id', $id)->first();
+                $results = Project::where([
+                    ['ProductOwner_id', '=', $owner->id],
+                    ['project_status', '=', $searchTerm]
+                ])->get();
+            }
         } elseif (Auth::user()->role == 'Client') {
-            $client = Client::where('user_id', $id)->first();
-            $results = Project::where([
-                ['client_id', '=', $client->id],
-                ['project_status', '=', $searchTerm],
-            ])->get();
+            if ($searchTerm == "unpaid") {
+                $client = Client::where('user_id', $id)->first();
+                $results = Project::where([
+                    ['client_id', '=', $client->id],
+                    ['is_payed', '=', false],
+                    ['budget', '<>', 0]
+                ])->get();
+            } else {
+
+                $client = Client::where('user_id', $id)->first();
+                $results = Project::where([
+                    ['client_id', '=', $client->id],
+                    ['project_status', '=', $searchTerm],
+                ])->get();
+            }
         } else {
             return response()->json([
                 'error' => 'Not found project with this status'

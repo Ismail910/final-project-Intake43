@@ -44,6 +44,7 @@ class RegisterController extends Controller
             'userName' => $request->input('userName'),
             'gender' => $request->input('gender')
         ]);
+        // print($request->profilePic);
         $this->save_image($request->profilePic, $user);
 
         $token = $user->createToken('token-name', ['user_id' => $user->id, 'email' => $user->email, 'name' => $user->name, 'role' => $user->role])->plainTextToken;
@@ -131,13 +132,27 @@ class RegisterController extends Controller
         ], 201);
     }
 
-    private function save_image($image, $article)
+    // private function save_image($image, $user)
+    // {
+
+    //     if ($image) {
+    //         print($image->extension);
+    //         $image_name = time() . '.' . $image->extension();
+    //         $image->move(public_path('images/users'), $image_name);
+    //         $user->profilePic = $image_name;
+    //         $user->save();
+    //     }
+    // }
+
+    private function save_image($image, $user)
     {
-        if ($image) {
-            $image_name = time() . '.' . $image->extension();
-            $image->move(public_path('images/users'), $image_name);
-            $article->profilePic = $image_name;
-            $article->save();
-        }
+    if ($image) {
+        $extension = $image->getClientOriginalExtension();
+        $image_name = time() . '.' . $extension;
+        $image->move(public_path('images/users'), $image_name);
+        $user->profilePic = $image_name;
+        $user->save();
     }
+    }
+
 }

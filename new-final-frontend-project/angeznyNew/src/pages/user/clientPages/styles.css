@@ -9,6 +9,7 @@
   background-image: linear-gradient(to right, #0f0c29, #302b63, #24243e);
   color:white !important;
   padding:10px;
+  
 }
 .deleteBtn{
   position:absolute;
@@ -52,4 +53,10 @@
 .yellow{
   background-color:yellow;
   border:1px solid white;
+}
+.blocked{
+  display: block;
+}
+.noneDiv{
+  display: none;
 }

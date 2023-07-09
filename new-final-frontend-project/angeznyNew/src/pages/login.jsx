@@ -112,9 +112,9 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <div className="text-center pt-1 mb-5 pb-1">
+              <div className="d-flex flex-column text-center pt-1 mb-5 pb-1">
                 <MDBBtn
-                  className="mb-4 w-100 gradient-custom-2"
+                  className="mb-4 w-50 mx-auto gradient-custom-2"
                   variant="contained"
                   type="submit"
                 >
