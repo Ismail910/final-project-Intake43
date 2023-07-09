@@ -184,6 +184,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from 'react-router-dom';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -206,11 +207,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function CustomizedTables() {
+  const client_id = localStorage.getItem('user_id');
+     
+  const [paymentId, setPaymentId] = useState(null);
+  const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     try {
-      const response = axios
+
+      const response =  axios
         .get(`http://127.0.0.1:8000/api/projects/search/unpaid`, {
           headers: {
             Accept: "application/json",
@@ -226,11 +232,35 @@ export default function CustomizedTables() {
         .catch((error) => {
           toast.error("Error updating project: " + error.message);
         });
+
     } catch (error) {
       toast.error(error.message);
     }
   }, []);
-
+  
+  const handlePayment = async (row) => {
+        try {
+          const data ={
+            amount: row.budget || 0,
+            project_id:row.id || 0,
+            user_id:client_id,
+    
+          }
+          const response = await axios.post('http://127.0.0.1:8000/api/paypal/pay',
+          data
+           );
+    
+          setPaymentId(response.data?.paymentId);
+          window.location.href = response.data?.redirectUrl;
+    
+        } catch (error) {
+          console.log(error.response?.data);
+         
+          toast.error('Failed to initiate the payment.');
+        }
+  };
+    
+     
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -255,13 +285,14 @@ export default function CustomizedTables() {
               </StyledTableCell>
               <StyledTableCell align="right">
                 <Button
-                  // onClick={() => handlePayedStatusChange(row.id, !row.is_payed)}
+                  onClick={() => handlePayment(row)}
                   variant="contained"
                   color="primary"
                   size="small"
                 >
                   PAY
                 </Button>
+                
               </StyledTableCell>
             </StyledTableRow>
           ))}

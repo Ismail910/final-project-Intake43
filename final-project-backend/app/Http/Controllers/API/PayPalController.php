@@ -14,7 +14,7 @@ class PayPalController extends Controller
 
     public function __construct()
     {
-      
+        $this->middleware(['auth:sanctum', 'checkUser:Client, Admin']);
         $this->gateway = Omnipay::create('PayPal_Rest');
         $this->gateway->setClientId(env('PAYPAL_CLIENT_ID'));
         $this->gateway->setSecret(env('PAYPAL_SECRET'));
@@ -60,7 +60,17 @@ class PayPalController extends Controller
 
     public function success(Request $request)
     {
-        // dd($request->all());
+        $paymentId = $request->input('paymentId');
+       
+        $payment = PaymentPaypal::where('transaction_reference', $paymentId)->first();
+    
+        if ($payment) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Payment is already processed.',
+            ]);
+        }
+
         if($request->input('paymentId') && $request->input('PayerID')){
             $transaction = $this->gateway->completePurchase(array(
                 'payerId'=> $request->input('PayerID'),
@@ -77,12 +87,12 @@ class PayPalController extends Controller
                     $payment->amount = $request->amount;
                     $payment->transaction_reference = $request->paymentId;
                     $payment->save();
-                    
+
                     $project = Project::findOrFail( $payment->project_id);
                     $project->is_payed = true;
                     $project->update();
 
-                    return redirect('http://localhost:3000/');
+                    return redirect('http://localhost:3000/client/payment/success');
                
             }
             else{
@@ -91,7 +101,7 @@ class PayPalController extends Controller
 
         }
         else{
-            return redirect('http://localhost:8000/error');
+            return redirect('http://localhost:8000/client/payment/failed');
         }
     }
 

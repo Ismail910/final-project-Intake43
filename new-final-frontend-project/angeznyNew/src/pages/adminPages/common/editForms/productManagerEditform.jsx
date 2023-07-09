@@ -153,7 +153,7 @@ const ProductManagerEditForm = ({ employee, handleUpdate }) => {
                   <div className="row mb-3">
                     <label>Profile Picture</label>
                     <input
-                      type="text"
+                      type="file"
                       name="profilePic"
                       className="form-control"
                       value={formData.user.profilePic}

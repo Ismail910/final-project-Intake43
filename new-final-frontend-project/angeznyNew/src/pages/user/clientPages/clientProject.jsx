@@ -361,19 +361,21 @@ const ClientProject = ({ statusProject }) => {
         <Row className="d-flex justify-content-center">
           {Array.isArray(projects) && projects.length > 0 ? (
             projects.map((item) => (
-              <Col key={item.id} lg={5} md={5} sm={5}>
-                <Card className="mb-4 cardData " div data-aos="zoom-in-up">
+              <Col key={item.id} lg={4} md={6} sm={12}>
+                <Card className="mb-4 cardData border " div data-aos="zoom-in-up">
                   <Card.Body>
-                    <Card.Title>Title of project : {item.name}</Card.Title>
-                    <Card.Text>{item.type}</Card.Text>
+                    <Card.Title className="mb-4">Title of project : {item.name}</Card.Title>
+                    <Card.Text >{item.type}</Card.Text>
                     <Card.Text>{item.description}</Card.Text>
-                    <span className={getClassByStatus(item.status)}></span>
+                    <span className={getClassByStatus(item.status)}><i class="fa-solid fa-star  fs-4 "></i></span>
 
                     <Button
                       onClick={() => handleEdit(item)}
                       disabled={item.status !== "notStarted"}
                     >
-                      <i class="fa-solid fa-pen-to-square"></i>
+                    <i class="fa-solid fa-pen-to-square" style={{ color: "#ffff00" }}></i>
+
+                      {/* <i class="fa-solid fa-pen-to-square " ></i> */}
                     </Button>
                     <Button
                       className="deleteBtn"
