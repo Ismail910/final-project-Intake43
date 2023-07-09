@@ -12,8 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('payment_paypals', function (Blueprint $table) {
+            // $table->id();
+            // $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->onDelete('set null');
+            // $table->foreignId('project_id')->constrained()->cascadeOnUpdate()->onDelete('set null');
+            // $table->decimal('amount', 10, 2);
+            // $table->string('transaction_reference');
+            // $table->json('additional_data')->nullable();
+            // $table->timestamps();
             $table->id();
+            $table->unsignedBigInteger('project_id')->nullable();
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('set null');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null'); 
             $table->decimal('amount', 10, 2);
             $table->string('transaction_reference');
