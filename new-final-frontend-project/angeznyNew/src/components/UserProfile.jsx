@@ -346,7 +346,7 @@ useEffect(() => {
                   data-aos-offset="500"
                   data-aos-duration="500">
                     <i class="fa-solid fa-flag fa-lg Icons"></i> Country :{' '}
-                    {!user['country'] ? 'empty field' : user['address']}{' '}
+                    {!user['country'] ? 'empty field' : user['country']}{' '}
                   </MDBCardText>{' '}
                   <MDBCardText className="font-italic mb-2 text-center mt-4 fs-5" data-aos="fade-left"
                   data-aos-anchor="#example-anchor"
